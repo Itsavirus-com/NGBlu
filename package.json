@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --ignore-unknown --write ."
   },
   "dependencies": {
     "next": "14.1.4",
@@ -14,11 +15,15 @@
     "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@evilmartians/lefthook": "^1.6.10",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.1.4"
+    "eslint-config-next": "14.1.4",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-import": "2.29.1",
+    "prettier": "3.2.5",
+    "typescript": "5.3.3"
   }
 }
