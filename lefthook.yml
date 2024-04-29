@@ -5,7 +5,7 @@ pre-commit:
   commands:
     1-formatting:
       glob: '*.{js,ts,tsx,css,scss,md,json}'
-      run: npx prettier --write {staged_files} && git add {staged_files}
+      run: yarn prettier --write {staged_files} && git add {staged_files}
     2-linting:
       glob: '*.{js,ts,tsx}'
-      run: npx next lint --file {staged_files} --fix && git add {staged_files}
+      run: yarn next lint --fix && git add {staged_files}
