@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 
 import avatar from '@/assets/images/avatars/300-3.jpg'
@@ -7,6 +8,8 @@ import avatar from '@/assets/images/avatars/300-3.jpg'
 import { Languages } from './languages'
 
 const HeaderUserMenu: FC = () => {
+  const t = useTranslations('common.navbar')
+
   return (
     <div
       className="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
@@ -33,13 +36,13 @@ const HeaderUserMenu: FC = () => {
 
       <div className="menu-item px-5 my-1">
         <Link href="/dashboard" className="menu-link px-5">
-          Account Settings
+          {t('account_settings')}
         </Link>
       </div>
 
       <div className="menu-item px-5">
         <Link href="/auth/login" className="menu-link px-5">
-          Sign Out
+          {t('sign_out')}
         </Link>
       </div>
     </div>

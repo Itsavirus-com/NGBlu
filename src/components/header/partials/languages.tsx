@@ -1,11 +1,21 @@
+'use client'
+
 import clsx from 'clsx'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 
 import dutchFlag from '@/assets/images/flags/netherlands.svg'
 import usFlag from '@/assets/images/flags/united-states.svg'
+import { Link, usePathname } from '@/navigation'
 
-const languages = [
+type Language = {
+  lang: 'en' | 'nl'
+  name: string
+  flag: string
+}
+
+const languages: Language[] = [
   {
     lang: 'nl',
     name: 'Dutch',
@@ -19,8 +29,11 @@ const languages = [
 ]
 
 const Languages: FC = () => {
-  const lang = 'en'
+  const lang = location.pathname.split('/')[1]
   const currentLanguage = languages.find(x => x.lang === lang) || languages[0]
+
+  const pathname = usePathname()
+  const t = useTranslations('common.navbar')
 
   return (
     <div
@@ -31,7 +44,7 @@ const Languages: FC = () => {
     >
       <a href="#" className="menu-link px-5">
         <span className="menu-title position-relative">
-          Language
+          {t('language')}
           <span className="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">
             {currentLanguage?.name}{' '}
             <Image
@@ -48,8 +61,9 @@ const Languages: FC = () => {
       <div className="menu-sub menu-sub-dropdown w-175px py-4">
         {languages.map(l => (
           <div className="menu-item px-3" key={l.lang}>
-            <a
-              href="#"
+            <Link
+              href={pathname}
+              locale={l.lang}
               className={clsx('menu-link d-flex px-5', {
                 active: l.lang === currentLanguage?.lang,
               })}
@@ -58,7 +72,7 @@ const Languages: FC = () => {
                 <Image className="rounded-1" src={l.flag} alt={l.name} />
               </span>
               {l.name}
-            </a>
+            </Link>
           </div>
         ))}
       </div>

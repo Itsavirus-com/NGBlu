@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 import logo from '@/assets/images/logos/ng-blu.png'
 import authBgImage from '@/assets/images/misc/auth-bg.png'
@@ -9,6 +10,8 @@ export default function AuthLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const t = useTranslations('auth')
+
   return (
     <div className="d-flex flex-column flex-lg-row flex-column-fluid h-100">
       <div className="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1">
@@ -19,11 +22,11 @@ export default function AuthLayout({
         <div className="d-flex flex-center flex-wrap px-5">
           <div className="d-flex fw-semibold text-primary fs-base">
             <a href="#" className="px-5" target="_blank">
-              Terms
+              {t('terms')}
             </a>
 
             <a href="#" className="px-5" target="_blank">
-              Contact Us
+              {t('contact_us')}
             </a>
           </div>
         </div>
@@ -38,21 +41,22 @@ export default function AuthLayout({
             <Image alt="Logo" src={logo} height={75} width={150} className="h-75px" />
           </Link>
 
-          <h1 className="text-white fs-2qx fw-bolder text-center mb-7">
-            Fast, Efficient and Productive
-          </h1>
+          <h1 className="text-white fs-2qx fw-bolder text-center mb-7">{t('title')}</h1>
 
           <div className="text-white fs-base text-center">
-            In this kind of post,{' '}
-            <a href="#" className="opacity-75-hover text-warning fw-bold me-1">
-              the blogger
-            </a>
-            introduces a person they’ve interviewed <br /> and provides some background information
-            about
-            <a href="#" className="opacity-75-hover text-warning fw-bold me-1">
-              the interviewee
-            </a>
-            and their <br /> work following this is a transcript of the interview.
+            {t.rich('subtitle', {
+              blogger: chunks => (
+                <a href="#" className="opacity-75-hover text-warning fw-bold me-1">
+                  {chunks}
+                </a>
+              ),
+              interviewee: chunks => (
+                <a href="#" className="opacity-75-hover text-warning fw-bold me-1">
+                  {chunks}
+                </a>
+              ),
+              br: () => <br />,
+            })}
           </div>
         </div>
       </div>

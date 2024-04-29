@@ -1,0 +1,22 @@
+{
+  "common": {
+    "yes": "Ja",
+    "no": "Ne",
+    "navbar": {
+      "language": "Taal",
+      "account_settings": "Gebruikersinstellingen",
+      "sign_out": "Uitloggen"
+    }
+  },
+  "auth": {
+    "title": "Snel, efficiënt en productief",
+    "subtitle": "In this kind of post, <blogger>the blogger</blogger> introduces a person they’ve interviewed <br></br> and provides some background information about <interviewee>the interviewee</interviewee> and their <br></br> work following this is a transcript of the interview.",
+    "terms": "Voorwaarden",
+    "contact_us": "Contacteer ons",
+    "login": {
+      "title": "Inloggen",
+      "subtitle": "Log in op InfraOrders 2.0",
+      "sign_in_button": "Log in met Microsoft"
+    }
+  }
+}

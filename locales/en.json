@@ -1,0 +1,22 @@
+{
+  "common": {
+    "yes": "Yes",
+    "no": "No",
+    "navbar": {
+      "language": "Language",
+      "account_settings": "Account Settings",
+      "sign_out": "Sign Out"
+    }
+  },
+  "auth": {
+    "title": "Fast, Efficient and Productive",
+    "subtitle": "In this kind of post, <blogger>the blogger</blogger> introduces a person they’ve interviewed <br></br> and provides some background information about <interviewee>the interviewee</interviewee> and their <br></br> work following this is a transcript of the interview.",
+    "terms": "Terms",
+    "contact_us": "Contact Us",
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Sign in to InfraOrders 2.0",
+      "sign_in_button": "Sign in with Microsoft"
+    }
+  }
+}
