@@ -1,9 +1,7 @@
-'use client'
-
 import clsx from 'clsx'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import dutchFlag from '@/assets/images/flags/netherlands.svg'
 import usFlag from '@/assets/images/flags/united-states.svg'
@@ -29,11 +27,16 @@ const languages: Language[] = [
 ]
 
 const Languages: FC = () => {
-  const lang = location.pathname.split('/')[1]
+  const [lang, setLang] = useState('en')
+
   const currentLanguage = languages.find(x => x.lang === lang) || languages[0]
 
   const pathname = usePathname()
   const t = useTranslations('common.navbar')
+
+  useEffect(() => {
+    setLang(location.pathname.split('/')[1])
+  }, [])
 
   return (
     <div

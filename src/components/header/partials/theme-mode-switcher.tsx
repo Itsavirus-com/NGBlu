@@ -1,5 +1,3 @@
-'use client'
-
 import clsx from 'clsx'
 
 import { KTIcon } from '@/components/kt-icon/kt-icon'

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { signOut, useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 
@@ -9,6 +10,7 @@ import { Languages } from './languages'
 
 const HeaderUserMenu: FC = () => {
   const t = useTranslations('common.navbar')
+  const { data: session } = useSession()
 
   return (
     <div
@@ -22,9 +24,9 @@ const HeaderUserMenu: FC = () => {
           </div>
 
           <div className="d-flex flex-column">
-            <div className="fw-bolder d-flex align-items-center fs-5">Admin</div>
+            <div className="fw-bolder d-flex align-items-center fs-5">{session?.user?.name}</div>
             <a href="#" className="fw-bold text-muted text-hover-primary fs-7">
-              admin@ngblu.nl
+              {session?.user?.email}
             </a>
           </div>
         </div>
@@ -40,10 +42,10 @@ const HeaderUserMenu: FC = () => {
         </Link>
       </div>
 
-      <div className="menu-item px-5">
-        <Link href="/auth/login" className="menu-link px-5">
+      <div className="menu-item px-5" data-kt-menu-trigger="click">
+        <div className="menu-link px-5" onClick={() => signOut()}>
           {t('sign_out')}
-        </Link>
+        </div>
       </div>
     </div>
   )

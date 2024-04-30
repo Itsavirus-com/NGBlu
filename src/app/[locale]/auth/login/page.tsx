@@ -1,4 +1,7 @@
+'use client'
+
 import Image from 'next/image'
+import { signIn } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 
 import microsoftIcon from '@/assets/images/brand-logos/microsoft-5.svg'
@@ -15,13 +18,13 @@ export default function Login() {
 
       <div className="row g-3 mb-9">
         <div className="col-md-8 offset-md-2">
-          <a
-            href="#"
+          <div
+            onClick={() => signIn('azure-ad')}
             className="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100"
           >
             <Image alt="Logo" src={microsoftIcon} width={15} height={15} className="h-15px me-3" />
             {t('sign_in_button')}
-          </a>
+          </div>
         </div>
       </div>
     </form>

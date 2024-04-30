@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect } from 'react'
 
 import { MenuComponent } from './menu-component'
@@ -7,7 +5,6 @@ import { ToggleComponent } from './toggle-component'
 
 export function MasterInit() {
   const pluginsInitialization = () => {
-    // ThemeModeComponent.init()
     setTimeout(() => {
       ToggleComponent.bootstrap()
       MenuComponent.bootstrap()

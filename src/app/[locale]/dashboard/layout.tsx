@@ -1,3 +1,7 @@
+'use client'
+
+import { SessionProvider } from 'next-auth/react'
+
 import { MasterInit } from '@/components/core/master-init'
 import { Footer } from '@/components/footer/footer'
 import { Header } from '@/components/header'
@@ -13,7 +17,7 @@ export default function DashboardLayout({
   children: React.ReactNode
 }>) {
   return (
-    <>
+    <SessionProvider>
       <div className="d-flex flex-column flex-root app-root" id="kt_app_root">
         <div className="app-page flex-column flex-column-fluid" id="kt_app_page">
           <Header />
@@ -28,6 +32,6 @@ export default function DashboardLayout({
       </div>
 
       <MasterInit />
-    </>
+    </SessionProvider>
   )
 }
