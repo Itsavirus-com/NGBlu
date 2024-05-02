@@ -6,6 +6,12 @@
       "language": "Language",
       "account_settings": "Account Settings",
       "sign_out": "Sign Out"
+    },
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "data_validation": "Data Validation",
+      "kvk": "KVK",
+      "Google": "Google"
     }
   },
   "auth": {
@@ -17,6 +23,14 @@
       "title": "Sign In",
       "subtitle": "Sign in to InfraOrders 2.0",
       "sign_in_button": "Sign in with Microsoft"
+    }
+  },
+  "data_validation": {
+    "kvk": {
+      "title": "KVK Data Validation"
+    },
+    "google": {
+      "title": "Google Address Validation"
     }
   }
 }

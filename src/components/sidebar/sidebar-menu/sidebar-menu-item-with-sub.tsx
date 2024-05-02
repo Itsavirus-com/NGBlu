@@ -5,7 +5,6 @@ import { KTIcon } from '@/components/kt-icon/kt-icon'
 import { WithChildren } from '@/types'
 
 type Props = {
-  to: string
   title: string
   icon?: string
   fontIcon?: string
@@ -14,10 +13,8 @@ type Props = {
 
 const SidebarMenuItemWithSub: React.FC<Props & WithChildren> = ({
   children,
-  to,
   title,
   icon,
-  fontIcon,
   hasBullet,
 }) => {
   const isActive = false

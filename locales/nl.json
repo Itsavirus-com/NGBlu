@@ -6,6 +6,12 @@
       "language": "Taal",
       "account_settings": "Gebruikersinstellingen",
       "sign_out": "Uitloggen"
+    },
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "data_validation": "Data Validation",
+      "kvk": "KVK",
+      "Google": "Google"
     }
   },
   "auth": {
@@ -17,6 +23,14 @@
       "title": "Inloggen",
       "subtitle": "Log in op InfraOrders 2.0",
       "sign_in_button": "Log in met Microsoft"
+    }
+  },
+  "data_validation": {
+    "kvk": {
+      "title": "KVK Validation"
+    },
+    "google": {
+      "title": "Google Address Validation"
     }
   }
 }

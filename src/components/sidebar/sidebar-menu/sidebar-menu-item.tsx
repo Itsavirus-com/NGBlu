@@ -18,7 +18,6 @@ const SidebarMenuItem: FC<Props & WithChildren> = ({
   to,
   title,
   icon,
-  fontIcon,
   hasBullet = false,
 }) => {
   const isActive = false
