@@ -3,7 +3,7 @@ import AzureADProvider from 'next-auth/providers/azure-ad'
 
 async function getAccessToken(idToken: string) {
   try {
-    const res = await fetch(`${process.env.API_BASE_URL}/login?id_token=${idToken}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login?id_token=${idToken}`, {
       method: 'GET',
     })
 
