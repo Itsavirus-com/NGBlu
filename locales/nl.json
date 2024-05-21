@@ -26,11 +26,29 @@
     }
   },
   "data_validation": {
+    "reject": "Reject",
+    "accept": "Accept",
+    "unconfirmed": "Unconfirmed",
+    "counter": "Counter {start} out of {end}",
+    "companyName": "Company Name",
+    "kvkNumber": "KVK Number",
+    "streetAddress": "Street Address",
+    "houseNumber": "House Nr",
+    "houseNumberExtension": "Ext Addition",
+    "postcode": "Postcode",
+    "city": "City",
+    "country": "Country",
     "kvk": {
-      "title": "KVK Validation"
+      "title": "KVK Validation",
+      "registeredAddress": "Registered Address in Chamber of Commerce",
+      "originalAddress": "Original Address"
     },
     "google": {
-      "title": "Google Address Validation"
+      "title": "Google Address Validation",
+      "originalAddress": "Original Address",
+      "proposedAddress": "Proposed Address",
+      "lat": "Latitude",
+      "lon": "Longitude"
     }
   }
 }
