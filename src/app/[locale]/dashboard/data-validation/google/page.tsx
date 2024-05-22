@@ -8,6 +8,7 @@ import { KTIcon } from '@/components/kt-icon/kt-icon'
 import { PageTitle } from '@/components/page-title'
 
 import useGoogleForm from './google-form.hook'
+import { GoogleMap } from './google-map'
 import './style.scss'
 
 export default function Google() {
@@ -187,6 +188,10 @@ export default function Google() {
                     name="lon"
                     className="form-control-solid"
                   />
+                </Col>
+
+                <Col lg={4}>
+                  <GoogleMap lat={-8.291115} lng={115.164772} />
                 </Col>
               </Row>
 
