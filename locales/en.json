@@ -11,7 +11,8 @@
       "dashboard": "Dashboard",
       "data_validation": "Data Validation",
       "kvk": "KVK",
-      "Google": "Google"
+      "Google": "Google",
+      "validation": "Data Validation"
     }
   },
   "404": {
@@ -59,6 +60,10 @@
       "proposedAddress": "Proposed Address",
       "lat": "Latitude",
       "lon": "Longitude"
+    },
+    "validation": {
+      "title": "Data Validation",
+      "showDetails": "Show Details"
     }
   }
 }
