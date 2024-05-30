@@ -1,0 +1,47 @@
+image: node:20.13.1-alpine
+
+pipelines:
+  branches:
+    release/staging:
+      - step:
+          name: NPM install and build
+          script:
+            - npm install
+            - npm run build
+          artifacts:
+            - node_modules/**
+            - build/**
+          caches:
+            - node
+      - step:
+          name: NPM test and lint
+          script:
+            - npm run lint
+          artifacts:
+            download: true
+            paths:
+              - node_modules/**
+              - build/**
+          caches:
+            - node
+      - step:
+          image: alpine
+          name: Deploy to Staging
+          deployment: staging
+          caches:
+            - apk
+          artifacts:
+            download: true
+            paths:
+              - node_modules/**
+              - build/**
+          script:
+            - apk update && apk add -f openssh-client rsync sudo
+            - echo "Deploying to $DEPLOYMENT_PATH"
+            - rsync -avz --delete ./ $STAGING_USER@$STAGING_IP:$DEPLOYMENT_PATH 2>&1
+            - ssh $STAGING_USER@$STAGING_IP 'systemctl restart supervisord 2>&1; bash -l'
+
+definitions:
+  caches:
+    node: ~/.node
+    apk: /var/cache/apk
