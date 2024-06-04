@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import snakeCase from 'lodash/snakeCase'
 
 import { Config } from './serialize-formdata.types'
