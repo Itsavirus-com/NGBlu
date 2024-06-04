@@ -12,27 +12,43 @@ type TreeItems = Record<string, TreeData>
 const data = [
   {
     id: '1',
-    title: 'Enterprise root',
+    title: 'NG-blu',
     children: [
       {
         id: '2',
-        title: 'Business partner 1',
+        title: 'Addresses',
         children: [
-          { id: '6', title: 'Project 1' },
-          { id: '7', title: 'Project 2' },
-          { id: '8', title: 'Project 3' },
+          { id: '7', title: 'Address 1: Visit Address' },
+          { id: '8', title: 'Address 2: Postal Address' },
+          { id: '9', title: 'Address 3: Invoice Address' },
         ],
       },
       {
         id: '3',
-        title: 'Business partner 2',
+        title: 'Contacts',
         children: [
-          { id: '9', title: 'Project 4' },
-          { id: '10', title: 'Project 5' },
+          { id: '10', title: 'Contact 1' },
+          { id: '11', title: 'Contact 2' },
         ],
       },
-      { id: '4', title: 'Business partner 3' },
-      { id: '5', title: 'Business partner 4' },
+      { id: '4', title: 'Users' },
+      {
+        id: '5',
+        title: 'Business partners',
+        children: [
+          { id: '12', title: 'Business partner 1: Microsoft' },
+          { id: '13', title: 'Business partner 2: Apple' },
+          { id: '14', title: 'Business partner 3: NVDIA' },
+        ],
+      },
+      {
+        id: '6',
+        title: 'Organization units',
+        children: [
+          { id: '15', title: 'Business partner 1: Microsoft Indonesia' },
+          { id: '16', title: 'Business partner 2: Apple Singapore' },
+        ],
+      },
     ],
   },
 ]

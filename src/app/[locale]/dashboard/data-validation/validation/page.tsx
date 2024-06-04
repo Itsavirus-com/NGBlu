@@ -12,6 +12,7 @@ import {
 import { PageTitle } from '@/components/page-title'
 
 import { convertedList } from './data'
+import { FormDrawer } from './form-drawer'
 
 import 'react-complex-tree/lib/style-modern.css'
 import './style.scss'
@@ -54,6 +55,8 @@ export default function Validation() {
           </CardBody>
         </Card>
       </div>
+
+      <FormDrawer />
     </>
   )
 }
