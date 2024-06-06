@@ -1,12 +1,14 @@
+'use client'
+
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 
-import notFoundDark from '@/assets/images/misc/404-error-dark.png'
-import notFound from '@/assets/images/misc/404-error.png'
+import serverErrorDark from '@/assets/images/misc/500-error-dark.png'
+import serverError from '@/assets/images/misc/500-error.png'
 import { Link } from '@/navigation'
 
-export default function NotFound() {
-  const t = useTranslations('404')
+export default function Error() {
+  const t = useTranslations('500')
 
   return (
     <div className="d-flex flex-column flex-root">
@@ -19,8 +21,8 @@ export default function NotFound() {
               <div className="fw-semibold fs-6 text-gray-500 mb-7">{t('subtitle')}</div>
 
               <div className="mb-3">
-                <Image src={notFound} className="mw-100 theme-light-show" alt="" />
-                <Image src={notFoundDark} className="mw-100 theme-dark-show" alt="" />
+                <Image src={serverError} className="mw-100 theme-light-show" alt="" />
+                <Image src={serverErrorDark} className="mw-100 theme-dark-show" alt="" />
               </div>
 
               <div className="mb-0">

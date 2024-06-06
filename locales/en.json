@@ -14,6 +14,16 @@
       "Google": "Google"
     }
   },
+  "404": {
+    "title": "Oops!",
+    "subtitle": "We can't find that page.",
+    "cta": "Return Home"
+  },
+  "500": {
+    "title": "System Error",
+    "subtitle": "Something went wrong! Please try again later.",
+    "cta": "Return Home"
+  },
   "auth": {
     "title": "Fast, Efficient and Productive",
     "subtitle": "In this kind of post, <blogger>the blogger</blogger> introduces a person they’ve interviewed <br></br> and provides some background information about <interviewee>the interviewee</interviewee> and their <br></br> work following this is a transcript of the interview.",
