@@ -1,0 +1,7 @@
+services:
+  web:
+    build:
+      dockerfile: Dockerfile
+    image: io2-frontend
+    ports:
+      - '3000:3000'
