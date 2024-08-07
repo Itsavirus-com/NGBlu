@@ -63,7 +63,13 @@
     },
     "validation": {
       "title": "Data Validation",
-      "showDetails": "Show Details"
+      "showDetails": "Show Details",
+      "addresses": "Addresses",
+      "business_partners": "Business Partners",
+      "contacts": "Contacts",
+      "customers": "Customers",
+      "projects": "Projects",
+      "users": "Users"
     }
   }
 }

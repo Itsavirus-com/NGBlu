@@ -45,11 +45,11 @@
   justify-content: space-between;
   width: 100%;
 
-  button {
+  a {
     display: none;
   }
 
-  &:hover button {
+  &:hover a {
     display: block;
   }
 }

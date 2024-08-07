@@ -2478,10 +2478,10 @@ react-bootstrap@^2.10.2:
     uncontrollable "^7.2.1"
     warning "^4.0.3"
 
-react-complex-tree@^2.4.4:
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/react-complex-tree/-/react-complex-tree-2.4.4.tgz#7395f38e68a5c955d60f390191942bbf05da1839"
-  integrity sha512-Nltzn7oJMF9NnPxrfxRxVD/4u/ZkCVEnwQ4Em6hmZT+m/DUCorIoPsL3VV86zZXx0D2Rj6LX8dHWnYFrMmYYlw==
+react-complex-tree@^2.4.5:
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/react-complex-tree/-/react-complex-tree-2.4.5.tgz#d752172ea116108ad2d56da7eb6c0d2604b5ddef"
+  integrity sha512-RcdgHxe7uUlRHeHS8im1izuIZko3sbtrfR1ZbMuGi3I83AfpuAfQSzhCU7lNRKgAYCDyRGq+92N06uz8Wp3BDg==
 
 react-dom@^18:
   version "18.3.1"
