@@ -4,6 +4,7 @@ import { Drawer } from '@/components/drawer'
 
 import { AddressContent } from './address-content'
 import { BusinessPartnerContent } from './business-partner-content'
+import { ContactContent } from './contact-content'
 import { DynamicDrawerProps } from './dynamic-drawer.type'
 import { EnterpriseRootContent } from './enterprise-root-content'
 
@@ -22,6 +23,9 @@ export const DynamicDrawer = ({ index, title, item }: DynamicDrawerProps) => {
       case 'enterprise-root-business-partner':
       case 'business-partner-business-partner':
         return <BusinessPartnerContent data={item} />
+      case 'enterprise-root-contact':
+      case 'business-partner-contact':
+        return <ContactContent data={item} />
       default:
         return null
     }

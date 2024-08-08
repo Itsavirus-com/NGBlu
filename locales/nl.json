@@ -95,6 +95,20 @@
         "postalAddress": "Postal Address",
         "visitAddress": "Visit Address",
         "invoiceAddress": "Invoice Address"
+      },
+      "contact": {
+        "profile": "Profile",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "nameSuffix": "Name Suffix",
+        "namePrefix": "Name Prefix",
+        "titles": "Titles",
+        "gender": "Gender",
+        "department": "Department",
+        "personType": "Person Type",
+        "responsibility": "Responsibility",
+        "contactInfo": "Contact Info",
+        "contactType": "Contact Type"
       }
     }
   }
