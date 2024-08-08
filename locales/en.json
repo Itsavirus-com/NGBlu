@@ -69,7 +69,25 @@
       "contacts": "Contacts",
       "customers": "Customers",
       "projects": "Projects",
-      "users": "Users"
+      "users": "Users",
+      "companyInfo": {
+        "companyInfo": "Company Info",
+        "companyName": "Company Name"
+      },
+      "address": {
+        "address": "Address",
+        "addressName": "Address Name",
+        "addressType": "Address Type",
+        "streetName": "Street Name",
+        "houseNumber": "House Number",
+        "houseNumberSuffix": "House Number Suffix",
+        "apartmentNumber": "Apartment Number",
+        "area": "Area",
+        "city": "City",
+        "county": "County",
+        "country": "Country",
+        "postalCode": "Postal Code"
+      }
     }
   }
 }
