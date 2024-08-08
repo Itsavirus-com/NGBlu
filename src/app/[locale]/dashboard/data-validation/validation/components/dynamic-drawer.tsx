@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 
 import { Drawer } from '@/components/drawer'
 
+import { AddressContent } from './address-content'
 import { DynamicDrawerProps } from './dynamic-drawer.type'
 import { EnterpriseRootContent } from './enterprise-root-content'
 
@@ -14,8 +15,9 @@ export const DynamicDrawer = ({ index, title, item }: DynamicDrawerProps) => {
     switch (itemType) {
       case 'enterprise-root':
         return <EnterpriseRootContent data={item} />
-      case 'user':
-      // return <UserRoot />
+      case 'enterprise-root-address':
+      case 'business-partner-address':
+        return <AddressContent data={item} />
       default:
         return null
     }
