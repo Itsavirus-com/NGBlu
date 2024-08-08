@@ -72,7 +72,11 @@
       "users": "Users",
       "companyInfo": {
         "companyInfo": "Company Info",
-        "companyName": "Company Name"
+        "companyName": "Company Name",
+        "companyStatus": "Company Status",
+        "vatNumber": "VAT Number",
+        "kvkNumber": "KVK Number",
+        "partnerType": "Partner Type"
       },
       "address": {
         "address": "Address",
@@ -86,7 +90,11 @@
         "city": "City",
         "county": "County",
         "country": "Country",
-        "postalCode": "Postal Code"
+        "postalCode": "Postal Code",
+        "legalAddress": "Legal Address",
+        "postalAddress": "Postal Address",
+        "visitAddress": "Visit Address",
+        "invoiceAddress": "Invoice Address"
       }
     }
   }
