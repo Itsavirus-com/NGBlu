@@ -13,7 +13,7 @@ export const Drawer = (props: DrawerProps) => {
       data-kt-drawer-name="help"
       data-kt-drawer-activate="true"
       data-kt-drawer-overlay="true"
-      data-kt-drawer-width="{default:'350px', 'md': '525px', 'lg': '50vw'}"
+      data-kt-drawer-width="{default:'350px', 'md': '525px', 'lg': '65vw'}"
       data-kt-drawer-direction="end"
       data-kt-drawer-toggle={`#${drawerId}_toggle`}
       data-kt-drawer-close={`#${drawerId}_close`}
