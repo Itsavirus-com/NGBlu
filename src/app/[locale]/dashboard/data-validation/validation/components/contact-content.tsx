@@ -3,6 +3,7 @@ import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 
 import { ContentProps } from './dynamic-drawer.type'
+import { PersonDetails } from './person-details'
 import { TextWithLabel } from './text-with-label'
 
 export const ContactContent = ({ data }: ContentProps) => {
@@ -11,18 +12,7 @@ export const ContactContent = ({ data }: ContentProps) => {
   return (
     <Tabs defaultActiveKey="profile" id="contactTabs">
       <Tab eventKey="profile" title={t('contact.profile')}>
-        <TextWithLabel
-          label={t('contact.firstName')}
-          value={data.person.firstname}
-          className="mt-5"
-        />
-        <TextWithLabel label={t('contact.lastName')} value={data.person.lastname} />
-        <TextWithLabel label={t('contact.nameSuffix')} value={data.person.nameSuffix} />
-        <TextWithLabel label={t('contact.namePrefix')} value={data.person.namePrefix} />
-        <TextWithLabel label={t('contact.titles')} value={data.person.titles} />
-        <TextWithLabel label={t('contact.gender')} value={data.person.gender.gender} />
-        <TextWithLabel label={t('contact.department')} value={data.person.department} />
-        <TextWithLabel label={t('contact.personType')} value={data.person?.personType?.type} />
+        <PersonDetails person={data.person} />
       </Tab>
 
       {data.responsibility && (
