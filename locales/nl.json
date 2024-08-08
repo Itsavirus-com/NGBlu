@@ -109,6 +109,22 @@
         "responsibility": "Responsibility",
         "contactInfo": "Contact Info",
         "contactType": "Contact Type"
+      },
+      "customer": {
+        "profile": "Profile",
+        "name": "Name",
+        "type": "Type",
+        "status": "Status",
+        "accountNumber": "Account Number",
+        "referenceId": "Reference ID",
+        "afasId": "AFAS ID",
+        "contactPerson": "Contact Person",
+        "location": "Location",
+        "organizationUnit": "Organization Unit",
+        "ouUnit": {
+          "name": "Name",
+          "primaryAddress": "Primary Address"
+        }
       }
     }
   }
