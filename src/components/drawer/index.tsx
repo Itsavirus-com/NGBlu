@@ -47,7 +47,7 @@ export const Drawer = (props: DrawerProps) => {
             data-kt-scroll-dependencies={`#${drawerId}_header`}
             data-kt-scroll-offset="5px"
           >
-            <div className="ps-1 pe-1">{props.children}</div>
+            {props.children}
           </div>
         </div>
       </div>
