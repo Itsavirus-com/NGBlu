@@ -98,7 +98,7 @@ export default function Validation() {
   }
 
   const loadEnterpriseRootBusinessPartners = async (id: string): Promise<TreeData> => {
-    const res = await businessPartnerApi.getBusinessPartners()
+    const res = await businessPartnerApi.getBusinessPartners({ filter: { enterpriseRootId: id } })
 
     return {
       index: `enterprise-root-business-partners-${id}`,
@@ -306,7 +306,7 @@ export default function Validation() {
   }
 
   const loadBusinessPartnerBusinessPartners = async (id: string): Promise<TreeData> => {
-    const res = await businessPartnerApi.getBusinessPartners()
+    const res = await businessPartnerApi.getBusinessPartners({ filter: { parentId: id } })
 
     return {
       index: `business-partner-business-partners-${id}`,
