@@ -12,21 +12,21 @@ export const snakeCaseKeys: KeyConverter = data => {
     const result: AnyObject = {}
 
     Object.entries(data).forEach(([key, value]) => {
-      const camelizedKey = snakeCase(key)
+      const snakeCaseKey = snakeCase(key)
 
       if (!value) return
 
       if (Array.isArray(value)) {
-        result[camelizedKey] = value.map((item: any) => camelizeKeys(item))
+        result[snakeCaseKey] = value.map((item: any) => snakeCaseKeys(item))
         return
       }
 
       if (typeof value === 'object') {
-        result[camelizedKey] = camelizeKeys(value)
+        result[snakeCaseKey] = snakeCaseKeys(value)
         return
       }
 
-      result[camelizedKey] = value
+      result[snakeCaseKey] = value
     })
 
     return result
