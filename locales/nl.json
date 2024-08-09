@@ -125,6 +125,13 @@
           "name": "Name",
           "primaryAddress": "Primary Address"
         }
+      },
+      "project": {
+        "generalInfo": "General Info",
+        "projectName": "Project Name",
+        "projectType": "Project Type",
+        "description": "Description",
+        "location": "Location"
       }
     }
   }

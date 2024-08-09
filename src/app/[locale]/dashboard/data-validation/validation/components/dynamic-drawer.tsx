@@ -8,6 +8,7 @@ import { ContactContent } from './contact-content'
 import { CustomerContent } from './customer-content'
 import { DynamicDrawerProps } from './dynamic-drawer.type'
 import { EnterpriseRootContent } from './enterprise-root-content'
+import { ProjectContent } from './project-content'
 
 export const DynamicDrawer = ({ index, title, item }: DynamicDrawerProps) => {
   const itemType = useMemo(() => index?.replace(/-\d+(-\d+)?$/, ''), [index])
@@ -30,6 +31,9 @@ export const DynamicDrawer = ({ index, title, item }: DynamicDrawerProps) => {
       case 'enterprise-root-customer':
       case 'business-partner-customer':
         return <CustomerContent data={item} />
+      case 'enterprise-root-project':
+      case 'business-partner-project':
+        return <ProjectContent data={item} />
       default:
         return null
     }
