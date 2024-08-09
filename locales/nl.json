@@ -132,6 +132,14 @@
         "projectType": "Project Type",
         "description": "Description",
         "location": "Location"
+      },
+      "user": {
+        "user": "User",
+        "displayName": "Display Name",
+        "email": "Email",
+        "lastLogin": "Last Login",
+        "blocked": "Blocked",
+        "profile": "Profile"
       }
     }
   }
