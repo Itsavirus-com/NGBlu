@@ -32,6 +32,18 @@ export const ProjectContent = ({ data }: ContentProps) => {
           <AddressDetails address={data.project.address} />
         </Tab>
       )}
+
+      {data?.ouUnit && (
+        <Tab eventKey="orgUnit" title={t('orgUnit.title')}>
+          <TextWithLabel className="mt-5" label={t('orgUnit.name')} value={data.ouUnit?.name} />
+        </Tab>
+      )}
+
+      {data?.ouUnit?.primaryAddress && (
+        <Tab eventKey="orgUnitAddress" title={t('orgUnit.orgUnitAddress')}>
+          <AddressDetails address={data.ouUnit?.primaryAddress} />
+        </Tab>
+      )}
     </Tabs>
   )
 }

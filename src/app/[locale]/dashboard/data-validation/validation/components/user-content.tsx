@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl'
 import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 
+import { AddressDetails } from './address-details'
 import { DateWithLabel } from './date-with-label'
 import { ContentProps } from './dynamic-drawer.type'
 import { PersonDetails } from './person-details'
@@ -30,6 +31,18 @@ export const UserContent = ({ data }: ContentProps) => {
       {data.person && (
         <Tab eventKey="profile" title={t('user.profile')}>
           <PersonDetails person={data.person} />
+        </Tab>
+      )}
+
+      {data?.ouUnit && (
+        <Tab eventKey="orgUnit" title={t('orgUnit.title')}>
+          <TextWithLabel className="mt-5" label={t('orgUnit.name')} value={data.ouUnit?.name} />
+        </Tab>
+      )}
+
+      {data?.ouUnit?.primaryAddress && (
+        <Tab eventKey="orgUnitAddress" title={t('orgUnit.orgUnitAddress')}>
+          <AddressDetails address={data.ouUnit?.primaryAddress} />
         </Tab>
       )}
     </Tabs>

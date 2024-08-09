@@ -31,21 +31,29 @@ export const CustomerContent = ({ data }: ContentProps) => {
       )}
 
       {data.endclient?.locationAddress && (
-        <Tab eventKey="location" title={t('customer.location')}>
+        <Tab eventKey="address" title={t('customer.address')}>
           <AddressDetails address={data.endclient.locationAddress} />
         </Tab>
       )}
 
-      {data?.ouUnit && (
-        <Tab eventKey="organizationUnit" title={t('customer.organizationUnit')}>
-          <TextWithLabel
-            className="mt-5"
-            label={t('customer.ouUnit.name')}
-            value={data.ouUnit?.name}
+      {data.enterpriseRootAddresses && (
+        <Tab eventKey="rootAddress" title={t('customer.rootAddress')}>
+          <AddressDetails
+            address={data.enterpriseRootAddresses.address}
+            addressType={data.enterpriseRootAddresses.addressType}
           />
+        </Tab>
+      )}
 
-          <h4 className="text-gray-900 fw-bold fs-4 mt-8">{t('customer.ouUnit.primaryAddress')}</h4>
-          <AddressDetails address={data.ouUnit.primaryAddress} />
+      {data?.ouUnit && (
+        <Tab eventKey="orgUnit" title={t('orgUnit.title')}>
+          <TextWithLabel className="mt-5" label={t('orgUnit.name')} value={data.ouUnit?.name} />
+        </Tab>
+      )}
+
+      {data?.ouUnit?.primaryAddress && (
+        <Tab eventKey="orgUnitAddress" title={t('orgUnit.orgUnitAddress')}>
+          <AddressDetails address={data.ouUnit?.primaryAddress} />
         </Tab>
       )}
     </Tabs>
