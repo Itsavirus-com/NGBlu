@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 
+import { DrawerComponent } from './drawer-component'
 import { MenuComponent } from './menu-component'
 import { ToggleComponent } from './toggle-component'
 
@@ -8,6 +9,7 @@ export function MasterInit() {
     setTimeout(() => {
       ToggleComponent.bootstrap()
       MenuComponent.bootstrap()
+      DrawerComponent.bootstrap()
     }, 500)
   }
 

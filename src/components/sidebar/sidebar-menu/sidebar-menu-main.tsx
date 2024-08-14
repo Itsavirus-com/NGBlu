@@ -13,6 +13,11 @@ const SidebarMenuMain = () => {
       <SidebarMenuSeparator title={t('data_validation')} />
       <SidebarMenuItem to="/dashboard/data-validation/kvk" title={t('kvk')} icon="shield" />
       <SidebarMenuItem to="/dashboard/data-validation/google" title={t('Google')} icon="google" />
+      <SidebarMenuItem
+        to="/dashboard/data-validation/data-hierarchy"
+        title={t('hierarchy')}
+        icon="abstract-26"
+      />
     </>
   )
 }

@@ -11,7 +11,8 @@
       "dashboard": "Dashboard",
       "data_validation": "Data Validation",
       "kvk": "KVK",
-      "Google": "Google"
+      "Google": "Google",
+      "hierarchy": "Data Hierarchy"
     }
   },
   "404": {
@@ -59,6 +60,88 @@
       "proposedAddress": "Proposed Address",
       "lat": "Latitude",
       "lon": "Longitude"
+    },
+    "data_hierarchy": {
+      "title": "Data Hierarchy",
+      "showDetails": "Show Details",
+      "addresses": "Addresses",
+      "business_partners": "Business Partners",
+      "contacts": "Contacts",
+      "customers": "Customers",
+      "projects": "Projects",
+      "users": "Users",
+      "companyInfo": {
+        "companyInfo": "Company Info",
+        "companyName": "Company Name",
+        "companyStatus": "Company Status",
+        "vatNumber": "VAT Number",
+        "kvkNumber": "KVK Number",
+        "partnerType": "Partner Type"
+      },
+      "address": {
+        "address": "Address",
+        "addressName": "Address Name",
+        "addressType": "Address Type",
+        "streetName": "Street Name",
+        "houseNumber": "House Number",
+        "houseNumberSuffix": "House Number Suffix",
+        "apartmentNumber": "Apartment Number",
+        "area": "Area",
+        "city": "City",
+        "county": "County",
+        "country": "Country",
+        "postalCode": "Postal Code",
+        "legalAddress": "Legal Address",
+        "postalAddress": "Postal Address",
+        "visitAddress": "Visit Address",
+        "invoiceAddress": "Invoice Address"
+      },
+      "contact": {
+        "profile": "Profile",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "nameSuffix": "Name Suffix",
+        "namePrefix": "Name Prefix",
+        "titles": "Titles",
+        "gender": "Gender",
+        "department": "Department",
+        "personType": "Person Type",
+        "responsibility": "Responsibility",
+        "contactInfo": "Contact Info",
+        "contactType": "Contact Type"
+      },
+      "orgUnit": {
+        "title": "Org. Unit",
+        "name": "Name",
+        "orgUnitAddress": "Org. Unit Address"
+      },
+      "customer": {
+        "profile": "Profile",
+        "name": "Name",
+        "type": "Type",
+        "status": "Status",
+        "accountNumber": "Account Number",
+        "referenceId": "Reference ID",
+        "afasId": "AFAS ID",
+        "contactPerson": "Contact Person",
+        "address": "Address",
+        "rootAddress": "Root Address"
+      },
+      "project": {
+        "generalInfo": "General Info",
+        "projectName": "Project Name",
+        "projectType": "Project Type",
+        "description": "Description",
+        "location": "Location"
+      },
+      "user": {
+        "user": "User",
+        "displayName": "Display Name",
+        "email": "Email",
+        "lastLogin": "Last Login",
+        "blocked": "Blocked",
+        "profile": "Profile"
+      }
     }
   }
 }

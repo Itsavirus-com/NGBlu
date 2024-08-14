@@ -7,7 +7,7 @@ import { camelizeKeys, snakeCaseKeys } from './helpers/object'
 import { serialize } from './helpers/serialize-formdata'
 
 export class ApiCore {
-  protected baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || ''
+  protected baseURL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api` || ''
   protected api: ApisauceInstance
 
   /**
