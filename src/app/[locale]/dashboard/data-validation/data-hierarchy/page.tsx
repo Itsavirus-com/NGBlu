@@ -11,12 +11,14 @@ import {
   UncontrolledTreeEnvironment,
 } from 'react-complex-tree'
 
+import { KTIcon } from '@/components/kt-icon/kt-icon'
 import { PageTitle } from '@/components/page-title'
 import { businessPartnerApi } from '@/services/api/business-partner-api'
 import { enterpriseRootApi } from '@/services/api/enterprise-root-api'
 
 import { DynamicDrawer } from './components/dynamic-drawer'
 import { DynamicDrawerProps } from './components/dynamic-drawer.type'
+import { generateItemIcon } from './components/helper'
 
 import 'react-complex-tree/lib/style-modern.css'
 import './style.scss'
@@ -74,7 +76,7 @@ export default function Validation() {
         (item: Record<string, any>) => `enterprise-root-address-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('addresses'),
       },
       canRename: false,
@@ -108,7 +110,7 @@ export default function Validation() {
         (item: Record<string, any>) => `enterprise-root-business-partner-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('business_partners'),
       },
       canRename: false,
@@ -149,7 +151,7 @@ export default function Validation() {
         (item: Record<string, any>) => `enterprise-root-contact-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('contacts'),
       },
       canRename: false,
@@ -183,7 +185,7 @@ export default function Validation() {
         (item: Record<string, any>) => `enterprise-root-customer-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('customers'),
       },
       canRename: false,
@@ -217,7 +219,7 @@ export default function Validation() {
         (item: Record<string, any>) => `enterprise-root-project-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('projects'),
       },
       canRename: false,
@@ -251,7 +253,7 @@ export default function Validation() {
         (item: Record<string, any>) => `enterprise-root-user-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('users'),
       },
       canRename: false,
@@ -282,7 +284,7 @@ export default function Validation() {
         (item: Record<string, any>) => `business-partner-address-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('addresses'),
       },
       canRename: false,
@@ -316,7 +318,7 @@ export default function Validation() {
         (item: Record<string, any>) => `business-partner-business-partner-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('business_partners'),
       },
       canRename: false,
@@ -357,7 +359,7 @@ export default function Validation() {
         (item: Record<string, any>) => `business-partner-contact-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('contacts'),
       },
       canRename: false,
@@ -391,7 +393,7 @@ export default function Validation() {
         (item: Record<string, any>) => `business-partner-customer-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('customers'),
       },
       canRename: false,
@@ -425,7 +427,7 @@ export default function Validation() {
         (item: Record<string, any>) => `business-partner-project-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('projects'),
       },
       canRename: false,
@@ -459,7 +461,7 @@ export default function Validation() {
         (item: Record<string, any>) => `business-partner-user-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('users'),
       },
       canRename: false,
@@ -717,28 +719,34 @@ export default function Validation() {
                 'enterprise-tree': {},
               }}
               defaultInteractionMode={InteractionMode.ClickArrowToExpand}
-              renderItemTitle={({ item, title }) => {
-                return (
-                  <div className="rct-tree-item-title-wrapper">
+              renderItemTitle={({ item, title }) => (
+                <div className="rct-tree-item-wrapper">
+                  <div className="rct-tree-item-title">
+                    <KTIcon
+                      iconName={generateItemIcon(item.index as string)}
+                      className="rct-tree-item-icon"
+                    />
+                    {item.data?.id && <span className="rct-tree-item-id">{item.data.id}</span>}
                     <span>{title}</span>
-                    {item.canMove && (
-                      <Button
-                        as="a"
-                        variant="light-primary"
-                        size="sm"
-                        id="kt_enterprise_root_toggle"
-                        onClick={() => {
-                          setSelectedItem(item.data)
-                          setSelectedItemTitle(title)
-                          setSelectedItemIndex(item.index as string)
-                        }}
-                      >
-                        {t('showDetails')}
-                      </Button>
-                    )}
                   </div>
-                )
-              }}
+
+                  {item.data?.type !== 'group' && (
+                    <Button
+                      as="a"
+                      variant="light-primary"
+                      size="sm"
+                      id="kt_enterprise_root_toggle"
+                      onClick={() => {
+                        setSelectedItem(item.data)
+                        setSelectedItemTitle(title)
+                        setSelectedItemIndex(item.index as string)
+                      }}
+                    >
+                      {t('showDetails')}
+                    </Button>
+                  )}
+                </div>
+              )}
             >
               <Tree treeId="enterprise-tree" rootItem="root" />
             </UncontrolledTreeEnvironment>

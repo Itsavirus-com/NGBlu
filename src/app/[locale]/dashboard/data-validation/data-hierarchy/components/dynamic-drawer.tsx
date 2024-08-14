@@ -8,11 +8,12 @@ import { ContactContent } from './contact-content'
 import { CustomerContent } from './customer-content'
 import { DynamicDrawerProps } from './dynamic-drawer.type'
 import { EnterpriseRootContent } from './enterprise-root-content'
+import { generateItemIcon, generateItemType } from './helper'
 import { ProjectContent } from './project-content'
 import { UserContent } from './user-content'
 
 export const DynamicDrawer = ({ index, title, item }: DynamicDrawerProps) => {
-  const itemType = useMemo(() => index?.replace(/-\d+(-\d+)?$/, ''), [index])
+  const itemType = useMemo(() => generateItemType(index), [index])
 
   const renderDrawerContent = () => {
     if (!itemType || !item) return null
@@ -44,7 +45,12 @@ export const DynamicDrawer = ({ index, title, item }: DynamicDrawerProps) => {
   }
 
   return (
-    <Drawer id="enterprise_root" title={title || ''}>
+    <Drawer
+      id="enterprise_root"
+      title={title || ''}
+      icon={generateItemIcon(index)}
+      dataId={item?.id}
+    >
       {renderDrawerContent()}
     </Drawer>
   )

@@ -39,11 +39,33 @@
   font-family: var(--bs-body-font-family);
 }
 
-.rct-tree-item-title-wrapper {
+.rct-tree-item-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+
+  .rct-tree-item-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rct-tree-item-icon {
+    font-size: 20px;
+    margin-right: 5px;
+    color: var(--bs-text-primary);
+  }
+
+  .rct-tree-item-id {
+    font-size: 12px;
+    line-height: initial;
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: white;
+    background-color: var(--bs-text-primary);
+    margin-right: 5px;
+  }
 
   a {
     display: none;
