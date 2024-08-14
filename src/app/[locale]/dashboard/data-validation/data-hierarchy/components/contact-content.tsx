@@ -8,7 +8,7 @@ import { PersonDetails } from './person-details'
 import { TextWithLabel } from './text-with-label'
 
 export const ContactContent = ({ data }: ContentProps) => {
-  const t = useTranslations('data_validation.validation')
+  const t = useTranslations('data_validation.data_hierarchy')
 
   return (
     <Tabs defaultActiveKey="profile" id="contactTabs">

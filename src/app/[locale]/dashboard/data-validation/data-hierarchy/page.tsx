@@ -24,7 +24,7 @@ import './style.scss'
 type TreeData = TreeItem<Record<string, any>>
 
 export default function Validation() {
-  const t = useTranslations('data_validation.validation')
+  const t = useTranslations('data_validation.data_hierarchy')
 
   const [selectedItem, setSelectedItem] = useState<DynamicDrawerProps['item'] | null>(null)
   const [selectedItemTitle, setSelectedItemTitle] = useState<string | null>('')

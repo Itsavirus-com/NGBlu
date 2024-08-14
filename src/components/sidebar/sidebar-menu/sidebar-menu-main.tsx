@@ -14,8 +14,8 @@ const SidebarMenuMain = () => {
       <SidebarMenuItem to="/dashboard/data-validation/kvk" title={t('kvk')} icon="shield" />
       <SidebarMenuItem to="/dashboard/data-validation/google" title={t('Google')} icon="google" />
       <SidebarMenuItem
-        to="/dashboard/data-validation/validation"
-        title={t('validation')}
+        to="/dashboard/data-validation/data-hierarchy"
+        title={t('hierarchy')}
         icon="abstract-26"
       />
     </>

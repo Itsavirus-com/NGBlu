@@ -3,34 +3,33 @@ import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 
 import { AddressDetails } from './address-details'
-import { DateWithLabel } from './date-with-label'
 import { ContentProps } from './dynamic-drawer.type'
-import { PersonDetails } from './person-details'
 import { TextWithLabel } from './text-with-label'
 
-export const UserContent = ({ data }: ContentProps) => {
-  const tCommon = useTranslations('common')
-  const t = useTranslations('data_validation.validation')
+export const ProjectContent = ({ data }: ContentProps) => {
+  const t = useTranslations('data_validation.data_hierarchy')
 
   return (
-    <Tabs defaultActiveKey="user" id="userTabs">
-      <Tab eventKey="user" title={t('user.user')}>
+    <Tabs defaultActiveKey="generalInfo" id="projectTabs">
+      <Tab eventKey="generalInfo" title={t('project.generalInfo')}>
         <TextWithLabel
           className="mt-5"
-          label={t('user.displayName')}
-          value={data.user.displayName}
+          label={t('project.projectName')}
+          value={data.project?.projectName}
         />
-        <TextWithLabel label={t('user.email')} value={data.user.email} />
-        <DateWithLabel label={t('user.lastLogin')} value={data.user?.lastLogin} />
         <TextWithLabel
-          label={t('user.blocked')}
-          value={!!data.user.blockedAt ? tCommon('yes') : tCommon('no')}
+          label={t('project.projectType')}
+          value={data.project?.projectType?.projectType}
+        />
+        <TextWithLabel
+          label={t('project.description')}
+          value={data.project?.projectInfo?.projectInfo}
         />
       </Tab>
 
-      {data.person && (
-        <Tab eventKey="profile" title={t('user.profile')}>
-          <PersonDetails person={data.person} />
+      {data.project?.address && (
+        <Tab eventKey="location" title={t('project.location')}>
+          <AddressDetails address={data.project.address} />
         </Tab>
       )}
 

@@ -4,7 +4,7 @@ import { AddressDetailsProps } from './address-details.type'
 import { TextWithLabel } from './text-with-label'
 
 export const AddressDetails = ({ address, addressType }: AddressDetailsProps) => {
-  const t = useTranslations('data_validation.validation.address')
+  const t = useTranslations('data_validation.data_hierarchy.address')
 
   return (
     <>

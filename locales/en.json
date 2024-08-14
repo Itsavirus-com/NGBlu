@@ -12,7 +12,7 @@
       "data_validation": "Data Validation",
       "kvk": "KVK",
       "Google": "Google",
-      "validation": "Data Validation"
+      "hierarchy": "Data Hierarchy"
     }
   },
   "404": {
@@ -61,8 +61,8 @@
       "lat": "Latitude",
       "lon": "Longitude"
     },
-    "validation": {
-      "title": "Data Validation",
+    "data_hierarchy": {
+      "title": "Data Hierarchy",
       "showDetails": "Show Details",
       "addresses": "Addresses",
       "business_partners": "Business Partners",
