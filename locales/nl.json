@@ -11,8 +11,11 @@
       "dashboard": "Dashboard",
       "data_validation": "Data Validation",
       "kvk": "KVK",
-      "Google": "Google",
-      "hierarchy": "Data Hierarchy"
+      "google": "Google",
+      "hierarchy": "Data Hierarchy",
+      "dataManagement": "Data Management",
+      "products": "Products",
+      "services": "Services"
     },
     "table": {
       "filterOptions": "Filter Options",
