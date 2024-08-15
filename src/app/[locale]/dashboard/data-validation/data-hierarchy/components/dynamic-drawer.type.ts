@@ -1,9 +1,7 @@
+import { TreeData } from '../page.type'
+
 export type DynamicDrawerProps = {
-  index: string | null
-
-  title: string | null
-
-  item: Record<string, any> | null
+  item: TreeData | null
 }
 
 export type ContentProps = {

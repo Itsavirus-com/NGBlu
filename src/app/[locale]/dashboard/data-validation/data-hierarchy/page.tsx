@@ -6,7 +6,6 @@ import { Button, Card, CardBody } from 'react-bootstrap'
 import {
   InteractionMode,
   Tree,
-  TreeItem,
   TreeItemIndex,
   UncontrolledTreeEnvironment,
 } from 'react-complex-tree'
@@ -17,20 +16,16 @@ import { businessPartnerApi } from '@/services/api/business-partner-api'
 import { enterpriseRootApi } from '@/services/api/enterprise-root-api'
 
 import { DynamicDrawer } from './components/dynamic-drawer'
-import { DynamicDrawerProps } from './components/dynamic-drawer.type'
-import { generateItemIcon } from './components/helper'
+import { generateItemIcon, generateItemId, generateItemTitle } from './components/helper'
+import { TreeData } from './page.type'
 
 import 'react-complex-tree/lib/style-modern.css'
 import './style.scss'
 
-type TreeData = TreeItem<Record<string, any>>
-
 export default function Validation() {
   const t = useTranslations('data_validation.data_hierarchy')
 
-  const [selectedItem, setSelectedItem] = useState<DynamicDrawerProps['item'] | null>(null)
-  const [selectedItemTitle, setSelectedItemTitle] = useState<string | null>('')
-  const [selectedItemIndex, setSelectedItemIndex] = useState<string | null>('')
+  const [selectedItem, setSelectedItem] = useState<TreeData | null>(null)
 
   const loadTreeRoots = async (): Promise<TreeData> => {
     const res = await enterpriseRootApi.getEnterpriseRoots()
@@ -698,55 +693,39 @@ export default function Validation() {
               canDropOnFolder
               canReorderItems
               dataProvider={dataProvider}
-              getItemTitle={item => {
-                if (item.data.person) {
-                  return `${item.data.person.firstname} ${item.data.person.lastname}`
-                }
-
-                if (item.data.address) return item.data.address.addressName
-
-                if (item.data.project) return item.data.project.projectName
-
-                if (item.data.endclient) return item.data.endclient.name
-
-                if (item.data.ouUnit) return item.data.ouUnit.name
-
-                if (item.data.user) return item.data.user.displayName
-
-                return item.data.name
-              }}
+              getItemTitle={generateItemTitle}
               viewState={{
                 'enterprise-tree': {},
               }}
               defaultInteractionMode={InteractionMode.ClickArrowToExpand}
-              renderItemTitle={({ item, title }) => (
-                <div className="rct-tree-item-wrapper">
-                  <div className="rct-tree-item-title">
-                    <KTIcon
-                      iconName={generateItemIcon(item.index as string)}
-                      className="rct-tree-item-icon"
-                    />
-                    {item.data?.id && <span className="rct-tree-item-id">{item.data.id}</span>}
-                    <span>{title}</span>
-                  </div>
+              renderItemTitle={({ item, title }) => {
+                const itemId = generateItemId(item)
 
-                  {item.data?.type !== 'group' && (
-                    <Button
-                      as="a"
-                      variant="light-primary"
-                      size="sm"
-                      id="kt_enterprise_root_toggle"
-                      onClick={() => {
-                        setSelectedItem(item.data)
-                        setSelectedItemTitle(title)
-                        setSelectedItemIndex(item.index as string)
-                      }}
-                    >
-                      {t('showDetails')}
-                    </Button>
-                  )}
-                </div>
-              )}
+                return (
+                  <div className="rct-tree-item-wrapper">
+                    <div className="rct-tree-item-title">
+                      <KTIcon
+                        iconName={generateItemIcon(item.index as string)}
+                        className="rct-tree-item-icon"
+                      />
+                      {itemId && <span className="rct-tree-item-id">{itemId}</span>}
+                      <span>{title}</span>
+                    </div>
+
+                    {item.data?.type !== 'group' && (
+                      <Button
+                        as="a"
+                        variant="light-primary"
+                        size="sm"
+                        id="kt_enterprise_root_toggle"
+                        onClick={() => setSelectedItem(item)}
+                      >
+                        {t('showDetails')}
+                      </Button>
+                    )}
+                  </div>
+                )
+              }}
             >
               <Tree treeId="enterprise-tree" rootItem="root" />
             </UncontrolledTreeEnvironment>
@@ -754,7 +733,7 @@ export default function Validation() {
         </Card>
       </div>
 
-      <DynamicDrawer index={selectedItemIndex} title={selectedItemTitle} item={selectedItem} />
+      <DynamicDrawer item={selectedItem} />
     </>
   )
 }
