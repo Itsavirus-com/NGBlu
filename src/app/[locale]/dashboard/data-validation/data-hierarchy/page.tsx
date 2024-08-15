@@ -6,29 +6,31 @@ import { Button, Card, CardBody } from 'react-bootstrap'
 import {
   InteractionMode,
   Tree,
-  TreeItem,
   TreeItemIndex,
   UncontrolledTreeEnvironment,
 } from 'react-complex-tree'
 
+import { KTIcon } from '@/components/kt-icon/kt-icon'
 import { PageTitle } from '@/components/page-title'
 import { businessPartnerApi } from '@/services/api/business-partner-api'
 import { enterpriseRootApi } from '@/services/api/enterprise-root-api'
 
 import { DynamicDrawer } from './components/dynamic-drawer'
-import { DynamicDrawerProps } from './components/dynamic-drawer.type'
+import {
+  generateItemIcon,
+  generateItemId,
+  generateItemTitle,
+  generateItemType,
+} from './components/helper'
+import { TreeData } from './page.type'
 
 import 'react-complex-tree/lib/style-modern.css'
 import './style.scss'
 
-type TreeData = TreeItem<Record<string, any>>
-
 export default function Validation() {
   const t = useTranslations('data_validation.data_hierarchy')
 
-  const [selectedItem, setSelectedItem] = useState<DynamicDrawerProps['item'] | null>(null)
-  const [selectedItemTitle, setSelectedItemTitle] = useState<string | null>('')
-  const [selectedItemIndex, setSelectedItemIndex] = useState<string | null>('')
+  const [selectedItem, setSelectedItem] = useState<TreeData | null>(null)
 
   const loadTreeRoots = async (): Promise<TreeData> => {
     const res = await enterpriseRootApi.getEnterpriseRoots()
@@ -74,7 +76,7 @@ export default function Validation() {
         (item: Record<string, any>) => `enterprise-root-address-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('addresses'),
       },
       canRename: false,
@@ -108,7 +110,7 @@ export default function Validation() {
         (item: Record<string, any>) => `enterprise-root-business-partner-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('business_partners'),
       },
       canRename: false,
@@ -149,7 +151,7 @@ export default function Validation() {
         (item: Record<string, any>) => `enterprise-root-contact-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('contacts'),
       },
       canRename: false,
@@ -183,7 +185,7 @@ export default function Validation() {
         (item: Record<string, any>) => `enterprise-root-customer-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('customers'),
       },
       canRename: false,
@@ -217,7 +219,7 @@ export default function Validation() {
         (item: Record<string, any>) => `enterprise-root-project-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('projects'),
       },
       canRename: false,
@@ -251,7 +253,7 @@ export default function Validation() {
         (item: Record<string, any>) => `enterprise-root-user-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('users'),
       },
       canRename: false,
@@ -282,7 +284,7 @@ export default function Validation() {
         (item: Record<string, any>) => `business-partner-address-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('addresses'),
       },
       canRename: false,
@@ -316,7 +318,7 @@ export default function Validation() {
         (item: Record<string, any>) => `business-partner-business-partner-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('business_partners'),
       },
       canRename: false,
@@ -357,7 +359,7 @@ export default function Validation() {
         (item: Record<string, any>) => `business-partner-contact-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('contacts'),
       },
       canRename: false,
@@ -391,7 +393,7 @@ export default function Validation() {
         (item: Record<string, any>) => `business-partner-customer-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('customers'),
       },
       canRename: false,
@@ -425,7 +427,7 @@ export default function Validation() {
         (item: Record<string, any>) => `business-partner-project-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('projects'),
       },
       canRename: false,
@@ -459,7 +461,7 @@ export default function Validation() {
         (item: Record<string, any>) => `business-partner-user-${id}-${item.id}`
       ),
       data: {
-        id: 1,
+        type: 'group',
         name: t('users'),
       },
       canRename: false,
@@ -485,195 +487,94 @@ export default function Validation() {
 
       treeChangeListeners = []
 
-      getTreeItem = async (itemId: TreeItemIndex): Promise<TreeData> => {
-        if (typeof itemId === 'string') {
-          // Enterprise Root
-          if (itemId.startsWith('enterprise-root-addresses-')) {
-            const id = itemId.replace('enterprise-root-addresses-', '')
-            this.data[itemId] = await loadEnterpriseRootAddresses(id)
+      getTreeItem = async (index: TreeItemIndex): Promise<TreeData> => {
+        const itemType = generateItemType(index as string)
+        const ids = /(\d+)\-?(\d+)?/.exec(index as string)
 
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('enterprise-root-address-')) {
-            const ids = itemId.replace('enterprise-root-address-', '')
-            const [id, addressId] = ids.split('-')
-
-            this.data[itemId] = await loadEnterpriseRootAddressDetails(id, addressId)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('enterprise-root-business-partners-')) {
-            const id = itemId.replace('enterprise-root-business-partners-', '')
-            this.data[itemId] = await loadEnterpriseRootBusinessPartners(id)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('enterprise-root-business-partner-')) {
-            const ids = itemId.replace('enterprise-root-business-partner-', '')
-            const [id, businessPartnerId] = ids.split('-')
-            this.data[itemId] = await loadEnterpriseRootBusinessPartnerDetails(
-              id,
-              businessPartnerId
-            )
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('enterprise-root-contacts-')) {
-            const id = itemId.replace('enterprise-root-contacts-', '')
-            this.data[itemId] = await loadEnterpriseRootContacts(id)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('enterprise-root-contact-')) {
-            const ids = itemId.replace('enterprise-root-contact-', '')
-            const [id, contactId] = ids.split('-')
-
-            this.data[itemId] = await loadEnterpriseRootContactDetails(id, contactId)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('enterprise-root-customers-')) {
-            const id = itemId.replace('enterprise-root-customers-', '')
-            this.data[itemId] = await loadEnterpriseRootCustomers(id)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('enterprise-root-customer-')) {
-            const ids = itemId.replace('enterprise-root-customer-', '')
-            const [id, customerId] = ids.split('-')
-
-            this.data[itemId] = await loadEnterpriseRootCustomerDetails(id, customerId)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('enterprise-root-users-')) {
-            const id = itemId.replace('enterprise-root-users-', '')
-            this.data[itemId] = await loadEnterpriseRootUsers(id)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('enterprise-root-user-')) {
-            const ids = itemId.replace('enterprise-root-user-', '')
-            const [id, userId] = ids.split('-')
-
-            this.data[itemId] = await loadEnterpriseRootUserDetails(id, userId)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('enterprise-root-projects-')) {
-            const id = itemId.replace('enterprise-root-projects-', '')
-            this.data[itemId] = await loadEnterpriseRootProjects(id)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('enterprise-root-project-')) {
-            const ids = itemId.replace('enterprise-root-project-', '')
-            const [id, projectId] = ids.split('-')
-
-            this.data[itemId] = await loadEnterpriseRootProjectDetails(id, projectId)
-
-            return this.data[itemId]
-          }
-
-          // Business Partner
-          if (itemId.startsWith('business-partner-addresses-')) {
-            const id = itemId.replace('business-partner-addresses-', '')
-            this.data[itemId] = await loadBusinessPartnerAddresses(id)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('business-partner-address-')) {
-            const ids = itemId.replace('business-partner-address-', '')
-            const [id, addressId] = ids.split('-')
-
-            this.data[itemId] = await loadBusinessPartnerAddressDetails(id, addressId)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('business-partner-business-partners-')) {
-            const id = itemId.replace('business-partner-business-partners-', '')
-            this.data[itemId] = await loadBusinessPartnerBusinessPartners(id)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('business-partner-business-partner-')) {
-            const ids = itemId.replace('business-partner-business-partner-', '')
-            const [id, businessPartnerId] = ids.split('-')
-            this.data[itemId] = await loadBusinessPartnerBusinessPartnerDetails(
-              id,
-              businessPartnerId
-            )
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('business-partner-contacts-')) {
-            const id = itemId.replace('business-partner-contacts-', '')
-            this.data[itemId] = await loadBusinessPartnerContacts(id)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('business-partner-contact-')) {
-            const ids = itemId.replace('business-partner-contact-', '')
-            const [id, contactId] = ids.split('-')
-
-            this.data[itemId] = await loadBusinessPartnerContactDetails(id, contactId)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('business-partner-customers-')) {
-            const id = itemId.replace('business-partner-customers-', '')
-            this.data[itemId] = await loadBusinessPartnerCustomers(id)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('business-partner-customer-')) {
-            const ids = itemId.replace('business-partner-customer-', '')
-            const [id, customerId] = ids.split('-')
-
-            this.data[itemId] = await loadBusinessPartnerCustomerDetails(id, customerId)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('business-partner-users-')) {
-            const id = itemId.replace('business-partner-users-', '')
-            this.data[itemId] = await loadBusinessPartnerUsers(id)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('business-partner-user-')) {
-            const ids = itemId.replace('business-partner-user-', '')
-            const [id, userId] = ids.split('-')
-
-            this.data[itemId] = await loadBusinessPartnerUserDetails(id, userId)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('business-partner-projects-')) {
-            const id = itemId.replace('business-partner-projects-', '')
-            this.data[itemId] = await loadBusinessPartnerProjects(id)
-
-            return this.data[itemId]
-          }
-          if (itemId.startsWith('business-partner-project-')) {
-            const ids = itemId.replace('business-partner-project-', '')
-            const [id, projectId] = ids.split('-')
-
-            this.data[itemId] = await loadBusinessPartnerProjectDetails(id, projectId)
-
-            return this.data[itemId]
-          }
-
-          // Root
-          if (itemId.startsWith('enterprise-root')) {
-            const id = itemId.replace('enterprise-root-', '')
-            this.data[itemId] = await loadEnterpriseRootDetails(id)
-
-            return this.data[itemId]
-          }
+        if (!ids) {
+          this.data['root'] = await loadTreeRoots()
+          return this.data['root']
         }
 
-        this.data['root'] = await loadTreeRoots()
-        return this.data['root']
+        const [, id, itemId] = ids
+        switch (itemType) {
+          case 'enterprise-root-addresses':
+            this.data[index] = await loadEnterpriseRootAddresses(id)
+            return this.data[index]
+          case 'enterprise-root-address':
+            this.data[index] = await loadEnterpriseRootAddressDetails(id, itemId)
+            return this.data[index]
+          case 'enterprise-root-business-partners':
+            this.data[index] = await loadEnterpriseRootBusinessPartners(id)
+            return this.data[index]
+          case 'enterprise-root-business-partner':
+            this.data[index] = await loadEnterpriseRootBusinessPartnerDetails(id, itemId)
+            return this.data[index]
+          case 'enterprise-root-contacts':
+            this.data[index] = await loadEnterpriseRootContacts(id)
+            return this.data[index]
+          case 'enterprise-root-contact':
+            this.data[index] = await loadEnterpriseRootContactDetails(id, itemId)
+            return this.data[index]
+          case 'enterprise-root-customers':
+            this.data[index] = await loadEnterpriseRootCustomers(id)
+            return this.data[index]
+          case 'enterprise-root-customer':
+            this.data[index] = await loadEnterpriseRootCustomerDetails(id, itemId)
+            return this.data[index]
+          case 'enterprise-root-users':
+            this.data[index] = await loadEnterpriseRootUsers(id)
+            return this.data[index]
+          case 'enterprise-root-user':
+            this.data[index] = await loadEnterpriseRootUserDetails(id, itemId)
+            return this.data[index]
+          case 'enterprise-root-projects':
+            this.data[index] = await loadEnterpriseRootProjects(id)
+            return this.data[index]
+          case 'enterprise-root-project':
+            this.data[index] = await loadEnterpriseRootProjectDetails(id, itemId)
+            return this.data[index]
+          case 'business-partner-addresses':
+            this.data[index] = await loadBusinessPartnerAddresses(id)
+            return this.data[index]
+          case 'business-partner-address':
+            this.data[index] = await loadBusinessPartnerAddressDetails(id, itemId)
+            return this.data[index]
+          case 'business-partner-business-partners':
+            this.data[index] = await loadBusinessPartnerBusinessPartners(id)
+            return this.data[index]
+          case 'business-partner-business-partner':
+            this.data[index] = await loadBusinessPartnerBusinessPartnerDetails(id, itemId)
+            return this.data[index]
+          case 'business-partner-contacts':
+            this.data[index] = await loadBusinessPartnerContacts(id)
+            return this.data[index]
+          case 'business-partner-contact':
+            this.data[index] = await loadBusinessPartnerContactDetails(id, itemId)
+            return this.data[index]
+          case 'business-partner-customers':
+            this.data[index] = await loadBusinessPartnerCustomers(id)
+            return this.data[index]
+          case 'business-partner-customer':
+            this.data[index] = await loadBusinessPartnerCustomerDetails(id, itemId)
+            return this.data[index]
+          case 'business-partner-users':
+            this.data[index] = await loadBusinessPartnerUsers(id)
+            return this.data[index]
+          case 'business-partner-user':
+            this.data[index] = await loadBusinessPartnerUserDetails(id, itemId)
+            return this.data[index]
+          case 'business-partner-projects':
+            this.data[index] = await loadBusinessPartnerProjects(id)
+            return this.data[index]
+          case 'business-partner-project':
+            this.data[index] = await loadBusinessPartnerProjectDetails(id, itemId)
+            return this.data[index]
+          case 'enterprise-root':
+          default:
+            this.data[index] = await loadEnterpriseRootDetails(id)
+            return this.data[index]
+        }
       }
 
       onRenameItem = async (item: TreeData, name: string) => {
@@ -696,42 +597,32 @@ export default function Validation() {
               canDropOnFolder
               canReorderItems
               dataProvider={dataProvider}
-              getItemTitle={item => {
-                if (item.data.person) {
-                  return `${item.data.person.firstname} ${item.data.person.lastname}`
-                }
-
-                if (item.data.address) return item.data.address.addressName
-
-                if (item.data.project) return item.data.project.projectName
-
-                if (item.data.endclient) return item.data.endclient.name
-
-                if (item.data.ouUnit) return item.data.ouUnit.name
-
-                if (item.data.user) return item.data.user.displayName
-
-                return item.data.name
-              }}
+              getItemTitle={generateItemTitle}
               viewState={{
                 'enterprise-tree': {},
               }}
               defaultInteractionMode={InteractionMode.ClickArrowToExpand}
               renderItemTitle={({ item, title }) => {
+                const itemId = generateItemId(item)
+
                 return (
-                  <div className="rct-tree-item-title-wrapper">
-                    <span>{title}</span>
-                    {item.canMove && (
+                  <div className="rct-tree-item-wrapper">
+                    <div className="rct-tree-item-title">
+                      <KTIcon
+                        iconName={generateItemIcon(item.index as string)}
+                        className="rct-tree-item-icon"
+                      />
+                      {itemId && <span className="rct-tree-item-id">{itemId}</span>}
+                      <span>{title}</span>
+                    </div>
+
+                    {item.data?.type !== 'group' && (
                       <Button
                         as="a"
                         variant="light-primary"
                         size="sm"
                         id="kt_enterprise_root_toggle"
-                        onClick={() => {
-                          setSelectedItem(item.data)
-                          setSelectedItemTitle(title)
-                          setSelectedItemIndex(item.index as string)
-                        }}
+                        onClick={() => setSelectedItem(item)}
                       >
                         {t('showDetails')}
                       </Button>
@@ -746,7 +637,7 @@ export default function Validation() {
         </Card>
       </div>
 
-      <DynamicDrawer index={selectedItemIndex} title={selectedItemTitle} item={selectedItem} />
+      <DynamicDrawer item={selectedItem} />
     </>
   )
 }

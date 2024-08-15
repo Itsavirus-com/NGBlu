@@ -21,7 +21,11 @@ export const Drawer = (props: DrawerProps) => {
       <div className="card shadow-none rounded-0 w-100 h-100">
         <div className="card-header" id={`${drawerId}_header`}>
           {props.title ? (
-            <h3 className="card-title fw-bold text-gray-600">{props.title}</h3>
+            <div className="d-flex align-items-center">
+              {props.icon && <KTIcon iconName={props.icon} className="fs-2 me-2 text-primary" />}
+              {props.dataId && <span className="me-2 badge badge-primary">{props.dataId}</span>}
+              <h3 className="card-title fw-bold text-gray-600">{props.title}</h3>
+            </div>
           ) : (
             <div />
           )}
