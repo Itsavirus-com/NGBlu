@@ -20,7 +20,11 @@
       "reset": "Reset",
       "actions": "Actions",
       "tableEmptyTitle": "No data available",
-      "tableEmptyDescription": "There is no data to display. If you have filters applied, try to clear them."
+      "tableEmptyDescription": "There is no data to display. If you have filters applied, try to clear them.",
+      "display": "Display",
+      "goToPage": "Go to page",
+      "rows": "{pageSize} rows",
+      "pageInfo": "Page <strong>{currentPage}</strong> of <strong>{totalPage}</strong>"
     }
   },
   "404": {
