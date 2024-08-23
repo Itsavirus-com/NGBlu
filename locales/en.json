@@ -13,6 +13,12 @@
       "kvk": "KVK",
       "Google": "Google",
       "hierarchy": "Data Hierarchy"
+    },
+    "table": {
+      "filterOptions": "Filter Options",
+      "apply": "Apply",
+      "reset": "Reset",
+      "actions": "Actions"
     }
   },
   "404": {

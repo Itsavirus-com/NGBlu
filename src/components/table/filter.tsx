@@ -1,14 +1,15 @@
 import { useTranslations } from 'next-intl'
 
+import { Button } from '@/components/button/button'
+
 import { FilterProps } from './filter.type'
-import { ToolbarButton } from './toolbar-button'
 
 export const Filter = ({ children }: FilterProps) => {
   const t = useTranslations('common.table')
 
   return (
     <div className={!children ? 'd-none' : ''}>
-      <ToolbarButton
+      <Button
         icon="category"
         className="ms-2"
         extraProps={{

@@ -1,0 +1,13 @@
+import { ButtonProps } from '@/components/button/button.type'
+
+export type Action = 'view' | 'edit' | 'delete'
+
+export type TableActionsHeadProps = {
+  actions?: Action[]
+  customActions?: ButtonProps[]
+}
+
+export type TableActionsProps = TableActionsHeadProps & {
+  actionBasePath?: string
+  dataId?: number
+}
