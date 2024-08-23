@@ -9,7 +9,7 @@ export const TableActionsHead = ({ actions, customActions }: TableActionsHeadPro
 
   if (!actions?.length && !customActions?.length) return null
 
-  return <th className="min-w-100px text-end">{t('actions')}</th>
+  return <th className="text-end">{t('actions')}</th>
 }
 
 export const TableActions = (props: TableActionsProps) => {

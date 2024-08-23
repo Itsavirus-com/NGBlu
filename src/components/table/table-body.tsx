@@ -2,12 +2,16 @@ import { useTableData } from '@/services/swr/use-table-data'
 
 import { TableActions, TableActionsHead } from './table-actions'
 import { TableBodyProps } from './table-body.type'
+import { TableEmpty } from './table-empty'
+import { TableLoading } from './table-loading'
 
 export const TableBody = <TableValues extends Record<string, any>>(
   props: TableBodyProps<TableValues>
 ) => {
   const { columns, apiPath, actions, customActions, actionBasePath } = props
-  const { data } = useTableData<TableValues>(apiPath, {})
+  const hasActions = !!actions?.length || !!customActions?.length
+
+  const { data, isLoading } = useTableData<TableValues>(apiPath, {})
 
   if (!columns?.length) return null
 
@@ -26,9 +30,9 @@ export const TableBody = <TableValues extends Record<string, any>>(
           </tr>
         </thead>
 
-        {!!data?.length && (
-          <tbody>
-            {data?.map((row, index) => (
+        <tbody>
+          {!!data?.length &&
+            data?.map((row, index) => (
               <tr key={index}>
                 {columns.map(column => (
                   <td key={column.id} className={column.bodyClassName}>
@@ -44,8 +48,19 @@ export const TableBody = <TableValues extends Record<string, any>>(
                 />
               </tr>
             ))}
-          </tbody>
-        )}
+
+          <TableEmpty
+            visible={!data?.length && !isLoading}
+            hasActions={hasActions}
+            columnLength={columns.length}
+          />
+
+          <TableLoading
+            visible={!data?.length && isLoading}
+            columnLength={columns.length}
+            hasActions={hasActions}
+          />
+        </tbody>
       </table>
     </div>
   )

@@ -18,7 +18,9 @@
       "filterOptions": "Filter Options",
       "apply": "Apply",
       "reset": "Reset",
-      "actions": "Actions"
+      "actions": "Actions",
+      "tableEmptyTitle": "No data available",
+      "tableEmptyDescription": "There is no data to display. If you have filters applied, try to clear them."
     }
   },
   "404": {
