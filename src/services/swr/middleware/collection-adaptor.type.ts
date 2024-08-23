@@ -5,9 +5,11 @@ import { AnyObject } from './model-adaptor.type'
 export type Collection<K extends string, T extends AnyObject> = {
   [key in K]: T[]
 } & {
-  currentPage: number
-  totalPages: number
-  totalData: number
+  pagination: {
+    currentPage: number
+    lastPage: number
+    total: number
+  }
 }
 
 type CollectionAdaptorParams<Model> = {
