@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { Button } from '@/components/button/button'
 
 import { Filter } from './filter'
@@ -5,7 +7,18 @@ import { TableBody } from './table-body'
 import { TableProps } from './table.type'
 
 export const Table = <TableValues extends Record<string, any>>(props: TableProps<TableValues>) => {
-  const { title, description, toolbars, filters, columns, apiPath, actions, actionBasePath } = props
+  const {
+    title,
+    description,
+    toolbars,
+    filters: filterComponents,
+    columns,
+    apiPath,
+    actions,
+    actionBasePath,
+  } = props
+
+  const [filters, setFilters] = useState<Record<string, any>>({})
 
   return (
     <div className="app-container container-fluid">
@@ -19,7 +32,7 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
           <div className="card-toolbar">
             {toolbars?.map((toolbar, index) => <Button key={index} {...toolbar} />)}
 
-            <Filter>{filters}</Filter>
+            <Filter onFilter={setFilters}>{filterComponents}</Filter>
           </div>
         </div>
         <div className="card-body py-3">
@@ -28,6 +41,7 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
             apiPath={apiPath}
             actions={actions}
             actionBasePath={actionBasePath}
+            filters={filters}
           />
         </div>
       </div>

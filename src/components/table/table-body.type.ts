@@ -13,4 +13,5 @@ export type TableColumn<TableValues> = {
 export type TableBodyProps<TableValues> = {
   columns: TableColumn<TableValues>[]
   apiPath: string
+  filters?: Record<string, any>
 } & TableActionsProps
