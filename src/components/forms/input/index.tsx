@@ -21,7 +21,7 @@ export const ControlledInput = (props: InputProps) => {
 
   return (
     <Form.Group className={containerClass}>
-      {label && <Form.Label>{label}</Form.Label>}
+      {label && <Form.Label className="fw-bold">{label}</Form.Label>}
       <Form.Control
         id={name}
         as="input"
