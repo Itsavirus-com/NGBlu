@@ -1,0 +1,45 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
+
+import { Table } from '@/components/table/table'
+import { TableColumn } from '@/components/table/table.type'
+import { PriceInterval } from '@/services/swr/models/price-interval.type'
+
+import { PriceIntervalsFilter } from './components/price-interval-filter'
+
+export default function PriceCurrencies() {
+  const t = useTranslations('dataManagement.prices.intervals')
+
+  const columns: TableColumn<PriceInterval>[] = [
+    {
+      id: 'id',
+      title: t('id'),
+      render: row => row.id,
+    },
+    {
+      id: 'name',
+      title: t('name'),
+      render: row => row.name,
+    },
+  ]
+
+  return (
+    <Table<PriceInterval>
+      title={t('title')}
+      toolbars={[
+        {
+          icon: 'plus',
+          label: t('newPriceInterval'),
+          colorClass: 'light-primary',
+          href: 'intervals/new',
+        },
+      ]}
+      filters={<PriceIntervalsFilter />}
+      columns={columns}
+      apiPath="prices/intervals"
+      actionBasePath="intervals"
+      actions={['edit', 'delete']}
+    />
+  )
+}

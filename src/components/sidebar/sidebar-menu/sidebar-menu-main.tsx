@@ -34,6 +34,10 @@ const SidebarMenuMain = () => {
           to="/dashboard/data-management/prices/currencies"
           title={t('currencies')}
         />
+        <SidebarMenuItem
+          to="/dashboard/data-management/prices/intervals"
+          title={t('priceIntervals')}
+        />
       </SidebarMenuItemWithSub>
     </>
   )

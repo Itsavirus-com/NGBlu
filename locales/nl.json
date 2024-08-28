@@ -18,7 +18,8 @@
       "services": "Services",
       "prices": "Prices",
       "priceConfigs": "Price Configs",
-      "currencies": "Currencies"
+      "currencies": "Currencies",
+      "priceIntervals": "Price Intervals"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -223,6 +224,12 @@
         "newCurrency": "New Currency",
         "id": "ID",
         "currency": "Currency"
+      },
+      "intervals": {
+        "title": "Price Intervals",
+        "newPriceInterval": "New Price Interval",
+        "id": "ID",
+        "name": "Name"
       }
     }
   }
