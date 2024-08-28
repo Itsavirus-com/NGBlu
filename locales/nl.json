@@ -17,7 +17,8 @@
       "products": "Products",
       "services": "Services",
       "prices": "Prices",
-      "priceConfigs": "Price Configs"
+      "priceConfigs": "Price Configs",
+      "currencies": "Currencies"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -216,6 +217,12 @@
         "interval": "Interval",
         "type": "Type",
         "tax": "Tax"
+      },
+      "currencies": {
+        "title": "Currencies",
+        "newCurrency": "New Currency",
+        "id": "ID",
+        "currency": "Currency"
       }
     }
   }

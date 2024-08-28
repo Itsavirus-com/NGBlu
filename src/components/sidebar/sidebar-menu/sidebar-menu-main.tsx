@@ -30,6 +30,10 @@ const SidebarMenuMain = () => {
 
       <SidebarMenuItemWithSub title={t('prices')} icon="credit-cart">
         <SidebarMenuItem to="/dashboard/data-management/prices/configs" title={t('priceConfigs')} />
+        <SidebarMenuItem
+          to="/dashboard/data-management/prices/currencies"
+          title={t('currencies')}
+        />
       </SidebarMenuItemWithSub>
     </>
   )
