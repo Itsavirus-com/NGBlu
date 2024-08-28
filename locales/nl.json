@@ -19,7 +19,8 @@
       "prices": "Prices",
       "priceConfigs": "Price Configs",
       "currencies": "Currencies",
-      "priceIntervals": "Price Intervals"
+      "priceIntervals": "Price Intervals",
+      "pricePlans": "Price Plans"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -230,6 +231,19 @@
         "newPriceInterval": "New Price Interval",
         "id": "ID",
         "name": "Name"
+      },
+      "plans": {
+        "title": "Price Plans",
+        "newPriceInterval": "New Price Plan",
+        "id": "ID",
+        "name": "Name",
+        "price": "Price",
+        "unit": "Unit",
+        "interval": "Interval",
+        "type": "Type",
+        "tax": "Tax",
+        "default": "Default",
+        "productOrService": "Product or Service"
       }
     }
   }

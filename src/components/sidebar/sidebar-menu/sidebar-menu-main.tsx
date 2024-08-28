@@ -38,6 +38,7 @@ const SidebarMenuMain = () => {
           to="/dashboard/data-management/prices/intervals"
           title={t('priceIntervals')}
         />
+        <SidebarMenuItem to="/dashboard/data-management/prices/plans" title={t('pricePlans')} />
       </SidebarMenuItemWithSub>
     </>
   )
