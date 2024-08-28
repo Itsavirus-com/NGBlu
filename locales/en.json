@@ -15,7 +15,9 @@
       "hierarchy": "Data Hierarchy",
       "dataManagement": "Data Management",
       "products": "Products",
-      "services": "Services"
+      "services": "Services",
+      "prices": "Prices",
+      "priceConfigs": "Price Configs"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -203,6 +205,18 @@
       "activeTo": "Active To",
       "product": "Product",
       "pricePlan": "Price Plan"
+    },
+    "prices": {
+      "configs": {
+        "title": "Price Configs",
+        "newPriceConfig": "New Price Config",
+        "id": "ID",
+        "price": "Price",
+        "unit": "Unit",
+        "interval": "Interval",
+        "type": "Type",
+        "tax": "Tax"
+      }
     }
   }
 }

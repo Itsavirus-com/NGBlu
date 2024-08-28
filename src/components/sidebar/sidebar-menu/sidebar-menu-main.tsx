@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl'
 
 import { SidebarMenuItem } from './sidebar-menu-item'
+import { SidebarMenuItemWithSub } from './sidebar-menu-item-with-sub'
 import { SidebarMenuSeparator } from './sidebar-menu-separator'
 
 const SidebarMenuMain = () => {
@@ -26,6 +27,10 @@ const SidebarMenuMain = () => {
         icon="delivery-3"
       />
       <SidebarMenuItem to="/dashboard/data-management/services" title={t('services')} icon="icon" />
+
+      <SidebarMenuItemWithSub title={t('prices')} icon="credit-cart">
+        <SidebarMenuItem to="/dashboard/data-management/prices/configs" title={t('priceConfigs')} />
+      </SidebarMenuItemWithSub>
     </>
   )
 }
