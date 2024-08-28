@@ -21,7 +21,8 @@
       "currencies": "Currencies",
       "priceIntervals": "Price Intervals",
       "pricePlans": "Price Plans",
-      "priceTypes": "Price Types"
+      "priceTypes": "Price Types",
+      "priceUnits": "Price Units"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -251,6 +252,12 @@
         "newPriceType": "New Price Type",
         "id": "ID",
         "type": "Type"
+      },
+      "units": {
+        "title": "Price Units",
+        "newPriceUnit": "New Price Unit",
+        "id": "ID",
+        "unit": "Unit"
       }
     }
   }
