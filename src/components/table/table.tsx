@@ -18,12 +18,13 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
     data,
     actions,
     actionBasePath,
+    className,
   } = props
 
   const [filters, setFilters] = useState<Record<string, any>>({})
 
   return (
-    <div className="app-container container-fluid">
+    <div className={`app-container container-fluid ${className}`}>
       <div className="card card-xxl-stretch">
         <div className="card-header border-0 pt-5">
           <h3 className="card-title align-items-start flex-column">

@@ -20,4 +20,5 @@ export type TableProps<TableValues> = {
   filters?: ReactNode
   apiPath?: string
   data?: TableValues[]
+  className?: string
 } & TableActionsProps
