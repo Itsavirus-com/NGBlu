@@ -11,8 +11,23 @@
       "dashboard": "Dashboard",
       "data_validation": "Data Validation",
       "kvk": "KVK",
-      "Google": "Google",
-      "hierarchy": "Data Hierarchy"
+      "google": "Google",
+      "hierarchy": "Data Hierarchy",
+      "dataManagement": "Data Management",
+      "products": "Products",
+      "services": "Services"
+    },
+    "table": {
+      "filterOptions": "Filter Options",
+      "apply": "Apply",
+      "reset": "Reset",
+      "actions": "Actions",
+      "tableEmptyTitle": "No data available",
+      "tableEmptyDescription": "There is no data to display. If you have filters applied, try to clear them.",
+      "display": "Display",
+      "goToPage": "Go to page",
+      "rows": "{pageSize} rows",
+      "pageInfo": "Page <strong>{currentPage}</strong> of <strong>{totalPage}</strong>"
     }
   },
   "404": {
