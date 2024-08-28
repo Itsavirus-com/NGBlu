@@ -20,7 +20,8 @@
       "priceConfigs": "Price Configs",
       "currencies": "Currencies",
       "priceIntervals": "Price Intervals",
-      "pricePlans": "Price Plans"
+      "pricePlans": "Price Plans",
+      "priceTaxes": "Price Taxes"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -244,6 +245,16 @@
         "tax": "Tax",
         "default": "Default",
         "productOrService": "Product or Service"
+      },
+      "taxes": {
+        "title": "Price Taxes",
+        "newPriceTax": "New Price Tax",
+        "id": "ID",
+        "name": "Name",
+        "value": "Value",
+        "currency": "Currency",
+        "unit": "Unit",
+        "country": "Country"
       }
     }
   }
