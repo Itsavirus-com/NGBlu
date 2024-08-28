@@ -2,14 +2,14 @@ import { useState } from 'react'
 
 import { useTableData } from '@/services/swr/use-table-data'
 
+import { DynamicTableBodyProps } from './dynamic-table-body.type'
 import { TableActions, TableActionsHead } from './table-actions'
-import { TableBodyProps } from './table-body.type'
 import { TableEmpty } from './table-empty'
 import { TableLoading } from './table-loading'
 import { TablePagination } from './table-pagination'
 
-export const TableBody = <TableValues extends Record<string, any>>(
-  props: TableBodyProps<TableValues>
+export const DynamicTableBody = <TableValues extends Record<string, any>>(
+  props: DynamicTableBodyProps<TableValues>
 ) => {
   const { columns, apiPath, actions, customActions, actionBasePath, filters } = props
   const hasActions = !!actions?.length || !!customActions?.length

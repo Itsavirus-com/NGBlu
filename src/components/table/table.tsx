@@ -2,8 +2,9 @@ import { useState } from 'react'
 
 import { Button } from '@/components/button/button'
 
+import { DynamicTableBody } from './dynamic-table-body'
 import { Filter } from './filter'
-import { TableBody } from './table-body'
+import { StaticTableBody } from './static-table-body'
 import { TableProps } from './table.type'
 
 export const Table = <TableValues extends Record<string, any>>(props: TableProps<TableValues>) => {
@@ -14,6 +15,7 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
     filters: filterComponents,
     columns,
     apiPath,
+    data,
     actions,
     actionBasePath,
   } = props
@@ -36,13 +38,24 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
           </div>
         </div>
         <div className="card-body py-3">
-          <TableBody<TableValues>
-            columns={columns}
-            apiPath={apiPath}
-            actions={actions}
-            actionBasePath={actionBasePath}
-            filters={filters}
-          />
+          {!!data && (
+            <StaticTableBody<TableValues>
+              columns={columns}
+              data={data}
+              actions={actions}
+              actionBasePath={actionBasePath}
+            />
+          )}
+
+          {!!apiPath && (
+            <DynamicTableBody<TableValues>
+              columns={columns}
+              apiPath={apiPath}
+              actions={actions}
+              actionBasePath={actionBasePath}
+              filters={filters}
+            />
+          )}
         </div>
       </div>
     </div>

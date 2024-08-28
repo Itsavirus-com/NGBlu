@@ -2,11 +2,22 @@ import { ReactNode } from 'react'
 
 import { ButtonProps } from '@/components/button/button.type'
 
-import { TableBodyProps } from './table-body.type'
+import { TableActionsProps } from './table-actions.type'
+
+export type TableColumn<TableValues> = {
+  id: string
+  title: ReactNode
+  headClassName?: string
+  bodyClassName?: string
+  render?: (value: TableValues) => ReactNode
+}
 
 export type TableProps<TableValues> = {
   title: string
   description?: string
+  columns: TableColumn<TableValues>[]
   toolbars?: ButtonProps[]
   filters?: ReactNode
-} & TableBodyProps<TableValues>
+  apiPath?: string
+  data?: TableValues[]
+} & TableActionsProps
