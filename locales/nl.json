@@ -158,5 +158,51 @@
         "profile": "Profile"
       }
     }
+  },
+  "dataManagement": {
+    "products": {
+      "title": "Products",
+      "newProduct": "New Product",
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "type": "Type",
+      "category": "Category",
+      "corporateProductOnly": "Corporate Product Only",
+      "consumerProductOnly": "Consumer Product Only",
+      "pricePlans": "Price Plans",
+      "price": "Price",
+      "unit": "Unit",
+      "interval": "Interval",
+      "tax": "Tax",
+      "default": "Default",
+      "priceConfigs": "Price Configs",
+      "activeFrom": "Active From",
+      "activeTo": "Active To",
+      "product": "Product",
+      "pricePlan": "Price Plan"
+    },
+    "services": {
+      "title": "Services",
+      "newService": "New Service",
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "type": "Type",
+      "category": "Category",
+      "corporateServiceOnly": "Corporate Service Only",
+      "consumerServiceOnly": "Consumer Service Only",
+      "pricePlans": "Price Plans",
+      "price": "Price",
+      "unit": "Unit",
+      "interval": "Interval",
+      "tax": "Tax",
+      "default": "Default",
+      "priceConfigs": "Price Configs",
+      "activeFrom": "Active From",
+      "activeTo": "Active To",
+      "product": "Product",
+      "pricePlan": "Price Plan"
+    }
   }
 }
