@@ -28,20 +28,46 @@ const SidebarMenuMain = () => {
       />
       <SidebarMenuItem to="/dashboard/data-management/services" title={t('services')} icon="icon" />
 
-      <SidebarMenuItemWithSub title={t('prices')} icon="credit-cart">
-        <SidebarMenuItem to="/dashboard/data-management/prices/configs" title={t('priceConfigs')} />
+      <SidebarMenuItemWithSub
+        to="/dashboard/data-management/prices"
+        title={t('prices')}
+        icon="credit-cart"
+      >
+        <SidebarMenuItem
+          to="/dashboard/data-management/prices/configs"
+          title={t('priceConfigs')}
+          hasBullet
+        />
         <SidebarMenuItem
           to="/dashboard/data-management/prices/currencies"
           title={t('currencies')}
+          hasBullet
         />
         <SidebarMenuItem
           to="/dashboard/data-management/prices/intervals"
           title={t('priceIntervals')}
+          hasBullet
         />
-        <SidebarMenuItem to="/dashboard/data-management/prices/plans" title={t('pricePlans')} />
-        <SidebarMenuItem to="/dashboard/data-management/prices/taxes" title={t('priceTaxes')} />
-        <SidebarMenuItem to="/dashboard/data-management/prices/types" title={t('priceTypes')} />
-        <SidebarMenuItem to="/dashboard/data-management/prices/units" title={t('priceUnits')} />
+        <SidebarMenuItem
+          to="/dashboard/data-management/prices/plans"
+          title={t('pricePlans')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/prices/taxes"
+          title={t('priceTaxes')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/prices/types"
+          title={t('priceTypes')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/prices/units"
+          title={t('priceUnits')}
+          hasBullet
+        />
       </SidebarMenuItemWithSub>
 
       <SidebarMenuItem
