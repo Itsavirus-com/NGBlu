@@ -3,7 +3,10 @@ import Link from 'next/link'
 import { FC } from 'react'
 
 import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { usePathname } from '@/navigation'
 import { WithChildren } from '@/types'
+
+import { checkIsActive } from './helper'
 
 type Props = {
   to: string
@@ -20,7 +23,8 @@ const SidebarMenuItem: FC<Props & WithChildren> = ({
   icon,
   hasBullet = false,
 }) => {
-  const isActive = false
+  const pathname = usePathname()
+  const isActive = checkIsActive(pathname, to)
 
   return (
     <div className="menu-item">
