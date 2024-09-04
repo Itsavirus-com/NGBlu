@@ -43,6 +43,17 @@ const SidebarMenuMain = () => {
         <SidebarMenuItem to="/dashboard/data-management/prices/types" title={t('priceTypes')} />
         <SidebarMenuItem to="/dashboard/data-management/prices/units" title={t('priceUnits')} />
       </SidebarMenuItemWithSub>
+
+      <SidebarMenuItem
+        to="/dashboard/data-management/persons"
+        title={t('persons')}
+        icon="profile-user"
+      />
+      <SidebarMenuItem
+        to="/dashboard/data-management/users"
+        title={t('users')}
+        icon="security-user"
+      />
     </>
   )
 }

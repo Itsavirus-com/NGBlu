@@ -23,7 +23,9 @@
       "pricePlans": "Price Plans",
       "priceTaxes": "Price Taxes",
       "priceTypes": "Price Types",
-      "priceUnits": "Price Units"
+      "priceUnits": "Price Units",
+      "users": "Users",
+      "persons": "Persons"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -270,6 +272,15 @@
         "id": "ID",
         "unit": "Unit"
       }
+    },
+    "users": {
+      "title": "Users",
+      "newUser": "New User",
+      "id": "ID",
+      "displayName": "Display Name",
+      "email": "Email",
+      "lastLogin": "Last Login",
+      "blocked": "Blocked"
     }
   }
 }
