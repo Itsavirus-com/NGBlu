@@ -1,0 +1,64 @@
+'use client'
+import { useTranslations } from 'next-intl'
+
+import { Table } from '@/components/table/table'
+import { TableColumn } from '@/components/table/table.type'
+import { Person } from '@/services/swr/models/person.type'
+
+import { PersonFilter } from './components/person-filter'
+
+export default function Persons() {
+  const t = useTranslations('dataManagement.persons')
+
+  const columns: TableColumn<Person>[] = [
+    {
+      id: 'id',
+      title: t('id'),
+      render: row => row.id,
+    },
+    {
+      id: 'firstName',
+      title: t('firstName'),
+      render: row => row.firstname,
+    },
+    {
+      id: 'lastName',
+      title: t('lastName'),
+      render: row => row.lastname,
+    },
+    {
+      id: 'personType',
+      title: t('personType'),
+      render: row => row.personType.type,
+    },
+    {
+      id: 'department',
+      title: t('department'),
+      render: row => row.department,
+    },
+    {
+      id: 'role',
+      title: t('role'),
+      render: row => row.role,
+    },
+  ]
+
+  return (
+    <Table<Person>
+      title={t('title')}
+      toolbars={[
+        {
+          icon: 'plus',
+          label: t('newPerson'),
+          colorClass: 'light-primary',
+          href: 'persons/new',
+        },
+      ]}
+      filters={<PersonFilter />}
+      columns={columns}
+      apiPath="persons"
+      actionBasePath="persons"
+      actions={['view', 'edit', 'delete']}
+    />
+  )
+}

@@ -281,6 +281,22 @@
       "email": "Email",
       "lastLogin": "Last Login",
       "blocked": "Blocked"
+    },
+    "persons": {
+      "title": "Persons",
+      "newPerson": "New Person",
+      "id": "ID",
+      "salutation": "Salutation",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "nameSuffix": "Name Suffix",
+      "namePrefix": "Name Prefix",
+      "pronounce": "Pronounce",
+      "gender": "Gender",
+      "personType": "Person Type",
+      "titles": "Titles",
+      "department": "Department",
+      "role": "Role"
     }
   }
 }
