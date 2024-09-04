@@ -1,4 +1,6 @@
 import { PriceConfig } from './price-config.type'
+import { Product } from './product.type'
+import { Service } from './service.type'
 
 export type PricePlan = {
   id: number
@@ -6,6 +8,8 @@ export type PricePlan = {
   isDefault: boolean
   priceConfig: PriceConfig
   fallbackPriceConfig: PriceConfig
+  product?: Product
+  service?: Service
   createdAt: string
   updatedAt: string
 }

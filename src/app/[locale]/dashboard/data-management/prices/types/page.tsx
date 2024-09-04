@@ -1,0 +1,45 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
+
+import { Table } from '@/components/table/table'
+import { TableColumn } from '@/components/table/table.type'
+import { PriceType } from '@/services/swr/models/price-type.types'
+
+import { PriceTypesFilter } from './components/price-type-filter'
+
+export default function PriceCurrencies() {
+  const t = useTranslations('dataManagement.prices.types')
+
+  const columns: TableColumn<PriceType>[] = [
+    {
+      id: 'id',
+      title: t('id'),
+      render: row => row.id,
+    },
+    {
+      id: 'type',
+      title: t('type'),
+      render: row => row.type,
+    },
+  ]
+
+  return (
+    <Table<PriceType>
+      title={t('title')}
+      toolbars={[
+        {
+          icon: 'plus',
+          label: t('newPriceType'),
+          colorClass: 'light-primary',
+          href: 'types/new',
+        },
+      ]}
+      filters={<PriceTypesFilter />}
+      columns={columns}
+      apiPath="prices/types"
+      actionBasePath="types"
+      actions={['edit', 'delete']}
+    />
+  )
+}

@@ -15,7 +15,14 @@
       "hierarchy": "Data Hierarchy",
       "dataManagement": "Data Management",
       "products": "Products",
-      "services": "Services"
+      "services": "Services",
+      "prices": "Prices",
+      "priceConfigs": "Price Configs",
+      "currencies": "Currencies",
+      "priceIntervals": "Price Intervals",
+      "pricePlans": "Price Plans",
+      "priceTypes": "Price Types",
+      "priceUnits": "Price Units"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -203,6 +210,55 @@
       "activeTo": "Active To",
       "product": "Product",
       "pricePlan": "Price Plan"
+    },
+    "prices": {
+      "configs": {
+        "title": "Price Configs",
+        "newPriceConfig": "New Price Config",
+        "id": "ID",
+        "price": "Price",
+        "unit": "Unit",
+        "interval": "Interval",
+        "type": "Type",
+        "tax": "Tax"
+      },
+      "currencies": {
+        "title": "Currencies",
+        "newCurrency": "New Currency",
+        "id": "ID",
+        "currency": "Currency"
+      },
+      "intervals": {
+        "title": "Price Intervals",
+        "newPriceInterval": "New Price Interval",
+        "id": "ID",
+        "name": "Name"
+      },
+      "plans": {
+        "title": "Price Plans",
+        "newPriceInterval": "New Price Plan",
+        "id": "ID",
+        "name": "Name",
+        "price": "Price",
+        "unit": "Unit",
+        "interval": "Interval",
+        "type": "Type",
+        "tax": "Tax",
+        "default": "Default",
+        "productOrService": "Product or Service"
+      },
+      "types": {
+        "title": "Price Types",
+        "newPriceType": "New Price Type",
+        "id": "ID",
+        "type": "Type"
+      },
+      "units": {
+        "title": "Price Units",
+        "newPriceUnit": "New Price Unit",
+        "id": "ID",
+        "unit": "Unit"
+      }
     }
   }
 }
