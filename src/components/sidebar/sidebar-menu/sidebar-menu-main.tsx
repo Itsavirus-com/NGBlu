@@ -85,6 +85,11 @@ const SidebarMenuMain = () => {
         title={t('projects')}
         icon="chart-line"
       />
+      <SidebarMenuItem
+        to="/dashboard/data-management/end-clients"
+        title={t('endClients')}
+        icon="profile-user"
+      />
     </>
   )
 }
