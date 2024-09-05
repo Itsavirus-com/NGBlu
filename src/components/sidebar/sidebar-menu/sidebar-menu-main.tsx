@@ -80,6 +80,11 @@ const SidebarMenuMain = () => {
         title={t('users')}
         icon="security-user"
       />
+      <SidebarMenuItem
+        to="/dashboard/data-management/projects"
+        title={t('projects')}
+        icon="chart-line"
+      />
     </>
   )
 }
