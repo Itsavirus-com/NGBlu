@@ -9,7 +9,6 @@ import { PricePlan } from '@/services/swr/models/price-plan.type'
 
 import { PricePlansFilter } from './components/price-plan-filter'
 
-
 export default function PriceCurrencies() {
   const t = useTranslations('dataManagement.prices.plans')
 

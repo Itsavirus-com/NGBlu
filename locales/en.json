@@ -22,7 +22,9 @@
       "priceIntervals": "Price Intervals",
       "pricePlans": "Price Plans",
       "priceTypes": "Price Types",
-      "priceUnits": "Price Units"
+      "priceUnits": "Price Units",
+      "users": "Users",
+      "persons": "Persons"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -259,6 +261,31 @@
         "id": "ID",
         "unit": "Unit"
       }
+    },
+    "users": {
+      "title": "Users",
+      "newUser": "New User",
+      "id": "ID",
+      "displayName": "Display Name",
+      "email": "Email",
+      "lastLogin": "Last Login",
+      "blocked": "Blocked"
+    },
+    "persons": {
+      "title": "Persons",
+      "newPerson": "New Person",
+      "id": "ID",
+      "salutation": "Salutation",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "nameSuffix": "Name Suffix",
+      "namePrefix": "Name Prefix",
+      "pronounce": "Pronounce",
+      "gender": "Gender",
+      "personType": "Person Type",
+      "titles": "Titles",
+      "department": "Department",
+      "role": "Role"
     }
   }
 }

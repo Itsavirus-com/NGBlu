@@ -2,9 +2,13 @@ import clsx from 'clsx'
 import React from 'react'
 
 import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { usePathname } from '@/navigation'
 import { WithChildren } from '@/types'
 
+import { checkIsActive } from './helper'
+
 type Props = {
+  to: string
   title: string
   icon?: string
   fontIcon?: string
@@ -12,12 +16,14 @@ type Props = {
 }
 
 const SidebarMenuItemWithSub: React.FC<Props & WithChildren> = ({
+  to,
   children,
   title,
   icon,
   hasBullet,
 }) => {
-  const isActive = false
+  const pathname = usePathname()
+  const isActive = checkIsActive(pathname, to)
 
   return (
     <div
