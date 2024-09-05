@@ -26,7 +26,8 @@
       "users": "Users",
       "persons": "Persons",
       "projects": "Projects",
-      "endClients": "End Clients"
+      "endClients": "End Clients",
+      "packages": "Packages"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -331,6 +332,18 @@
       "county": "County",
       "country": "Country",
       "postalCode": "Postal Code"
+    },
+    "packages": {
+      "title": "Packages",
+      "newPackage": "New Package",
+      "id": "ID",
+      "name": "Name",
+      "type": "Type",
+      "price": "Price",
+      "priceUnit": "Price Unit",
+      "priceInterval": "Price Interval",
+      "priceType": "Price Type",
+      "tax": "Tax"
     }
   }
 }

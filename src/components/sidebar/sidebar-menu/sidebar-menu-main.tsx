@@ -27,6 +27,11 @@ const SidebarMenuMain = () => {
         icon="delivery-3"
       />
       <SidebarMenuItem to="/dashboard/data-management/services" title={t('services')} icon="icon" />
+      <SidebarMenuItem
+        to="/dashboard/data-management/packages"
+        title={t('packages')}
+        icon="cube-2"
+      />
 
       <SidebarMenuItemWithSub
         to="/dashboard/data-management/prices"
