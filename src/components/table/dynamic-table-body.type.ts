@@ -5,4 +5,5 @@ export type DynamicTableBodyProps<TableValues> = {
   columns: TableColumn<TableValues>[]
   apiPath: string
   filters?: Record<string, any>
+  defaultFilters?: Record<string, any>
 } & TableActionsProps

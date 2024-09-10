@@ -11,7 +11,15 @@ import { TablePagination } from './table-pagination'
 export const DynamicTableBody = <TableValues extends Record<string, any>>(
   props: DynamicTableBodyProps<TableValues>
 ) => {
-  const { columns, apiPath, actions, customActions, actionBasePath, filters } = props
+  const {
+    columns,
+    apiPath,
+    actions,
+    customActions,
+    actionBasePath,
+    filters,
+    defaultFilters = {},
+  } = props
   const hasActions = !!actions?.length || !!customActions?.length
 
   const [page, setPage] = useState<number>(1)
@@ -20,7 +28,10 @@ export const DynamicTableBody = <TableValues extends Record<string, any>>(
   const { data, isLoading, pagination } = useTableData<TableValues>(apiPath, {
     page,
     limit: perPage,
-    ...filters,
+    filter: {
+      ...defaultFilters,
+      ...filters?.filter,
+    },
   })
 
   if (!columns?.length) return null

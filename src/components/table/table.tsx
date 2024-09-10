@@ -13,6 +13,7 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
     description,
     toolbars,
     filters: filterComponents,
+    defaultFilters,
     columns,
     apiPath,
     data,
@@ -55,6 +56,7 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
               actions={actions}
               actionBasePath={actionBasePath}
               filters={filters}
+              defaultFilters={defaultFilters}
             />
           )}
         </div>
