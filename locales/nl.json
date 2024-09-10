@@ -28,7 +28,11 @@
       "persons": "Persons",
       "projects": "Projects",
       "endClients": "End Clients",
-      "packages": "Packages"
+      "packages": "Packages",
+      "addresses": "Addresses",
+      "company": "Company",
+      "companies": "Companies",
+      "companyStatuses": "Company Statuses"
     },
     "table": {
       "filterOptions": "Filter Options",
