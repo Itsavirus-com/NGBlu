@@ -348,6 +348,25 @@
       "priceInterval": "Price Interval",
       "priceType": "Price Type",
       "tax": "Tax"
+    },
+    "addresses": {
+      "title": "Addresses",
+      "newAddress": "New Address",
+      "id": "ID",
+      "name": "Name",
+      "addressName": "Address Name",
+      "streetName": "Street Name",
+      "houseNumber": "House Number",
+      "houseNumberSuffix": "House Number Suffix",
+      "apartmentNumber": "Apartment Number",
+      "area": "Area",
+      "city": "City",
+      "county": "County",
+      "country": "Country",
+      "postalCode": "Postal Code",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "googleAddressId": "Google Address ID"
     }
   }
 }
