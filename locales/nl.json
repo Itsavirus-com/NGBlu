@@ -303,7 +303,15 @@
       "personType": "Person Type",
       "titles": "Titles",
       "department": "Department",
-      "role": "Role"
+      "role": "Role",
+      "generalInfo": "General Info",
+      "contacts": {
+        "title": "Contacts",
+        "newContact": "New Contact",
+        "id": "ID",
+        "contact": "Contact",
+        "contactType": "Contact Type"
+      }
     },
     "projects": {
       "title": "Projects",
