@@ -116,6 +116,11 @@ const SidebarMenuMain = () => {
         title={t('addresses')}
         icon="map"
       />
+      <SidebarMenuItem
+        to="/dashboard/data-management/genders"
+        title={t('genders')}
+        icon="paintbucket"
+      />
     </>
   )
 }

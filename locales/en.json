@@ -31,7 +31,8 @@
       "addresses": "Addresses",
       "company": "Company",
       "companies": "Companies",
-      "companyStatuses": "Company Statuses"
+      "companyStatuses": "Company Statuses",
+      "genders": "Genders"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -408,6 +409,12 @@
       "newCompanyStatus": "New Company Status",
       "id": "ID",
       "status": "Status"
+    },
+    "genders": {
+      "title": "Genders",
+      "newGender": "New Gender",
+      "id": "ID",
+      "gender": "Gender"
     }
   }
 }
