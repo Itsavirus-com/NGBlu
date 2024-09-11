@@ -121,6 +121,11 @@ const SidebarMenuMain = () => {
         title={t('genders')}
         icon="paintbucket"
       />
+      <SidebarMenuItem
+        to="/dashboard/data-management/countries"
+        title={t('countries')}
+        icon="flag"
+      />
     </>
   )
 }

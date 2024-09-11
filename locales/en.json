@@ -32,7 +32,8 @@
       "company": "Company",
       "companies": "Companies",
       "companyStatuses": "Company Statuses",
-      "genders": "Genders"
+      "genders": "Genders",
+      "countries": "Countries"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -415,6 +416,16 @@
       "newGender": "New Gender",
       "id": "ID",
       "gender": "Gender"
+    },
+    "countries": {
+      "title": "Countries",
+      "newCountry": "New Country",
+      "id": "ID",
+      "name": "Name",
+      "iso": "ISO",
+      "locale": "Locale",
+      "currency": "Currency",
+      "decimalSymbol": "Decimal Symbol"
     }
   }
 }
