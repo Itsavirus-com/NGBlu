@@ -18,6 +18,7 @@ export type TableProps<TableValues> = {
   columns: TableColumn<TableValues>[]
   toolbars?: ButtonProps[]
   filters?: ReactNode
+  defaultFilters?: Record<string, any>
   apiPath?: string
   data?: TableValues[]
   className?: string

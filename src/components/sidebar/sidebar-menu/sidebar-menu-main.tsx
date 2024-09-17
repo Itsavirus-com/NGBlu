@@ -95,6 +95,27 @@ const SidebarMenuMain = () => {
         title={t('endClients')}
         icon="profile-user"
       />
+      <SidebarMenuItemWithSub
+        to="/dashboard/data-management/company"
+        title={t('company')}
+        icon="home-3"
+      >
+        <SidebarMenuItem
+          to="/dashboard/data-management/company/companies"
+          title={t('companies')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/company/statuses"
+          title={t('companyStatuses')}
+          hasBullet
+        />
+      </SidebarMenuItemWithSub>
+      <SidebarMenuItem
+        to="/dashboard/data-management/addresses"
+        title={t('addresses')}
+        icon="map"
+      />
     </>
   )
 }

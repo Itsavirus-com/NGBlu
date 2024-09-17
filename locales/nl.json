@@ -28,7 +28,11 @@
       "persons": "Persons",
       "projects": "Projects",
       "endClients": "End Clients",
-      "packages": "Packages"
+      "packages": "Packages",
+      "addresses": "Addresses",
+      "company": "Company",
+      "companies": "Companies",
+      "companyStatuses": "Company Statuses"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -299,7 +303,15 @@
       "personType": "Person Type",
       "titles": "Titles",
       "department": "Department",
-      "role": "Role"
+      "role": "Role",
+      "generalInfo": "General Info",
+      "contacts": {
+        "title": "Contacts",
+        "newContact": "New Contact",
+        "id": "ID",
+        "contact": "Contact",
+        "contactType": "Contact Type"
+      }
     },
     "projects": {
       "title": "Projects",
@@ -355,6 +367,58 @@
       "priceInterval": "Price Interval",
       "priceType": "Price Type",
       "tax": "Tax"
+    },
+    "addresses": {
+      "title": "Addresses",
+      "newAddress": "New Address",
+      "id": "ID",
+      "name": "Name",
+      "addressName": "Address Name",
+      "streetName": "Street Name",
+      "houseNumber": "House Number",
+      "houseNumberSuffix": "House Number Suffix",
+      "apartmentNumber": "Apartment Number",
+      "area": "Area",
+      "city": "City",
+      "county": "County",
+      "country": "Country",
+      "postalCode": "Postal Code",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "googleAddressId": "Google Address ID"
+    },
+    "companies": {
+      "title": "Companies",
+      "newCompany": "New Company",
+      "id": "ID",
+      "name": "Name",
+      "status": "Status",
+      "vatNumber": "VAT Number",
+      "kvkNumber": "KVK Number",
+      "generalInfo": "General Info",
+      "legalAddress": "Legal Address",
+      "postalAddress": "Postal Address",
+      "visitAddress": "Visit Address",
+      "invoiceAddress": "Invoice Address",
+      "addressName": "Address Name",
+      "streetName": "Street Name",
+      "houseNumber": "House Number",
+      "houseNumberSuffix": "House Number Suffix",
+      "apartmentNumber": "Apartment Number",
+      "area": "Area",
+      "city": "City",
+      "county": "County",
+      "country": "Country",
+      "postalCode": "Postal Code",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "googleAddressId": "Google Address ID"
+    },
+    "companyStatuses": {
+      "title": "Company Statuses",
+      "newCompanyStatus": "New Company Status",
+      "id": "ID",
+      "status": "Status"
     }
   }
 }
