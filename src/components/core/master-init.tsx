@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 
 import { DrawerComponent } from './drawer-component'
 import { MenuComponent } from './menu-component'
+import { ScrollComponent } from './scroll-component'
+import { ScrollTopComponent } from './scroll-top-component'
 import { ToggleComponent } from './toggle-component'
 
 export function MasterInit() {
@@ -10,6 +12,8 @@ export function MasterInit() {
       ToggleComponent.bootstrap()
       MenuComponent.bootstrap()
       DrawerComponent.bootstrap()
+      ScrollTopComponent.bootstrap()
+      ScrollComponent.bootstrap()
     }, 500)
   }
 

@@ -32,7 +32,12 @@
       "addresses": "Addresses",
       "company": "Company",
       "companies": "Companies",
-      "companyStatuses": "Company Statuses"
+      "companyStatuses": "Company Statuses",
+      "genders": "Genders",
+      "countries": "Countries",
+      "creditCard": "Credit Card",
+      "creditCardTypes": "Credit Card Types",
+      "creditCardBrands": "Credit Card Brands"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -419,6 +424,34 @@
       "newCompanyStatus": "New Company Status",
       "id": "ID",
       "status": "Status"
+    },
+    "genders": {
+      "title": "Genders",
+      "newGender": "New Gender",
+      "id": "ID",
+      "gender": "Gender"
+    },
+    "countries": {
+      "title": "Countries",
+      "newCountry": "New Country",
+      "id": "ID",
+      "name": "Name",
+      "iso": "ISO",
+      "locale": "Locale",
+      "currency": "Currency",
+      "decimalSymbol": "Decimal Symbol"
+    },
+    "creditCardTypes": {
+      "title": "Credit Card Types",
+      "newCreditCardType": "New Credit Card Type",
+      "id": "ID",
+      "type": "Type"
+    },
+    "creditCardBrands": {
+      "title": "Credit Card Brands",
+      "newCreditCardBrand": "New Credit Card Brand",
+      "id": "ID",
+      "brand": "Brand"
     }
   }
 }

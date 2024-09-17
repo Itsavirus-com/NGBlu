@@ -116,6 +116,32 @@ const SidebarMenuMain = () => {
         title={t('addresses')}
         icon="map"
       />
+      <SidebarMenuItem
+        to="/dashboard/data-management/genders"
+        title={t('genders')}
+        icon="paintbucket"
+      />
+      <SidebarMenuItem
+        to="/dashboard/data-management/countries"
+        title={t('countries')}
+        icon="flag"
+      />
+      <SidebarMenuItemWithSub
+        to="/dashboard/data-management/credit-card"
+        title={t('creditCard')}
+        icon="credit-cart"
+      >
+        <SidebarMenuItem
+          to="/dashboard/data-management/credit-card/types"
+          title={t('creditCardTypes')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/credit-card/brands"
+          title={t('creditCardBrands')}
+          hasBullet
+        />
+      </SidebarMenuItemWithSub>
     </>
   )
 }
