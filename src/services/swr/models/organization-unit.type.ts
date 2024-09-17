@@ -1,4 +1,4 @@
-import { Address } from './address.types'
+import { Address } from './address.type'
 import { Namespace } from './namespace.type'
 
 export type OrganizationUnit = {

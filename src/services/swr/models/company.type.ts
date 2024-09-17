@@ -1,4 +1,4 @@
-import { Address } from './address.types'
+import { Address } from './address.type'
 import { CompanyStatus } from './company-status.type'
 
 export type Company = {

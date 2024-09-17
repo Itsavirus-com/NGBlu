@@ -1,6 +1,6 @@
 import { ApiResponse } from 'apisauce'
 
-import { ApiErrorKind, GeneralApiProblem } from './api-problem.types'
+import { ApiErrorKind, GeneralApiProblem } from './api-problem.type'
 
 /**
  * Attempts to get a common cause of problems from an api response.

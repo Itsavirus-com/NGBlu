@@ -1,4 +1,4 @@
-import { Address } from '@/services/swr/models/address.types'
+import { Address } from '@/services/swr/models/address.type'
 
 export type AddressProps = {
   title: string

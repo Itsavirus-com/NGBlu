@@ -1,7 +1,7 @@
 import camelCase from 'lodash/camelCase'
 import snakeCase from 'lodash/snakeCase'
 
-import { AnyObject, KeyConverter } from './object.types'
+import { AnyObject, KeyConverter } from './object.type'
 
 export const snakeCaseKeys: KeyConverter = data => {
   if (!data) return data

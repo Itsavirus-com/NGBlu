@@ -2,7 +2,7 @@
 
 import snakeCase from 'lodash/snakeCase'
 
-import { Config } from './serialize-formdata.types'
+import { Config } from './serialize-formdata.type'
 
 const isUndefined = (value: any) => {
   return value === undefined

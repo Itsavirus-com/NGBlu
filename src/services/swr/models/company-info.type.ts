@@ -1,4 +1,4 @@
-import { Address } from './address.types'
+import { Address } from './address.type'
 
 export type CompanyInfo = {
   id: number

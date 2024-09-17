@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl'
 
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
-import { Address } from '@/services/swr/models/address.types'
+import { Address } from '@/services/swr/models/address.type'
 
 import { AddressFilter } from './components/address-filter'
 

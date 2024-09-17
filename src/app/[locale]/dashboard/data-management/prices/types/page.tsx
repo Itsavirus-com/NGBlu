@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
-import { PriceType } from '@/services/swr/models/price-type.types'
+import { PriceType } from '@/services/swr/models/price-type.type'
 
 import { PriceTypesFilter } from './components/price-type-filter'
 
