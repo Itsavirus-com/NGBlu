@@ -11,7 +11,7 @@ const SidebarMenuMain = () => {
     <>
       <SidebarMenuItem to="/dashboard" icon="element-11" title={t('dashboard')} />
 
-      <SidebarMenuSeparator title={t('data_validation')} />
+      <SidebarMenuSeparator title={t('dataValidation')} />
       <SidebarMenuItem to="/dashboard/data-validation/kvk" title={t('kvk')} icon="shield" />
       <SidebarMenuItem to="/dashboard/data-validation/google" title={t('google')} icon="google" />
       <SidebarMenuItem

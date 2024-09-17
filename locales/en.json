@@ -9,7 +9,7 @@
     },
     "sidebar": {
       "dashboard": "Dashboard",
-      "data_validation": "Data Validation",
+      "dataValidation": "Data Validation",
       "kvk": "KVK",
       "google": "Google",
       "hierarchy": "Data Hierarchy",
@@ -21,6 +21,7 @@
       "currencies": "Currencies",
       "priceIntervals": "Price Intervals",
       "pricePlans": "Price Plans",
+      "priceTaxes": "Price Taxes",
       "priceTypes": "Price Types",
       "priceUnits": "Price Units",
       "users": "Users",
@@ -73,7 +74,7 @@
       "sign_in_button": "Sign in with Microsoft"
     }
   },
-  "data_validation": {
+  "dataValidation": {
     "reject": "Reject",
     "accept": "Accept",
     "unconfirmed": "Unconfirmed",
@@ -98,11 +99,11 @@
       "lat": "Latitude",
       "lon": "Longitude"
     },
-    "data_hierarchy": {
+    "dataHierarchy": {
       "title": "Data Hierarchy",
       "showDetails": "Show Details",
       "addresses": "Addresses",
-      "business_partners": "Business Partners",
+      "businessPartners": "Business Partners",
       "contacts": "Contacts",
       "customers": "Customers",
       "projects": "Projects",
@@ -261,6 +262,16 @@
         "tax": "Tax",
         "default": "Default",
         "productOrService": "Product or Service"
+      },
+      "taxes": {
+        "title": "Price Taxes",
+        "newPriceTax": "New Price Tax",
+        "id": "ID",
+        "name": "Name",
+        "value": "Value",
+        "currency": "Currency",
+        "unit": "Unit",
+        "country": "Country"
       },
       "types": {
         "title": "Price Types",

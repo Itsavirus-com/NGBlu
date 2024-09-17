@@ -13,7 +13,7 @@ import useKvkForm from './kvk-form.hook'
 import './style.scss'
 
 export default function Kvk() {
-  const t = useTranslations('data_validation')
+  const t = useTranslations('dataValidation')
 
   useOriginalAddress('10029')
   useProposedAddress('google')

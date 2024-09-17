@@ -9,7 +9,7 @@
     },
     "sidebar": {
       "dashboard": "Dashboard",
-      "data_validation": "Data Validation",
+      "dataValidation": "Data Validation",
       "kvk": "KVK",
       "google": "Google",
       "hierarchy": "Data Hierarchy",
@@ -74,7 +74,7 @@
       "sign_in_button": "Log in met Microsoft"
     }
   },
-  "data_validation": {
+  "dataValidation": {
     "reject": "Reject",
     "accept": "Accept",
     "unconfirmed": "Unconfirmed",
@@ -99,11 +99,11 @@
       "lat": "Latitude",
       "lon": "Longitude"
     },
-    "data_hierarchy": {
+    "dataHierarchy": {
       "title": "Data Hierarchy",
       "showDetails": "Show Details",
       "addresses": "Addresses",
-      "business_partners": "Business Partners",
+      "businessPartners": "Business Partners",
       "contacts": "Contacts",
       "customers": "Customers",
       "projects": "Projects",

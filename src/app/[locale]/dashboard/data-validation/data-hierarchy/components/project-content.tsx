@@ -7,7 +7,7 @@ import { ContentProps } from './dynamic-drawer.type'
 import { TextWithLabel } from './text-with-label'
 
 export const ProjectContent = ({ data }: ContentProps) => {
-  const t = useTranslations('data_validation.data_hierarchy')
+  const t = useTranslations('dataValidation.dataHierarchy')
 
   return (
     <Tabs defaultActiveKey="generalInfo" id="projectTabs">

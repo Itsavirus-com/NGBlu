@@ -10,7 +10,7 @@ import { TextWithLabel } from './text-with-label'
 
 export const UserContent = ({ data }: ContentProps) => {
   const tCommon = useTranslations('common')
-  const t = useTranslations('data_validation.data_hierarchy')
+  const t = useTranslations('dataValidation.dataHierarchy')
 
   return (
     <Tabs defaultActiveKey="user" id="userTabs">

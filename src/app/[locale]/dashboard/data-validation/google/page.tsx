@@ -12,7 +12,7 @@ import { GoogleMap } from './google-map'
 import './style.scss'
 
 export default function Google() {
-  const t = useTranslations('data_validation')
+  const t = useTranslations('dataValidation')
 
   const { methods, onSubmit } = useGoogleForm()
 
