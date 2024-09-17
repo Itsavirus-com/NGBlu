@@ -31,13 +31,13 @@ export default function CreditCardTypes() {
           icon: 'plus',
           label: t('newCreditCardType'),
           colorClass: 'light-primary',
-          href: 'types/new',
+          href: 'credit-card-types/new',
         },
       ]}
       filters={<CreditCardTypeFilter />}
       columns={columns}
       apiPath="credit-cards/types"
-      actionBasePath="types"
+      actionBasePath="credit-card-types"
       actions={['edit', 'delete']}
     />
   )

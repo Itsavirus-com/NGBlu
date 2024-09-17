@@ -31,13 +31,13 @@ export default function CreditCardBrands() {
           icon: 'plus',
           label: t('newCreditCardBrand'),
           colorClass: 'light-primary',
-          href: 'brands/new',
+          href: 'credit-card-brands/new',
         },
       ]}
       filters={<CreditCardBrandFilter />}
       columns={columns}
       apiPath="credit-cards/brands"
-      actionBasePath="brands"
+      actionBasePath="credit-card-brands"
       actions={['edit', 'delete']}
     />
   )

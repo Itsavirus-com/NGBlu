@@ -35,7 +35,9 @@
       "companyStatuses": "Company Statuses",
       "genders": "Genders",
       "countries": "Countries",
-      "creditCard": "Credit Card",
+      "payment": "Payment",
+      "payments": "Payments",
+      "paymentTypes": "Payment Types",
       "creditCardTypes": "Credit Card Types",
       "creditCardBrands": "Credit Card Brands",
       "organizationUnits": "Organization Units"
