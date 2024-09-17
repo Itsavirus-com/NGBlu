@@ -112,6 +112,11 @@ const SidebarMenuMain = () => {
         />
       </SidebarMenuItemWithSub>
       <SidebarMenuItem
+        to="/dashboard/data-management/organization-units"
+        title={t('organizationUnits')}
+        icon="data"
+      />
+      <SidebarMenuItem
         to="/dashboard/data-management/addresses"
         title={t('addresses')}
         icon="map"
