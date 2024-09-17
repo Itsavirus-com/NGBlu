@@ -27,6 +27,11 @@ const SidebarMenuMain = () => {
         icon="delivery-3"
       />
       <SidebarMenuItem to="/dashboard/data-management/services" title={t('services')} icon="icon" />
+      <SidebarMenuItem
+        to="/dashboard/data-management/packages"
+        title={t('packages')}
+        icon="cube-2"
+      />
 
       <SidebarMenuItemWithSub
         to="/dashboard/data-management/prices"
@@ -79,6 +84,16 @@ const SidebarMenuMain = () => {
         to="/dashboard/data-management/users"
         title={t('users')}
         icon="security-user"
+      />
+      <SidebarMenuItem
+        to="/dashboard/data-management/projects"
+        title={t('projects')}
+        icon="chart-line"
+      />
+      <SidebarMenuItem
+        to="/dashboard/data-management/end-clients"
+        title={t('endClients')}
+        icon="profile-user"
       />
     </>
   )

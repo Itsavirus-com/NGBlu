@@ -25,7 +25,10 @@
       "priceTypes": "Price Types",
       "priceUnits": "Price Units",
       "users": "Users",
-      "persons": "Persons"
+      "persons": "Persons",
+      "projects": "Projects",
+      "endClients": "End Clients",
+      "packages": "Packages"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -297,6 +300,61 @@
       "titles": "Titles",
       "department": "Department",
       "role": "Role"
+    },
+    "projects": {
+      "title": "Projects",
+      "newProject": "New Project",
+      "id": "ID",
+      "projectName": "Project Name",
+      "projectType": "Project Type",
+      "projectInfo": "Project Info",
+      "address": "Address",
+      "addressName": "Address Name",
+      "streetName": "Street Name",
+      "houseNumber": "House Number",
+      "houseNumberSuffix": "House Number Suffix",
+      "apartmentNumber": "Apartment Number",
+      "area": "Area",
+      "city": "City",
+      "county": "County",
+      "country": "Country",
+      "postalCode": "Postal Code",
+      "generalInfo": "General Info",
+      "location": "Location"
+    },
+    "endClients": {
+      "title": "End Clients",
+      "newEndClient": "New End Client",
+      "id": "ID",
+      "name": "Name",
+      "type": "Type",
+      "status": "Status",
+      "accountNumber": "Account Number",
+      "referenceId": "Reference ID",
+      "afasId": "AFAS ID",
+      "address": "Address",
+      "addressName": "Address Name",
+      "streetName": "Street Name",
+      "houseNumber": "House Number",
+      "houseNumberSuffix": "House Number Suffix",
+      "apartmentNumber": "Apartment Number",
+      "area": "Area",
+      "city": "City",
+      "county": "County",
+      "country": "Country",
+      "postalCode": "Postal Code"
+    },
+    "packages": {
+      "title": "Packages",
+      "newPackage": "New Package",
+      "id": "ID",
+      "name": "Name",
+      "type": "Type",
+      "price": "Price",
+      "priceUnit": "Price Unit",
+      "priceInterval": "Price Interval",
+      "priceType": "Price Type",
+      "tax": "Tax"
     }
   }
 }
