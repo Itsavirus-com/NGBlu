@@ -11,7 +11,7 @@ const SidebarMenuMain = () => {
     <>
       <SidebarMenuItem to="/dashboard" icon="element-11" title={t('dashboard')} />
 
-      <SidebarMenuSeparator title={t('data_validation')} />
+      <SidebarMenuSeparator title={t('dataValidation')} />
       <SidebarMenuItem to="/dashboard/data-validation/kvk" title={t('kvk')} icon="shield" />
       <SidebarMenuItem to="/dashboard/data-validation/google" title={t('google')} icon="google" />
       <SidebarMenuItem
@@ -112,6 +112,11 @@ const SidebarMenuMain = () => {
         />
       </SidebarMenuItemWithSub>
       <SidebarMenuItem
+        to="/dashboard/data-management/organization-units"
+        title={t('organizationUnits')}
+        icon="data"
+      />
+      <SidebarMenuItem
         to="/dashboard/data-management/addresses"
         title={t('addresses')}
         icon="map"
@@ -127,17 +132,27 @@ const SidebarMenuMain = () => {
         icon="flag"
       />
       <SidebarMenuItemWithSub
-        to="/dashboard/data-management/credit-card"
-        title={t('creditCard')}
+        to="/dashboard/data-management/payment"
+        title={t('payment')}
         icon="credit-cart"
       >
         <SidebarMenuItem
-          to="/dashboard/data-management/credit-card/types"
+          to="/dashboard/data-management/payment/payments"
+          title={t('payments')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/payment/types"
+          title={t('paymentTypes')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/payment/credit-card-types"
           title={t('creditCardTypes')}
           hasBullet
         />
         <SidebarMenuItem
-          to="/dashboard/data-management/credit-card/brands"
+          to="/dashboard/data-management/payment/credit-card-brands"
           title={t('creditCardBrands')}
           hasBullet
         />

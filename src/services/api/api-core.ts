@@ -1,7 +1,7 @@
 import { ApiResponse, ApisauceInstance, create } from 'apisauce'
 import { getSession } from 'next-auth/react'
 
-import { ApiParams, RequestMethod } from './api-core.types'
+import { ApiParams, RequestMethod } from './api-core.type'
 import { getGeneralApiProblem } from './helpers/api-problem'
 import { camelizeKeys, snakeCaseKeys } from './helpers/object'
 import { serialize } from './helpers/serialize-formdata'

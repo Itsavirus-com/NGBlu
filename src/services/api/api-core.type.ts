@@ -1,4 +1,4 @@
-import { GeneralApiProblem } from './helpers/api-problem.types'
+import { GeneralApiProblem } from './helpers/api-problem.type'
 
 export type RequestMethod = 'get' | 'post' | 'put' | 'patch' | 'delete'
 

@@ -9,7 +9,7 @@
     },
     "sidebar": {
       "dashboard": "Dashboard",
-      "data_validation": "Data Validation",
+      "dataValidation": "Data Validation",
       "kvk": "KVK",
       "google": "Google",
       "hierarchy": "Data Hierarchy",
@@ -35,9 +35,12 @@
       "companyStatuses": "Company Statuses",
       "genders": "Genders",
       "countries": "Countries",
-      "creditCard": "Credit Card",
+      "payment": "Payment",
+      "payments": "Payments",
+      "paymentTypes": "Payment Types",
       "creditCardTypes": "Credit Card Types",
-      "creditCardBrands": "Credit Card Brands"
+      "creditCardBrands": "Credit Card Brands",
+      "organizationUnits": "Organization Units"
     },
     "table": {
       "filterOptions": "Filter Options",
@@ -73,7 +76,7 @@
       "sign_in_button": "Log in met Microsoft"
     }
   },
-  "data_validation": {
+  "dataValidation": {
     "reject": "Reject",
     "accept": "Accept",
     "unconfirmed": "Unconfirmed",
@@ -98,11 +101,11 @@
       "lat": "Latitude",
       "lon": "Longitude"
     },
-    "data_hierarchy": {
+    "dataHierarchy": {
       "title": "Data Hierarchy",
       "showDetails": "Show Details",
       "addresses": "Addresses",
-      "business_partners": "Business Partners",
+      "businessPartners": "Business Partners",
       "contacts": "Contacts",
       "customers": "Customers",
       "projects": "Projects",
@@ -441,6 +444,43 @@
       "currency": "Currency",
       "decimalSymbol": "Decimal Symbol"
     },
+    "payments": {
+      "title": "Payments",
+      "id": "ID",
+      "personName": "Person Name",
+      "bankName": "Bank Name",
+      "paymentType": "Payment Type",
+      "paymentDetails": "Payment Details",
+      "generalInfo": "General Info",
+      "bankIban": "Bank IBAN",
+      "bankBic": "Bank BIC",
+      "creditCardInfo": "Credit Card Info",
+      "creditCardNumber": "Credit Card Number",
+      "validTo": "Valid To",
+      "ccv": "CCV",
+      "creditCardType": "Credit Card Type",
+      "creditCardBrand": "Credit Card Brand",
+      "bankAddress": "Bank Address",
+      "addressName": "Address Name",
+      "streetName": "Street Name",
+      "houseNumber": "House Number",
+      "houseNumberSuffix": "House Number Suffix",
+      "apartmentNumber": "Apartment Number",
+      "area": "Area",
+      "city": "City",
+      "county": "County",
+      "country": "Country",
+      "postalCode": "Postal Code",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "googleAddressId": "Google Address ID"
+    },
+    "paymentTypes": {
+      "title": "Payment Types",
+      "newCreditCardBrand": "New Payment Type",
+      "id": "ID",
+      "name": "Name"
+    },
     "creditCardTypes": {
       "title": "Credit Card Types",
       "newCreditCardType": "New Credit Card Type",
@@ -452,6 +492,25 @@
       "newCreditCardBrand": "New Credit Card Brand",
       "id": "ID",
       "brand": "Brand"
+    },
+    "organizationUnits": {
+      "title": "Organization Units",
+      "newOrganizationUnit": "New Organization Unit",
+      "id": "ID",
+      "name": "Name",
+      "addressName": "Address Name",
+      "streetName": "Street Name",
+      "houseNumber": "House Number",
+      "houseNumberSuffix": "House Number Suffix",
+      "apartmentNumber": "Apartment Number",
+      "area": "Area",
+      "city": "City",
+      "county": "County",
+      "country": "Country",
+      "postalCode": "Postal Code",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "googleAddressId": "Google Address ID"
     }
   }
 }

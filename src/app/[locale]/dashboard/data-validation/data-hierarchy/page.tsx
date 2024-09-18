@@ -28,7 +28,7 @@ import 'react-complex-tree/lib/style-modern.css'
 import './style.scss'
 
 export default function Validation() {
-  const t = useTranslations('data_validation.data_hierarchy')
+  const t = useTranslations('dataValidation.dataHierarchy')
 
   const [selectedItem, setSelectedItem] = useState<TreeData | null>(null)
 
@@ -111,7 +111,7 @@ export default function Validation() {
       ),
       data: {
         type: 'group',
-        name: t('business_partners'),
+        name: t('businessPartners'),
       },
       canRename: false,
     }
@@ -319,7 +319,7 @@ export default function Validation() {
       ),
       data: {
         type: 'group',
-        name: t('business_partners'),
+        name: t('businessPartners'),
       },
       canRename: false,
     }

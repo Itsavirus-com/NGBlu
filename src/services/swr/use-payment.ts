@@ -2,12 +2,12 @@ import useSWR from 'swr'
 import { derive } from 'valtio/utils'
 
 import { modelAdaptor } from './middleware/model-adaptor'
-import { Address } from './models/address.type'
+import { Payment } from './models/payment.type'
 
-export const useAddress = (addressId: number) => {
-  const { data, mutate, isLoading } = useSWR<Address>(
+export const usePayment = (paymentId: number) => {
+  const { data, mutate, isLoading } = useSWR<Payment>(
     {
-      path: `addresses/${addressId}`,
+      path: `payments/details/${paymentId}`,
     },
     {
       use: [modelAdaptor(() => derive({}), 'data')],

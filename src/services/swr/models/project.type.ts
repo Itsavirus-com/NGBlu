@@ -1,4 +1,4 @@
-import { Address } from './address.types'
+import { Address } from './address.type'
 import { ProjectInfo } from './project-info.type'
 import { ProjectType } from './project-type'
 

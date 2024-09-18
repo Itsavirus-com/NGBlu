@@ -4,7 +4,7 @@ import { PersonDetailsProps } from './person-details.type'
 import { TextWithLabel } from './text-with-label'
 
 export const PersonDetails = ({ person }: PersonDetailsProps) => {
-  const t = useTranslations('data_validation.data_hierarchy.contact')
+  const t = useTranslations('dataValidation.dataHierarchy.contact')
 
   return (
     <>

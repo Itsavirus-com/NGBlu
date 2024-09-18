@@ -1,4 +1,4 @@
-import { Address } from './address.types'
+import { Address } from './address.type'
 import { CompanyInfo } from './company-info.type'
 import { EndClientStatus } from './end-client-status.type'
 import { EndClientType } from './end-client-type.type'

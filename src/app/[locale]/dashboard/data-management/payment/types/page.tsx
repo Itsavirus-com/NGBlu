@@ -3,40 +3,40 @@ import { useTranslations } from 'next-intl'
 
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
-import { CreditCardType } from '@/services/swr/models/credit-card-type.type'
+import { PaymentType } from '@/services/swr/models/payment-type.type'
 
-import { CreditCardTypeFilter } from './components/credit-card-type-filter'
+import { PaymentTypeFilter } from './components/payment-type-filter'
 
-export default function CreditCardTypes() {
-  const t = useTranslations('dataManagement.creditCardTypes')
+export default function PaymentTypes() {
+  const t = useTranslations('dataManagement.paymentTypes')
 
-  const columns: TableColumn<CreditCardType>[] = [
+  const columns: TableColumn<PaymentType>[] = [
     {
       id: 'id',
       title: t('id'),
       render: row => row.id,
     },
     {
-      id: 'type',
-      title: t('type'),
-      render: row => row.creditcardType,
+      id: 'name',
+      title: t('name'),
+      render: row => row.paymentType,
     },
   ]
 
   return (
-    <Table<CreditCardType>
+    <Table<PaymentType>
       title={t('title')}
       toolbars={[
         {
           icon: 'plus',
-          label: t('newCreditCardType'),
+          label: t('newCreditCardBrand'),
           colorClass: 'light-primary',
           href: 'types/new',
         },
       ]}
-      filters={<CreditCardTypeFilter />}
+      filters={<PaymentTypeFilter />}
       columns={columns}
-      apiPath="credit-cards/types"
+      apiPath="payments/types"
       actionBasePath="types"
       actions={['edit', 'delete']}
     />
