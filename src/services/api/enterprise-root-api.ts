@@ -56,6 +56,10 @@ export class EnterpriseRootApi extends ApiCore {
   async getEnterpriseRootOrgUnitDetails(id: string, orgUnitId: string) {
     return await this.get({ path: `enterprise-roots/${id}/organisational-units/${orgUnitId}` })
   }
+
+  async getItemDetails(path: string) {
+    return await this.get({ path })
+  }
 }
 
 export const enterpriseRootApi = new EnterpriseRootApi()

@@ -720,7 +720,7 @@ export default function Validation() {
         </Card>
       </div>
 
-      <DynamicDrawer item={selectedItem} />
+      <DynamicDrawer item={selectedItem} onBreadcrumbPress={item => setSelectedItem(item)} />
     </>
   )
 }
