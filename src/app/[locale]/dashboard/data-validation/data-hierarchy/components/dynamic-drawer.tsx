@@ -9,6 +9,7 @@ import { CustomerContent } from './customer-content'
 import { DynamicDrawerProps } from './dynamic-drawer.type'
 import { EnterpriseRootContent } from './enterprise-root-content'
 import { generateItemIcon, generateItemId, generateItemTitle, generateItemType } from './helper'
+import { OrgUnitContent } from './org-unit-content'
 import { ProjectContent } from './project-content'
 import { UserContent } from './user-content'
 
@@ -61,6 +62,9 @@ export const DynamicDrawer = ({ item }: DynamicDrawerProps) => {
       case 'enterprise-root-user':
       case 'business-partner-user':
         return <UserContent data={item.data} />
+      case 'enterprise-root-org-unit':
+      case 'business-partner-org-unit':
+        return <OrgUnitContent data={item.data} />
       default:
         return null
     }

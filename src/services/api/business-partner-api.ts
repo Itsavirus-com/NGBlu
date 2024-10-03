@@ -45,8 +45,16 @@ export class BusinessPartnerApi extends ApiCore {
     return await this.get({ path: `business-partners/${id}/projects` })
   }
 
-  async getEnterpriseRootProjectDetails(id: string, customerId: string) {
-    return await this.get({ path: `business-partners/${id}/projects/${customerId}` })
+  async getEnterpriseRootProjectDetails(id: string, projectId: string) {
+    return await this.get({ path: `business-partners/${id}/projects/${projectId}` })
+  }
+
+  async getEnterpriseRootOrgUnits(id: string) {
+    return await this.get({ path: `business-partners/${id}/organisational-units` })
+  }
+
+  async getEnterpriseRootOrgUnitDetails(id: string, orgUnitId: string) {
+    return await this.get({ path: `business-partners/${id}/organisational-units/${orgUnitId}` })
   }
 }
 

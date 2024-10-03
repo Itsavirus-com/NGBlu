@@ -59,6 +59,7 @@ export default function Validation() {
         `enterprise-root-customers-${id}`,
         `enterprise-root-projects-${id}`,
         `enterprise-root-users-${id}`,
+        `enterprise-root-org-units-${id}`,
       ],
       data: res.data.data,
       canRename: true,
@@ -134,6 +135,7 @@ export default function Validation() {
         `business-partner-customers-${businessPartnerId}`,
         `business-partner-projects-${businessPartnerId}`,
         `business-partner-users-${businessPartnerId}`,
+        `business-partner-org-units-${businessPartnerId}`,
       ],
       data: res.data.data,
       canRename: false,
@@ -273,6 +275,40 @@ export default function Validation() {
     }
   }
 
+  const loadEnterpriseRootOrgUnits = async (id: string): Promise<TreeData> => {
+    const res = await enterpriseRootApi.getEnterpriseRootOrgUnits(id)
+
+    return {
+      index: `enterprise-root-org-units-${id}`,
+      canMove: false,
+      isFolder: true,
+      children: res.data.data.map(
+        (item: Record<string, any>) => `enterprise-root-org-unit-${id}-${item.id}`
+      ),
+      data: {
+        type: 'group',
+        name: t('orgUnits'),
+      },
+      canRename: false,
+    }
+  }
+
+  const loadEnterpriseRootOrgUnitDetails = async (
+    id: string,
+    orgUnitId: string
+  ): Promise<TreeData> => {
+    const res = await enterpriseRootApi.getEnterpriseRootOrgUnitDetails(id, orgUnitId)
+
+    return {
+      index: `enterprise-root-org-unit-${id}-${orgUnitId}`,
+      canMove: true,
+      isFolder: false,
+      children: [],
+      data: res.data.data,
+      canRename: true,
+    }
+  }
+
   const loadBusinessPartnerAddresses = async (id: string): Promise<TreeData> => {
     const res = await businessPartnerApi.getEnterpriseRootAddresses(id)
 
@@ -342,6 +378,7 @@ export default function Validation() {
         `business-partner-customers-${businessPartnerId}`,
         `business-partner-projects-${businessPartnerId}`,
         `business-partner-users-${businessPartnerId}`,
+        `business-partner-org-units-${businessPartnerId}`,
       ],
       data: res.data.data,
       canRename: false,
@@ -481,6 +518,40 @@ export default function Validation() {
     }
   }
 
+  const loadBusinessPartnerOrgUnits = async (id: string): Promise<TreeData> => {
+    const res = await businessPartnerApi.getEnterpriseRootOrgUnits(id)
+
+    return {
+      index: `business-partner-org-units-${id}`,
+      canMove: false,
+      isFolder: true,
+      children: res.data.data.map(
+        (item: Record<string, any>) => `business-partner-org-unit-${id}-${item.id}`
+      ),
+      data: {
+        type: 'group',
+        name: t('orgUnits'),
+      },
+      canRename: false,
+    }
+  }
+
+  const loadBusinessPartnerOrgUnitDetails = async (
+    id: string,
+    orgUnitId: string
+  ): Promise<TreeData> => {
+    const res = await businessPartnerApi.getEnterpriseRootOrgUnitDetails(id, orgUnitId)
+
+    return {
+      index: `business-partner-org-unit-${id}-${orgUnitId}`,
+      canMove: true,
+      isFolder: false,
+      children: [],
+      data: res.data.data,
+      canRename: true,
+    }
+  }
+
   const dataProvider = useMemo(() => {
     class CustomDataProviderImplementation {
       data: Record<string, TreeData> = {}
@@ -534,6 +605,12 @@ export default function Validation() {
           case 'enterprise-root-project':
             this.data[index] = await loadEnterpriseRootProjectDetails(id, itemId)
             return this.data[index]
+          case 'enterprise-root-org-units':
+            this.data[index] = await loadEnterpriseRootOrgUnits(id)
+            return this.data[index]
+          case 'enterprise-root-org-unit':
+            this.data[index] = await loadEnterpriseRootOrgUnitDetails(id, itemId)
+            return this.data[index]
           case 'business-partner-addresses':
             this.data[index] = await loadBusinessPartnerAddresses(id)
             return this.data[index]
@@ -569,6 +646,12 @@ export default function Validation() {
             return this.data[index]
           case 'business-partner-project':
             this.data[index] = await loadBusinessPartnerProjectDetails(id, itemId)
+            return this.data[index]
+          case 'business-partner-org-units':
+            this.data[index] = await loadBusinessPartnerOrgUnits(id)
+            return this.data[index]
+          case 'business-partner-org-unit':
+            this.data[index] = await loadBusinessPartnerOrgUnitDetails(id, itemId)
             return this.data[index]
           case 'enterprise-root':
           default:

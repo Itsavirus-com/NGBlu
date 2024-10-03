@@ -110,6 +110,7 @@
       "customers": "Customers",
       "projects": "Projects",
       "users": "Users",
+      "orgUnits": "Organization Units",
       "companyInfo": {
         "companyInfo": "Company Info",
         "companyName": "Company Name",
@@ -153,7 +154,8 @@
       "orgUnit": {
         "title": "Org. Unit",
         "name": "Name",
-        "orgUnitAddress": "Org. Unit Address"
+        "orgUnitAddress": "Org. Unit Address",
+        "primaryAddress": "Primary Address"
       },
       "customer": {
         "profile": "Profile",
