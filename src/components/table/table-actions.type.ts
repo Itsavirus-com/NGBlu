@@ -10,4 +10,6 @@ export type TableActionsHeadProps = {
 export type TableActionsProps = TableActionsHeadProps & {
   actionBasePath?: string
   dataId?: number
+  apiPath?: string
+  onDelete?: () => void
 }

@@ -25,7 +25,7 @@ export const DynamicTableBody = <TableValues extends Record<string, any>>(
   const [page, setPage] = useState<number>(1)
   const [perPage, setPerPage] = useState<number>(20)
 
-  const { data, isLoading, pagination } = useTableData<TableValues>(apiPath, {
+  const { data, isLoading, pagination, mutate } = useTableData<TableValues>(apiPath, {
     page,
     limit: perPage,
     filter: {
@@ -67,6 +67,8 @@ export const DynamicTableBody = <TableValues extends Record<string, any>>(
                     customActions={customActions}
                     actionBasePath={actionBasePath}
                     dataId={row.id}
+                    apiPath={apiPath}
+                    onDelete={mutate}
                   />
                 </tr>
               ))}
