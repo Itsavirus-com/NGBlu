@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 
+import { Toast } from '@/components/toast/toast'
+
 import '@/assets/sass/style.scss'
 
 const inter = Inter({
@@ -41,6 +43,8 @@ export default function LocaleLayout({
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
+
+          <Toast />
         </NextIntlClientProvider>
       </body>
     </html>
