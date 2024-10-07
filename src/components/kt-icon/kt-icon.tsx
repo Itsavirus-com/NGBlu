@@ -6,11 +6,17 @@ type Props = {
   className?: string
   iconType?: 'duotone' | 'solid' | 'outline'
   iconName: string
+  role?: string
+  onClick?: () => void
 }
 
-const KTIcon: FC<Props> = ({ className = '', iconType = 'duotone', iconName }) => {
+const KTIcon: FC<Props> = ({ className = '', iconType = 'duotone', iconName, role, onClick }) => {
   return (
-    <i className={`ki-${iconType} ki-${iconName}${className && ' ' + className}`}>
+    <i
+      className={`ki-${iconType} ki-${iconName}${className && ' ' + className}`}
+      role={role}
+      onClick={onClick}
+    >
       {iconType === 'duotone' &&
         [...Array(icons[iconName])].map((_e, i) => {
           return (
