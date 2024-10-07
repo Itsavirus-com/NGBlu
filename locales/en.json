@@ -2,6 +2,9 @@
   "common": {
     "yes": "Yes",
     "no": "No",
+    "cancel": "Cancel",
+    "yesContinue": "Yes, continue",
+    "dismiss": "Dismiss",
     "navbar": {
       "language": "Language",
       "account_settings": "Account Settings",
@@ -53,6 +56,10 @@
       "goToPage": "Go to page",
       "rows": "{pageSize} rows",
       "pageInfo": "Page <strong>{currentPage}</strong> of <strong>{totalPage}</strong>"
+    },
+    "error": {
+      "unexpectedErrorTitle": "Unexpected Error!",
+      "unexpectedErrorDesc": "An unexpected error occurred. Please try again later."
     }
   },
   "404": {
