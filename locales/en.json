@@ -411,6 +411,13 @@
       "longitude": "Longitude",
       "googleAddressId": "Google Address ID"
     },
+    "addressTypes": {
+      "title": "Address Types",
+      "newAddressType": "New Address Type",
+      "updateAddressType": "Update Address Type",
+      "id": "ID",
+      "addressType": "Type"
+    },
     "companies": {
       "title": "Companies",
       "newCompany": "New Company",
