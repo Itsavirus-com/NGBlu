@@ -515,6 +515,7 @@
     "creditCardBrands": {
       "title": "Credit Card Brands",
       "newCreditCardBrand": "New Credit Card Brand",
+      "updateCreditCardBrand": "Update Credit Card Brand",
       "id": "ID",
       "brand": "Brand"
     },
