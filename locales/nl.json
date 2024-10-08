@@ -5,6 +5,7 @@
     "cancel": "Cancel",
     "yesContinue": "Yes, continue",
     "dismiss": "Dismiss",
+    "submit": "Submit",
     "navbar": {
       "language": "Taal",
       "account_settings": "Gebruikersinstellingen",
@@ -438,6 +439,7 @@
     "companyStatuses": {
       "title": "Company Statuses",
       "newCompanyStatus": "New Company Status",
+      "updateCompanyStatus": "Update Company Status",
       "id": "ID",
       "status": "Status"
     },
