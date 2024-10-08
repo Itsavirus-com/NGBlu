@@ -259,6 +259,7 @@
       "currencies": {
         "title": "Currencies",
         "newCurrency": "New Currency",
+        "updateCurrency": "Update Currency",
         "id": "ID",
         "currency": "Currency"
       },
