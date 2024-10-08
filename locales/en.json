@@ -508,6 +508,7 @@
     "creditCardTypes": {
       "title": "Credit Card Types",
       "newCreditCardType": "New Credit Card Type",
+      "updateCreditCardType": "Update Credit Card Type",
       "id": "ID",
       "type": "Type"
     },
