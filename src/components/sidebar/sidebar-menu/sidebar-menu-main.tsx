@@ -116,11 +116,23 @@ const SidebarMenuMain = () => {
         title={t('organizationUnits')}
         icon="data"
       />
-      <SidebarMenuItem
-        to="/dashboard/data-management/addresses"
-        title={t('addresses')}
+      <SidebarMenuItemWithSub
+        to="/dashboard/data-management/address"
+        title={t('address')}
         icon="map"
-      />
+      >
+        <SidebarMenuItem
+          to="/dashboard/data-management/address/types"
+          title={t('addressTypes')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/address/addresses"
+          title={t('addresses')}
+          hasBullet
+        />
+      </SidebarMenuItemWithSub>
+
       <SidebarMenuItem
         to="/dashboard/data-management/genders"
         title={t('genders')}

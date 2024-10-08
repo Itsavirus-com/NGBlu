@@ -33,6 +33,8 @@
       "projects": "Projects",
       "endClients": "End Clients",
       "packages": "Packages",
+      "address": "Address",
+      "addressTypes": "Address Types",
       "addresses": "Addresses",
       "company": "Company",
       "companies": "Companies",
