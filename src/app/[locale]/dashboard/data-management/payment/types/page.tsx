@@ -29,7 +29,7 @@ export default function PaymentTypes() {
       toolbars={[
         {
           icon: 'plus',
-          label: t('newCreditCardBrand'),
+          label: t('newPaymentType'),
           colorClass: 'light-primary',
           href: 'types/new',
         },

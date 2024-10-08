@@ -501,7 +501,8 @@
     },
     "paymentTypes": {
       "title": "Payment Types",
-      "newCreditCardBrand": "New Payment Type",
+      "newPaymentType": "New Payment Type",
+      "updatePaymentType": "Update Payment Type",
       "id": "ID",
       "name": "Name"
     },
