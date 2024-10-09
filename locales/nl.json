@@ -462,6 +462,7 @@
     "countries": {
       "title": "Countries",
       "newCountry": "New Country",
+      "updateCountry": "Update Country",
       "id": "ID",
       "name": "Name",
       "iso": "ISO",
