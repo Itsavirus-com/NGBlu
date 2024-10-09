@@ -90,11 +90,18 @@ const SidebarMenuMain = () => {
         title={t('projects')}
         icon="chart-line"
       />
-      <SidebarMenuItem
-        to="/dashboard/data-management/end-clients"
-        title={t('endClients')}
+      <SidebarMenuItemWithSub
+        to="/dashboard/data-management/end-client"
+        title={t('endClient')}
         icon="profile-user"
-      />
+      >
+        <SidebarMenuItem
+          to="/dashboard/data-management/end-client/end-clients"
+          title={t('endClients')}
+          hasBullet
+        />
+      </SidebarMenuItemWithSub>
+
       <SidebarMenuItemWithSub
         to="/dashboard/data-management/company"
         title={t('company')}
