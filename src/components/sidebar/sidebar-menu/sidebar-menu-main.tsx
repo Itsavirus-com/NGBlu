@@ -85,6 +85,11 @@ const SidebarMenuMain = () => {
           title={t('persons')}
           hasBullet
         />
+        <SidebarMenuItem
+          to="/dashboard/data-management/person/types"
+          title={t('personTypes')}
+          hasBullet
+        />
       </SidebarMenuItemWithSub>
 
       <SidebarMenuItem

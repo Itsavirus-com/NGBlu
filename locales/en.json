@@ -31,6 +31,7 @@
       "users": "Users",
       "person": "Person",
       "persons": "Persons",
+      "personTypes": "Person Types",
       "projects": "Projects",
       "endClient": "End Client",
       "endClients": "End Clients",
@@ -343,6 +344,13 @@
         "contact": "Contact",
         "contactType": "Contact Type"
       }
+    },
+    "personTypes": {
+      "title": "Person Types",
+      "newPersonType": "New Person Type",
+      "updatePersonType": "Update Person Type",
+      "id": "ID",
+      "type": "Type"
     },
     "projects": {
       "title": "Projects",
