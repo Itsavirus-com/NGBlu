@@ -26,7 +26,22 @@ const SidebarMenuMain = () => {
         title={t('products')}
         icon="delivery-3"
       />
-      <SidebarMenuItem to="/dashboard/data-management/services" title={t('services')} icon="icon" />
+      <SidebarMenuItemWithSub
+        to="/dashboard/data-management/service"
+        title={t('services')}
+        icon="icon"
+      >
+        <SidebarMenuItem
+          to="/dashboard/data-management/service/services"
+          title={t('services')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/service/types"
+          title={t('servicesTypes')}
+          hasBullet
+        />
+      </SidebarMenuItemWithSub>
       <SidebarMenuItem
         to="/dashboard/data-management/packages"
         title={t('packages')}

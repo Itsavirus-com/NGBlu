@@ -20,6 +20,7 @@
       "dataManagement": "Data Management",
       "products": "Products",
       "services": "Services",
+      "servicesTypes": "Service Types",
       "prices": "Prices",
       "priceConfigs": "Price Configs",
       "currencies": "Currencies",
@@ -249,7 +250,13 @@
       "activeFrom": "Active From",
       "activeTo": "Active To",
       "product": "Product",
-      "pricePlan": "Price Plan"
+      "pricePlan": "Price Plan",
+      "types": {
+        "id": "ID",
+        "title": "Service Types",
+        "newServiceType": "New Service Type",
+        "type": "Service Type"
+      }
     },
     "prices": {
       "configs": {
