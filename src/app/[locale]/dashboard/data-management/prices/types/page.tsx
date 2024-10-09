@@ -6,9 +6,9 @@ import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { PriceType } from '@/services/swr/models/price-type.type'
 
-import { PriceTypesFilter } from './components/price-type-filter'
+import { PriceTypeFilter } from './components/price-type-filter'
 
-export default function PriceCurrencies() {
+export default function PriceTypes() {
   const t = useTranslations('dataManagement.prices.types')
 
   const columns: TableColumn<PriceType>[] = [
@@ -35,7 +35,7 @@ export default function PriceCurrencies() {
           href: 'types/new',
         },
       ]}
-      filters={<PriceTypesFilter />}
+      filters={<PriceTypeFilter />}
       columns={columns}
       apiPath="prices/types"
       actionBasePath="types"

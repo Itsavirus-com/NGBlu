@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl'
 
 import { ControlledInput } from '@/components/forms/input'
 
-export const PriceTypesFilter = () => {
+export const PriceTypeFilter = () => {
   const t = useTranslations('dataManagement.prices.types')
 
   return (
