@@ -12,10 +12,10 @@ import { PageTitle } from '@/components/page-title'
 import useCountryForm from '../../components/country-form.hook'
 
 export default function UpdateCompanyStatus() {
-  const params = useParams()
+  const { countryId } = useParams()
   const t = useTranslations('dataManagement.countries')
 
-  const { methods, onSubmit } = useCountryForm(Number(params.countryId))
+  const { methods, onSubmit } = useCountryForm(Number(countryId))
 
   return (
     <>
