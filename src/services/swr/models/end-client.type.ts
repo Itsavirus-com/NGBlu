@@ -7,9 +7,9 @@ export type EndClient = {
   id: number
   name: string
   typeId: number
-  endClientType: EndClientType
+  type: EndClientType
   statusId: number
-  endClientStatus: EndClientStatus
+  status: EndClientStatus
   accountNumber: string
   referenceId: string
   afasId: string

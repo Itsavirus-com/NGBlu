@@ -25,12 +25,12 @@ export default function EndClients() {
     {
       id: 'type',
       title: t('type'),
-      render: row => row.endClientType.type,
+      render: row => row.type?.type,
     },
     {
       id: 'status',
       title: t('status'),
-      render: row => row.endClientStatus.status,
+      render: row => row.status?.status,
     },
   ]
 

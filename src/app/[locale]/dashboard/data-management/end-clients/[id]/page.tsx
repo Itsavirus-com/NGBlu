@@ -24,13 +24,13 @@ export default function EndClientDetails({ params }: { params: { id: number } })
             className="my-3"
             isLoading={isLoading}
             label={t('type')}
-            value={data?.endClientType?.type}
+            value={data?.type?.type}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('status')}
-            value={data?.endClientStatus?.status}
+            value={data?.status?.status}
           />
           <TextView
             className="my-3"
