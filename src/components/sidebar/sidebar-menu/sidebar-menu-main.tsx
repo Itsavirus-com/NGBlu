@@ -75,11 +75,18 @@ const SidebarMenuMain = () => {
         />
       </SidebarMenuItemWithSub>
 
-      <SidebarMenuItem
-        to="/dashboard/data-management/persons"
-        title={t('persons')}
+      <SidebarMenuItemWithSub
+        to="/dashboard/data-management/person"
+        title={t('person')}
         icon="profile-user"
-      />
+      >
+        <SidebarMenuItem
+          to="/dashboard/data-management/person/persons"
+          title={t('persons')}
+          hasBullet
+        />
+      </SidebarMenuItemWithSub>
+
       <SidebarMenuItem
         to="/dashboard/data-management/users"
         title={t('users')}
