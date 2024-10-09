@@ -33,6 +33,8 @@
       "projects": "Projects",
       "endClient": "End Client",
       "endClients": "End Clients",
+      "endClientTypes": "End Client Types",
+      "endClientStatuses": "End Client Statuses",
       "packages": "Packages",
       "address": "Address",
       "addressTypes": "Address Types",
@@ -383,6 +385,13 @@
       "county": "County",
       "country": "Country",
       "postalCode": "Postal Code"
+    },
+    "endClientTypes": {
+      "title": "End Client Types",
+      "newEndClientType": "New End Client Type",
+      "updateEndClientType": "Update End Client Type",
+      "id": "ID",
+      "type": "Type"
     },
     "packages": {
       "title": "Packages",

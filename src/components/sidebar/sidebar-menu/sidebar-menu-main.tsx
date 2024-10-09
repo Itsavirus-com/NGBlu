@@ -100,6 +100,16 @@ const SidebarMenuMain = () => {
           title={t('endClients')}
           hasBullet
         />
+        <SidebarMenuItem
+          to="/dashboard/data-management/end-client/types"
+          title={t('endClientTypes')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/end-client/statuses"
+          title={t('endClientStatuses')}
+          hasBullet
+        />
       </SidebarMenuItemWithSub>
 
       <SidebarMenuItemWithSub
