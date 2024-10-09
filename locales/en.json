@@ -266,6 +266,7 @@
       "intervals": {
         "title": "Price Intervals",
         "newPriceInterval": "New Price Interval",
+        "updatePriceInterval": "Update Price Interval",
         "id": "ID",
         "name": "Name"
       },
