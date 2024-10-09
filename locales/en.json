@@ -393,6 +393,13 @@
       "id": "ID",
       "type": "Type"
     },
+    "endClientStatuses": {
+      "title": "End Client Statuses",
+      "newEndClientStatus": "New End Client Status",
+      "updateEndClientStatus": "Update End Client Status",
+      "id": "ID",
+      "status": "Status"
+    },
     "packages": {
       "title": "Packages",
       "newPackage": "New Package",
