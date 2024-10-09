@@ -255,6 +255,7 @@
         "id": "ID",
         "title": "Service Types",
         "newServiceType": "New Service Type",
+        "updateServiceType": "Update Service Type",
         "type": "Service Type"
       }
     },
