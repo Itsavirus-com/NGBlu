@@ -493,12 +493,14 @@
     "genders": {
       "title": "Genders",
       "newGender": "New Gender",
+      "updateGender": "Update Gender",
       "id": "ID",
       "gender": "Gender"
     },
     "countries": {
       "title": "Countries",
       "newCountry": "New Country",
+      "updateCountry": "Update Country",
       "id": "ID",
       "name": "Name",
       "iso": "ISO",
