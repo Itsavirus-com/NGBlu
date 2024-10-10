@@ -308,6 +308,7 @@
       "units": {
         "title": "Price Units",
         "newPriceUnit": "New Price Unit",
+        "updatePriceUnit": "Update Price Unit",
         "id": "ID",
         "unit": "Unit"
       }
