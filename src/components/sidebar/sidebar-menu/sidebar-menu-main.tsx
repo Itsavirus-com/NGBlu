@@ -42,11 +42,22 @@ const SidebarMenuMain = () => {
           hasBullet
         />
       </SidebarMenuItemWithSub>
-      <SidebarMenuItem
-        to="/dashboard/data-management/packages"
+      <SidebarMenuItemWithSub
+        to="/dashboard/data-management/package"
         title={t('packages')}
         icon="cube-2"
-      />
+      >
+        <SidebarMenuItem
+          to="/dashboard/data-management/package/packages"
+          title={t('packages')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/package/types"
+          title={t('packagesTypes')}
+          hasBullet
+        />
+      </SidebarMenuItemWithSub>
 
       <SidebarMenuItemWithSub
         to="/dashboard/data-management/prices"
