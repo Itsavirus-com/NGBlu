@@ -437,7 +437,14 @@
       "priceUnit": "Price Unit",
       "priceInterval": "Price Interval",
       "priceType": "Price Type",
-      "tax": "Tax"
+      "tax": "Tax",
+      "types": {
+        "title": "Package Types",
+        "newPackageType": "New Package Type",
+        "updatePackageType": "Update Package Type",
+        "id": "ID",
+        "name": "Package Type"
+      }
     },
     "addresses": {
       "title": "Addresses",
