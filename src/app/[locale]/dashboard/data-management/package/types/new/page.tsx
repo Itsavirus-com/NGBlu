@@ -10,7 +10,7 @@ import { PageTitle } from '@/components/page-title'
 
 import usePackageTypeForm from '../components/package-type-form.hook'
 
-export default function NewServiceType() {
+export default function NewPackageType() {
   const t = useTranslations('dataManagement.packages.types')
 
   const { methods, onSubmit } = usePackageTypeForm()

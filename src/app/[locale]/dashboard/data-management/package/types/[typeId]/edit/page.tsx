@@ -11,7 +11,7 @@ import { PageTitle } from '@/components/page-title'
 
 import usePackageTypeForm from '../../components/package-type-form.hook'
 
-export default function UpdateCompanyStatus() {
+export default function UpdatePackageType() {
   const { typeId } = useParams()
   const t = useTranslations('dataManagement.packages.types')
 
