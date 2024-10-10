@@ -230,7 +230,14 @@
       "activeFrom": "Active From",
       "activeTo": "Active To",
       "product": "Product",
-      "pricePlan": "Price Plan"
+      "pricePlan": "Price Plan",
+      "types": {
+        "id": "ID",
+        "title": "Product Types",
+        "newProductType": "New Product Type",
+        "updateProductType": "Update Product Type",
+        "type": "Product Type"
+      }
     },
     "services": {
       "title": "Services",
