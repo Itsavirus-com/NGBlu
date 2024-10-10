@@ -90,6 +90,11 @@ const SidebarMenuMain = () => {
           title={t('personTypes')}
           hasBullet
         />
+        <SidebarMenuItem
+          to="/dashboard/data-management/person/contact-types"
+          title={t('contactTypes')}
+          hasBullet
+        />
       </SidebarMenuItemWithSub>
 
       <SidebarMenuItem
