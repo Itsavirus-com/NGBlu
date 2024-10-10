@@ -10,7 +10,7 @@ import { PageTitle } from '@/components/page-title'
 
 import useGenderForm from '../components/gender-form.hook'
 
-export default function NewCompanyStatus() {
+export default function NewGender() {
   const t = useTranslations('dataManagement.genders')
 
   const { methods, onSubmit } = useGenderForm()

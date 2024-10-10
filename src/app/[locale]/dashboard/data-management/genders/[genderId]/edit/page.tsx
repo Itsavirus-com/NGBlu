@@ -11,7 +11,7 @@ import { PageTitle } from '@/components/page-title'
 
 import useGenderForm from '../../components/gender-form.hook'
 
-export default function UpdateCompanyStatus() {
+export default function UpdateGender() {
   const { genderId } = useParams()
   const t = useTranslations('dataManagement.genders')
 
