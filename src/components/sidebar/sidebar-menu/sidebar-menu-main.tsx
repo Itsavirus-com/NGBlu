@@ -128,14 +128,25 @@ const SidebarMenuMain = () => {
         title={t('users')}
         icon="security-user"
       />
-      <SidebarMenuItem
-        to="/dashboard/data-management/projects"
+      <SidebarMenuItemWithSub
+        to="/dashboard/data-management/project"
         title={t('projects')}
         icon="chart-line"
-      />
-      <SidebarMenuItemWithSub
-        to="/dashboard/data-management/end-client"
-        title={t('endClient')}
+      >
+        <SidebarMenuItem
+          to="/dashboard/data-management/project/projects"
+          title={t('projects')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/project/types"
+          title={t('projectsTypes')}
+          hasBullet
+        />
+      </SidebarMenuItemWithSub>
+      <SidebarMenuItem
+        to="/dashboard/data-management/end-clients"
+        title={t('endClients')}
         icon="profile-user"
       >
         <SidebarMenuItem
