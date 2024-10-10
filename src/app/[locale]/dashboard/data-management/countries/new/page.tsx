@@ -10,7 +10,7 @@ import { PageTitle } from '@/components/page-title'
 
 import useCountryForm from '../components/country-form.hook'
 
-export default function NewCompanyStatus() {
+export default function NewCountry() {
   const t = useTranslations('dataManagement.countries')
 
   const { methods, onSubmit } = useCountryForm()
