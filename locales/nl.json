@@ -456,6 +456,7 @@
     "genders": {
       "title": "Genders",
       "newGender": "New Gender",
+      "updateGender": "Update Gender",
       "id": "ID",
       "gender": "Gender"
     },
