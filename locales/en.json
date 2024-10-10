@@ -389,7 +389,14 @@
       "country": "Country",
       "postalCode": "Postal Code",
       "generalInfo": "General Info",
-      "location": "Location"
+      "location": "Location",
+      "types": {
+        "id": "ID",
+        "title": "Project Types",
+        "newProjectType": "New Project Type",
+        "updateProjectType": "Update Project Type",
+        "type": "Project Type"
+      }
     },
     "endClients": {
       "title": "End Clients",
