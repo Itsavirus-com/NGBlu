@@ -11,7 +11,7 @@ import { PageTitle } from '@/components/page-title'
 
 import useServiceTypeForm from '../../components/service-type-form.hook'
 
-export default function UpdateCompanyStatus() {
+export default function UpdateServiceType() {
   const { typeId } = useParams()
   const t = useTranslations('dataManagement.services.types')
 
