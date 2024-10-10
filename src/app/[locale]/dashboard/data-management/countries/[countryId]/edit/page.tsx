@@ -11,7 +11,7 @@ import { PageTitle } from '@/components/page-title'
 
 import useCountryForm from '../../components/country-form.hook'
 
-export default function UpdateCompanyStatus() {
+export default function UpdateCountry() {
   const { countryId } = useParams()
   const t = useTranslations('dataManagement.countries')
 
