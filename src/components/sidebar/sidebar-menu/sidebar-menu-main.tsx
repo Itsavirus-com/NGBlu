@@ -21,11 +21,24 @@ const SidebarMenuMain = () => {
       />
 
       <SidebarMenuSeparator title={t('dataManagement')} />
-      <SidebarMenuItem
-        to="/dashboard/data-management/products"
+
+      <SidebarMenuItemWithSub
+        to="/dashboard/data-management/product"
         title={t('products')}
         icon="delivery-3"
-      />
+      >
+        <SidebarMenuItem
+          to="/dashboard/data-management/product/products"
+          title={t('products')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/product/types"
+          title={t('productsTypes')}
+          hasBullet
+        />
+      </SidebarMenuItemWithSub>
+
       <SidebarMenuItemWithSub
         to="/dashboard/data-management/service"
         title={t('services')}
