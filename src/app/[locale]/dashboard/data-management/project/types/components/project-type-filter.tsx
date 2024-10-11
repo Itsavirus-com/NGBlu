@@ -8,7 +8,7 @@ export const ProjectTypesFilter = () => {
   return (
     <>
       <ControlledInput name="filter[id]" label={t('id')} className="mb-5" />
-      <ControlledInput name="filter[project_type]" label={t('type')} className="mb-10" />
+      <ControlledInput name="filter[projectType]" label={t('type')} className="mb-10" />
     </>
   )
 }

@@ -144,7 +144,8 @@ const SidebarMenuMain = () => {
           hasBullet
         />
       </SidebarMenuItemWithSub>
-      <SidebarMenuItem
+
+      <SidebarMenuItemWithSub
         to="/dashboard/data-management/end-clients"
         title={t('endClients')}
         icon="profile-user"
