@@ -19,6 +19,7 @@
       "hierarchy": "Data Hierarchy",
       "dataManagement": "Data Management",
       "products": "Products",
+      "productsTypes": "Product Types",
       "services": "Services",
       "servicesTypes": "Service Types",
       "prices": "Prices",
@@ -35,11 +36,12 @@
       "personTypes": "Person Types",
       "contactTypes": "Contact Types",
       "projects": "Projects",
-      "endClient": "End Client",
+      "projectsTypes": "Projects Types",
       "endClients": "End Clients",
       "endClientTypes": "End Client Types",
       "endClientStatuses": "End Client Statuses",
       "packages": "Packages",
+      "packagesTypes": "Package Types",
       "address": "Address",
       "addressTypes": "Address Types",
       "addresses": "Addresses",
@@ -228,7 +230,14 @@
       "activeFrom": "Active From",
       "activeTo": "Active To",
       "product": "Product",
-      "pricePlan": "Price Plan"
+      "pricePlan": "Price Plan",
+      "types": {
+        "id": "ID",
+        "title": "Product Types",
+        "newProductType": "New Product Type",
+        "updateProductType": "Update Product Type",
+        "type": "Product Type"
+      }
     },
     "services": {
       "title": "Services",
@@ -388,7 +397,14 @@
       "country": "Country",
       "postalCode": "Postal Code",
       "generalInfo": "General Info",
-      "location": "Location"
+      "location": "Location",
+      "types": {
+        "id": "ID",
+        "title": "Project Types",
+        "newProjectType": "New Project Type",
+        "updateProjectType": "Update Project Type",
+        "type": "Project Type"
+      }
     },
     "endClients": {
       "title": "End Clients",
@@ -436,7 +452,14 @@
       "priceUnit": "Price Unit",
       "priceInterval": "Price Interval",
       "priceType": "Price Type",
-      "tax": "Tax"
+      "tax": "Tax",
+      "types": {
+        "title": "Package Types",
+        "newPackageType": "New Package Type",
+        "updatePackageType": "Update Package Type",
+        "id": "ID",
+        "name": "Package Type"
+      }
     },
     "addresses": {
       "title": "Addresses",

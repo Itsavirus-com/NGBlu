@@ -21,11 +21,24 @@ const SidebarMenuMain = () => {
       />
 
       <SidebarMenuSeparator title={t('dataManagement')} />
-      <SidebarMenuItem
-        to="/dashboard/data-management/products"
+
+      <SidebarMenuItemWithSub
+        to="/dashboard/data-management/product"
         title={t('products')}
         icon="delivery-3"
-      />
+      >
+        <SidebarMenuItem
+          to="/dashboard/data-management/product/products"
+          title={t('products')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/product/types"
+          title={t('productsTypes')}
+          hasBullet
+        />
+      </SidebarMenuItemWithSub>
+
       <SidebarMenuItemWithSub
         to="/dashboard/data-management/service"
         title={t('services')}
@@ -42,11 +55,22 @@ const SidebarMenuMain = () => {
           hasBullet
         />
       </SidebarMenuItemWithSub>
-      <SidebarMenuItem
-        to="/dashboard/data-management/packages"
+      <SidebarMenuItemWithSub
+        to="/dashboard/data-management/package"
         title={t('packages')}
         icon="cube-2"
-      />
+      >
+        <SidebarMenuItem
+          to="/dashboard/data-management/package/packages"
+          title={t('packages')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/package/types"
+          title={t('packagesTypes')}
+          hasBullet
+        />
+      </SidebarMenuItemWithSub>
 
       <SidebarMenuItemWithSub
         to="/dashboard/data-management/prices"
@@ -117,14 +141,26 @@ const SidebarMenuMain = () => {
         title={t('users')}
         icon="security-user"
       />
-      <SidebarMenuItem
-        to="/dashboard/data-management/projects"
+      <SidebarMenuItemWithSub
+        to="/dashboard/data-management/project"
         title={t('projects')}
         icon="chart-line"
-      />
+      >
+        <SidebarMenuItem
+          to="/dashboard/data-management/project/projects"
+          title={t('projects')}
+          hasBullet
+        />
+        <SidebarMenuItem
+          to="/dashboard/data-management/project/types"
+          title={t('projectsTypes')}
+          hasBullet
+        />
+      </SidebarMenuItemWithSub>
+
       <SidebarMenuItemWithSub
-        to="/dashboard/data-management/end-client"
-        title={t('endClient')}
+        to="/dashboard/data-management/end-clients"
+        title={t('endClients')}
         icon="profile-user"
       >
         <SidebarMenuItem
