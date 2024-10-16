@@ -4,11 +4,12 @@ import { useEffect, useRef, useState } from 'react'
 import { Form, FormSelectProps, Placeholder } from 'react-bootstrap'
 import { useController, useFormContext } from 'react-hook-form'
 
-import { useOptionData } from '@/services/swr/use-option-data'
+import { useOptionData, useOptionDataById } from '@/services/swr/use-option-data'
 
 type SelectProps<OptionValue> = FormSelectProps & {
   label?: string
   name: string
+  filterName?: string
   containerClass?: string
   apiPath: string
   option: {
@@ -20,7 +21,8 @@ type SelectProps<OptionValue> = FormSelectProps & {
 export const ControlledSelect = <OptionValue extends Record<string, any>>(
   props: SelectProps<OptionValue>
 ) => {
-  const { label, name, containerClass, children, apiPath, option, ...otherProps } = props
+  const { label, name, filterName, containerClass, children, apiPath, option, ...otherProps } =
+    props
 
   const { control } = useFormContext()
   const {
@@ -39,6 +41,8 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     page,
     limit: 10,
   })
+
+  const { data: detailData } = useOptionDataById<OptionValue>(apiPath, field.value)
 
   useEffect(() => {
     if (data && pagination) {
@@ -59,7 +63,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
   return (
     <Form.Group className={containerClass}>
       {label && <Form.Label className="fw-bold">{label}</Form.Label>}
-      {allData.length === 0 ? (
+      {allData.length === 0 || !detailData ? (
         <Placeholder as="div" animation="wave">
           <Placeholder
             size="lg"
@@ -82,14 +86,18 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
             field.onChange(e.target.value)
             const value = e.target.value
             if (value === 'load_more') {
-              field.onChange('select_option')
+              field.onChange(field.value || 'select_option')
               handleLoadMore()
             }
           }}
         >
-          <option disabled value={'select_option'}>
-            {isLoading ? 'Loading more...' : 'Select one'}
-          </option>
+          {detailData ? (
+            <option value={detailData.id}>{detailData.id}</option>
+          ) : (
+            <option disabled value={'select_option'}>
+              {isLoading ? 'Loading more...' : 'Select one'}
+            </option>
+          )}
           {allData.map((item: OptionValue, index: number) => (
             <option key={index} value={String(option.value(item))}>
               {option.label(item)}

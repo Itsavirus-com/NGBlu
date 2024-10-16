@@ -1,5 +1,7 @@
 import useSWR from 'swr'
+import { derive } from 'valtio/utils'
 
+import { modelAdaptor } from './middleware/model-adaptor'
 import { AnyObject } from './middleware/model-adaptor.type'
 import { OptionDataCollection, OptionDataParams } from './models/option-data.type'
 
@@ -15,4 +17,21 @@ export const useOptionData = <OptionValue extends AnyObject>(
   })
 
   return { ...data, ...results }
+}
+
+export const useOptionDataById = <OptionValue extends AnyObject>(
+  path: string,
+  identifier: string
+) => {
+  const { data, mutate, isLoading } = useSWR<OptionValue>(
+    () =>
+      identifier && {
+        path: `${path}/${identifier}`,
+      },
+    {
+      use: [modelAdaptor(() => derive({}), 'data')],
+    }
+  )
+
+  return { data, mutate, isLoading }
 }
