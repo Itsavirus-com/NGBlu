@@ -103,7 +103,7 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
         filters={<PackageServiceFilter />}
         columns={columns}
         apiPath={`packages/${params.id}/services`}
-        actionBasePath="packages"
+        actionBasePath={`${params.id}/services`}
         actions={['edit', 'delete']}
       />
     </>

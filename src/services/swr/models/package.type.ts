@@ -14,7 +14,7 @@ export type Package = {
 
 export type PackageService = {
   id: number
-  packageId: number
-  serviceId: number
-  servicePricingConfigId: number
+  packageId: string
+  serviceId: string
+  servicePricingConfigId: string
 }
