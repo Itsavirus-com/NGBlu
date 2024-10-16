@@ -22,8 +22,9 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
 ) => {
   const { label, name, containerClass, children, apiPath, option, ...otherProps } = props
 
-  const { register, control } = useFormContext()
+  const { control } = useFormContext()
   const {
+    field,
     fieldState: { invalid, error },
   } = useController({ control, name })
 
@@ -42,12 +43,9 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
   useEffect(() => {
     if (data && pagination) {
       setLastPage(pagination.lastPage)
-      setAllData(prevData => [...prevData, ...data])
+      if (page === 1) setAllData(data)
+      else setAllData(prevData => [...prevData, ...data])
       setIsLoading(false)
-
-      if (selectRef.current) {
-        selectRef.current.value = 'select_option'
-      }
     }
   }, [data, pagination])
 
@@ -73,31 +71,33 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
       ) : (
         <Form.Select
           id={name}
-          as="select"
           isInvalid={invalid}
-          {...register(name)}
+          {...field}
           {...otherProps}
           ref={selectRef}
+          value={field.value || 'select_option'}
           autoComplete={name}
           data-test-id={name}
           onChange={e => {
+            field.onChange(e.target.value)
             const value = e.target.value
             if (value === 'load_more') {
+              field.onChange('select_option')
               handleLoadMore()
             }
           }}
         >
-          <option disabled selected value={'select_option'}>
-            Select one
+          <option disabled value={'select_option'}>
+            {isLoading ? 'Loading more...' : 'Select one'}
           </option>
           {allData.map((item: OptionValue, index: number) => (
-            <option key={index} value={option.value(item)}>
+            <option key={index} value={String(option.value(item))}>
               {option.label(item)}
             </option>
           ))}
           {page < lastPage && (
             <option value="load_more" disabled={isLoading}>
-              {isLoading ? 'Loading more...' : 'Load more...'}
+              Load more...
             </option>
           )}
         </Form.Select>
