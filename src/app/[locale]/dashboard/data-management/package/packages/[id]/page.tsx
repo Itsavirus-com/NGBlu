@@ -5,13 +5,41 @@ import { Row } from 'react-bootstrap'
 
 import { Page } from '@/components/page/page'
 import { PageTitle } from '@/components/page-title'
+import { Table } from '@/components/table/table'
+import { TableColumn } from '@/components/table/table.type'
 import { TextView } from '@/components/view/text-view/text-view'
+import { PackageService } from '@/services/swr/models/package.type'
 import { usePackage } from '@/services/swr/use-package'
+
+import { PackageServiceFilter } from './components/package-service-filter'
 
 export default function PackageDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.packages')
 
   const { data, isLoading } = usePackage(params.id)
+
+  const columns: TableColumn<PackageService>[] = [
+    {
+      id: 'id',
+      title: t('id'),
+      render: row => row.id,
+    },
+    {
+      id: 'packageId',
+      title: t('packageId'),
+      render: row => row.packageId,
+    },
+    {
+      id: 'serviceId',
+      title: t('serviceId'),
+      render: row => row.serviceId,
+    },
+    {
+      id: 'servicePricingConfigId',
+      title: t('servicePricingConfigId'),
+      render: row => row.servicePricingConfigId,
+    },
+  ]
 
   return (
     <>
@@ -61,6 +89,23 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
           />
         </Row>
       </Page>
+      <Table<PackageService>
+        className="mt-4"
+        title={t('packageServices')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('newPackageService'),
+            colorClass: 'light-primary',
+            href: `${params.id}/services/new`,
+          },
+        ]}
+        filters={<PackageServiceFilter />}
+        columns={columns}
+        apiPath={`packages/${params.id}/services`}
+        actionBasePath="packages"
+        actions={['edit', 'delete']}
+      />
     </>
   )
 }

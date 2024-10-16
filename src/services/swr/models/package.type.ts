@@ -11,3 +11,10 @@ export type Package = {
   createdAt: string
   updatedAt: string
 }
+
+export type PackageService = {
+  id: number
+  packageId: number
+  serviceId: number
+  servicePricingConfigId: number
+}

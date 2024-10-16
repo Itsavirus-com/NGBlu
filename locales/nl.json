@@ -37,6 +37,7 @@
       "contactTypes": "Contact Types",
       "projects": "Projects",
       "projectsTypes": "Projects Types",
+      "packagesServices": "Package Services",
       "endClients": "End Clients",
       "endClientTypes": "End Client Types",
       "endClientStatuses": "End Client Statuses",
@@ -453,12 +454,24 @@
       "priceInterval": "Price Interval",
       "priceType": "Price Type",
       "tax": "Tax",
+      "packageServices": "Package Services",
+      "packageId": "Package ID",
+      "serviceId": "Service ID",
+      "servicePricingConfigId": "Service Pricing Config ID",
+      "newPackageService": "New Package Service",
       "types": {
         "title": "Package Types",
         "newPackageType": "New Package Type",
         "updatePackageType": "Update Package Type",
         "id": "ID",
         "name": "Package Type"
+      },
+      "services": {
+        "title": "Services",
+        "newPackageService": "New Service",
+        "updatePackageService": "New Service",
+        "id": "ID",
+        "name": "Name"
       }
     },
     "addresses": {
