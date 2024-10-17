@@ -1,5 +1,6 @@
 import { PackageType } from './package-type.type'
 import { PriceConfig } from './price-config.type'
+import { Service, ServicePriceConfig } from './service.type'
 
 export type Package = {
   id: number
@@ -15,8 +16,11 @@ export type Package = {
 export type PackageService = {
   id: number
   packageId: string
+  package: Package
   serviceId: string
+  service: Service
   servicePricingConfigId: string
+  servicePricingConfig: ServicePriceConfig
 }
 
 export type PackageProduct = {

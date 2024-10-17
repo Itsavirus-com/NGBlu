@@ -22,39 +22,39 @@ export default function UpdatePackageService() {
 
   return (
     <>
-      <PageTitle title={t('newPackageService')} />
+      <PageTitle title={t('updatePackageService')} />
 
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <div className="app-container container-fluid">
           <Card>
             <CardBody>
               <ControlledSelect<Package>
-                label={t('packageId')}
+                label={t('package')}
                 name="packageId"
                 filterName="id"
                 containerClass="mb-3"
                 className="form-control-solid"
                 apiPath="packages"
-                option={{ label: row => row.id, value: row => row.id }}
+                option={{ label: row => row.name, value: row => row.id }}
                 disabled
               />
               <ControlledSelect<Service>
-                label={t('serviceId')}
+                label={t('service')}
                 name="serviceId"
                 filterName="id"
                 containerClass="mb-3"
                 className="form-control-solid"
                 apiPath="services"
-                option={{ label: row => row.id, value: row => row.id }}
+                option={{ label: row => row.name, value: row => row.id }}
               />
               <ControlledSelect<ServicePriceConfig>
-                label={t('servicePricingConfigId')}
+                label={t('servicePricingConfig')}
                 name="servicePricingConfigId"
                 filterName="id"
                 containerClass="mb-3"
                 className="form-control-solid"
                 apiPath="services/price-configs"
-                option={{ label: row => row.id, value: row => row.id }}
+                option={{ label: row => row.pricePlan.name, value: row => row.id }}
               />
 
               <FormButtons />
