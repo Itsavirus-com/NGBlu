@@ -49,19 +49,19 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
       render: row => row.id,
     },
     {
-      id: 'packageId',
-      title: t('packageId'),
-      render: row => row.packageId,
+      id: 'package',
+      title: t('package'),
+      render: row => row.package.name,
     },
     {
-      id: 'productId',
-      title: t('productId'),
-      render: row => row.productId,
+      id: 'product',
+      title: t('product'),
+      render: row => row.product.name,
     },
     {
-      id: 'productPricingConfigId',
-      title: t('productPricingConfigId'),
-      render: row => row.productPricingConfigId,
+      id: 'productPricingConfig',
+      title: t('productPricingConfig'),
+      render: row => row.productPricingConfig.pricePlan.name,
     },
   ]
 

@@ -29,32 +29,32 @@ export default function UpdatePackageProduct() {
           <Card>
             <CardBody>
               <ControlledSelect<Package>
-                label={t('packageId')}
+                label={t('package')}
                 name="packageId"
                 filterName="id"
                 containerClass="mb-3"
                 className="form-control-solid"
                 apiPath="packages"
-                option={{ label: row => row.id, value: row => row.id }}
+                option={{ label: row => row.name, value: row => row.id }}
                 disabled
               />
               <ControlledSelect<Product>
-                label={t('productId')}
+                label={t('product')}
                 name="productId"
                 filterName="id"
                 containerClass="mb-3"
                 className="form-control-solid"
                 apiPath="products"
-                option={{ label: row => row.id, value: row => row.id }}
+                option={{ label: row => row.name, value: row => row.id }}
               />
               <ControlledSelect<ProductPriceConfig>
-                label={t('productPricingConfigId')}
+                label={t('productPricingConfig')}
                 name="productPricingConfigId"
                 filterName="id"
                 containerClass="mb-3"
                 className="form-control-solid"
                 apiPath="products/price-configs"
-                option={{ label: row => row.id, value: row => row.id }}
+                option={{ label: row => row.pricePlan.name, value: row => row.id }}
               />
 
               <FormButtons />

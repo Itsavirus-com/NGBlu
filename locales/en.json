@@ -460,9 +460,10 @@
       "newPackageService": "New Package Service",
       "updatePackageService": "Update Package Service",
       "packageProducts": "Package Products",
-      "productId": "Product ID",
-      "productPricingConfigId": "Product Pricing Config ID",
+      "product": "Product",
+      "productPricingConfig": "Product Pricing Config",
       "newPackageProduct": "New Package Product",
+      "updatePackageProduct": "Update Package Product",
       "types": {
         "title": "Package Types",
         "newPackageType": "New Package Type",
