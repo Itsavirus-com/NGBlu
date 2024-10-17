@@ -42,7 +42,6 @@
       "endClientStatuses": "End Client Statuses",
       "packages": "Packages",
       "packagesTypes": "Package Types",
-      "packagesServices": "Package Services",
       "address": "Address",
       "addressTypes": "Address Types",
       "addresses": "Addresses",
@@ -459,6 +458,10 @@
       "serviceId": "Service ID",
       "servicePricingConfigId": "Service Pricing Config ID",
       "newPackageService": "New Package Service",
+      "packageProducts": "Package Products",
+      "productId": "Product ID",
+      "productPricingConfigId": "Product Pricing Config ID",
+      "newPackageProduct": "New Package Product",
       "types": {
         "title": "Package Types",
         "newPackageType": "New Package Type",

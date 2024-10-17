@@ -37,7 +37,6 @@
       "contactTypes": "Contact Types",
       "projects": "Projects",
       "projectsTypes": "Projects Types",
-      "packagesServices": "Package Services",
       "endClients": "End Clients",
       "endClientTypes": "End Client Types",
       "endClientStatuses": "End Client Statuses",
@@ -459,6 +458,10 @@
       "serviceId": "Service ID",
       "servicePricingConfigId": "Service Pricing Config ID",
       "newPackageService": "New Package Service",
+      "packageProducts": "Package Products",
+      "productId": "Product ID",
+      "productPricingConfigId": "Product Pricing Config ID",
+      "newPackageProduct": "New Package Product",
       "types": {
         "title": "Package Types",
         "newPackageType": "New Package Type",

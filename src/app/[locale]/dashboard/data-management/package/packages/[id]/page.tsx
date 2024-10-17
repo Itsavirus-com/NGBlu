@@ -8,9 +8,10 @@ import { PageTitle } from '@/components/page-title'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { TextView } from '@/components/view/text-view/text-view'
-import { PackageService } from '@/services/swr/models/package.type'
+import { PackageProduct, PackageService } from '@/services/swr/models/package.type'
 import { usePackage } from '@/services/swr/use-package'
 
+import { PackageProductFilter } from './components/package-product-filter'
 import { PackageServiceFilter } from './components/package-service-filter'
 
 export default function PackageDetails({ params }: { params: { id: number } }) {
@@ -18,7 +19,7 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
 
   const { data, isLoading } = usePackage(params.id)
 
-  const columns: TableColumn<PackageService>[] = [
+  const serviceColumns: TableColumn<PackageService>[] = [
     {
       id: 'id',
       title: t('id'),
@@ -38,6 +39,29 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
       id: 'servicePricingConfigId',
       title: t('servicePricingConfigId'),
       render: row => row.servicePricingConfigId,
+    },
+  ]
+
+  const productColumns: TableColumn<PackageProduct>[] = [
+    {
+      id: 'id',
+      title: t('id'),
+      render: row => row.id,
+    },
+    {
+      id: 'packageId',
+      title: t('packageId'),
+      render: row => row.packageId,
+    },
+    {
+      id: 'productId',
+      title: t('productId'),
+      render: row => row.productId,
+    },
+    {
+      id: 'productPricingConfigId',
+      title: t('productPricingConfigId'),
+      render: row => row.productPricingConfigId,
     },
   ]
 
@@ -101,9 +125,26 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
           },
         ]}
         filters={<PackageServiceFilter />}
-        columns={columns}
+        columns={serviceColumns}
         apiPath={`packages/${params.id}/services`}
         actionBasePath={`${params.id}/services`}
+        actions={['edit', 'delete']}
+      />
+      <Table<PackageProduct>
+        className="mt-4"
+        title={t('packageProducts')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('newPackageProduct'),
+            colorClass: 'light-primary',
+            href: `${params.id}/products/new`,
+          },
+        ]}
+        filters={<PackageProductFilter />}
+        columns={productColumns}
+        apiPath={`packages/${params.id}/products`}
+        actionBasePath={`${params.id}/products`}
         actions={['edit', 'delete']}
       />
     </>

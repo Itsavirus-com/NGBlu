@@ -18,3 +18,10 @@ export type PackageService = {
   serviceId: string
   servicePricingConfigId: string
 }
+
+export type PackageProduct = {
+  id: number
+  packageId: string
+  productId: string
+  productPricingConfigId: string
+}
