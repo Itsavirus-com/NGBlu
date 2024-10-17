@@ -63,7 +63,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
   return (
     <Form.Group className={containerClass}>
       {label && <Form.Label className="fw-bold">{label}</Form.Label>}
-      {allData.length === 0 || !detailData ? (
+      {allData.length === 0 ? (
         <Placeholder as="div" animation="wave">
           <Placeholder
             size="lg"
