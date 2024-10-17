@@ -92,7 +92,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
           }}
         >
           {detailData ? (
-            <option value={detailData.id}>{detailData.id}</option>
+            <option value={option.value(detailData)}>{option.label(detailData)}</option>
           ) : (
             <option disabled value={'select_option'}>
               {isLoading ? 'Loading more...' : 'Select one'}
