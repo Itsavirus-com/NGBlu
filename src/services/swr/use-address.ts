@@ -4,11 +4,12 @@ import { derive } from 'valtio/utils'
 import { modelAdaptor } from './middleware/model-adaptor'
 import { Address } from './models/address.type'
 
-export const useAddress = (addressId: number) => {
+export const useAddress = (addressId?: number) => {
   const { data, mutate, isLoading } = useSWR<Address>(
-    {
-      path: `addresses/${addressId}`,
-    },
+    () =>
+      addressId && {
+        path: `addresses/${addressId}`,
+      },
     {
       use: [modelAdaptor(() => derive({}), 'data')],
     }

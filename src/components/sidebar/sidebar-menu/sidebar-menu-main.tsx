@@ -207,13 +207,13 @@ const SidebarMenuMain = () => {
         icon="map"
       >
         <SidebarMenuItem
-          to="/dashboard/data-management/address/types"
-          title={t('addressTypes')}
+          to="/dashboard/data-management/address/addresses"
+          title={t('addresses')}
           hasBullet
         />
         <SidebarMenuItem
-          to="/dashboard/data-management/address/addresses"
-          title={t('addresses')}
+          to="/dashboard/data-management/address/types"
+          title={t('addressTypes')}
           hasBullet
         />
       </SidebarMenuItemWithSub>
