@@ -7,7 +7,7 @@ import { camelizeKeys, snakeCaseKeys } from './helpers/object'
 import { serialize } from './helpers/serialize-formdata'
 
 export class ApiCore {
-  protected baseURL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api` || ''
+  protected baseURL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`
   protected api: ApisauceInstance
 
   /**
@@ -87,14 +87,10 @@ export class ApiCore {
     })
   }
 
-  protected getBaseURL() {
-    return this.baseURL.replace(/\/$/, '')
-  }
-
   constructor() {
     this.api = create({
       timeout: 10000,
-      baseURL: this.getBaseURL(),
+      baseURL: this.baseURL,
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -119,7 +115,7 @@ export class ApiCore {
 
   protected async callApi(method: RequestMethod, { path, payload }: ApiParams) {
     const response: ApiResponse<any> = await this.api[method](path, payload, {
-      baseURL: this.getBaseURL(),
+      baseURL: this.baseURL,
     })
 
     return await this.processResult(response)
