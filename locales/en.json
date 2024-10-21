@@ -242,6 +242,7 @@
     "services": {
       "title": "Services",
       "newService": "New Service",
+      "updateService": "Update Service",
       "id": "ID",
       "name": "Name",
       "description": "Description",

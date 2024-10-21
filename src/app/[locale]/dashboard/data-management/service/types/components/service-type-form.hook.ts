@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
-import { serviceTypeApi } from '@/services/api/service-api'
+import { serviceTypeApi } from '@/services/api/service-type-api'
 import { useServiceType } from '@/services/swr/use-service-type'
 import { InferType } from '@/utils/typescript'
 
