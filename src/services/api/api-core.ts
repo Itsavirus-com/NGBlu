@@ -33,7 +33,7 @@ export class ApiCore {
   protected payloadWrapper?: string
 
   protected addHeaderTransformer() {
-    this.api.addRequestTransform(request => async () => {
+    this.api.addAsyncRequestTransform(request => async () => {
       if (!request.headers) request.headers = {}
 
       const session = await getSession()
