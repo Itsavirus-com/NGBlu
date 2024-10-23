@@ -48,10 +48,9 @@ export default function useServiceForm(serviceId?: number) {
     try {
       let newData = {
         ...data,
-        corporateOnlyService: data.corporateOnlyService ? 1 : 0,
-        consumerOnlyService: data.consumerOnlyService ? 1 : 0,
+        corporateOnlyService: data.corporateOnlyService ? '1' : '0',
+        consumerOnlyService: data.consumerOnlyService ? '1' : '0',
       }
-      console.log(newData)
       const res = await serviceApi.update(serviceId, newData)
 
       if (res.ok) {

@@ -15,7 +15,6 @@ export const ControlledSwitch = (props: SwitchProps) => {
 
   const { register, control } = useFormContext()
   const {
-    field,
     fieldState: { invalid, error },
   } = useController({ control, name })
 
@@ -23,17 +22,16 @@ export const ControlledSwitch = (props: SwitchProps) => {
     <Form.Group className={containerClass}>
       <div className="d-flex my-4">
         <Form.Check
-          type="radio"
+          type="switch"
           id={name}
           isInvalid={invalid}
           step={step}
           {...register(name)}
           {...otherProps}
-          name={field.name}
           autoComplete={name}
           data-test-id={name}
         />
-        {label && <Form.Check.Label className="fw-bold">{label}</Form.Check.Label>}
+        {label && <Form.Check.Label className="fw-bold ms-3">{label}</Form.Check.Label>}
       </div>
 
       {error && <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>}
