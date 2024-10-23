@@ -453,12 +453,30 @@
       "priceInterval": "Price Interval",
       "priceType": "Price Type",
       "tax": "Tax",
+      "packageServices": "Package Services",
+      "package": "Package",
+      "service": "Service",
+      "servicePricingConfig": "Service Pricing Config",
+      "newPackageService": "New Package Service",
+      "updatePackageService": "Update Package Service",
+      "packageProducts": "Package Products",
+      "product": "Product",
+      "productPricingConfig": "Product Pricing Config",
+      "newPackageProduct": "New Package Product",
+      "updatePackageProduct": "Update Package Product",
       "types": {
         "title": "Package Types",
         "newPackageType": "New Package Type",
         "updatePackageType": "Update Package Type",
         "id": "ID",
         "name": "Package Type"
+      },
+      "services": {
+        "title": "Services",
+        "newPackageService": "New Service",
+        "updatePackageService": "New Service",
+        "id": "ID",
+        "name": "Name"
       }
     },
     "addresses": {
