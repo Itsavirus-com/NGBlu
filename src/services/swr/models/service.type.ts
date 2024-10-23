@@ -6,8 +6,12 @@ export type ServicePriceConfig = {
   activeTo: string
   service: Service
   pricePlan: PricePlan
+  orgUnitId: number
+  businesspartnerId: number
+  enterpriseRootId: number
   createdAt: string
   updatedAt: string
+  deletedAt: string
 }
 
 export type Service = {

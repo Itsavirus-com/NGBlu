@@ -22,6 +22,7 @@
       "productsTypes": "Product Types",
       "services": "Services",
       "servicesTypes": "Service Types",
+      "servicesPriceConfigs": "Service Price Configs",
       "prices": "Prices",
       "priceConfigs": "Price Configs",
       "currencies": "Currencies",
@@ -266,6 +267,22 @@
         "newServiceType": "New Service Type",
         "updateServiceType": "Update Service Type",
         "type": "Service Type"
+      },
+      "priceConfig": {
+        "id": "ID",
+        "title": "Service Price Configs",
+        "businessPartnerId": "Business Partner ID",
+        "orgUnitId": "Org. Unit ID",
+        "enterpriseRootId": "Enterprise Root ID",
+        "service": "Service",
+        "serviceId": "Service ID",
+        "pricePlan": "Price Plan",
+        "pricePlanId": "Price Plan ID",
+        "activeFrom": "Active From",
+        "activeTo": "Active To",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "deletedAt": "Deleted At"
       }
     },
     "prices": {

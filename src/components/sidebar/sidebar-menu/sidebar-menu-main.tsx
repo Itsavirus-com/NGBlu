@@ -54,6 +54,11 @@ const SidebarMenuMain = () => {
           title={t('servicesTypes')}
           hasBullet
         />
+        <SidebarMenuItem
+          to="/dashboard/data-management/service/price-configs"
+          title={t('servicesPriceConfigs')}
+          hasBullet
+        />
       </SidebarMenuItemWithSub>
       <SidebarMenuItemWithSub
         to="/dashboard/data-management/package"
