@@ -482,6 +482,7 @@
     "addresses": {
       "title": "Addresses",
       "newAddress": "New Address",
+      "updateAddress": "Update Address",
       "id": "ID",
       "name": "Name",
       "addressName": "Address Name",
