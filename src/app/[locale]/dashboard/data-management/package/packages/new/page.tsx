@@ -13,7 +13,7 @@ import { PriceConfig } from '@/services/swr/models/price-config.type'
 
 import usePackageForm from '../components/package-form.hook'
 
-export default function NewCountry() {
+export default function NewPackage() {
   const t = useTranslations('dataManagement.packages')
 
   const { methods, onSubmit } = usePackageForm()
