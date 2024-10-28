@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { creditCardTypeApi } from '@/services/api/credit-card-type-api'
 import { useCreditCardType } from '@/services/swr/use-credit-card-type'
 import { InferType } from '@/utils/typescript'
 
 export default function useCreditCardTypeForm(creditCardTypeId?: number) {
+  const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: ccType } = useCreditCardType(creditCardTypeId)
@@ -27,6 +29,7 @@ export default function useCreditCardTypeForm(creditCardTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Credit card type created successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
@@ -41,6 +44,7 @@ export default function useCreditCardTypeForm(creditCardTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Credit card type updated successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()

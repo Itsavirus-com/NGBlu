@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { genderApi } from '@/services/api/gender-api'
 import { useGender } from '@/services/swr/use-gender'
 import { InferType } from '@/utils/typescript'
 
 export default function useGenderForm(genderId?: number) {
+  const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: gender } = useGender(genderId)
@@ -27,6 +29,7 @@ export default function useGenderForm(genderId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Gender created successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
@@ -41,6 +44,7 @@ export default function useGenderForm(genderId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Gender updated successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()

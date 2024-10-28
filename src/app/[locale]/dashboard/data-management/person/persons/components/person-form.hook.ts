@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { personApi } from '@/services/api/person-api'
 import { usePerson } from '@/services/swr/use-person'
 import { InferType } from '@/utils/typescript'
 
 export default function usePersonForm(personId?: number) {
+  const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: person } = usePerson(personId)
@@ -37,6 +39,7 @@ export default function usePersonForm(personId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Person created successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
@@ -51,6 +54,7 @@ export default function usePersonForm(personId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Person updated successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
