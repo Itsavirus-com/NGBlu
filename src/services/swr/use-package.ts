@@ -4,11 +4,12 @@ import { derive } from 'valtio/utils'
 import { modelAdaptor } from './middleware/model-adaptor'
 import { Package } from './models/package.type'
 
-export const usePackage = (packageId: number) => {
+export const usePackage = (packageId?: number) => {
   const { data, mutate, isLoading } = useSWR<Package>(
-    {
-      path: `packages/${packageId}`,
-    },
+    () =>
+      packageId && {
+        path: `packages/${packageId}`,
+      },
     {
       use: [modelAdaptor(() => derive({}), 'data')],
     }

@@ -463,6 +463,7 @@
     "packages": {
       "title": "Packages",
       "newPackage": "New Package",
+      "updatePackage": "Update Package",
       "id": "ID",
       "name": "Name",
       "type": "Type",
@@ -470,6 +471,7 @@
       "priceUnit": "Price Unit",
       "priceInterval": "Price Interval",
       "priceType": "Price Type",
+      "priceConfig": "Price Config",
       "tax": "Tax",
       "packageServices": "Package Services",
       "package": "Package",
