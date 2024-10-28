@@ -166,6 +166,11 @@ const SidebarMenuMain = () => {
           title={t('projectsTypes')}
           hasBullet
         />
+        <SidebarMenuItem
+          to="/dashboard/data-management/project/infos"
+          title={t('projectsInfos')}
+          hasBullet
+        />
       </SidebarMenuItemWithSub>
 
       <SidebarMenuItemWithSub

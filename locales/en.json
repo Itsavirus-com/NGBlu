@@ -38,7 +38,8 @@
       "personTypes": "Person Types",
       "contactTypes": "Contact Types",
       "projects": "Projects",
-      "projectsTypes": "Projects Types",
+      "projectsTypes": "Project Types",
+      "projectsInfos": "Project Infos",
       "endClients": "End Clients",
       "endClientTypes": "End Client Types",
       "endClientStatuses": "End Client Statuses",
@@ -436,6 +437,13 @@
         "newProjectType": "New Project Type",
         "updateProjectType": "Update Project Type",
         "type": "Project Type"
+      },
+      "infos": {
+        "id": "ID",
+        "title": "Project Infos",
+        "newProjectInfo": "New Project Info",
+        "updateProjectInfo": "Update Project Info",
+        "projectInfo": "Project Info"
       }
     },
     "endClients": {
