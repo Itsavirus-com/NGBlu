@@ -361,6 +361,7 @@
     "persons": {
       "title": "Persons",
       "newPerson": "New Person",
+      "updatePerson": "Update Person",
       "id": "ID",
       "salutation": "Salutation",
       "firstName": "First Name",
