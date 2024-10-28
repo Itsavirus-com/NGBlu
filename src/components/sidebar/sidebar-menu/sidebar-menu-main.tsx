@@ -130,6 +130,11 @@ const SidebarMenuMain = () => {
           hasBullet
         />
         <SidebarMenuItem
+          to="/dashboard/data-management/person/responsibilities"
+          title={t('personResponsibilities')}
+          hasBullet
+        />
+        <SidebarMenuItem
           to="/dashboard/data-management/person/types"
           title={t('personTypes')}
           hasBullet

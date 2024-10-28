@@ -34,6 +34,7 @@
       "users": "Users",
       "person": "Person",
       "persons": "Persons",
+      "personResponsibilities": "Person Responsibilities",
       "personTypes": "Person Types",
       "contactTypes": "Contact Types",
       "projects": "Projects",
@@ -382,6 +383,13 @@
         "contact": "Contact",
         "contactType": "Contact Type"
       }
+    },
+    "personResponsibilities": {
+      "title": "Person Responsibilities",
+      "newPersonResponsibility": "New Person Responsibility",
+      "updatePersonResponsibility": "Update Person Responsibility",
+      "id": "ID",
+      "responsibility": "Responsibility"
     },
     "personTypes": {
       "title": "Person Types",
