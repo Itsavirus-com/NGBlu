@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { priceUnitApi } from '@/services/api/price-unit-api'
 import { usePriceUnit } from '@/services/swr/use-price-unit'
 import { InferType } from '@/utils/typescript'
 
 export default function usePriceUnitForm(priceUnitId?: number) {
+  const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: ccType } = usePriceUnit(priceUnitId)
@@ -27,6 +29,7 @@ export default function usePriceUnitForm(priceUnitId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price unit created successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
@@ -41,6 +44,7 @@ export default function usePriceUnitForm(priceUnitId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price unit updated successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()

@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { addressApi } from '@/services/api/address-api'
 import { useAddress } from '@/services/swr/use-address'
 import { InferType } from '@/utils/typescript'
 
 export default function useAddressForm(addressId?: number) {
+  const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: address } = useAddress(addressId)
@@ -39,6 +41,7 @@ export default function useAddressForm(addressId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Address created successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
@@ -53,6 +56,7 @@ export default function useAddressForm(addressId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Address updated successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()

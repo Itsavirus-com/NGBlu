@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { personResponsibilityApi } from '@/services/api/person-responsibility-api'
 import { usePersonResponsibility } from '@/services/swr/use-person-responsibility'
 import { InferType } from '@/utils/typescript'
 
 export default function useResponsibilityForm(responsibilityId?: number) {
+  const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: responsibility } = usePersonResponsibility(responsibilityId)
@@ -27,6 +29,7 @@ export default function useResponsibilityForm(responsibilityId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Responsibility created successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
@@ -41,6 +44,7 @@ export default function useResponsibilityForm(responsibilityId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Responsibility updated successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()

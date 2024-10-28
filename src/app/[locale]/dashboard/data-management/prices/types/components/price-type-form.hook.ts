@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { priceTypeApi } from '@/services/api/price-type-api'
 import { usePriceType } from '@/services/swr/use-price-type'
 import { InferType } from '@/utils/typescript'
 
 export default function usePriceTypeForm(priceTypeId?: number) {
+  const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: ccType } = usePriceType(priceTypeId)
@@ -27,6 +29,7 @@ export default function usePriceTypeForm(priceTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price type created successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
@@ -41,6 +44,7 @@ export default function usePriceTypeForm(priceTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price type updated successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()

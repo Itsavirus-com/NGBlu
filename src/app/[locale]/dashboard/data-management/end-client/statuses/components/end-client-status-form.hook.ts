@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { endClientStatusApi } from '@/services/api/end-client-status-api'
 import { useEndClientStatus } from '@/services/swr/use-end-client-status'
 import { InferType } from '@/utils/typescript'
 
 export default function useEndClientStatusForm(endClientStatusId?: number) {
+  const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: ccType } = useEndClientStatus(endClientStatusId)
@@ -27,6 +29,7 @@ export default function useEndClientStatusForm(endClientStatusId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client status created successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
@@ -41,6 +44,7 @@ export default function useEndClientStatusForm(endClientStatusId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client status updated successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
