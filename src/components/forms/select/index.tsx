@@ -16,13 +16,25 @@ type SelectProps<OptionValue> = FormSelectProps & {
     label: (value: OptionValue) => string | number
     value: (value: OptionValue) => string | number
   }
+  filter?: Record<string, any>
+  onChange?: (value: string | number) => void
 }
 
 export const ControlledSelect = <OptionValue extends Record<string, any>>(
   props: SelectProps<OptionValue>
 ) => {
-  const { label, name, filterName, containerClass, children, apiPath, option, ...otherProps } =
-    props
+  const {
+    label,
+    name,
+    filterName,
+    containerClass,
+    children,
+    apiPath,
+    option,
+    filter,
+    onChange,
+    ...otherProps
+  } = props
 
   const { control } = useFormContext()
   const {
@@ -40,6 +52,9 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
   const { data, pagination } = useOptionData<OptionValue>(apiPath, {
     page,
     limit: 10,
+    filter: {
+      ...filter,
+    },
   })
 
   const { data: detailData } = useOptionDataById<OptionValue>(apiPath, field.value)
@@ -83,6 +98,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
           autoComplete={name}
           data-test-id={name}
           onChange={e => {
+            onChange && onChange(e.target.value)
             field.onChange(e.target.value)
             const value = e.target.value
             if (value === 'load_more') {

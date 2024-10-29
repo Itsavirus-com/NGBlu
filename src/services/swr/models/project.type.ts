@@ -17,4 +17,5 @@ export type Project = {
   enterpriseRootId: number
   createdAd: string
   updatedAd: string
+  inputType: string
 }

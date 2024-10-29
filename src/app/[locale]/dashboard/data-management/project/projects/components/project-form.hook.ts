@@ -19,20 +19,32 @@ export default function useProjectForm(projectId?: number) {
     projectTypeId: yup.number().required(),
     projectInfoId: yup.number().required(),
     addressId: yup.number().required(),
-    ouUnitId: yup.number(),
     endclientId: yup.number(),
     businesspartnersId: yup.number(),
     enterpriseRootId: yup.number(),
+    ouUnitId: yup.number(),
+    inputType: yup.string().ensure().required(),
   })
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: projectData,
+    values: projectData && {
+      ...projectData,
+      inputType: projectData.endclientId
+        ? 'endclientId'
+        : projectData.businesspartnersId
+          ? 'businesspartnerId'
+          : projectData.enterpriseRootId
+            ? 'enterpriseRootId'
+            : '',
+    },
   })
 
   const addNewProject = async (data: InferType<typeof schema>) => {
     try {
-      const res = await projectApi.new(data)
+      const { inputType, ...rest } = data
+
+      const res = await projectApi.new(rest)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Project created successfully' })
@@ -47,7 +59,9 @@ export default function useProjectForm(projectId?: number) {
     if (!projectId) return
 
     try {
-      const res = await projectApi.update(projectId, data)
+      const { inputType, ...rest } = data
+
+      const res = await projectApi.update(projectId, rest)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Project updated successfully' })
