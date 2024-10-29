@@ -12,10 +12,10 @@ import { Service, ServicePriceConfig } from '@/services/swr/models/service.type'
 
 import usePackageServiceForm from '../component/package-service-form.hook'
 
-export default function NewPackageService() {
+export default function NewPackageService({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.packages')
 
-  const { methods, onSubmit } = usePackageServiceForm()
+  const { methods, onSubmit } = usePackageServiceForm(Number(params.id))
 
   return (
     <>
