@@ -12,10 +12,10 @@ import { Product, ProductPriceConfig } from '@/services/swr/models/product.type'
 
 import usePackageProductForm from '../component/package-product-form.hook'
 
-export default function NewPackageProduct() {
+export default function NewPackageProduct({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.packages')
 
-  const { methods, onSubmit } = usePackageProductForm()
+  const { methods, onSubmit } = usePackageProductForm(Number(params.id))
 
   return (
     <>
