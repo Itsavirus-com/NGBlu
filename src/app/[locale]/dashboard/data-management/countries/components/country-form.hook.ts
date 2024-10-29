@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { countryApi } from '@/services/api/country-api'
 import { useCountry } from '@/services/swr/use-country'
 import { InferType } from '@/utils/typescript'
 
 export default function useCountryForm(countryId?: number) {
+  const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: country } = useCountry(countryId)
@@ -31,6 +33,7 @@ export default function useCountryForm(countryId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Country created successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
@@ -45,6 +48,7 @@ export default function useCountryForm(countryId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Country updated successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()

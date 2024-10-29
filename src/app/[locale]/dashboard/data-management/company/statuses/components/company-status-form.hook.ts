@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { companyStatusApi } from '@/services/api/company-status-api'
 import { useCompanyStatus } from '@/services/swr/use-company-status'
 import { InferType } from '@/utils/typescript'
 
 export default function useCompanyStatusForm(companyStatusId?: number) {
+  const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: companyStatus } = useCompanyStatus(companyStatusId)
@@ -27,6 +29,7 @@ export default function useCompanyStatusForm(companyStatusId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Company status created successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
@@ -41,6 +44,7 @@ export default function useCompanyStatusForm(companyStatusId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Company status updated successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()

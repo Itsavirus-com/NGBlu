@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { serviceTypeApi } from '@/services/api/service-type-api'
 import { useServiceType } from '@/services/swr/use-service-type'
 import { InferType } from '@/utils/typescript'
 
 export default function useServiceTypeForm(typeId?: number) {
+  const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: serviceType } = useServiceType(typeId)
@@ -27,6 +29,7 @@ export default function useServiceTypeForm(typeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Service type created successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
@@ -41,6 +44,7 @@ export default function useServiceTypeForm(typeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Service type updated successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()

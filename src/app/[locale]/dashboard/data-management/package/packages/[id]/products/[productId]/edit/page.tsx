@@ -1,6 +1,5 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -13,12 +12,14 @@ import { Product, ProductPriceConfig } from '@/services/swr/models/product.type'
 
 import usePackageProductForm from '../../component/package-product-form.hook'
 
-export default function UpdatePackageProduct() {
-  const { productId } = useParams()
-
+export default function UpdatePackageProduct({
+  params,
+}: {
+  params: { id: number; productId: number }
+}) {
   const t = useTranslations('dataManagement.packages')
 
-  const { methods, onSubmit } = usePackageProductForm(Number(productId))
+  const { methods, onSubmit } = usePackageProductForm(Number(params.id), Number(params.productId))
 
   return (
     <>

@@ -1,6 +1,5 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -11,11 +10,10 @@ import { PageTitle } from '@/components/page-title'
 
 import useGenderForm from '../../components/gender-form.hook'
 
-export default function UpdateGender() {
-  const { genderId } = useParams()
+export default function UpdateGender({ params }: { params: { genderId: number } }) {
   const t = useTranslations('dataManagement.genders')
 
-  const { methods, onSubmit } = useGenderForm(Number(genderId))
+  const { methods, onSubmit } = useGenderForm(Number(params.genderId))
 
   return (
     <>

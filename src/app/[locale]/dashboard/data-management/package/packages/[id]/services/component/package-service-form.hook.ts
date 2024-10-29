@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
@@ -8,9 +7,7 @@ import { packageServiceApi } from '@/services/api/package-service-api'
 import { usePackageService } from '@/services/swr/use-package-service'
 import { InferType } from '@/utils/typescript'
 
-export default function usePackageServiceForm(packageServiceId?: number) {
-  const { id } = useParams()
-
+export default function usePackageServiceForm(id: number, packageServiceId?: number) {
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: serviceType } = usePackageService(Number(id), packageServiceId)

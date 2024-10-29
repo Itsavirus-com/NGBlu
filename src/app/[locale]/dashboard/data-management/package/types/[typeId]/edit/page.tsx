@@ -1,6 +1,5 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -11,11 +10,10 @@ import { PageTitle } from '@/components/page-title'
 
 import usePackageTypeForm from '../../components/package-type-form.hook'
 
-export default function UpdatePackageType() {
-  const { typeId } = useParams()
+export default function UpdatePackageType({ params }: { params: { typeId: number } }) {
   const t = useTranslations('dataManagement.packages.types')
 
-  const { methods, onSubmit } = usePackageTypeForm(Number(typeId))
+  const { methods, onSubmit } = usePackageTypeForm(Number(params.typeId))
 
   return (
     <>

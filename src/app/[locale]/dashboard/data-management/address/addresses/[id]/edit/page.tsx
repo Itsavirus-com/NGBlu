@@ -1,6 +1,5 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -13,12 +12,10 @@ import { Country } from '@/services/swr/models/country.type'
 
 import useAddressForm from '../../components/address-form.hook'
 
-export default function UpdateAddress() {
-  const { id } = useParams()
-
+export default function UpdateAddress({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.addresses')
 
-  const { methods, onSubmit } = useAddressForm(Number(id))
+  const { methods, onSubmit } = useAddressForm(Number(params.id))
 
   return (
     <>

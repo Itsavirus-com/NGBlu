@@ -1,6 +1,5 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -11,11 +10,10 @@ import { PageTitle } from '@/components/page-title'
 
 import useProjectTypeForm from '../../components/project-type-form.hook'
 
-export default function UpdateProjectType() {
-  const { typeId } = useParams()
+export default function UpdateProjectType({ params }: { params: { typeId: string } }) {
   const t = useTranslations('dataManagement.projects.types')
 
-  const { methods, onSubmit } = useProjectTypeForm(Number(typeId))
+  const { methods, onSubmit } = useProjectTypeForm(Number(params.typeId))
 
   return (
     <>

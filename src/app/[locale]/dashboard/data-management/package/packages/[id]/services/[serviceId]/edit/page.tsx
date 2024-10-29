@@ -1,6 +1,5 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -13,12 +12,14 @@ import { Service, ServicePriceConfig } from '@/services/swr/models/service.type'
 
 import usePackageServiceForm from '../../component/package-service-form.hook'
 
-export default function UpdatePackageService() {
-  const { serviceId } = useParams()
-
+export default function UpdatePackageService({
+  params,
+}: {
+  params: { id: number; serviceId: number }
+}) {
   const t = useTranslations('dataManagement.packages')
 
-  const { methods, onSubmit } = usePackageServiceForm(Number(serviceId))
+  const { methods, onSubmit } = usePackageServiceForm(Number(params.id), Number(params.serviceId))
 
   return (
     <>

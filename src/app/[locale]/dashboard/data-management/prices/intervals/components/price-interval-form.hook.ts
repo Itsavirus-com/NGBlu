@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { priceIntervalApi } from '@/services/api/price-interval-api'
 import { usePriceInterval } from '@/services/swr/use-price-interval'
 import { InferType } from '@/utils/typescript'
 
 export default function usePriceIntervalForm(priceIntervalId?: number) {
+  const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: ccType } = usePriceInterval(priceIntervalId)
@@ -27,6 +29,7 @@ export default function usePriceIntervalForm(priceIntervalId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price interval created successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
@@ -41,6 +44,7 @@ export default function usePriceIntervalForm(priceIntervalId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price interval updated successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
