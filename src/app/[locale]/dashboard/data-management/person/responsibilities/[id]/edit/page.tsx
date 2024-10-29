@@ -1,6 +1,5 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -11,11 +10,10 @@ import { PageTitle } from '@/components/page-title'
 
 import useResponsibilityForm from '../../components/responsibility-form.hook'
 
-export default function UpdatePersonResponsibility() {
-  const { id } = useParams()
+export default function UpdatePersonResponsibility({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.personResponsibilities')
 
-  const { methods, onSubmit } = useResponsibilityForm(Number(id))
+  const { methods, onSubmit } = useResponsibilityForm(Number(params.id))
 
   return (
     <>

@@ -1,6 +1,5 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -11,11 +10,10 @@ import { PageTitle } from '@/components/page-title'
 
 import useServiceTypeForm from '../../components/service-type-form.hook'
 
-export default function UpdateServiceType() {
-  const { typeId } = useParams()
+export default function UpdateServiceType({ params }: { params: { typeId: string } }) {
   const t = useTranslations('dataManagement.services.types')
 
-  const { methods, onSubmit } = useServiceTypeForm(Number(typeId))
+  const { methods, onSubmit } = useServiceTypeForm(Number(params.typeId))
 
   return (
     <>
