@@ -1,6 +1,5 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -11,11 +10,10 @@ import { PageTitle } from '@/components/page-title'
 
 import useProductTypeForm from '../../components/product-type-form.hook'
 
-export default function UpdateProductType() {
-  const { typeId } = useParams()
+export default function UpdateProductType({ params }: { params: { typeId: string } }) {
   const t = useTranslations('dataManagement.products.types')
 
-  const { methods, onSubmit } = useProductTypeForm(Number(typeId))
+  const { methods, onSubmit } = useProductTypeForm(Number(params.typeId))
 
   return (
     <>

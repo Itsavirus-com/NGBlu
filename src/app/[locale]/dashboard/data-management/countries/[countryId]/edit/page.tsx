@@ -1,6 +1,5 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -11,11 +10,10 @@ import { PageTitle } from '@/components/page-title'
 
 import useCountryForm from '../../components/country-form.hook'
 
-export default function UpdateCountry() {
-  const { countryId } = useParams()
+export default function UpdateCountry({ params }: { params: { countryId: number } }) {
   const t = useTranslations('dataManagement.countries')
 
-  const { methods, onSubmit } = useCountryForm(Number(countryId))
+  const { methods, onSubmit } = useCountryForm(Number(params.countryId))
 
   return (
     <>

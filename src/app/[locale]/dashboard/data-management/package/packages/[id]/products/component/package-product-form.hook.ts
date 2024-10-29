@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
@@ -8,9 +7,7 @@ import { packageProductApi } from '@/services/api/package-product-api'
 import { usePackageProduct } from '@/services/swr/use-package-product'
 import { InferType } from '@/utils/typescript'
 
-export default function usePackageProductForm(packageProductId?: number) {
-  const { id } = useParams()
-
+export default function usePackageProductForm(id: number, packageProductId?: number) {
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: productType } = usePackageProduct(Number(id), packageProductId)

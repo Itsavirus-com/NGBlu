@@ -1,6 +1,5 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -14,11 +13,10 @@ import { PersonType } from '@/services/swr/models/person-type.type'
 
 import usePersonForm from '../../components/person-form.hook'
 
-export default function UpdatePerson() {
-  const { id } = useParams()
+export default function UpdatePerson({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.persons')
 
-  const { methods, onSubmit } = usePersonForm(Number(id))
+  const { methods, onSubmit } = usePersonForm(Number(params.id))
 
   return (
     <>
