@@ -1,13 +1,13 @@
 import { ApiCore } from './api-core'
 
-export class ProjectTypeApi extends ApiCore {
+export class ProjectApi extends ApiCore {
   async new(payload: Record<string, any>) {
-    return await this.post({ path: 'projects/types', payload })
+    return await this.post({ path: 'projects', payload })
   }
 
   async update(id: number, payload: Record<string, any>) {
-    return await this.put({ path: `projects/types/${id}`, payload })
+    return await this.put({ path: `projects/${id}`, payload })
   }
 }
 
-export const projectTypeApi = new ProjectTypeApi()
+export const projectApi = new ProjectApi()

@@ -12,9 +12,10 @@ export type Project = {
   addressId: number
   address: Address
   ouUnitId: number
-  endClientId: number
-  businessPartnersId: number
+  endclientId: number
+  businesspartnersId: number
   enterpriseRootId: number
   createdAd: string
   updatedAd: string
+  inputType: string
 }

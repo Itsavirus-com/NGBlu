@@ -8,10 +8,11 @@ type SwitchProps = FormCheckInputProps & {
   name: string
   containerClass?: string
   step?: number
+  type?: 'checkbox' | 'radio' | 'switch'
 }
 
 export const ControlledSwitch = (props: SwitchProps) => {
-  const { label, name, containerClass, children, step, ...otherProps } = props
+  const { label, name, containerClass, children, step, type = 'switch', ...otherProps } = props
 
   const { register, control } = useFormContext()
   const {
@@ -22,7 +23,7 @@ export const ControlledSwitch = (props: SwitchProps) => {
     <Form.Group className={containerClass}>
       <div className="d-flex my-4">
         <Form.Check
-          type="switch"
+          type={type}
           id={name}
           isInvalid={invalid}
           step={step}
