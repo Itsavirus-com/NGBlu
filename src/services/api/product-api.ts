@@ -1,13 +1,13 @@
 import { ApiCore } from './api-core'
 
-export class ProductTypeApi extends ApiCore {
+export class ProductApi extends ApiCore {
   async new(payload: Record<string, any>) {
-    return await this.post({ path: 'products/types', payload })
+    return await this.post({ path: 'products', payload })
   }
 
   async update(id: number, payload: Record<string, any>) {
-    return await this.put({ path: `products/types/${id}`, payload })
+    return await this.put({ path: `products/${id}`, payload })
   }
 }
 
-export const productTypeApi = new ProductTypeApi()
+export const productApi = new ProductApi()
