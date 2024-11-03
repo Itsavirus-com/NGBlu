@@ -42,11 +42,19 @@ export default function ProductPriceConfigs() {
   return (
     <Table<ProductPriceConfig>
       title={t('title')}
+      toolbars={[
+        {
+          icon: 'plus',
+          label: t('newPriceConfig'),
+          colorClass: 'light-primary',
+          href: 'price-configs/new',
+        },
+      ]}
       filters={<ProductPriceConfigsFilter />}
       columns={columns}
       apiPath="products/price-configs"
       actionBasePath="price-configs"
-      actions={['view']}
+      actions={['view', 'edit', 'delete']}
     />
   )
 }

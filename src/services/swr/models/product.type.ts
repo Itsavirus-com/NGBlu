@@ -5,7 +5,9 @@ export type ProductPriceConfig = {
   activeFrom: string
   activeTo: string
   product: Product
+  productId: number
   pricePlan: PricePlan
+  priceplanId: number
   orgUnitId: number
   businesspartnerId: number
   enterpriseRootId: number
