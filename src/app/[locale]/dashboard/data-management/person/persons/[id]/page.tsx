@@ -161,6 +161,7 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
         actionBasePath={`${params.id}/addresses`}
         actions={['edit', 'delete']}
         className="mt-6"
+        defaultFilters={{ personId: params.id }}
       />
     </>
   )
