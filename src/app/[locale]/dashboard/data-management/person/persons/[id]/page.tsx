@@ -9,8 +9,10 @@ import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { TextView } from '@/components/view/text-view/text-view'
 import { Contact } from '@/services/swr/models/contact.type'
+import { PersonAddress } from '@/services/swr/models/person-address.type'
 import { usePerson } from '@/services/swr/use-person'
 
+import { AddressFilter } from './components/address-filter'
 import { ContactFilter } from './components/contact-filter'
 
 export default function PersonDetails({ params }: { params: { id: number } }) {
@@ -18,7 +20,7 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
 
   const { data, isLoading } = usePerson(params.id)
 
-  const columns: TableColumn<Contact>[] = [
+  const contactColumn: TableColumn<Contact>[] = [
     {
       id: 'id',
       title: t('contacts.id'),
@@ -32,7 +34,25 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
     {
       id: 'contactType',
       title: t('contacts.contactType'),
-      render: row => row.contactInfoType?.contactType,
+      render: row => row.contactType?.contactType,
+    },
+  ]
+
+  const addressColumn: TableColumn<PersonAddress>[] = [
+    {
+      id: 'id',
+      title: t('addresses.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'address',
+      title: t('addresses.address'),
+      render: row => `${row.addressId} | ${row.address.addressName}`,
+    },
+    {
+      id: 'isPrimaryAddress',
+      title: t('addresses.primaryAddress'),
+      render: row => (row.isPrimaryAddress ? t('addresses.yes') : t('addresses.no')),
     },
   ]
 
@@ -117,9 +137,28 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
           },
         ]}
         filters={<ContactFilter />}
-        columns={columns}
+        columns={contactColumn}
         apiPath="contacts/infos"
         actionBasePath="contacts"
+        actions={['edit', 'delete']}
+        className="mt-6"
+        defaultFilters={{ personId: params.id }}
+      />
+
+      <Table<PersonAddress>
+        title={t('addresses.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('addresses.newAddress'),
+            colorClass: 'light-primary',
+            href: `${params.id}/addresses/new`,
+          },
+        ]}
+        filters={<AddressFilter />}
+        columns={addressColumn}
+        apiPath={`persons/${params.id}/addresses`}
+        actionBasePath={`${params.id}/addresses`}
         actions={['edit', 'delete']}
         className="mt-6"
         defaultFilters={{ personId: params.id }}

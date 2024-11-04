@@ -5,7 +5,7 @@ export type Contact = {
   id: number
   contactInfo: string
   contactTypeId: number
-  contactInfoType: ContactType
+  contactType: ContactType
   personId: number
   person: Person
   ouUnitId: number

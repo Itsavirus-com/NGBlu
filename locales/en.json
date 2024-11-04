@@ -406,6 +406,20 @@
         "id": "ID",
         "contact": "Contact",
         "contactType": "Contact Type"
+      },
+      "addresses": {
+        "title": "Addresses",
+        "newAddress": "New Address",
+        "newPersonAddress": "New Person Address",
+        "updatePersonAddress": "Update Person Address",
+        "id": "ID",
+        "person": "Person",
+        "personId": "Person ID",
+        "address": "Address",
+        "addressId": "Address ID",
+        "primaryAddress": "Primary Address",
+        "yes": "Yes",
+        "no": "No"
       }
     },
     "personResponsibilities": {
