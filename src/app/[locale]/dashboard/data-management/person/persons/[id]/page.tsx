@@ -133,13 +133,13 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
             icon: 'plus',
             label: t('contacts.newContact'),
             colorClass: 'light-primary',
-            href: 'contacts/new',
+            href: `${params.id}/contacts/new`,
           },
         ]}
         filters={<ContactFilter />}
         columns={contactColumn}
         apiPath="contacts/infos"
-        actionBasePath="contacts"
+        actionBasePath={`${params.id}/contacts`}
         actions={['edit', 'delete']}
         className="mt-6"
         defaultFilters={{ personId: params.id }}
@@ -161,7 +161,6 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
         actionBasePath={`${params.id}/addresses`}
         actions={['edit', 'delete']}
         className="mt-6"
-        defaultFilters={{ personId: params.id }}
       />
     </>
   )

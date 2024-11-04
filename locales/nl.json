@@ -398,9 +398,17 @@
       "contacts": {
         "title": "Contacts",
         "newContact": "New Contact",
+        "newPersonContact": "New Person Contact",
+        "updatePersonContact": "Update Person Contact",
         "id": "ID",
         "contact": "Contact",
-        "contactType": "Contact Type"
+        "contactType": "Contact Type",
+        "enterpriseRoot": "Enterprise Root",
+        "enterpriseRootId": "Enterprise Root ID",
+        "businesspartner": "Business Partner",
+        "businesspartnerId": "Business Partner ID",
+        "endclient": "End Client",
+        "endclientId": "End Client ID"
       },
       "addresses": {
         "title": "Addresses",
