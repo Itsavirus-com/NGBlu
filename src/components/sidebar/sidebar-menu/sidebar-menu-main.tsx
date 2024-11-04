@@ -101,6 +101,7 @@ const SidebarMenuMain = () => {
         title={t('users')}
         icon="security-user"
       />
+
       <SidebarMenuItemWithSub
         to="/dashboard/data-management/project"
         title={t('projects')}
@@ -118,31 +119,28 @@ const SidebarMenuMain = () => {
         />
       </SidebarMenuItemWithSub>
 
-      <SidebarMenuItemWithSub
+      <SidebarMenuItem
         to="/dashboard/data-management/end-client/end-clients"
         title={t('endClients')}
         icon="profile-user"
       />
-
-      <SidebarMenuItemWithSub
+      <SidebarMenuItem
         to="/dashboard/data-management/company/companies"
         title={t('company')}
         icon="home-3"
       />
-
       <SidebarMenuItem
         to="/dashboard/data-management/organization-units"
         title={t('organizationUnits')}
         icon="data"
       />
-      <SidebarMenuItemWithSub
+      <SidebarMenuItem
         to="/dashboard/data-management/address/addresses"
         title={t('address')}
         icon="map"
       />
-
-      <SidebarMenuItemWithSub
-        to="/dashboard/data-management/payment"
+      <SidebarMenuItem
+        to="/dashboard/data-management/payment/payments"
         title={t('payment')}
         icon="credit-cart"
       />
