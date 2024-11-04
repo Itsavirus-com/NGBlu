@@ -182,6 +182,25 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
         className="mt-6"
         defaultFilters={{ personId: params.id }}
       />
+
+      <Table<PersonAddress>
+        title={t('addresses.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('addresses.newAddress'),
+            colorClass: 'light-primary',
+            href: `${params.id}/addresses/new`,
+          },
+        ]}
+        filters={<AddressFilter />}
+        columns={addressColumn}
+        apiPath={`persons/${params.id}/addresses`}
+        actionBasePath={`${params.id}/addresses`}
+        actions={['edit', 'delete']}
+        className="mt-6"
+        defaultFilters={{ personId: params.id }}
+      />
     </>
   )
 }
