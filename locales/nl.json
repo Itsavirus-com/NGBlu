@@ -688,6 +688,7 @@
     "companies": {
       "title": "Companies",
       "newCompany": "New Company",
+      "updateCompany": "Update Company",
       "id": "ID",
       "name": "Name",
       "status": "Status",
