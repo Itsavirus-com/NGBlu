@@ -738,6 +738,8 @@
     "payments": {
       "title": "Payments",
       "id": "ID",
+      "newPayment": "New Payment",
+      "updatePayment": "Update Payment",
       "personName": "Person Name",
       "bankName": "Bank Name",
       "paymentType": "Payment Type",
@@ -764,7 +766,10 @@
       "postalCode": "Postal Code",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "googleAddressId": "Google Address ID"
+      "googleAddressId": "Google Address ID",
+      "endClient": "End Client",
+      "businessPartner": "Business Partner",
+      "enterpriseRoot": "Enterprise Root"
     },
     "paymentTypes": {
       "title": "Payment Types",
