@@ -4,7 +4,7 @@ import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
-import { projectTypeApi } from '@/services/api/project-api'
+import { projectTypeApi } from '@/services/api/project-type-api'
 import { useProjectType } from '@/services/swr/use-project-type'
 import { InferType } from '@/utils/typescript'
 

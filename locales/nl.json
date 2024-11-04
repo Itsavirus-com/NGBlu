@@ -58,7 +58,8 @@
       "paymentTypes": "Payment Types",
       "creditCardTypes": "Credit Card Types",
       "creditCardBrands": "Credit Card Brands",
-      "organizationUnits": "Organization Units"
+      "organizationUnits": "Organization Units",
+      "settings": "Settings"
     },
     "table": {
       "filterOptions": "Filter Options",
