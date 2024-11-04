@@ -20,6 +20,7 @@
       "dataManagement": "Data Management",
       "products": "Products",
       "productsTypes": "Product Types",
+      "productsPriceConfigs": "Product Price Configs",
       "services": "Services",
       "servicesTypes": "Service Types",
       "servicesPriceConfigs": "Service Price Configs",
@@ -241,6 +242,27 @@
         "newProductType": "New Product Type",
         "updateProductType": "Update Product Type",
         "type": "Product Type"
+      },
+      "priceConfig": {
+        "id": "ID",
+        "title": "Product Price Configs",
+        "newPriceConfig": "New Price Config",
+        "updatePriceConfig": "Update Price Config",
+        "businessPartner": "Business Partner ",
+        "businessPartnerId": "Business Partner ID",
+        "orgUnit": "Org. Unit ",
+        "orgUnitId": "Org. Unit ID",
+        "enterpriseRoot": "Enterprise Root ",
+        "enterpriseRootId": "Enterprise Root ID",
+        "product": "Product",
+        "productId": "Product ID",
+        "pricePlan": "Price Plan",
+        "pricePlanId": "Price Plan ID",
+        "activeFrom": "Active From",
+        "activeTo": "Active To",
+        "createdAt": "Created At",
+        "updatedAt": "Updated At",
+        "deletedAt": "Deleted At"
       }
     },
     "services": {
