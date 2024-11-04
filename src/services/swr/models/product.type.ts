@@ -14,6 +14,7 @@ export type Product = {
   id: number
   name: string
   description: string
+  productTypeId: number
   productType: {
     id: string
     productType: string
