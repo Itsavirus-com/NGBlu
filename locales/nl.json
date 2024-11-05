@@ -359,11 +359,14 @@
       "taxes": {
         "title": "Price Taxes",
         "newPriceTax": "New Price Tax",
+        "updatePriceTax": "Update Price Tax",
         "id": "ID",
         "name": "Name",
         "value": "Value",
         "currency": "Currency",
         "unit": "Unit",
+        "tax": "Tax",
+        "priceUnit": "Price Unit",
         "country": "Country"
       },
       "types": {
