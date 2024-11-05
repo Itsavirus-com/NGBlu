@@ -71,7 +71,7 @@ export default function PriceCurrencies() {
       toolbars={[
         {
           icon: 'plus',
-          label: t('newPriceInterval'),
+          label: t('newPricePlan'),
           colorClass: 'light-primary',
           href: 'plans/new',
         },
