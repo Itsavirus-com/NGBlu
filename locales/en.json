@@ -315,10 +315,12 @@
       "configs": {
         "title": "Price Configs",
         "newPriceConfig": "New Price Config",
+        "updatePriceConfig": "Update Price Config",
         "id": "ID",
         "price": "Price",
         "unit": "Unit",
         "interval": "Interval",
+        "currency": "Currency",
         "type": "Type",
         "tax": "Tax"
       },

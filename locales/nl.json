@@ -246,8 +246,13 @@
       "priceConfig": {
         "id": "ID",
         "title": "Product Price Configs",
+        "newPriceConfig": "New Price Config",
+        "updatePriceConfig": "Update Price Config",
+        "businessPartner": "Business Partner ",
         "businessPartnerId": "Business Partner ID",
+        "orgUnit": "Org. Unit ",
         "orgUnitId": "Org. Unit ID",
+        "enterpriseRoot": "Enterprise Root ",
         "enterpriseRootId": "Enterprise Root ID",
         "product": "Product",
         "productId": "Product ID",
@@ -310,10 +315,12 @@
       "configs": {
         "title": "Price Configs",
         "newPriceConfig": "New Price Config",
+        "updatePriceConfig": "Update Price Config",
         "id": "ID",
         "price": "Price",
         "unit": "Unit",
         "interval": "Interval",
+        "currency": "Currency",
         "type": "Type",
         "tax": "Tax"
       },
