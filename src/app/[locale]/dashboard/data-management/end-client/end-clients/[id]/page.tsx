@@ -57,7 +57,7 @@ export default function EndClientDetails({ params }: { params: { id: number } })
             className="my-3"
             isLoading={isLoading}
             label={t('addressName')}
-            value={data?.locationAddress.addressName}
+            value={data?.locationAddress?.addressName}
           />
           <TextView
             className="my-3"

@@ -489,6 +489,7 @@
     "endClients": {
       "title": "End Clients",
       "newEndClient": "New End Client",
+      "updateEndClient": "Update End Client",
       "id": "ID",
       "name": "Name",
       "type": "Type",
