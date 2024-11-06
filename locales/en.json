@@ -675,6 +675,7 @@
     "organizationUnits": {
       "title": "Organization Units",
       "newOrganizationUnit": "New Organization Unit",
+      "updateOrganizationUnit": "Update Organization Unit",
       "id": "ID",
       "name": "Name",
       "addressName": "Address Name",
@@ -689,7 +690,10 @@
       "postalCode": "Postal Code",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "googleAddressId": "Google Address ID"
+      "googleAddressId": "Google Address ID",
+      "endClient": "End Client",
+      "businessPartner": "Business Partner",
+      "enterpriseRoot": "Enterprise Root"
     }
   }
 }

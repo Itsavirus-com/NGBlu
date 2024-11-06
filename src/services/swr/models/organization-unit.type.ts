@@ -12,4 +12,5 @@ export type OrganizationUnit = {
   createdAt: string
   updatedAt: string
   namespace: Namespace[]
+  inputType: string
 }
