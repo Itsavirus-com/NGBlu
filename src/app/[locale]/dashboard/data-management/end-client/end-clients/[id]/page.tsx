@@ -10,10 +10,12 @@ import { TableColumn } from '@/components/table/table.type'
 import { TextView } from '@/components/view/text-view/text-view'
 import { EndClientAddress } from '@/services/swr/models/end-client-address.type'
 import { EndClientContact } from '@/services/swr/models/end-client-contact.type'
+import { EndClientPaymentDetail } from '@/services/swr/models/end-client-payment-detail.type'
 import { useEndClient } from '@/services/swr/use-end-client'
 
 import { EndClientAddressFilter } from './components/end-client-address-filter'
 import { EndClientContactFilter } from './components/end-client-contact-filter'
+import { EndClientPaymentDetailFilter } from './components/end-client-payment-detail-filter'
 
 export default function EndClientDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.endClients')
@@ -53,6 +55,19 @@ export default function EndClientDetails({ params }: { params: { id: number } })
       id: 'responsibility',
       title: t('contacts.responsibility'),
       render: row => `${row.responsibilityId} | ${row.responsibility.responsibility}`,
+    },
+  ]
+
+  const paymentDetailColumns: TableColumn<EndClientPaymentDetail>[] = [
+    {
+      id: 'id',
+      title: t('paymentDetails.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'person',
+      title: t('paymentDetails.paymentInfo'),
+      render: row => `${row.paymentInfoId} | ${row.paymentInfo.paymentType?.paymentType}`,
     },
   ]
 
@@ -192,6 +207,24 @@ export default function EndClientDetails({ params }: { params: { id: number } })
         columns={contactColumns}
         apiPath={`end-clients/${params.id}/contacts`}
         actionBasePath={`${params.id}/contacts`}
+        actions={['view', 'edit', 'delete']}
+      />
+
+      <Table<EndClientPaymentDetail>
+        className="mt-4"
+        title={t('paymentDetails.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('paymentDetails.newPaymentDetail'),
+            colorClass: 'light-primary',
+            href: `${params.id}/payment-detail/new`,
+          },
+        ]}
+        filters={<EndClientPaymentDetailFilter />}
+        columns={paymentDetailColumns}
+        apiPath={`end-clients/${params.id}/payment-details`}
+        actionBasePath={`${params.id}/payment-detail`}
         actions={['view', 'edit', 'delete']}
       />
     </>

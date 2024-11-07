@@ -4,31 +4,31 @@ import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
-import { endClientContactApi } from '@/services/api/end-client-contact-api'
-import { useEndClientContact } from '@/services/swr/use-end-client-contact'
+import { endClientPaymentDetailApi } from '@/services/api/end-client-payment-detail-api'
+import { useEndClientPaymentDetail } from '@/services/swr/use-end-client-payment-detail'
 import { InferType } from '@/utils/typescript'
 
-export default function useEndClientContactForm(endCliendId: number, contactId?: number) {
+export default function useEndClientPaymentDetailForm(
+  endCliendId: number,
+  paymentDetailId?: number
+) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: endClientContact } = useEndClientContact(endCliendId, contactId)
+  const { data: endClientPaymentDetail } = useEndClientPaymentDetail(endCliendId, paymentDetailId)
 
   const schema = yup.object().shape({
-    personId: yup.number().required(),
-    responsibilityId: yup.number().required(),
-    contactInfoId: yup.number().required(),
-    enterpriseRootId: yup.number().required(),
+    paymentInfoId: yup.number().required(),
   })
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: endClientContact,
+    values: endClientPaymentDetail,
   })
 
-  const addNewEndClientContact = async (data: InferType<typeof schema>) => {
+  const addNewEndClientPaymentDetail = async (data: InferType<typeof schema>) => {
     try {
-      const res = await endClientContactApi.new(endCliendId, {
+      const res = await endClientPaymentDetailApi.new(endCliendId, {
         ...data,
         endclientId: endCliendId,
       })
@@ -42,11 +42,11 @@ export default function useEndClientContactForm(endCliendId: number, contactId?:
     }
   }
 
-  const updateEndClientContact = async (data: InferType<typeof schema>) => {
-    if (!contactId) return
+  const updateEndClientPaymentDetail = async (data: InferType<typeof schema>) => {
+    if (!paymentDetailId) return
 
     try {
-      const res = await endClientContactApi.update(endCliendId, contactId, {
+      const res = await endClientPaymentDetailApi.update(endCliendId, paymentDetailId, {
         ...data,
         endclientId: endCliendId,
       })
@@ -61,11 +61,11 @@ export default function useEndClientContactForm(endCliendId: number, contactId?:
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
-    if (contactId) {
-      return updateEndClientContact(data)
+    if (paymentDetailId) {
+      return updateEndClientPaymentDetail(data)
     }
 
-    return addNewEndClientContact(data)
+    return addNewEndClientPaymentDetail(data)
   }
 
   return { methods, onSubmit }
