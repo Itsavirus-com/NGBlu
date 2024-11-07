@@ -5,13 +5,36 @@ import { Row } from 'react-bootstrap'
 
 import { Page } from '@/components/page/page'
 import { PageTitle } from '@/components/page-title'
+import { Table } from '@/components/table/table'
+import { TableColumn } from '@/components/table/table.type'
 import { TextView } from '@/components/view/text-view/text-view'
+import { EndClientAddress } from '@/services/swr/models/end-client-address.type'
 import { useEndClient } from '@/services/swr/use-end-client'
+
+import { EndClientAddressFilter } from './components/end-client-address-filter'
 
 export default function EndClientDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.endClients')
 
   const { data, isLoading } = useEndClient(params.id)
+
+  const addressColumns: TableColumn<EndClientAddress>[] = [
+    {
+      id: 'id',
+      title: t('addresses.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'address',
+      title: t('addresses.address'),
+      render: row => `${row.addressId} | ${row.address.addressName}`,
+    },
+    {
+      id: 'isPrimaryAddress',
+      title: t('addresses.primaryAddress'),
+      render: row => (row.isPrimaryAddress ? t('addresses.yes') : t('addresses.no')),
+    },
+  ]
 
   return (
     <>
@@ -115,6 +138,24 @@ export default function EndClientDetails({ params }: { params: { id: number } })
           />
         </Row>
       </Page>
+
+      <Table<EndClientAddress>
+        className="mt-4"
+        title={t('addresses.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('addresses.newAddress'),
+            colorClass: 'light-primary',
+            href: `${params.id}/addresses/new`,
+          },
+        ]}
+        filters={<EndClientAddressFilter />}
+        columns={addressColumns}
+        apiPath={`end-clients/${params.id}/addresses`}
+        actionBasePath={`${params.id}/addresses`}
+        actions={['view', 'edit', 'delete']}
+      />
     </>
   )
 }

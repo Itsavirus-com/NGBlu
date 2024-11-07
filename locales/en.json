@@ -490,7 +490,28 @@
       "city": "City",
       "county": "County",
       "country": "Country",
-      "postalCode": "Postal Code"
+      "postalCode": "Postal Code",
+      "addresses": {
+        "title": "End Client Address",
+        "newAddress": "New Address",
+        "updateAddress": "Update Address",
+        "addressName": "Address Name",
+        "streetName": "Street Name",
+        "houseNumber": "House Number",
+        "houseNumberSuffix": "House Number Suffix",
+        "apartmentNumber": "Apartment Number",
+        "area": "Area",
+        "city": "City",
+        "county": "County",
+        "country": "Country",
+        "postalCode": "Postal Code",
+        "id": "ID",
+        "address": "Address",
+        "addressId": "Address ID",
+        "primaryAddress": "Primary Address",
+        "yes": "Yes",
+        "no": "No"
+      }
     },
     "endClientTypes": {
       "title": "End Client Types",
