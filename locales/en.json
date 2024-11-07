@@ -315,10 +315,12 @@
       "configs": {
         "title": "Price Configs",
         "newPriceConfig": "New Price Config",
+        "updatePriceConfig": "Update Price Config",
         "id": "ID",
         "price": "Price",
         "unit": "Unit",
         "interval": "Interval",
+        "currency": "Currency",
         "type": "Type",
         "tax": "Tax"
       },
@@ -338,7 +340,8 @@
       },
       "plans": {
         "title": "Price Plans",
-        "newPriceInterval": "New Price Plan",
+        "newPricePlan": "New Price Plan",
+        "updatePricePlan": "Update Price Plan",
         "id": "ID",
         "name": "Name",
         "price": "Price",
@@ -347,16 +350,23 @@
         "type": "Type",
         "tax": "Tax",
         "default": "Default",
-        "productOrService": "Product or Service"
+        "productOrService": "Product or Service",
+        "product": "Product",
+        "service": "Service",
+        "priceConfig": "Price Config",
+        "fallbackPriceConfig": "Fallback Price Config"
       },
       "taxes": {
         "title": "Price Taxes",
         "newPriceTax": "New Price Tax",
+        "updatePriceTax": "Update Price Tax",
         "id": "ID",
         "name": "Name",
         "value": "Value",
         "currency": "Currency",
         "unit": "Unit",
+        "tax": "Tax",
+        "priceUnit": "Price Unit",
         "country": "Country"
       },
       "types": {

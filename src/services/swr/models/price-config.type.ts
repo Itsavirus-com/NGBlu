@@ -6,11 +6,16 @@ import { PriceUnit } from './price-unit.type'
 
 export type PriceConfig = {
   id: number
-  priceValue: string
+  priceValue: number
+  priceUnitId: number
   priceUnit: PriceUnit
+  priceIntervalId: number
   priceInterval: PriceInterval
+  priceTypeId: number
   priceType: PriceType
+  priceCurrencyId: number
   priceCurrency: Currency
+  priceTaxId: number
   priceTax: PriceTax
   createdAt: string
   updatedAt: string
