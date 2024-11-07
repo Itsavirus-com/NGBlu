@@ -6,6 +6,7 @@ export type Contact = {
   contactInfo: string
   contactTypeId: number
   contactType: ContactType
+  contactInfoType: ContactType
   personId: number
   person: Person
   ouUnitId: number
