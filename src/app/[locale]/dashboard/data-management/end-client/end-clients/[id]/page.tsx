@@ -11,11 +11,13 @@ import { TextView } from '@/components/view/text-view/text-view'
 import { EndClientAddress } from '@/services/swr/models/end-client-address.type'
 import { EndClientContact } from '@/services/swr/models/end-client-contact.type'
 import { EndClientPaymentDetail } from '@/services/swr/models/end-client-payment-detail.type'
+import { EndClientProject } from '@/services/swr/models/end-client-project.type'
 import { useEndClient } from '@/services/swr/use-end-client'
 
 import { EndClientAddressFilter } from './components/end-client-address-filter'
 import { EndClientContactFilter } from './components/end-client-contact-filter'
 import { EndClientPaymentDetailFilter } from './components/end-client-payment-detail-filter'
+import { EndClientProjectFilter } from './components/end-client-project-filter'
 
 export default function EndClientDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.endClients')
@@ -68,6 +70,24 @@ export default function EndClientDetails({ params }: { params: { id: number } })
       id: 'person',
       title: t('paymentDetails.paymentInfo'),
       render: row => `${row.paymentInfoId} | ${row.paymentInfo.paymentType?.paymentType}`,
+    },
+  ]
+
+  const projectColumns: TableColumn<EndClientProject>[] = [
+    {
+      id: 'id',
+      title: t('projects.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'project',
+      title: t('projects.project'),
+      render: row => `${row.projectId} | ${row.project.projectName}`,
+    },
+    {
+      id: 'address',
+      title: t('projects.address'),
+      render: row => `${row.endclientAddressId} | ${row.endclientAddress.address.addressName}`,
     },
   ]
 
@@ -218,13 +238,31 @@ export default function EndClientDetails({ params }: { params: { id: number } })
             icon: 'plus',
             label: t('paymentDetails.newPaymentDetail'),
             colorClass: 'light-primary',
-            href: `${params.id}/payment-detail/new`,
+            href: `${params.id}/payment-details/new`,
           },
         ]}
         filters={<EndClientPaymentDetailFilter />}
         columns={paymentDetailColumns}
         apiPath={`end-clients/${params.id}/payment-details`}
-        actionBasePath={`${params.id}/payment-detail`}
+        actionBasePath={`${params.id}/payment-details`}
+        actions={['view', 'edit', 'delete']}
+      />
+
+      <Table<EndClientProject>
+        className="mt-4"
+        title={t('projects.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('projects.newProject'),
+            colorClass: 'light-primary',
+            href: `${params.id}/projects/new`,
+          },
+        ]}
+        filters={<EndClientProjectFilter />}
+        columns={projectColumns}
+        apiPath={`end-clients/${params.id}/projects`}
+        actionBasePath={`${params.id}/projects`}
         actions={['view', 'edit', 'delete']}
       />
     </>
