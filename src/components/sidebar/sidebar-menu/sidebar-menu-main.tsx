@@ -118,7 +118,7 @@ const SidebarMenuMain = () => {
         />
       </SidebarMenuItemWithSub>
 
-      <SidebarMenuItemWithSub
+      <SidebarMenuItem
         to="/dashboard/data-management/end-client/end-clients"
         title={t('endClients')}
         icon="profile-user"
