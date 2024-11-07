@@ -19,7 +19,7 @@ export default function EndClientContactDetails({
 
   return (
     <>
-      <PageTitle title={data?.contactInfo.contactInfo || ''} />
+      <PageTitle title={t('title')} />
 
       <Page>
         <Row>
