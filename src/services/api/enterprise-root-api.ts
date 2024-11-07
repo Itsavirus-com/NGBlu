@@ -60,6 +60,14 @@ export class EnterpriseRootApi extends ApiCore {
   async getItemDetails(path: string) {
     return await this.get({ path })
   }
+
+  async new(payload: Record<string, any>) {
+    return await this.post({ path: 'enterprise-roots', payload })
+  }
+
+  async update(id: number, payload: Record<string, any>) {
+    return await this.put({ path: `enterprise-roots/${id}`, payload })
+  }
 }
 
 export const enterpriseRootApi = new EnterpriseRootApi()

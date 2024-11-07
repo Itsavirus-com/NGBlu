@@ -44,6 +44,7 @@
       "endClients": "End Clients",
       "endClientTypes": "End Client Types",
       "endClientStatuses": "End Client Statuses",
+      "enterpriseRoots": "Enterprise Root",
       "packages": "Packages",
       "packagesTypes": "Package Types",
       "address": "Address",
@@ -629,6 +630,23 @@
       "updateEndClientStatus": "Update End Client Status",
       "id": "ID",
       "status": "Status"
+    },
+    "enterpriseRoots": {
+      "title": "Enterprise Roots",
+      "newEnterpriseRoot": "New Enterprise Root",
+      "updateEnterpriseRoot": "Update Enterprise Root",
+      "id": "ID",
+      "name": "Name",
+      "organisationUnit": "Organisation Unit",
+      "organisationUnitId": "Organisation Unit ID",
+      "enterpriseRootAddress": "Enterprise Root Address",
+      "enterpriseRootAddressId": "Enterprise Root Address ID",
+      "addressesCount": "Addresses Count",
+      "contactsCount": "Contacts Count",
+      "usersCount": "Users Count",
+      "projectsCount": "Projects Count",
+      "customersCount": "Customers Count",
+      "businessPartnersCount": "Business Partners Count"
     },
     "packages": {
       "title": "Packages",

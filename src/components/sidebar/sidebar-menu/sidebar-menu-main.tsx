@@ -124,6 +124,13 @@ const SidebarMenuMain = () => {
         title={t('endClients')}
         icon="profile-user"
       />
+
+      <SidebarMenuItem
+        to="/dashboard/data-management/enterprise-root"
+        title={t('enterpriseRoots')}
+        icon="shop"
+      />
+
       <SidebarMenuItem
         to="/dashboard/data-management/company/companies"
         title={t('company')}
