@@ -19,7 +19,7 @@ export default function Payments() {
     {
       id: 'personName',
       title: t('personName'),
-      render: row => `${row.person.firstname} ${row.person.lastname}`,
+      render: row => (row.person ? `${row.person.firstname} ${row.person?.lastname}` : '-'),
     },
     {
       id: 'bankName',
