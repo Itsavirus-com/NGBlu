@@ -506,6 +506,18 @@
         "primaryAddress": "Primary Address",
         "yes": "Yes",
         "no": "No"
+      },
+      "contacts": {
+        "title": "End Client Contact",
+        "newContact": "New Contact",
+        "updateContact": "Update Contact",
+        "id": "ID",
+        "person": "Person",
+        "contactInfo": "Contact Info",
+        "contactInfoId": "Contact Info ID",
+        "responsibility": "Responsibility",
+        "responsibilityId": "Responsibility ID",
+        "enterpriseRoot": "Enterprise Root"
       }
     },
     "endClientTypes": {
