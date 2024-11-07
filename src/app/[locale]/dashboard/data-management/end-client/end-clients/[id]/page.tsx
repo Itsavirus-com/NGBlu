@@ -9,9 +9,11 @@ import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { TextView } from '@/components/view/text-view/text-view'
 import { EndClientAddress } from '@/services/swr/models/end-client-address.type'
+import { EndClientContact } from '@/services/swr/models/end-client-contact.type'
 import { useEndClient } from '@/services/swr/use-end-client'
 
 import { EndClientAddressFilter } from './components/end-client-address-filter'
+import { EndClientContactFilter } from './components/end-client-contact-filter'
 
 export default function EndClientDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.endClients')
@@ -33,6 +35,24 @@ export default function EndClientDetails({ params }: { params: { id: number } })
       id: 'isPrimaryAddress',
       title: t('addresses.primaryAddress'),
       render: row => (row.isPrimaryAddress ? t('addresses.yes') : t('addresses.no')),
+    },
+  ]
+
+  const contactColumns: TableColumn<EndClientContact>[] = [
+    {
+      id: 'id',
+      title: t('contacts.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'contact',
+      title: t('contacts.contactInfo'),
+      render: row => `${row.contactInfoId} | ${row.contactInfo.contactInfo}`,
+    },
+    {
+      id: 'responsibility',
+      title: t('contacts.responsibility'),
+      render: row => `${row.responsibilityId} | ${row.responsibility.responsibility}`,
     },
   ]
 
@@ -154,6 +174,24 @@ export default function EndClientDetails({ params }: { params: { id: number } })
         columns={addressColumns}
         apiPath={`end-clients/${params.id}/addresses`}
         actionBasePath={`${params.id}/addresses`}
+        actions={['view', 'edit', 'delete']}
+      />
+
+      <Table<EndClientContact>
+        className="mt-4"
+        title={t('contacts.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('contacts.newContact'),
+            colorClass: 'light-primary',
+            href: `${params.id}/contacts/new`,
+          },
+        ]}
+        filters={<EndClientContactFilter />}
+        columns={contactColumns}
+        apiPath={`end-clients/${params.id}/contacts`}
+        actionBasePath={`${params.id}/contacts`}
         actions={['view', 'edit', 'delete']}
       />
     </>
