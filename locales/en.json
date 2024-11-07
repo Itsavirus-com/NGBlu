@@ -646,7 +646,31 @@
       "usersCount": "Users Count",
       "projectsCount": "Projects Count",
       "customersCount": "Customers Count",
-      "businessPartnersCount": "Business Partners Count"
+      "businessPartnersCount": "Business Partners Count",
+      "addresses": {
+        "title": "Addresses",
+        "newAddress": "New Address",
+        "updateAddress": "Update Address",
+        "id": "ID",
+        "address": "Address",
+        "addressId": "Address ID",
+        "addressName": "Address Name",
+        "addressType": "Address Type",
+        "addressTypeId": "Address Type ID",
+        "organisationUnit": "Organisation Unit",
+        "streetName": "Street Name",
+        "houseNumber": "House Number",
+        "houseNumberSuffix": "House Number Suffix",
+        "apartmentNumber": "Apartment Number",
+        "area": "Area",
+        "city": "City",
+        "county": "County",
+        "country": "Country",
+        "postalCode": "Postal Code",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "googleAddressId": "Google Address ID"
+      }
     },
     "packages": {
       "title": "Packages",

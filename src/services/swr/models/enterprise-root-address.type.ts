@@ -6,7 +6,7 @@ export type EnterpriseRootAddress = {
   addressId: number
   address: Address
   addressTypeId: number
-  address_type: AddressType
+  addressType: AddressType
   ouUnitId: number
   enterpriseRootId: number
   createdAt: string
