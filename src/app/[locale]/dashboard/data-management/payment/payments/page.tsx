@@ -19,7 +19,7 @@ export default function Payments() {
     {
       id: 'personName',
       title: t('personName'),
-      render: row => `${row.person.firstname} ${row.person.lastname}`,
+      render: row => (row.person ? `${row.person.firstname} ${row.person?.lastname}` : '-'),
     },
     {
       id: 'bankName',
@@ -36,11 +36,19 @@ export default function Payments() {
   return (
     <Table<Payment>
       title={t('title')}
+      toolbars={[
+        {
+          icon: 'plus',
+          label: t('newPayment'),
+          colorClass: 'light-primary',
+          href: 'payments/new',
+        },
+      ]}
       filters={<PaymentFilter />}
       columns={columns}
       apiPath="payments/details"
       actionBasePath="payments"
-      actions={['view']}
+      actions={['view', 'edit', 'delete']}
     />
   )
 }
