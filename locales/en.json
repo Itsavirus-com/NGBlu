@@ -580,6 +580,30 @@
         "latitude": "Latitude",
         "longitude": "Longitude",
         "googleAddressId": "Google Address ID"
+      },
+      "projects": {
+        "title": "Projects",
+        "newProject": "New Project",
+        "updateProject": "Update Project",
+        "id": "ID",
+        "project": "Project",
+        "projectId": "Project ID",
+        "address": "End Client Address",
+        "addressId": "Address ID",
+        "organisationalUnit": "Organizational Unit",
+        "addressName": "Address Name",
+        "streetName": "Street Name",
+        "houseNumber": "House Number",
+        "houseNumberSuffix": "House Number Suffix",
+        "apartmentNumber": "Apartment Number",
+        "area": "Area",
+        "city": "City",
+        "county": "County",
+        "country": "Country",
+        "postalCode": "Postal Code",
+        "projectName": "Project Name",
+        "projectType": "Project Type",
+        "projectInfo": "Project Info"
       }
     },
     "endClientTypes": {

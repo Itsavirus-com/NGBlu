@@ -11,7 +11,7 @@ import { PageTitle } from '@/components/page-title'
 import { EndClientStatus } from '@/services/swr/models/end-client-status.type'
 import { EndClientType } from '@/services/swr/models/end-client-type.type'
 
-import useEndClientForm from '../components/end-client-form.hook'
+import { useEndClientForm } from '../components/end-client-form.hook'
 
 export default function NewEndClient() {
   const t = useTranslations('dataManagement.endClients')
