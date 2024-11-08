@@ -35,7 +35,7 @@ export default function PriceConfigs() {
     {
       id: 'type',
       title: t('type'),
-      render: row => row.priceType.type,
+      render: row => row.priceType?.type,
     },
     {
       id: 'tax',
