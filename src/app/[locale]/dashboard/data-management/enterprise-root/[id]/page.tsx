@@ -10,10 +10,12 @@ import { TableColumn } from '@/components/table/table.type'
 import { TextView } from '@/components/view/text-view/text-view'
 import { EnterpriseRootAddress } from '@/services/swr/models/enterprise-root-address.type'
 import { EnterpriseRootContact } from '@/services/swr/models/enterprise-root-contact.type'
+import { EnterpriseRootProject } from '@/services/swr/models/enterprise-root-project.type'
 import { useEnterpriseRoot } from '@/services/swr/use-enterprise-root'
 
 import { EnterpriseRootAddressFilter } from './components/enterprise-root-address-filter'
 import { EnterpriseRootContactFilter } from './components/enterprise-root-contact-filter'
+import { EnterpriseRootProjectFilter } from './components/enterprise-root-project-filter'
 
 export default function EnterpriseRootDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.enterpriseRoots')
@@ -53,6 +55,25 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       id: 'responsibility',
       title: t('contacts.responsibility'),
       render: row => `${row.responsibilityId} | ${row.responsibility.responsibility}`,
+    },
+  ]
+
+  const projectColumns: TableColumn<EnterpriseRootProject>[] = [
+    {
+      id: 'id',
+      title: t('projects.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'project',
+      title: t('projects.project'),
+      render: row => `${row.projectId} | ${row.project.projectName}`,
+    },
+    {
+      id: 'address',
+      title: t('projects.address'),
+      render: row =>
+        `${row.enterpriseRootAddressesId} | ${row.enterpriseRootAddresses.address.addressName}`,
     },
   ]
 
@@ -135,6 +156,24 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
         columns={contactColumns}
         apiPath={`enterprise-roots/${params.id}/contacts`}
         actionBasePath={`${params.id}/contacts`}
+        actions={['view', 'edit', 'delete']}
+      />
+
+      <Table<EnterpriseRootProject>
+        className="mt-4"
+        title={t('projects.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('projects.newProject'),
+            colorClass: 'light-primary',
+            href: `${params.id}/projects/new`,
+          },
+        ]}
+        filters={<EnterpriseRootProjectFilter />}
+        columns={projectColumns}
+        apiPath={`enterprise-roots/${params.id}/projects`}
+        actionBasePath={`${params.id}/projects`}
         actions={['view', 'edit', 'delete']}
       />
     </>

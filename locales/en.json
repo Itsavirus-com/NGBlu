@@ -558,7 +558,7 @@
         "enterpriseRoot": "Enterprise Root"
       },
       "paymentDetails": {
-        "title": "Payment Details",
+        "title": "End Client Payment Details",
         "newPaymentDetail": "New Payment Detail",
         "updatePaymentDetail": "Update Payment Detail",
         "id": "ID",
@@ -593,7 +593,7 @@
         "googleAddressId": "Google Address ID"
       },
       "projects": {
-        "title": "Projects",
+        "title": "End Client Projects",
         "newProject": "New Project",
         "updateProject": "Update Project",
         "id": "ID",
@@ -684,6 +684,30 @@
         "responsibilityId": "Responsibility ID",
         "enterpriseRoot": "Enterprise Root",
         "organisationUnit": "Organisation Unit"
+      },
+      "projects": {
+        "title": "Enterprise Root Projects",
+        "newProject": "New Project",
+        "updateProject": "Update Project",
+        "id": "ID",
+        "project": "Project",
+        "projectId": "Project ID",
+        "address": "Enterprise Root Address",
+        "addressId": "Enterprise Root Address ID",
+        "organisationalUnit": "Organizational Unit",
+        "addressName": "Address Name",
+        "streetName": "Street Name",
+        "houseNumber": "House Number",
+        "houseNumberSuffix": "House Number Suffix",
+        "apartmentNumber": "Apartment Number",
+        "area": "Area",
+        "city": "City",
+        "county": "County",
+        "country": "Country",
+        "postalCode": "Postal Code",
+        "projectName": "Project Name",
+        "projectType": "Project Type",
+        "projectInfo": "Project Info"
       }
     },
     "packages": {
