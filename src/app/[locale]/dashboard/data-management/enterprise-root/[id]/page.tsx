@@ -12,12 +12,14 @@ import { EnterpriseRootAddress } from '@/services/swr/models/enterprise-root-add
 import { EnterpriseRootContact } from '@/services/swr/models/enterprise-root-contact.type'
 import { EnterpriseRootCustomer } from '@/services/swr/models/enterprise-root-customer.type'
 import { EnterpriseRootProject } from '@/services/swr/models/enterprise-root-project.type'
+import { EnterpriseRootUser } from '@/services/swr/models/enterprise-root-user.type'
 import { useEnterpriseRoot } from '@/services/swr/use-enterprise-root'
 
 import { EnterpriseRootAddressFilter } from './components/enterprise-root-address-filter'
 import { EnterpriseRootContactFilter } from './components/enterprise-root-contact-filter'
 import { EnterpriseRootCustomerFilter } from './components/enterprise-root-customer-filter'
 import { EnterpriseRootProjectFilter } from './components/enterprise-root-project-filter'
+import { EnterpriseRootUserFilter } from './components/enterprise-root-user-filter'
 
 export default function EnterpriseRootDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.enterpriseRoots')
@@ -95,6 +97,29 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       title: t('customers.address'),
       render: row =>
         `${row.enterpriseRootAddressesId} | ${row.enterpriseRootAddresses.address.addressName}`,
+    },
+  ]
+
+  const userColumns: TableColumn<EnterpriseRootUser>[] = [
+    {
+      id: 'id',
+      title: t('users.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'displayName',
+      title: t('users.user'),
+      render: row => `${row.userId} | ${row.user.displayName}`,
+    },
+    {
+      id: 'person',
+      title: t('users.person'),
+      render: row => `${row.personId} | ${row.person.firstname} ${row.person?.lastname}`,
+    },
+    {
+      id: 'personType',
+      title: t('users.personType'),
+      render: row => row.person.personType.type,
     },
   ]
 
@@ -213,6 +238,24 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
         columns={customerColumns}
         apiPath={`enterprise-roots/${params.id}/customers`}
         actionBasePath={`${params.id}/customers`}
+        actions={['view', 'edit', 'delete']}
+      />
+
+      <Table<EnterpriseRootUser>
+        className="mt-4"
+        title={t('users.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('users.newUser'),
+            colorClass: 'light-primary',
+            href: `${params.id}/users/new`,
+          },
+        ]}
+        filters={<EnterpriseRootUserFilter />}
+        columns={userColumns}
+        apiPath={`enterprise-roots/${params.id}/users`}
+        actionBasePath={`${params.id}/users`}
         actions={['view', 'edit', 'delete']}
       />
     </>
