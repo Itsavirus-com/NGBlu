@@ -10,11 +10,13 @@ import { TableColumn } from '@/components/table/table.type'
 import { TextView } from '@/components/view/text-view/text-view'
 import { EnterpriseRootAddress } from '@/services/swr/models/enterprise-root-address.type'
 import { EnterpriseRootContact } from '@/services/swr/models/enterprise-root-contact.type'
+import { EnterpriseRootCustomer } from '@/services/swr/models/enterprise-root-customer.type'
 import { EnterpriseRootProject } from '@/services/swr/models/enterprise-root-project.type'
 import { useEnterpriseRoot } from '@/services/swr/use-enterprise-root'
 
 import { EnterpriseRootAddressFilter } from './components/enterprise-root-address-filter'
 import { EnterpriseRootContactFilter } from './components/enterprise-root-contact-filter'
+import { EnterpriseRootCustomerFilter } from './components/enterprise-root-customer-filter'
 import { EnterpriseRootProjectFilter } from './components/enterprise-root-project-filter'
 
 export default function EnterpriseRootDetails({ params }: { params: { id: number } }) {
@@ -72,6 +74,25 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     {
       id: 'address',
       title: t('projects.address'),
+      render: row =>
+        `${row.enterpriseRootAddressesId} | ${row.enterpriseRootAddresses.address.addressName}`,
+    },
+  ]
+
+  const customerColumns: TableColumn<EnterpriseRootCustomer>[] = [
+    {
+      id: 'id',
+      title: t('customers.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'endClient',
+      title: t('customers.endClient'),
+      render: row => `${row.endclientId} | ${row.endclient.name}`,
+    },
+    {
+      id: 'address',
+      title: t('customers.address'),
       render: row =>
         `${row.enterpriseRootAddressesId} | ${row.enterpriseRootAddresses.address.addressName}`,
     },
@@ -174,6 +195,24 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
         columns={projectColumns}
         apiPath={`enterprise-roots/${params.id}/projects`}
         actionBasePath={`${params.id}/projects`}
+        actions={['view', 'edit', 'delete']}
+      />
+
+      <Table<EnterpriseRootCustomer>
+        className="mt-4"
+        title={t('customers.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('customers.newCustomer'),
+            colorClass: 'light-primary',
+            href: `${params.id}/customers/new`,
+          },
+        ]}
+        filters={<EnterpriseRootCustomerFilter />}
+        columns={customerColumns}
+        apiPath={`enterprise-roots/${params.id}/customers`}
+        actionBasePath={`${params.id}/customers`}
         actions={['view', 'edit', 'delete']}
       />
     </>
