@@ -670,6 +670,20 @@
         "latitude": "Latitude",
         "longitude": "Longitude",
         "googleAddressId": "Google Address ID"
+      },
+      "contacts": {
+        "title": "Enterprise Root Contacts",
+        "newContact": "New Contact",
+        "updateContact": "Update Contact",
+        "id": "ID",
+        "person": "Person",
+        "personId": "Person ID",
+        "contactInfo": "Contact Info",
+        "contactInfoId": "Contact Info ID",
+        "responsibility": "Responsibility",
+        "responsibilityId": "Responsibility ID",
+        "enterpriseRoot": "Enterprise Root",
+        "organisationUnit": "Organisation Unit"
       }
     },
     "packages": {

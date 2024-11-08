@@ -11,7 +11,7 @@ import { AddressType } from '@/services/swr/models/address-type.type'
 import { Address } from '@/services/swr/models/address.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
-import useEnterpriseRootAddressForm from '../../../components/enterpise-root-address-form.hook'
+import useEnterpriseRootAddressForm from '../../../components/enterprise-root-address-form.hook'
 
 export default function UpdateEnterpriseRoot({ params }: { params: { addressId: string } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.addresses')

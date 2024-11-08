@@ -9,16 +9,18 @@ import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { TextView } from '@/components/view/text-view/text-view'
 import { EnterpriseRootAddress } from '@/services/swr/models/enterprise-root-address.type'
+import { EnterpriseRootContact } from '@/services/swr/models/enterprise-root-contact.type'
 import { useEnterpriseRoot } from '@/services/swr/use-enterprise-root'
 
 import { EnterpriseRootAddressFilter } from './components/enterprise-root-address-filter'
+import { EnterpriseRootContactFilter } from './components/enterprise-root-contact-filter'
 
 export default function EnterpriseRootDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.enterpriseRoots')
 
   const { data, isLoading } = useEnterpriseRoot(params.id)
 
-  const columns: TableColumn<EnterpriseRootAddress>[] = [
+  const addressColumns: TableColumn<EnterpriseRootAddress>[] = [
     {
       id: 'id',
       title: t('addresses.id'),
@@ -33,6 +35,24 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       id: 'addressType',
       title: t('addresses.addressType'),
       render: row => row.addressType.addressType,
+    },
+  ]
+
+  const contactColumns: TableColumn<EnterpriseRootContact>[] = [
+    {
+      id: 'id',
+      title: t('addresses.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'contact',
+      title: t('contacts.contactInfo'),
+      render: row => `${row.contactInfoId} | ${row.contactInfo.contactInfo}`,
+    },
+    {
+      id: 'responsibility',
+      title: t('contacts.responsibility'),
+      render: row => `${row.responsibilityId} | ${row.responsibility.responsibility}`,
     },
   ]
 
@@ -94,9 +114,27 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
           },
         ]}
         filters={<EnterpriseRootAddressFilter />}
-        columns={columns}
+        columns={addressColumns}
         apiPath={`enterprise-roots/${params.id}/addresses`}
         actionBasePath={`${params.id}/addresses`}
+        actions={['view', 'edit', 'delete']}
+      />
+
+      <Table<EnterpriseRootContact>
+        className="mt-4"
+        title={t('contacts.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('contacts.newContact'),
+            colorClass: 'light-primary',
+            href: `${params.id}/contacts/new`,
+          },
+        ]}
+        filters={<EnterpriseRootContactFilter />}
+        columns={contactColumns}
+        apiPath={`enterprise-roots/${params.id}/contacts`}
+        actionBasePath={`${params.id}/contacts`}
         actions={['view', 'edit', 'delete']}
       />
     </>
