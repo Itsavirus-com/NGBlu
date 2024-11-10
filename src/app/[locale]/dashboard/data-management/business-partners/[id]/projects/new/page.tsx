@@ -13,7 +13,7 @@ import { Project } from '@/services/swr/models/project.type'
 
 import useBusinessPartnerProjectForm from '../../components/business-partner-project-form.hook'
 
-export default function NewBusinessPartnerProjectPage({ params }: { params: { id: string } }) {
+export default function NewBusinessPartnerProject({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners.projects')
 
   const { methods, onSubmit } = useBusinessPartnerProjectForm(Number(params.id))

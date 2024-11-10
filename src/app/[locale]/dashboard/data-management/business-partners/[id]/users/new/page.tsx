@@ -7,47 +7,40 @@ import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
-import { BusinessPartnerAddress } from '@/services/swr/models/business-partner-address.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
-import { Project } from '@/services/swr/models/project.type'
+import { Person } from '@/services/swr/models/person.type'
+import { User } from '@/services/swr/models/user.type'
 
-import useBusinessPartnerProjectForm from '../../../components/business-partner-project-form.hook'
+import useBusinessPartnerUserForm from '../../components/business-partner-user-form.hook'
 
-export default function UpdateBusinessPartnerProject({
-  params,
-}: {
-  params: { id: string; projectId: string }
-}) {
-  const t = useTranslations('dataManagement.businessPartners.projects')
+export default function NewBusinessPartnerUser({ params }: { params: { id: string } }) {
+  const t = useTranslations('dataManagement.businessPartners.users')
 
-  const { methods, onSubmit } = useBusinessPartnerProjectForm(
-    Number(params.id),
-    Number(params.projectId)
-  )
+  const { methods, onSubmit } = useBusinessPartnerUserForm(Number(params.id))
 
   return (
     <>
-      <PageTitle title={t('newProject')} />
+      <PageTitle title={t('newUser')} />
 
       <FormProvider methods={methods} onSubmit={onSubmit}>
         <div className="app-container container-fluid">
           <Card>
             <CardBody>
-              <ControlledSelect<Project>
-                label={t('project')}
-                name="projectId"
+              <ControlledSelect<User>
+                label={t('user')}
+                name="userId"
                 containerClass="mb-3"
                 className="form-control-solid"
-                apiPath={'projects'}
-                option={{ label: row => row.projectName, value: row => row.id }}
+                apiPath={'users'}
+                option={{ label: row => row.displayName, value: row => row.id }}
               />
-              <ControlledSelect<BusinessPartnerAddress>
-                label={t('businessPartnerAddress')}
-                name="businesspartnersAddressesId"
+              <ControlledSelect<Person>
+                label={t('person')}
+                name="personId"
                 containerClass="mb-3"
                 className="form-control-solid"
-                apiPath={`business-partners/${params.id}/addresses`}
-                option={{ label: row => row.address.addressName, value: row => row.id }}
+                apiPath="persons"
+                option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
               />
               <ControlledSelect<OrganizationUnit>
                 label={t('organisationalUnit')}

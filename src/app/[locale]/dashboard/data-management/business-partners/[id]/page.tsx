@@ -12,12 +12,14 @@ import { BusinessPartnerAddress } from '@/services/swr/models/business-partner-a
 import { BusinessPartnerContact } from '@/services/swr/models/business-partner-contact.type'
 import { BusinessPartnerCustomer } from '@/services/swr/models/business-partner-customer.type'
 import { BusinessPartnerProject } from '@/services/swr/models/business-partner-project.type'
+import { BusinessPartnerUser } from '@/services/swr/models/business-partner-user.type'
 import { useBusinessPartner } from '@/services/swr/use-business-partner'
 
 import { BusinessPartnerAddressFilter } from './components/business-partner-address-filter'
 import { BusinessPartnerContactFilter } from './components/business-partner-contact-filter'
 import { BusinessPartnerCustomerFilter } from './components/business-partner-customer-filter'
 import { BusinessPartnerProjectFilter } from './components/business-partner-project-filter'
+import { BusinessPartnerUserFilter } from './components/business-partner-user-filter'
 
 export default function BusinessPartnerDetails({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners')
@@ -78,6 +80,19 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
       id: 'project',
       title: t('projects.project'),
       render: row => `${row.projectId} | ${row.project.projectName}`,
+    },
+  ]
+
+  const userColumns: TableColumn<BusinessPartnerUser>[] = [
+    {
+      id: 'id',
+      title: t('users.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'user',
+      title: t('users.user'),
+      render: row => `${row.user.id} | ${row.user.displayName}`,
     },
   ]
 
@@ -202,6 +217,24 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
         columns={projectColumns}
         apiPath={`business-partners/${params.id}/projects`}
         actionBasePath={`${params.id}/projects`}
+        actions={['view', 'edit', 'delete']}
+      />
+
+      <Table<BusinessPartnerUser>
+        className="mt-4"
+        title={t('users.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('users.newUser'),
+            colorClass: 'light-primary',
+            href: `${params.id}/users/new`,
+          },
+        ]}
+        filters={<BusinessPartnerUserFilter />}
+        columns={userColumns}
+        apiPath={`business-partners/${params.id}/users`}
+        actionBasePath={`${params.id}/users`}
         actions={['view', 'edit', 'delete']}
       />
     </>

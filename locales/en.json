@@ -1086,6 +1086,33 @@
         "projectName": "Project Name",
         "projectType": "Project Type",
         "projectInfo": "Project Info"
+      },
+      "users": {
+        "title": "Business Partner Users",
+        "newUser": "New User",
+        "updateUser": "Update User",
+        "id": "ID",
+        "user": "User",
+        "userId": "User ID",
+        "person": "Person",
+        "organisationalUnit": "Organizational Unit",
+        "businessPartnerUser": "Business Partner User",
+        "displayName": "Display Name",
+        "email": "Email",
+        "lastLogin": "Last Login",
+        "blocked": "Blocked",
+        "yes": "Yes",
+        "no": "No",
+        "salutation": "Salutation",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "nameSuffix": "Name Suffix",
+        "namePrefix": "Name Prefix",
+        "pronounce": "Pronounce",
+        "gender": "Gender",
+        "titles": "Titles",
+        "department": "Department",
+        "role": "Role"
       }
     }
   }
