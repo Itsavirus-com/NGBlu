@@ -14,7 +14,7 @@ import { Person } from '@/services/swr/models/person.type'
 
 import { useBusinessPartnerContactForm } from '../../components/business-partner-contact-form.hook'
 
-export default function NewBusinessPartnerContactPage({ params }: { params: { id: string } }) {
+export default function NewBusinessPartnerContact({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners.contacts')
 
   const { methods, onSubmit } = useBusinessPartnerContactForm(Number(params.id))

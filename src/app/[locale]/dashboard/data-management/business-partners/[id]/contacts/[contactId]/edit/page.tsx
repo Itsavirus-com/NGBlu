@@ -14,7 +14,7 @@ import { Person } from '@/services/swr/models/person.type'
 
 import { useBusinessPartnerContactForm } from '../../../components/business-partner-contact-form.hook'
 
-export default function UpdateBusinessPartnerContactPage({
+export default function UpdateBusinessPartnerContact({
   params,
 }: {
   params: { id: string; contactId: string }

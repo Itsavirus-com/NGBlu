@@ -10,10 +10,12 @@ import { TableColumn } from '@/components/table/table.type'
 import { TextView } from '@/components/view/text-view/text-view'
 import { BusinessPartnerAddress } from '@/services/swr/models/business-partner-address.type'
 import { BusinessPartnerContact } from '@/services/swr/models/business-partner-contact.type'
+import { BusinessPartnerCustomer } from '@/services/swr/models/business-partner-customer.type'
 import { useBusinessPartner } from '@/services/swr/use-business-partner'
 
 import { BusinessPartnerAddressFilter } from './components/business-partner-address-filter'
 import { BusinessPartnerContactFilter } from './components/business-partner-contact-filter'
+import { BusinessPartnerCustomerFilter } from './components/business-partner-customer-filter'
 
 export default function BusinessPartnerDetails({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners')
@@ -48,6 +50,19 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
       id: 'person',
       title: t('contacts.person'),
       render: row => `${row.person.firstname} ${row.person.lastname}`,
+    },
+  ]
+
+  const customerColumns: TableColumn<BusinessPartnerCustomer>[] = [
+    {
+      id: 'id',
+      title: t('contacts.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'endClient',
+      title: t('customers.endClient'),
+      render: row => `${row.endclientId} | ${row.endclient.name}`,
     },
   ]
 
@@ -136,6 +151,24 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
         columns={contactColumns}
         apiPath={`business-partners/${params.id}/contacts`}
         actionBasePath={`${params.id}/contacts`}
+        actions={['view', 'edit', 'delete']}
+      />
+
+      <Table<BusinessPartnerCustomer>
+        className="mt-4"
+        title={t('customers.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('customers.newCustomer'),
+            colorClass: 'light-primary',
+            href: `${params.id}/customers/new`,
+          },
+        ]}
+        filters={<BusinessPartnerCustomerFilter />}
+        columns={customerColumns}
+        apiPath={`business-partners/${params.id}/customers`}
+        actionBasePath={`${params.id}/customers`}
         actions={['view', 'edit', 'delete']}
       />
     </>

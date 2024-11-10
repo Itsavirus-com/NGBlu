@@ -1038,6 +1038,36 @@
         "department": "Department",
         "role": "Role",
         "generalInfo": "General Info"
+      },
+      "customers": {
+        "title": "Business Partner Customers",
+        "newCustomer": "New Customer",
+        "updateCustomer": "Update Customer",
+        "id": "ID",
+        "endClient": "End Client",
+        "endClientId": "End Client ID",
+        "organisationalUnit": "Organizational Unit",
+        "organisationalUnitId": "Organizational Unit ID",
+        "enterpriseRoot": "Enterprise Root",
+        "businessPartnerAddress": "Business Partner Address",
+        "name": "Name",
+        "type": "Type",
+        "status": "Status",
+        "accountNumber": "Account Number",
+        "referenceId": "Reference ID",
+        "afasId": "AFAS ID",
+        "streetName": "Street Name",
+        "houseNumber": "House Number",
+        "houseNumberSuffix": "House Number Suffix",
+        "apartmentNumber": "Apartment Number",
+        "area": "Area",
+        "city": "City",
+        "county": "County",
+        "country": "Country",
+        "postalCode": "Postal Code",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "googleAddressId": "Google Address ID"
       }
     }
   }
