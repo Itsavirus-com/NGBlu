@@ -11,11 +11,13 @@ import { TextView } from '@/components/view/text-view/text-view'
 import { BusinessPartnerAddress } from '@/services/swr/models/business-partner-address.type'
 import { BusinessPartnerContact } from '@/services/swr/models/business-partner-contact.type'
 import { BusinessPartnerCustomer } from '@/services/swr/models/business-partner-customer.type'
+import { BusinessPartnerProject } from '@/services/swr/models/business-partner-project.type'
 import { useBusinessPartner } from '@/services/swr/use-business-partner'
 
 import { BusinessPartnerAddressFilter } from './components/business-partner-address-filter'
 import { BusinessPartnerContactFilter } from './components/business-partner-contact-filter'
 import { BusinessPartnerCustomerFilter } from './components/business-partner-customer-filter'
+import { BusinessPartnerProjectFilter } from './components/business-partner-project-filter'
 
 export default function BusinessPartnerDetails({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners')
@@ -56,13 +58,26 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
   const customerColumns: TableColumn<BusinessPartnerCustomer>[] = [
     {
       id: 'id',
-      title: t('contacts.id'),
+      title: t('customers.id'),
       render: row => row.id,
     },
     {
       id: 'endClient',
       title: t('customers.endClient'),
       render: row => `${row.endclientId} | ${row.endclient.name}`,
+    },
+  ]
+
+  const projectColumns: TableColumn<BusinessPartnerProject>[] = [
+    {
+      id: 'id',
+      title: t('projects.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'project',
+      title: t('projects.project'),
+      render: row => `${row.projectId} | ${row.project.projectName}`,
     },
   ]
 
@@ -169,6 +184,24 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
         columns={customerColumns}
         apiPath={`business-partners/${params.id}/customers`}
         actionBasePath={`${params.id}/customers`}
+        actions={['view', 'edit', 'delete']}
+      />
+
+      <Table<BusinessPartnerProject>
+        className="mt-4"
+        title={t('projects.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('projects.newProject'),
+            colorClass: 'light-primary',
+            href: `${params.id}/projects/new`,
+          },
+        ]}
+        filters={<BusinessPartnerProjectFilter />}
+        columns={projectColumns}
+        apiPath={`business-partners/${params.id}/projects`}
+        actionBasePath={`${params.id}/projects`}
         actions={['view', 'edit', 'delete']}
       />
     </>
