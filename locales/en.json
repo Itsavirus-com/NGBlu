@@ -19,6 +19,7 @@
       "hierarchy": "Data Hierarchy",
       "dataManagement": "Data Management",
       "businessPartners": "Business Partners",
+      "businessPartnersTypes": "Business Partner Types",
       "products": "Products",
       "productsTypes": "Product Types",
       "productsPriceConfigs": "Product Price Configs",
@@ -1114,6 +1115,13 @@
         "department": "Department",
         "role": "Role"
       }
+    },
+    "businessPartnerTypes": {
+      "title": "Business Partner Types",
+      "newBusinessPartnerType": "New Business Partner Type",
+      "updateBusinessPartnerType": "Update Business Partner Type",
+      "id": "ID",
+      "type": "Type"
     }
   }
 }

@@ -1121,6 +1121,13 @@
         "department": "Department",
         "role": "Role"
       }
+    },
+    "businessPartnerTypes": {
+      "title": "Business Partner Types",
+      "newBusinessPartnerType": "New Business Partner Type",
+      "updateBusinessPartnerType": "Update Business Partner Type",
+      "id": "ID",
+      "type": "Type"
     }
   }
 }

@@ -164,6 +164,11 @@ const SidebarMenuMain = () => {
         icon="setting"
       >
         <SidebarMenuItem
+          to="/dashboard/data-management/business-partners/types"
+          title={t('businessPartnersTypes')}
+          hasBullet
+        />
+        <SidebarMenuItem
           to="/dashboard/data-management/product/types"
           title={t('productsTypes')}
           hasBullet
