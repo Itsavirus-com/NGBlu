@@ -985,7 +985,28 @@
       "contactCount": "Contact Count",
       "customerCount": "Customer Count",
       "projectCount": "Project Count",
-      "userCount": "User Count"
+      "userCount": "User Count",
+      "addresses": {
+        "title": "Business Partners Addresses",
+        "newAddress": "New Address",
+        "updateAddress": "Update Address",
+        "addressName": "Address Name",
+        "addressType": "Address Type",
+        "streetName": "Street Name",
+        "houseNumber": "House Number",
+        "houseNumberSuffix": "House Number Suffix",
+        "apartmentNumber": "Apartment Number",
+        "area": "Area",
+        "city": "City",
+        "county": "County",
+        "country": "Country",
+        "postalCode": "Postal Code",
+        "id": "ID",
+        "address": "Address",
+        "addressId": "Address ID",
+        "addressTypeId": "Address Type ID",
+        "organisationalUnit": "Organizational Unit"
+      }
     }
   }
 }

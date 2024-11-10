@@ -5,13 +5,36 @@ import { Row } from 'react-bootstrap'
 
 import { Page } from '@/components/page/page'
 import { PageTitle } from '@/components/page-title'
+import { Table } from '@/components/table/table'
+import { TableColumn } from '@/components/table/table.type'
 import { TextView } from '@/components/view/text-view/text-view'
+import { BusinessPartnerAddress } from '@/services/swr/models/business-partner-address.type'
 import { useBusinessPartner } from '@/services/swr/use-business-partner'
+
+import { BusinessPartnerAddressFilter } from './components/business-partner-address-filter'
 
 export default function BusinessPartnerDetails({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners')
 
   const { data, isLoading } = useBusinessPartner(Number(params.id))
+
+  const addressColumns: TableColumn<BusinessPartnerAddress>[] = [
+    {
+      id: 'id',
+      title: t('addresses.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'address',
+      title: t('addresses.addressName'),
+      render: row => `${row.address.id} | ${row.address.addressName}`,
+    },
+    {
+      id: 'addressTyoe',
+      title: t('addresses.addressType'),
+      render: row => `${row.addressType?.id} | ${row.addressType?.addressType}`,
+    },
+  ]
 
   return (
     <>
@@ -64,6 +87,24 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
           />
         </Row>
       </Page>
+
+      <Table<BusinessPartnerAddress>
+        className="mt-4"
+        title={t('addresses.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('addresses.newAddress'),
+            colorClass: 'light-primary',
+            href: `${params.id}/addresses/new`,
+          },
+        ]}
+        filters={<BusinessPartnerAddressFilter />}
+        columns={addressColumns}
+        apiPath={`business-partners/${params.id}/addresses`}
+        actionBasePath={`${params.id}/addresses`}
+        actions={['view', 'edit', 'delete']}
+      />
     </>
   )
 }
