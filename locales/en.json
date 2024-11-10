@@ -18,6 +18,7 @@
       "google": "Google",
       "hierarchy": "Data Hierarchy",
       "dataManagement": "Data Management",
+      "businessPartners": "Business Partners",
       "products": "Products",
       "productsTypes": "Product Types",
       "productsPriceConfigs": "Product Price Configs",
@@ -966,6 +967,25 @@
       "endClient": "End Client",
       "businessPartner": "Business Partner",
       "enterpriseRoot": "Enterprise Root"
+    },
+    "businessPartners": {
+      "title": "Business Partners",
+      "newBusinessPartner": "New Business Partner",
+      "updateBusinessPartner": "Update Business Partner",
+      "id": "ID",
+      "name": "Name",
+      "type": "Type",
+      "company": "Company",
+      "companyId": "Company ID",
+      "businessPartnerType": "Business Partner Type",
+      "businessPartnersAddresses": "Business Partners Addresses",
+      "enterpriseRoot": "Enterprise Root",
+      "organisationalUnit": "Organizational Unit",
+      "addressCount": "Address Count",
+      "contactCount": "Contact Count",
+      "customerCount": "Customer Count",
+      "projectCount": "Project Count",
+      "userCount": "User Count"
     }
   }
 }
