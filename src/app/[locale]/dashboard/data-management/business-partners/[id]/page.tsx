@@ -9,9 +9,11 @@ import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { TextView } from '@/components/view/text-view/text-view'
 import { BusinessPartnerAddress } from '@/services/swr/models/business-partner-address.type'
+import { BusinessPartnerContact } from '@/services/swr/models/business-partner-contact.type'
 import { useBusinessPartner } from '@/services/swr/use-business-partner'
 
 import { BusinessPartnerAddressFilter } from './components/business-partner-address-filter'
+import { BusinessPartnerContactFilter } from './components/business-partner-contact-filter'
 
 export default function BusinessPartnerDetails({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners')
@@ -33,6 +35,19 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
       id: 'addressTyoe',
       title: t('addresses.addressType'),
       render: row => `${row.addressType?.id} | ${row.addressType?.addressType}`,
+    },
+  ]
+
+  const contactColumns: TableColumn<BusinessPartnerContact>[] = [
+    {
+      id: 'id',
+      title: t('contacts.id'),
+      render: row => row.id,
+    },
+    {
+      id: 'person',
+      title: t('contacts.person'),
+      render: row => `${row.person.firstname} ${row.person.lastname}`,
     },
   ]
 
@@ -103,6 +118,24 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
         columns={addressColumns}
         apiPath={`business-partners/${params.id}/addresses`}
         actionBasePath={`${params.id}/addresses`}
+        actions={['view', 'edit', 'delete']}
+      />
+
+      <Table<BusinessPartnerContact>
+        className="mt-4"
+        title={t('contacts.title')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('contacts.newContact'),
+            colorClass: 'light-primary',
+            href: `${params.id}/contacts/new`,
+          },
+        ]}
+        filters={<BusinessPartnerContactFilter />}
+        columns={contactColumns}
+        apiPath={`business-partners/${params.id}/contacts`}
+        actionBasePath={`${params.id}/contacts`}
         actions={['view', 'edit', 'delete']}
       />
     </>

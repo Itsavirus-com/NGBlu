@@ -1006,6 +1006,31 @@
         "addressId": "Address ID",
         "addressTypeId": "Address Type ID",
         "organisationalUnit": "Organizational Unit"
+      },
+      "contacts": {
+        "title": "Business Partner Contact",
+        "newContact": "New Contact",
+        "updateContact": "Update Contact",
+        "id": "ID",
+        "person": "Person",
+        "personId": "Person ID",
+        "contactInfo": "Contact Info",
+        "contactInfoId": "Contact Info ID",
+        "responsibility": "Responsibility",
+        "responsibilityId": "Responsibility ID",
+        "enterpriseRoot": "Enterprise Root",
+        "salutation": "Salutation",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "nameSuffix": "Name Suffix",
+        "namePrefix": "Name Prefix",
+        "pronounce": "Pronounce",
+        "gender": "Gender",
+        "personType": "Person Type",
+        "titles": "Titles",
+        "department": "Department",
+        "role": "Role",
+        "generalInfo": "General Info"
       }
     }
   }
