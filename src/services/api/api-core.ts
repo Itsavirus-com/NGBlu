@@ -1,4 +1,5 @@
 import { ApiResponse, ApisauceInstance, create } from 'apisauce'
+import { createHmac } from 'crypto'
 import { getSession } from 'next-auth/react'
 
 import { ApiParams, RequestMethod } from './api-core.type'
@@ -32,13 +33,51 @@ export class ApiCore {
    */
   protected payloadWrapper?: string
 
-  protected addHeaderTransformer() {
-    this.api.addAsyncRequestTransform(request => async () => {
-      if (!request.headers) request.headers = {}
+  protected async generateSignature(sharedSecret: string, message: string): Promise<string> {
+    return createHmac('sha256', sharedSecret).update(message).digest('hex')
+  }
+
+  protected buildQueryParams(params: Record<string, any>): string {
+    const queryParams = new URLSearchParams()
+    const sortedKeys = Object.keys(params).sort()
+
+    sortedKeys.forEach(key => {
+      const value = params[key]
+      if (typeof value === 'object' && value !== null) {
+        const nestedKeys = Object.keys(value).sort()
+        nestedKeys.forEach(nestedKey => {
+          queryParams.append(`${key}[${nestedKey}]`, value[nestedKey])
+        })
+      } else {
+        queryParams.append(key, value)
+      }
+    })
+
+    return queryParams.toString()
+  }
+
+  protected getUrl(request: any): string {
+    const { baseURL, url, params } = request
+    const queryString = params ? this.buildQueryParams(params) : ''
+    return `${baseURL}/${url}${queryString ? `?${queryString}` : ''}`
+  }
+
+  protected async addHeaderTransformer() {
+    this.api.addAsyncRequestTransform(async request => {
+      request.headers = request.headers || {}
+
+      const timestamp = new Date().toISOString()
+      const url = this.getUrl(request)
+      const method = request.method?.toUpperCase() || ''
+      const body = request.data ? JSON.stringify(request.data) : ''
+      const message = `${timestamp}${method}${url}${body}`
 
       const session = await getSession()
 
-      if (session?.accessToken) {
+      if (session?.accessToken && session?.sharedSecret) {
+        const signature = await this.generateSignature(session.sharedSecret, message)
+        request.headers['X-Signature'] = signature
+        request.headers['X-Timestamp'] = timestamp
         request.headers.Authorization = `Bearer ${session.accessToken}`
       }
 
