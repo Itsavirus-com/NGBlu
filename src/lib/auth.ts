@@ -1,5 +1,19 @@
+import sodium from 'libsodium-wrappers'
 import { NextAuthOptions } from 'next-auth'
 import AzureADProvider from 'next-auth/providers/azure-ad'
+
+async function generateSecret(clientPrivateKey: string) {
+  await sodium.ready
+
+  const serverPublicKey = process.env.NEXT_PUBLIC_SERVER_PUBLIC_KEY as string
+
+  const sharedSecret = sodium.crypto_scalarmult(
+    sodium.from_base64(clientPrivateKey, sodium.base64_variants.ORIGINAL),
+    sodium.from_base64(serverPublicKey, sodium.base64_variants.ORIGINAL)
+  )
+
+  return sharedSecret
+}
 
 async function getAccessToken(idToken: string) {
   try {
@@ -12,7 +26,12 @@ async function getAccessToken(idToken: string) {
 
     if (!res.ok) return null
 
-    return res.headers.get('access-token')
+    const sharedSecret = await generateSecret(res.headers.get('client-private-key') as string)
+
+    return {
+      accessToken: res.headers.get('access-token'),
+      sharedSecret,
+    }
   } catch (error) {
     return null
   }
@@ -43,9 +62,10 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, account }) {
       if (account) {
-        const accessToken = await getAccessToken(account.id_token as string)
+        const resp = await getAccessToken(account.id_token as string)
 
-        token.accessToken = accessToken
+        token.accessToken = resp?.accessToken
+        token.sharedSecret = resp?.sharedSecret
       }
 
       return token
@@ -53,6 +73,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session) {
         session.accessToken = token.accessToken as string
+        session.sharedSecret = token.sharedSecret as string
       }
 
       return session
