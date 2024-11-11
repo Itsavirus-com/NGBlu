@@ -56,6 +56,14 @@ export class BusinessPartnerApi extends ApiCore {
   async getEnterpriseRootOrgUnitDetails(id: string, orgUnitId: string) {
     return await this.get({ path: `business-partners/${id}/organisational-units/${orgUnitId}` })
   }
+
+  async new(payload: Record<string, any>) {
+    return await this.post({ path: 'business-partners', payload })
+  }
+
+  async update(id: number, payload: Record<string, any>) {
+    return await this.put({ path: `business-partners/${id}`, payload })
+  }
 }
 
 export const businessPartnerApi = new BusinessPartnerApi()

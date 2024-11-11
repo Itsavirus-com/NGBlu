@@ -12,7 +12,7 @@ export default function useEndClientTypeForm(endClientTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: ccType } = useEndClientType(endClientTypeId)
+  const { data: endClientType } = useEndClientType(endClientTypeId)
 
   const schema = yup.object().shape({
     type: yup.string().ensure().required(),
@@ -20,10 +20,10 @@ export default function useEndClientTypeForm(endClientTypeId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: ccType,
+    values: endClientType,
   })
 
-  const addNewCompanyStatus = async (data: InferType<typeof schema>) => {
+  const addNewEndClientType = async (data: InferType<typeof schema>) => {
     try {
       const res = await endClientTypeApi.new(data)
 
@@ -36,7 +36,7 @@ export default function useEndClientTypeForm(endClientTypeId?: number) {
     }
   }
 
-  const updateCompanyStatus = async (data: InferType<typeof schema>) => {
+  const updateEndClientType = async (data: InferType<typeof schema>) => {
     if (!endClientTypeId) return
 
     try {
@@ -53,10 +53,10 @@ export default function useEndClientTypeForm(endClientTypeId?: number) {
 
   const onSubmit = async (data: InferType<typeof schema>) => {
     if (endClientTypeId) {
-      return updateCompanyStatus(data)
+      return updateEndClientType(data)
     }
 
-    return addNewCompanyStatus(data)
+    return addNewEndClientType(data)
   }
 
   return { methods, onSubmit }
