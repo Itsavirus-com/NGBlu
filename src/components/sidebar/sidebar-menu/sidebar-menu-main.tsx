@@ -22,6 +22,12 @@ const SidebarMenuMain = () => {
 
       <SidebarMenuSeparator title={t('dataManagement')} />
 
+      <SidebarMenuItem
+        to="/dashboard/data-management/business-partners"
+        title={t('businessPartners')}
+        icon="briefcase"
+      />
+
       <SidebarMenuItemWithSub
         to="/dashboard/data-management/product"
         title={t('products')}
@@ -157,6 +163,11 @@ const SidebarMenuMain = () => {
         title={t('settings')}
         icon="setting"
       >
+        <SidebarMenuItem
+          to="/dashboard/data-management/business-partners/types"
+          title={t('businessPartnersTypes')}
+          hasBullet
+        />
         <SidebarMenuItem
           to="/dashboard/data-management/product/types"
           title={t('productsTypes')}
