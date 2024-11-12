@@ -14,254 +14,142 @@ const SidebarMenuMain = () => {
 
       {/* Data Validation */}
       <SidebarMenuSeparator title={t('dataValidation')} />
-      <SidebarMenuItem to="/dashboard/data-validation/kvk" title={t('kvk')} icon="shield" />
-      <SidebarMenuItem to="/dashboard/data-validation/google" title={t('google')} icon="google" />
-      <SidebarMenuItem
-        to="/dashboard/data-validation/data-hierarchy"
-        title={t('hierarchy')}
-        icon="abstract-26"
-      />
+      <SidebarMenuItem to="/dashboard/kvk" title={t('kvk')} icon="shield" />
+      <SidebarMenuItem to="/dashboard/google" title={t('google')} icon="google" />
+      <SidebarMenuItem to="/dashboard/data-hierarchy" title={t('hierarchy')} icon="abstract-26" />
       {/* End of Data Validation */}
 
       {/* Data Management */}
       <SidebarMenuSeparator title={t('dataManagement')} />
-      <SidebarMenuItem to="/dashboard/data-management/addresses" title={t('address')} icon="map" />
+      <SidebarMenuItem to="/dashboard/addresses" title={t('address')} icon="map" />
       <SidebarMenuItem
-        to="/dashboard/data-management/business-partners"
+        to="/dashboard/business-partners"
         title={t('businessPartners')}
         icon="briefcase"
       />
+      <SidebarMenuItem to="/dashboard/companies" title={t('company')} icon="home-3" />
+      <SidebarMenuItem to="/dashboard/end-clients" title={t('endClients')} icon="profile-user" />
+      <SidebarMenuItem to="/dashboard/enterprise-roots" title={t('enterpriseRoots')} icon="shop" />
       <SidebarMenuItem
-        to="/dashboard/data-management/companies"
-        title={t('company')}
-        icon="home-3"
-      />
-      <SidebarMenuItem
-        to="/dashboard/data-management/end-clients"
-        title={t('endClients')}
-        icon="profile-user"
-      />
-      <SidebarMenuItem
-        to="/dashboard/data-management/enterprise-roots"
-        title={t('enterpriseRoots')}
-        icon="shop"
-      />
-      <SidebarMenuItem
-        to="/dashboard/data-management/organization-units"
+        to="/dashboard/organization-units"
         title={t('organizationUnits')}
         icon="data"
       />
-      <SidebarMenuItem
-        to="/dashboard/data-management/packages"
-        title={t('packages')}
-        icon="cube-2"
-      />
-      <SidebarMenuItem
-        to="/dashboard/data-management/payments"
-        title={t('payment')}
-        icon="credit-cart"
-      />
-      <SidebarMenuItemWithSub
-        to="/dashboard/data-management/person"
-        title={t('person')}
-        icon="profile-user"
-      >
+      <SidebarMenuItem to="/dashboard/packages" title={t('packages')} icon="cube-2" />
+      <SidebarMenuItem to="/dashboard/payments" title={t('payment')} icon="credit-cart" />
+      <SidebarMenuItemWithSub to="/dashboard/person" title={t('person')} icon="profile-user">
+        <SidebarMenuItem to="/dashboard/person/persons" title={t('persons')} hasBullet />
         <SidebarMenuItem
-          to="/dashboard/data-management/person/persons"
-          title={t('persons')}
-          hasBullet
-        />
-        <SidebarMenuItem
-          to="/dashboard/data-management/person/responsibilities"
+          to="/dashboard/person/responsibilities"
           title={t('personResponsibilities')}
           hasBullet
         />
       </SidebarMenuItemWithSub>
-      <SidebarMenuItemWithSub
-        to="/dashboard/data-management/price"
-        title={t('prices')}
-        icon="credit-cart"
-      >
-        <SidebarMenuItem
-          to="/dashboard/data-management/price/configs"
-          title={t('priceConfigs')}
-          hasBullet
-        />
-        <SidebarMenuItem
-          to="/dashboard/data-management/price/plans"
-          title={t('pricePlans')}
-          hasBullet
-        />
+      <SidebarMenuItemWithSub to="/dashboard/price" title={t('prices')} icon="credit-cart">
+        <SidebarMenuItem to="/dashboard/price/configs" title={t('priceConfigs')} hasBullet />
+        <SidebarMenuItem to="/dashboard/price/plans" title={t('pricePlans')} hasBullet />
       </SidebarMenuItemWithSub>
 
-      <SidebarMenuItemWithSub
-        to="/dashboard/data-management/product"
-        title={t('products')}
-        icon="delivery-3"
-      >
+      <SidebarMenuItemWithSub to="/dashboard/product" title={t('products')} icon="delivery-3">
+        <SidebarMenuItem to="/dashboard/product/products" title={t('products')} hasBullet />
         <SidebarMenuItem
-          to="/dashboard/data-management/product/products"
-          title={t('products')}
-          hasBullet
-        />
-        <SidebarMenuItem
-          to="/dashboard/data-management/product/price-configs"
+          to="/dashboard/product/price-configs"
           title={t('productsPriceConfigs')}
           hasBullet
         />
       </SidebarMenuItemWithSub>
-      <SidebarMenuItemWithSub
-        to="/dashboard/data-management/project"
-        title={t('projects')}
-        icon="chart-line"
-      >
-        <SidebarMenuItem
-          to="/dashboard/data-management/project/projects"
-          title={t('projects')}
-          hasBullet
-        />
-        <SidebarMenuItem
-          to="/dashboard/data-management/project/infos"
-          title={t('projectsInfos')}
-          hasBullet
-        />
+      <SidebarMenuItemWithSub to="/dashboard/project" title={t('projects')} icon="chart-line">
+        <SidebarMenuItem to="/dashboard/project/projects" title={t('projects')} hasBullet />
+        <SidebarMenuItem to="/dashboard/project/infos" title={t('projectsInfos')} hasBullet />
       </SidebarMenuItemWithSub>
-      <SidebarMenuItemWithSub
-        to="/dashboard/data-management/service"
-        title={t('services')}
-        icon="icon"
-      >
+      <SidebarMenuItemWithSub to="/dashboard/service" title={t('services')} icon="icon">
+        <SidebarMenuItem to="/dashboard/service/services" title={t('services')} hasBullet />
         <SidebarMenuItem
-          to="/dashboard/data-management/service/services"
-          title={t('services')}
-          hasBullet
-        />
-        <SidebarMenuItem
-          to="/dashboard/data-management/service/price-configs"
+          to="/dashboard/service/price-configs"
           title={t('servicesPriceConfigs')}
           hasBullet
         />
       </SidebarMenuItemWithSub>
-      <SidebarMenuItem
-        to="/dashboard/data-management/users"
-        title={t('users')}
-        icon="security-user"
-      />
+      <SidebarMenuItem to="/dashboard/users" title={t('users')} icon="security-user" />
       {/* End of Data Management */}
 
       {/* Data Management - Settings */}
-      <SidebarMenuItemWithSub
-        to="/dashboard/data-management/settings"
-        title={t('settings')}
-        icon="setting"
-      >
+      <SidebarMenuItemWithSub to="/dashboard/settings" title={t('settings')} icon="setting">
         <SidebarMenuItem
-          to="/dashboard/data-management/settings/address-types"
+          to="/dashboard/settings/address-types"
           title={t('addressTypes')}
           hasBullet
         />
         <SidebarMenuItem
-          to="/dashboard/data-management/settings/business-partner-types"
+          to="/dashboard/settings/business-partner-types"
           title={t('businessPartnersTypes')}
           hasBullet
         />
         <SidebarMenuItem
-          to="/dashboard/data-management/settings/company-statuses"
+          to="/dashboard/settings/company-statuses"
           title={t('companyStatuses')}
           hasBullet
         />
         <SidebarMenuItem
-          to="/dashboard/data-management/settings/contact-types"
+          to="/dashboard/settings/contact-types"
           title={t('contactTypes')}
           hasBullet
         />
+        <SidebarMenuItem to="/dashboard/settings/countries" title={t('countries')} hasBullet />
+        <SidebarMenuItem to="/dashboard/settings/currencies" title={t('currencies')} hasBullet />
         <SidebarMenuItem
-          to="/dashboard/data-management/settings/countries"
-          title={t('countries')}
-          hasBullet
-        />
-        <SidebarMenuItem
-          to="/dashboard/data-management/settings/currencies"
-          title={t('currencies')}
-          hasBullet
-        />
-        <SidebarMenuItem
-          to="/dashboard/data-management/settings/end-client-statuses"
+          to="/dashboard/settings/end-client-statuses"
           title={t('endClientStatuses')}
           hasBullet
         />
         <SidebarMenuItem
-          to="/dashboard/data-management/settings/end-client-types"
+          to="/dashboard/settings/end-client-types"
           title={t('endClientTypes')}
           hasBullet
         />
+        <SidebarMenuItem to="/dashboard/settings/genders" title={t('genders')} hasBullet />
         <SidebarMenuItem
-          to="/dashboard/data-management/settings/genders"
-          title={t('genders')}
-          hasBullet
-        />
-        <SidebarMenuItem
-          to="/dashboard/data-management/settings/package-types"
+          to="/dashboard/settings/package-types"
           title={t('packagesTypes')}
           hasBullet
         />
+        <SidebarMenuItem to="/dashboard/settings/person-types" title={t('personTypes')} hasBullet />
         <SidebarMenuItem
-          to="/dashboard/data-management/settings/person-types"
-          title={t('personTypes')}
-          hasBullet
-        />
-        <SidebarMenuItem
-          to="/dashboard/data-management/settings/price-intervals"
+          to="/dashboard/settings/price-intervals"
           title={t('priceIntervals')}
           hasBullet
         />
+        <SidebarMenuItem to="/dashboard/settings/price-taxes" title={t('priceTaxes')} hasBullet />
+        <SidebarMenuItem to="/dashboard/settings/price-types" title={t('priceTypes')} hasBullet />
+        <SidebarMenuItem to="/dashboard/settings/price-units" title={t('priceUnits')} hasBullet />
         <SidebarMenuItem
-          to="/dashboard/data-management/settings/price-taxes"
-          title={t('priceTaxes')}
-          hasBullet
-        />
-        <SidebarMenuItem
-          to="/dashboard/data-management/settings/price-types"
-          title={t('priceTypes')}
-          hasBullet
-        />
-        <SidebarMenuItem
-          to="/dashboard/data-management/settings/price-units"
-          title={t('priceUnits')}
-          hasBullet
-        />
-        <SidebarMenuItem
-          to="/dashboard/data-management/settings/product-types"
+          to="/dashboard/settings/product-types"
           title={t('productsTypes')}
           hasBullet
         />
         <SidebarMenuItem
-          to="/dashboard/data-management/settings/project-types"
+          to="/dashboard/settings/project-types"
           title={t('projectsTypes')}
           hasBullet
         />
         <SidebarMenuItem
-          to="/dashboard/data-management/settings/service-types"
+          to="/dashboard/settings/service-types"
           title={t('servicesTypes')}
           hasBullet
         />
-        <SidebarMenuItemWithSub
-          to="/dashboard/data-management/settings/payment"
-          title={t('payments')}
-          hasBullet
-        >
+        <SidebarMenuItemWithSub to="/dashboard/settings/payment" title={t('payments')} hasBullet>
           <SidebarMenuItem
-            to="/dashboard/data-management/settings/payment/credit-card-brands"
+            to="/dashboard/settings/payment/credit-card-brands"
             title={t('creditCardBrands')}
             hasBullet
           />
           <SidebarMenuItem
-            to="/dashboard/data-management/settings/payment/credit-card-types"
+            to="/dashboard/settings/payment/credit-card-types"
             title={t('creditCardTypes')}
             hasBullet
           />
           <SidebarMenuItem
-            to="/dashboard/data-management/settings/payment/types"
+            to="/dashboard/settings/payment/types"
             title={t('paymentTypes')}
             hasBullet
           />
