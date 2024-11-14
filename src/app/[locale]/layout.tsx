@@ -5,6 +5,7 @@ import { NextIntlClientProvider, useMessages } from 'next-intl'
 import { Toast } from '@/components/toast/toast'
 
 import '@/assets/sass/style.scss'
+import 'flatpickr/dist/flatpickr.css'
 
 const inter = Inter({
   weight: ['300', '400', '500', '600', '700'],
