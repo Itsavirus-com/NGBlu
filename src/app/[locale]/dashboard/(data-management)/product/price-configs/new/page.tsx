@@ -3,9 +3,9 @@
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
+import { ControlledDatetime } from '@/components/forms/datetime'
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
-import { ControlledInput } from '@/components/forms/input'
 import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
@@ -27,13 +27,13 @@ export default function NewProductPriceConfig() {
         <div className="app-container container-fluid">
           <Card>
             <CardBody>
-              <ControlledInput
+              <ControlledDatetime
                 label={t('activeFrom')}
                 name="activeFrom"
                 containerClass="mb-3"
                 className="form-control-solid"
               />
-              <ControlledInput
+              <ControlledDatetime
                 label={t('activeTo')}
                 name="activeTo"
                 containerClass="mb-3"
