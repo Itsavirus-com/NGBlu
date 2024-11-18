@@ -18,21 +18,27 @@ export default function useServiceForm(serviceId?: number) {
     name: yup.string().ensure().required(),
     description: yup.string().ensure().required(),
     serviceTypeId: yup.number().required(),
-    corporateOnlyService: yup.boolean().required(),
-    consumerOnlyService: yup.boolean().required(),
+    inputType: yup.string().ensure(),
   })
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: service,
+    values: service && {
+      ...service,
+      inputType: service.corporateOnlyService
+        ? 'corporateOnlyService'
+        : service.consumerOnlyService
+          ? 'consumerOnlyService'
+          : '',
+    },
   })
 
   const addNewService = async (data: InferType<typeof schema>) => {
     try {
       let newData = {
         ...data,
-        corporateOnlyService: data.corporateOnlyService ? 1 : 0,
-        consumerOnlyService: data.consumerOnlyService ? 1 : 0,
+        corporateOnlyService: data.inputType === 'corporateOnlyService' ? '1' : '0',
+        consumerOnlyService: data.inputType === 'consumerOnlyService' ? '1' : '0',
       }
       const res = await serviceApi.new(newData)
 
@@ -51,8 +57,8 @@ export default function useServiceForm(serviceId?: number) {
     try {
       let newData = {
         ...data,
-        corporateOnlyService: data.corporateOnlyService ? '1' : '0',
-        consumerOnlyService: data.consumerOnlyService ? '1' : '0',
+        corporateOnlyService: data.inputType === 'corporateOnlyService' ? '1' : '0',
+        consumerOnlyService: data.inputType === 'consumerOnlyService' ? '1' : '0',
       }
       const res = await serviceApi.update(serviceId, newData)
 

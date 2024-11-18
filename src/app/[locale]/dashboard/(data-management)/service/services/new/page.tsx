@@ -1,6 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 import { Card, CardBody } from 'react-bootstrap'
 
 import { ControlledSwitch } from '@/components/forms/checkbox'
@@ -17,6 +18,13 @@ export default function NewService() {
   const t = useTranslations('dataManagement.services')
 
   const { methods, onSubmit } = useServiceForm()
+
+  const [inputType, setInputType] = useState<'corporateProductOnly' | 'consumerProductOnly' | null>(
+    null
+  )
+  const handleChange = (value: 'corporateProductOnly' | 'consumerProductOnly') => {
+    setInputType(value)
+  }
 
   return (
     <>
@@ -46,8 +54,24 @@ export default function NewService() {
                 apiPath="services/types"
                 option={{ label: row => row.serviceType, value: row => row.id }}
               />
-              <ControlledSwitch label={t('corporateServiceOnly')} name="corporateOnlyService" />
-              <ControlledSwitch label={t('consumerServiceOnly')} name="consumerOnlyService" />
+              <div className="d-flex gap-3">
+                <ControlledSwitch
+                  type="radio"
+                  label={t('corporateProductOnly')}
+                  name="inputType"
+                  containerClass="mb-3"
+                  value={'corporateProductOnly'}
+                  onChange={() => handleChange('corporateProductOnly')}
+                />
+                <ControlledSwitch
+                  type="radio"
+                  label={t('consumerProductOnly')}
+                  name="inputType"
+                  containerClass="mb-3"
+                  value={'consumerProductOnly'}
+                  onChange={() => handleChange('consumerProductOnly')}
+                />
+              </div>
 
               <FormButtons />
             </CardBody>
