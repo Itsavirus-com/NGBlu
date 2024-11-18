@@ -34,4 +34,5 @@ export type Product = {
   category: string
   createdAt: string
   updatedAt: string
+  inputType: string
 }
