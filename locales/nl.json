@@ -389,9 +389,13 @@
     "users": {
       "title": "Users",
       "newUser": "New User",
+      "updateUser": "Update User",
+      "blockUser": "Block User",
       "id": "ID",
       "displayName": "Display Name",
       "email": "Email",
+      "password": "Password",
+      "person": "Person",
       "lastLogin": "Last Login",
       "blocked": "Blocked"
     },

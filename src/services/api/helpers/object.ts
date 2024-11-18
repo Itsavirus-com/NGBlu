@@ -14,7 +14,7 @@ export const snakeCaseKeys: KeyConverter = data => {
     Object.entries(data).forEach(([key, value]) => {
       const snakeCaseKey = snakeCase(key)
 
-      if (!value) return
+      // if (!value) return
 
       if (Array.isArray(value)) {
         result[snakeCaseKey] = value.map((item: any) => snakeCaseKeys(item))
