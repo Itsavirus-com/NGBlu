@@ -38,7 +38,7 @@ export default function Genders() {
       columns={columns}
       apiPath="genders"
       actionBasePath="genders"
-      actions={['edit', 'delete']}
+      actions={['edit']}
     />
   )
 }
