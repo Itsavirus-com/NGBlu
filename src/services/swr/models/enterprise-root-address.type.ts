@@ -4,6 +4,7 @@ import { Address } from './address.type'
 export type EnterpriseRootAddress = {
   id: number
   addressId: number
+  addressName: string
   address: Address
   addressTypeId: number
   addressType: AddressType
