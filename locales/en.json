@@ -300,8 +300,13 @@
       "priceConfig": {
         "id": "ID",
         "title": "Service Price Configs",
+        "newPriceConfig": "New Price Config",
+        "updatePriceConfig": "Update Price Config",
+        "businessPartner": "Business Partner ",
         "businessPartnerId": "Business Partner ID",
+        "orgUnit": "Org. Unit ",
         "orgUnitId": "Org. Unit ID",
+        "enterpriseRoot": "Enterprise Root ",
         "enterpriseRootId": "Enterprise Root ID",
         "service": "Service",
         "serviceId": "Service ID",

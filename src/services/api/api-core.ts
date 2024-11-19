@@ -8,7 +8,8 @@ import { camelizeKeys, snakeCaseKeys } from './helpers/object'
 import { serialize } from './helpers/serialize-formdata'
 
 export class ApiCore {
-  protected baseURL = `https://io2-api.development.ngblu.io/api`
+  // protected baseURL = `https://io2-api.development.ngblu.io/api`
+  protected baseURL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api`
   protected api: ApisauceInstance
 
   /**
