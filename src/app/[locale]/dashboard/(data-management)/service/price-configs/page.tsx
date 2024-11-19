@@ -42,11 +42,19 @@ export default function ServicePriceConfigs() {
   return (
     <Table<ServicePriceConfig>
       title={t('title')}
+      toolbars={[
+        {
+          icon: 'plus',
+          label: t('newPriceConfig'),
+          colorClass: 'light-primary',
+          href: 'price-configs/new',
+        },
+      ]}
       filters={<ServicePriceConfigsFilter />}
       columns={columns}
       apiPath="services/price-configs"
       actionBasePath="price-configs"
-      actions={['view']}
+      actions={['view', 'edit', 'delete']}
     />
   )
 }
