@@ -32,13 +32,13 @@ export default function PackageTypes() {
           icon: 'plus',
           label: t('newPackageType'),
           colorClass: 'light-primary',
-          href: 'types/new',
+          href: 'package-types/new',
         },
       ]}
       filters={<PackageTypesFilter />}
       columns={columns}
       apiPath="packages/types"
-      actionBasePath="types"
+      actionBasePath="package-types"
       actions={['edit', 'delete']}
     />
   )
