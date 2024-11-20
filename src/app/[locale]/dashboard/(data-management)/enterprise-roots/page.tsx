@@ -27,7 +27,7 @@ export default function EnterpriseRoots() {
       title: t('enterpriseRootAddress'),
       render: row =>
         row.enterpriseRootAddresses
-          ? `${row.enterpriseRootAddressesId} | ${row.enterpriseRootAddresses.address.addressName}`
+          ? `${row.enterpriseRootAddressesId} | ${row.enterpriseRootAddresses.addressName}`
           : '-',
     },
     {

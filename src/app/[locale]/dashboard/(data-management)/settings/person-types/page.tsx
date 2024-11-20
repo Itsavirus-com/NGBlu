@@ -32,13 +32,13 @@ export default function PersonTypes() {
           icon: 'plus',
           label: t('newPersonType'),
           colorClass: 'light-primary',
-          href: 'types/new',
+          href: 'person-types/new',
         },
       ]}
       filters={<PersonTypeFilter />}
       columns={columns}
       apiPath="persons/types"
-      actionBasePath="types"
+      actionBasePath="person-types"
       actions={['edit', 'delete']}
     />
   )

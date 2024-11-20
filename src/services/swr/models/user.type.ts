@@ -4,10 +4,12 @@ export type User = {
   id: number
   displayName: string
   email: string
+  password: string
   personId: number
   person: Person
   lastLogin: string
   blockedAt: string
+  blocked: boolean
   createdAt: string
   updatedAt: string
 }

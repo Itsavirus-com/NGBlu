@@ -32,13 +32,13 @@ export default function ProductTypes() {
           icon: 'plus',
           label: t('newProductType'),
           colorClass: 'light-primary',
-          href: 'types/new',
+          href: 'product-types/new',
         },
       ]}
       filters={<ProductTypesFilter />}
       columns={columns}
       apiPath="products/types"
-      actionBasePath="types"
+      actionBasePath="product-types"
       actions={['edit', 'delete']}
     />
   )

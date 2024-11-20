@@ -31,13 +31,13 @@ export default function EndClientStatuses() {
           icon: 'plus',
           label: t('newEndClientStatus'),
           colorClass: 'light-primary',
-          href: 'statuses/new',
+          href: 'end-client-statuses/new',
         },
       ]}
       filters={<EndClientStatusFilter />}
       columns={columns}
       apiPath="end-clients/statuses"
-      actionBasePath="statuses"
+      actionBasePath="end-client-statuses"
       actions={['edit', 'delete']}
     />
   )

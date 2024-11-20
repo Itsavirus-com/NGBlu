@@ -1,6 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { useEffect, useState } from 'react'
 import { Card, CardBody } from 'react-bootstrap'
 
 import { ControlledSwitch } from '@/components/forms/checkbox'
@@ -17,6 +18,19 @@ export default function UpdateService({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.services')
 
   const { methods, onSubmit } = useServiceForm(Number(params.id))
+
+  const [inputType, setInputType] = useState<'corporateOnlyService' | 'consumerOnlyService' | null>(
+    null
+  )
+  const handleChange = (value: 'corporateOnlyService' | 'consumerOnlyService') => {
+    setInputType(value)
+  }
+
+  useEffect(() => {
+    if (inputType === null) {
+      setInputType(methods.getValues('inputType') as 'corporateOnlyService' | 'consumerOnlyService')
+    }
+  }, [methods.watch()])
 
   return (
     <>
@@ -46,8 +60,24 @@ export default function UpdateService({ params }: { params: { id: string } }) {
                 apiPath="services/types"
                 option={{ label: row => row.serviceType, value: row => row.id }}
               />
-              <ControlledSwitch label={t('corporateServiceOnly')} name="corporateOnlyService" />
-              <ControlledSwitch label={t('consumerServiceOnly')} name="consumerOnlyService" />
+              <div className="d-flex gap-3">
+                <ControlledSwitch
+                  type="radio"
+                  label={t('corporateServiceOnly')}
+                  name="inputType"
+                  containerClass="mb-3"
+                  value={'corporateOnlyService'}
+                  onChange={() => handleChange('corporateOnlyService')}
+                />
+                <ControlledSwitch
+                  type="radio"
+                  label={t('consumerServiceOnly')}
+                  name="inputType"
+                  containerClass="mb-3"
+                  value={'consumerOnlyService'}
+                  onChange={() => handleChange('consumerOnlyService')}
+                />
+              </div>
 
               <FormButtons />
             </CardBody>
