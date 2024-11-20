@@ -32,13 +32,13 @@ export default function PriceCurrencies() {
           icon: 'plus',
           label: t('newPriceUnit'),
           colorClass: 'light-primary',
-          href: 'units/new',
+          href: 'price-units/new',
         },
       ]}
       filters={<PriceUnitsFilter />}
       columns={columns}
       apiPath="prices/units"
-      actionBasePath="units"
+      actionBasePath="price-units"
       actions={['edit', 'delete']}
     />
   )

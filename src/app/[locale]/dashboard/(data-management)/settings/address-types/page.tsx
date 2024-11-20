@@ -32,13 +32,13 @@ export default function AddressTypes() {
           icon: 'plus',
           label: t('newAddressType'),
           colorClass: 'light-primary',
-          href: 'types/new',
+          href: 'address-types/new',
         },
       ]}
       filters={<AddressTypeFilter />}
       columns={columns}
       apiPath="addresses/types"
-      actionBasePath="types"
+      actionBasePath="address-types"
       actions={['edit', 'delete']}
     />
   )

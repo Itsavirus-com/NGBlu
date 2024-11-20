@@ -32,13 +32,13 @@ export default function ServiceTypes() {
           icon: 'plus',
           label: t('newServiceType'),
           colorClass: 'light-primary',
-          href: 'types/new',
+          href: 'service-types/new',
         },
       ]}
       filters={<ServiceTypesFilter />}
       columns={columns}
       apiPath="services/types"
-      actionBasePath="types"
+      actionBasePath="service-types"
       actions={['edit', 'delete']}
     />
   )

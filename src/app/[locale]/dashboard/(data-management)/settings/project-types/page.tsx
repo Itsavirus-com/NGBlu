@@ -32,13 +32,13 @@ export default function PackageTypes() {
           icon: 'plus',
           label: t('newProjectType'),
           colorClass: 'light-primary',
-          href: 'types/new',
+          href: 'project-types/new',
         },
       ]}
       filters={<ProjectTypesFilter />}
       columns={columns}
       apiPath="projects/types"
-      actionBasePath="types"
+      actionBasePath="project-types"
       actions={['edit', 'delete']}
     />
   )

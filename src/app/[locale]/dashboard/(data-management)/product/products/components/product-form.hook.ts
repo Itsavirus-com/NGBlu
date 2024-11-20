@@ -18,21 +18,27 @@ export default function useProductForm(productId?: number) {
     name: yup.string().ensure().required(),
     description: yup.string().ensure().required(),
     productTypeId: yup.number().required(),
-    corporateProductOnly: yup.boolean().required(),
-    consumerProductOnly: yup.boolean().required(),
+    inputType: yup.string().ensure(),
   })
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: product,
+    values: product && {
+      ...product,
+      inputType: product.corporateProductOnly
+        ? 'corporateProductOnly'
+        : product.consumerProductOnly
+          ? 'consumerProductOnly'
+          : '',
+    },
   })
 
   const addNewProduct = async (data: InferType<typeof schema>) => {
     try {
       let newData = {
         ...data,
-        corporateProductOnly: data.corporateProductOnly ? '1' : '0',
-        consumerProductOnly: data.consumerProductOnly ? '1' : '0',
+        corporateProductOnly: data.inputType === 'corporateProductOnly' ? '1' : '0',
+        consumerProductOnly: data.inputType === 'consumerProductOnly' ? '1' : '0',
       }
       const res = await productApi.new(newData)
 
@@ -51,8 +57,8 @@ export default function useProductForm(productId?: number) {
     try {
       let newData = {
         ...data,
-        corporateProductOnly: data.corporateProductOnly ? '1' : '0',
-        consumerProductOnly: data.consumerProductOnly ? '1' : '0',
+        corporateProductOnly: data.inputType === 'corporateProductOnly' ? '1' : '0',
+        consumerProductOnly: data.inputType === 'consumerProductOnly' ? '1' : '0',
       }
       const res = await productApi.update(productId, newData)
 

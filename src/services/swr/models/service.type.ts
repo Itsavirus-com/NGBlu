@@ -32,4 +32,5 @@ export type Service = {
   category: string
   createdAt: string
   updatedAt: string
+  inputType: string
 }

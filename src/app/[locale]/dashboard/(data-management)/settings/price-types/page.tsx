@@ -32,13 +32,13 @@ export default function PriceTypes() {
           icon: 'plus',
           label: t('newPriceType'),
           colorClass: 'light-primary',
-          href: 'types/new',
+          href: 'price-types/new',
         },
       ]}
       filters={<PriceTypeFilter />}
       columns={columns}
       apiPath="prices/types"
-      actionBasePath="types"
+      actionBasePath="price-types"
       actions={['edit', 'delete']}
     />
   )

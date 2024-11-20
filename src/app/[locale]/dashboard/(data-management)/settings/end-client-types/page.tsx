@@ -31,13 +31,13 @@ export default function EndClientTypes() {
           icon: 'plus',
           label: t('newEndClientType'),
           colorClass: 'light-primary',
-          href: 'types/new',
+          href: 'end-client-types/new',
         },
       ]}
       filters={<EndClientTypeFilter />}
       columns={columns}
       apiPath="end-clients/types"
-      actionBasePath="types"
+      actionBasePath="end-client-types"
       actions={['edit', 'delete']}
     />
   )
