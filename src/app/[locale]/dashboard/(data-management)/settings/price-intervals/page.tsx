@@ -32,13 +32,13 @@ export default function PriceCurrencies() {
           icon: 'plus',
           label: t('newPriceInterval'),
           colorClass: 'light-primary',
-          href: 'intervals/new',
+          href: 'price-intervals/new',
         },
       ]}
       filters={<PriceIntervalsFilter />}
       columns={columns}
       apiPath="prices/intervals"
-      actionBasePath="intervals"
+      actionBasePath="price-intervals"
       actions={['edit', 'delete']}
     />
   )

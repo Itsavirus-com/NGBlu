@@ -31,13 +31,13 @@ export default function BusinessPartnerTypes() {
           icon: 'plus',
           label: t('newBusinessPartnerType'),
           colorClass: 'light-primary',
-          href: 'types/new',
+          href: 'business-partner-types/new',
         },
       ]}
       filters={<BusinessPartnerTypeFilter />}
       columns={columns}
       apiPath="business-partners/types"
-      actionBasePath="types"
+      actionBasePath="business-partner-types"
       actions={['edit', 'delete']}
     />
   )

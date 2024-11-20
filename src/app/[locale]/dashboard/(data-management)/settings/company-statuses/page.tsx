@@ -32,13 +32,13 @@ export default function CompanyStatuses() {
           icon: 'plus',
           label: t('newCompanyStatus'),
           colorClass: 'light-primary',
-          href: 'statuses/new',
+          href: 'company-statuses/new',
         },
       ]}
       filters={<CompanyStatusFilter />}
       columns={columns}
       apiPath="companies/statuses"
-      actionBasePath="statuses"
+      actionBasePath="company-statuses"
       actions={['edit', 'delete']}
     />
   )
