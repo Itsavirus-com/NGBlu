@@ -43,7 +43,13 @@ export default function useAddressForm(addressId?: number) {
         showToast({ variant: 'success', body: 'Address created successfully' })
         back()
       }
-    } catch (error) {
+    } catch (error: any) {
+      if ('lat' in error.errors.detail) {
+        return showToast({ variant: 'danger', body: 'Invalid latitude' })
+      }
+      if ('lng' in error.errors.detail) {
+        return showToast({ variant: 'danger', body: 'Invalid longitude' })
+      }
       showUnexpectedToast()
     }
   }
@@ -58,7 +64,13 @@ export default function useAddressForm(addressId?: number) {
         showToast({ variant: 'success', body: 'Address updated successfully' })
         back()
       }
-    } catch (error) {
+    } catch (error: any) {
+      if ('lat' in error.errors.detail) {
+        return showToast({ variant: 'danger', body: 'Invalid latitude' })
+      }
+      if ('lng' in error.errors.detail) {
+        return showToast({ variant: 'danger', body: 'Invalid longitude' })
+      }
       showUnexpectedToast()
     }
   }
