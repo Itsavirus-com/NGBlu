@@ -4,11 +4,12 @@ import { derive } from 'valtio/utils'
 import { modelAdaptor } from './middleware/model-adaptor'
 import { ServicePriceConfig } from './models/service.type'
 
-export const useServicePriceConfig = (serviceId: number) => {
+export const useServicePriceConfig = (serviceId?: number) => {
   const { data, isLoading } = useSWR<ServicePriceConfig>(
-    {
-      path: `services/price-configs/${serviceId}`,
-    },
+    () =>
+      serviceId && {
+        path: `services/price-configs/${serviceId}`,
+      },
     {
       use: [modelAdaptor(() => derive({}), 'data')],
     }
