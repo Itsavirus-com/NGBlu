@@ -16,7 +16,7 @@ export default function useBusinessPartnerForm(id?: number) {
 
   const schema = yup.object().shape({
     name: yup.string().ensure().required(),
-    businesspartnerTypeId: yup.number(),
+    businesspartnerTypeId: yup.number().required(),
     companyInfoId: yup.number().required(),
     enterpriseRootId: yup.number().required(),
     businesspartnersAddressesId: yup.number(),
@@ -25,7 +25,11 @@ export default function useBusinessPartnerForm(id?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: businessPartner,
+    values: businessPartner && {
+      ...businessPartner,
+      businesspartnerTypeId: businessPartner.businessPartnerType.id,
+      companyInfoId: businessPartner.companyInfo.id,
+    },
   })
 
   const addNewBusinessPartner = async (data: InferType<typeof schema>) => {
