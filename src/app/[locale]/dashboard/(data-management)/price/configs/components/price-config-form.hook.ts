@@ -15,7 +15,7 @@ export default function usePriceConfigForm(configId?: number) {
   const { data: priceConfig } = usePriceConfig(configId)
 
   const schema = yup.object().shape({
-    priceValue: yup.number().required(),
+    priceValue: yup.number().typeError('Price value must be a number').required(),
     priceUnitId: yup.number().required(),
     priceCurrencyId: yup.number().required(),
     priceTypeId: yup.number().required(),
