@@ -31,7 +31,12 @@ export default function usePackageTypeForm(typeId?: number) {
         showToast({ variant: 'success', body: 'Package type created successfully' })
         back()
       }
-    } catch (error) {
+    } catch (error: any) {
+      if ('name' in error.errors.detail) {
+        showToast({ variant: 'danger', body: 'Package type already exists' })
+        return
+      }
+
       showUnexpectedToast()
     }
   }
@@ -46,7 +51,12 @@ export default function usePackageTypeForm(typeId?: number) {
         showToast({ variant: 'success', body: 'Package type updated successfully' })
         back()
       }
-    } catch (error) {
+    } catch (error: any) {
+      if ('name' in error.errors.detail) {
+        showToast({ variant: 'danger', body: 'Package type already exists' })
+        return
+      }
+
       showUnexpectedToast()
     }
   }
