@@ -19,10 +19,10 @@ export default function NewService() {
 
   const { methods, onSubmit } = useServiceForm()
 
-  const [inputType, setInputType] = useState<'corporateProductOnly' | 'consumerProductOnly' | null>(
+  const [inputType, setInputType] = useState<'corporateOnlyService' | 'consumerOnlyService' | null>(
     null
   )
-  const handleChange = (value: 'corporateProductOnly' | 'consumerProductOnly') => {
+  const handleChange = (value: 'corporateOnlyService' | 'consumerOnlyService') => {
     setInputType(value)
   }
 
@@ -57,19 +57,19 @@ export default function NewService() {
               <div className="d-flex gap-3">
                 <ControlledSwitch
                   type="radio"
-                  label={t('corporateProductOnly')}
+                  label={t('corporateServiceOnly')}
                   name="inputType"
                   containerClass="mb-3"
-                  value={'corporateProductOnly'}
-                  onChange={() => handleChange('corporateProductOnly')}
+                  value={'corporateOnlyService'}
+                  onChange={() => handleChange('corporateOnlyService')}
                 />
                 <ControlledSwitch
                   type="radio"
-                  label={t('consumerProductOnly')}
+                  label={t('consumerServiceOnly')}
                   name="inputType"
                   containerClass="mb-3"
-                  value={'consumerProductOnly'}
-                  onChange={() => handleChange('consumerProductOnly')}
+                  value={'consumerOnlyService'}
+                  onChange={() => handleChange('consumerOnlyService')}
                 />
               </div>
 

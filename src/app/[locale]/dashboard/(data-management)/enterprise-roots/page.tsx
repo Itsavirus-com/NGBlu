@@ -45,13 +45,13 @@ export default function EnterpriseRoots() {
           icon: 'plus',
           label: t('newEnterpriseRoot'),
           colorClass: 'light-primary',
-          href: 'enterprise-root/new',
+          href: 'enterprise-roots/new',
         },
       ]}
       filters={<EnterpriseRootFilter />}
       columns={columns}
       apiPath="enterprise-roots"
-      actionBasePath="enterprise-root"
+      actionBasePath="enterprise-roots"
       actions={['view', 'edit', 'delete']}
     />
   )

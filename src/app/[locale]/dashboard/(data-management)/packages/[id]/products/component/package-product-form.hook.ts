@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { packageProductApi } from '@/services/api/package-product-api'
 import { usePackageProduct } from '@/services/swr/use-package-product'
 import { InferType } from '@/utils/typescript'
 
 export default function usePackageProductForm(id: number, packageProductId?: number) {
+  const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: productType } = usePackageProduct(Number(id), packageProductId)
@@ -32,6 +34,7 @@ export default function usePackageProductForm(id: number, packageProductId?: num
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Package Product created successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()
@@ -46,6 +49,7 @@ export default function usePackageProductForm(id: number, packageProductId?: num
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Package Product updated successfully' })
+        back()
       }
     } catch (error) {
       showUnexpectedToast()

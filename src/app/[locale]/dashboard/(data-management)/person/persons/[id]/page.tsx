@@ -83,8 +83,8 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
           <TextView
             className="my-3"
             isLoading={isLoading}
-            label={t('nameSuffix')}
-            value={data?.nameSuffix}
+            label={t('namePrefix')}
+            value={data?.namePrefix}
           />
           <TextView
             className="my-3"

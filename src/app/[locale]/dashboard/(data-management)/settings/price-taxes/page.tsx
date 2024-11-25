@@ -52,13 +52,13 @@ export default function PriceCurrencies() {
           icon: 'plus',
           label: t('newPriceTax'),
           colorClass: 'light-primary',
-          href: 'taxes/new',
+          href: 'price-taxes/new',
         },
       ]}
       filters={<PriceTaxesFilter />}
       columns={columns}
       apiPath="prices/taxes"
-      actionBasePath="taxes"
+      actionBasePath="price-taxes"
       actions={['edit', 'delete']}
     />
   )
