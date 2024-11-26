@@ -974,6 +974,7 @@
       "latitude": "Latitude",
       "longitude": "Longitude",
       "googleAddressId": "Google Address ID",
+      "primaryAddress": "Primary Address",
       "endClient": "End Client",
       "businessPartner": "Business Partner",
       "enterpriseRoot": "Enterprise Root"

@@ -10,6 +10,10 @@ import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
 import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
+import { Address } from '@/services/swr/models/address.type'
+import { BusinessPartner } from '@/services/swr/models/business-partner.type'
+import { EndClient } from '@/services/swr/models/end-client.type'
+import { EnterpriseRoot } from '@/services/swr/models/enterprise-root.type'
 
 import useOrganizationUnitForm from '../../components/organization-unit-form.hook'
 
@@ -51,6 +55,14 @@ export default function UpdateOrganizationUnit({ params }: { params: { id: strin
                 containerClass="mb-3"
                 className="form-control-solid"
               />
+              <ControlledSelect<Address>
+                label={t('primaryAddress')}
+                name="primaryAddressId"
+                containerClass="mb-3"
+                className="form-control-solid"
+                apiPath="addresses"
+                option={{ label: row => row.addressName, value: row => row.id }}
+              />
               <div className="d-flex gap-3">
                 <ControlledSwitch
                   type="radio"
@@ -77,7 +89,7 @@ export default function UpdateOrganizationUnit({ params }: { params: { id: strin
                   onChange={() => handleChange('enterpriseRootId')}
                 />
               </div>
-              <ControlledSelect
+              <ControlledSelect<EndClient>
                 label={t('endClient')}
                 name="endclientId"
                 containerClass="mb-3"
@@ -86,7 +98,7 @@ export default function UpdateOrganizationUnit({ params }: { params: { id: strin
                 option={{ label: row => row.name, value: row => row.id }}
                 disabled={inputType !== 'endclientId'}
               />
-              <ControlledSelect
+              <ControlledSelect<BusinessPartner>
                 label={t('businessPartner')}
                 name="businesspartnerId"
                 containerClass="mb-3"
@@ -95,7 +107,7 @@ export default function UpdateOrganizationUnit({ params }: { params: { id: strin
                 option={{ label: row => row.name, value: row => row.id }}
                 disabled={inputType !== 'businesspartnerId'}
               />
-              <ControlledSelect
+              <ControlledSelect<EnterpriseRoot>
                 label={t('enterpriseRoot')}
                 name="enterpriseRootId"
                 containerClass="mb-3"

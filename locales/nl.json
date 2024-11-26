@@ -979,6 +979,7 @@
       "postalCode": "Postal Code",
       "latitude": "Latitude",
       "longitude": "Longitude",
+      "primaryAddress": "Primary Address",
       "googleAddressId": "Google Address ID",
       "endClient": "End Client",
       "businessPartner": "Business Partner",
