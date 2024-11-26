@@ -77,7 +77,7 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       id: 'address',
       title: t('projects.address'),
       render: row =>
-        `${row.enterpriseRootAddressesId} | ${row.enterpriseRootAddresses.address.addressName}`,
+        `${row.enterpriseRootAddressesId} | ${row.enterpriseRootAddresses.addressName}`,
     },
   ]
 
@@ -96,7 +96,7 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       id: 'address',
       title: t('customers.address'),
       render: row =>
-        `${row.enterpriseRootAddressesId} | ${row.enterpriseRootAddresses.address.addressName}`,
+        `${row.enterpriseRootAddressesId} | ${row.enterpriseRootAddresses.addressName}`,
     },
   ]
 
