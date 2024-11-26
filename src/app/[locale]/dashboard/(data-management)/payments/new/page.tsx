@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
+import { ControlledDatetime } from '@/components/forms/datetime'
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
@@ -54,7 +55,7 @@ export default function NewPayment() {
                 containerClass="mb-3"
                 className="form-control-solid"
               />
-              <ControlledInput
+              <ControlledDatetime
                 label={t('validTo')}
                 name="validTo"
                 containerClass="mb-3"
