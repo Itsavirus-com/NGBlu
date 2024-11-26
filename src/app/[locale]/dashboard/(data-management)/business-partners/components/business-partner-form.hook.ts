@@ -40,7 +40,11 @@ export default function useBusinessPartnerForm(id?: number) {
         showToast({ variant: 'success', body: 'Business partner created successfully' })
         back()
       }
-    } catch (error) {
+    } catch (error: any) {
+      if ('name' in error.errors.detail) {
+        showToast({ variant: 'danger', body: 'Business partner name is already exists' })
+        return
+      }
       showUnexpectedToast()
     }
   }
@@ -55,7 +59,11 @@ export default function useBusinessPartnerForm(id?: number) {
         showToast({ variant: 'success', body: 'Business partner updated successfully' })
         back()
       }
-    } catch (error) {
+    } catch (error: any) {
+      if ('name' in error.errors.detail) {
+        showToast({ variant: 'danger', body: 'Business partner name is already exists' })
+        return
+      }
       showUnexpectedToast()
     }
   }
