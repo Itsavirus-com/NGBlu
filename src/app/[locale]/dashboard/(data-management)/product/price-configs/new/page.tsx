@@ -1,6 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 import { Card, CardBody } from 'react-bootstrap'
 
 import { ControlledDatetime } from '@/components/forms/datetime'
@@ -16,6 +17,7 @@ import useProductPriceConfigForm from '../components/product-price-configs-form.
 
 export default function NewProductPriceConfig() {
   const t = useTranslations('dataManagement.products.priceConfig')
+  const [fromValue, setFromValue] = useState<Date | null>(null)
 
   const { methods, onSubmit } = useProductPriceConfigForm()
 
@@ -32,12 +34,17 @@ export default function NewProductPriceConfig() {
                 name="activeFrom"
                 containerClass="mb-3"
                 className="form-control-solid"
+                onChange={([date]: any) => setFromValue(date)}
               />
               <ControlledDatetime
                 label={t('activeTo')}
                 name="activeTo"
                 containerClass="mb-3"
                 className="form-control-solid"
+                disabled={fromValue === null}
+                options={{
+                  minDate: fromValue,
+                }}
               />
               <ControlledSelect<Product>
                 label={t('product')}

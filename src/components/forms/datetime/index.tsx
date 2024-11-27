@@ -11,6 +11,9 @@ type DatetimeProps = FormControlProps & {
   step?: number
   min?: number
   max?: number
+  disabled?: boolean
+  options?: Object
+  onChange?: ([value]: any) => void
 }
 
 export const ControlledDatetime = (props: DatetimeProps) => {
@@ -32,16 +35,19 @@ export const ControlledDatetime = (props: DatetimeProps) => {
         step={step}
         className={clsx('form-control', className)}
         {...register(name)}
+        disabled={props.disabled}
         value={datetime}
         onChange={([date]: any) => {
           setDatetime(date)
           setValue(name, new Date(date - new Date().getTimezoneOffset() * 60000).toISOString())
+          if (props.onChange) props.onChange([date])
         }}
         autoComplete={name}
         data-test-id={name}
         options={{
           enableTime: true,
           dateFormat: 'Y-m-d H:i',
+          ...props.options,
         }}
       >
         {children}
