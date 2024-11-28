@@ -68,79 +68,79 @@ export default function EnterpriseRootCustomerDetails({
             className="my-3"
             isLoading={isLoading}
             label={t('addressName')}
-            value={data?.enterpriseRootAddresses.address.addressName}
+            value={data?.enterpriseRootAddresses.addressName}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('streetName')}
-            value={data?.enterpriseRootAddresses.address.streetname}
+            value={data?.enterpriseRootAddresses.streetname}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('houseNumberSuffix')}
-            value={data?.enterpriseRootAddresses.address.housenumberSuffix}
+            value={data?.enterpriseRootAddresses.housenumberSuffix}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('houseNumber')}
-            value={data?.enterpriseRootAddresses.address.housenumber}
+            value={data?.enterpriseRootAddresses.housenumber}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('apartmentNumber')}
-            value={data?.enterpriseRootAddresses.address.appartmentNumber}
+            value={data?.enterpriseRootAddresses.appartmentNumber}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('area')}
-            value={data?.enterpriseRootAddresses.address.area}
+            value={data?.enterpriseRootAddresses.area}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('county')}
-            value={data?.enterpriseRootAddresses.address.county}
+            value={data?.enterpriseRootAddresses.county}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('city')}
-            value={data?.enterpriseRootAddresses.address.city}
+            value={data?.enterpriseRootAddresses.city}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('country')}
-            value={data?.enterpriseRootAddresses.address.country?.name}
+            value={data?.enterpriseRootAddresses.country?.name}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('postalCode')}
-            value={data?.enterpriseRootAddresses.address.postalcode}
+            value={data?.enterpriseRootAddresses.postalcode}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('latitude')}
-            value={data?.enterpriseRootAddresses.address.lat}
+            value={data?.enterpriseRootAddresses.lat}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('longitude')}
-            value={data?.enterpriseRootAddresses.address.lng}
+            value={data?.enterpriseRootAddresses.lng}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('googleAddressId')}
-            value={data?.enterpriseRootAddresses.address.googleAddressId}
+            value={data?.enterpriseRootAddresses.googleAddressId}
           />
         </Row>
       </Page>

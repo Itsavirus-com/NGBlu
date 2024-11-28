@@ -1,4 +1,4 @@
-import { EnterpriseRootAddress } from './enterprise-root-address.type'
+import { Address } from './address.type'
 import { Namespace } from './namespace.type'
 import { OrganizationUnit } from './organization-unit.type'
 import { Project } from './project.type'
@@ -8,7 +8,7 @@ export type EnterpriseRootProject = {
   projectId: number
   project: Project
   enterpriseRootAddressesId: number
-  enterpriseRootAddresses: EnterpriseRootAddress
+  enterpriseRootAddresses: Address
   ouUnitId: number
   ouUnit: OrganizationUnit
   enterpriseRootId: number

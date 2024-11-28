@@ -1,5 +1,5 @@
+import { Address } from './address.type'
 import { EndClient } from './end-client.type'
-import { EnterpriseRootAddress } from './enterprise-root-address.type'
 import { Namespace } from './namespace.type'
 import { OrganizationUnit } from './organization-unit.type'
 
@@ -12,7 +12,7 @@ export type EnterpriseRootCustomer = {
   endclient: EndClient
   enterpriseRootId: number
   enterpriseRootAddressesId: number
-  enterpriseRootAddresses: EnterpriseRootAddress
+  enterpriseRootAddresses: Address
   createdAt: string
   updatedAt: string
   namespace: Namespace[]
