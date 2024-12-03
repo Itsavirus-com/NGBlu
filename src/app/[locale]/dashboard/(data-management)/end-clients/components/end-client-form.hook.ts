@@ -16,6 +16,9 @@ export default function useEndClientForm(id?: number) {
 
   const schema = yup.object().shape({
     name: yup.string().ensure().required(),
+    typeId: yup.number().required(),
+    statusId: yup.number().required(),
+    locationAddressId: yup.number().required(),
   })
 
   const methods = useForm<InferType<typeof schema>>({
