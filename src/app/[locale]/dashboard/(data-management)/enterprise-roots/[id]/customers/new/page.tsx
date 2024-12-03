@@ -7,13 +7,13 @@ import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
+import { Address } from '@/services/swr/models/address.type'
 import { EndClient } from '@/services/swr/models/end-client.type'
-import { EnterpriseRootAddress } from '@/services/swr/models/enterprise-root-address.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
 import useEnterpriseRootCustomerForm from '../../components/enterprise-root-customer-form.hook'
 
-export default function NewEnterpriseRootCustomer({ params }: { params: { id: number } }) {
+export default function NewEnterpriseRootCustomer() {
   const t = useTranslations('dataManagement.enterpriseRoots.customers')
 
   const { methods, onSubmit } = useEnterpriseRootCustomerForm()
@@ -34,13 +34,13 @@ export default function NewEnterpriseRootCustomer({ params }: { params: { id: nu
                 apiPath={'end-clients'}
                 option={{ label: row => row.name, value: row => row.id }}
               />
-              <ControlledSelect<EnterpriseRootAddress>
+              <ControlledSelect<Address>
                 label={t('address')}
                 name="enterpriseRootAddressesId"
                 containerClass="mb-3"
                 className="form-control-solid"
-                apiPath={`enterprise-roots/${params.id}/addresses`}
-                option={{ label: row => row.address.addressName, value: row => row.id }}
+                apiPath={`addresses`}
+                option={{ label: row => row.addressName, value: row => row.id }}
               />
               <ControlledSelect<OrganizationUnit>
                 label={t('organisationalUnit')}
