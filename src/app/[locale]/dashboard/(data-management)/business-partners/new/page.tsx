@@ -8,7 +8,7 @@ import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
 import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
-// import { BusinessPartnerAddress } from '@/services/swr/models/business-partner-address.type'
+import { Address } from '@/services/swr/models/address.type'
 import { BusinessPartnerType } from '@/services/swr/models/business-partner-type.type'
 import { Company } from '@/services/swr/models/company.type'
 import { EnterpriseRoot } from '@/services/swr/models/enterprise-root-type'
@@ -43,14 +43,14 @@ export default function NewBusinessPartner() {
                 apiPath="business-partners/types"
                 option={{ label: row => row.name, value: row => row.id }}
               />
-              {/* <ControlledSelect<BusinessPartnerAddress>
+              <ControlledSelect<Address>
                 label={t('businessPartnersAddresses')}
                 name="businesspartnersAddressesId"
                 containerClass="mb-3"
                 className="form-control-solid"
-                apiPath="business-partners/1/addresses"
-                option={{ label: row => row.address.addressName, value: row => row.id }}
-              /> */}
+                apiPath="addresses"
+                option={{ label: row => row.addressName, value: row => row.id }}
+              />
               <ControlledSelect<Company>
                 label={t('company')}
                 name="companyInfoId"

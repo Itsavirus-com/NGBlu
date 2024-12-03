@@ -520,6 +520,7 @@
       "name": "Name",
       "type": "Type",
       "status": "Status",
+      "locationAddress": "Location Address",
       "accountNumber": "Account Number",
       "referenceId": "Reference ID",
       "afasId": "AFAS ID",

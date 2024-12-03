@@ -8,6 +8,7 @@ import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
 import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
+import { Address } from '@/services/swr/models/address.type'
 import { EndClientStatus } from '@/services/swr/models/end-client-status.type'
 import { EndClientType } from '@/services/swr/models/end-client-type.type'
 
@@ -47,6 +48,14 @@ export default function NewEndClient() {
                 className="form-control-solid"
                 apiPath="end-clients/statuses"
                 option={{ label: row => row.status, value: row => row.id }}
+              />
+              <ControlledSelect<Address>
+                label={t('locationAddress')}
+                name="locationAddressId"
+                containerClass="mb-3"
+                className="form-control-solid"
+                apiPath="addresses"
+                option={{ label: row => row.addressName, value: row => row.id }}
               />
 
               <FormButtons />

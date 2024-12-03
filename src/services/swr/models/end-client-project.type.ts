@@ -1,4 +1,4 @@
-import { EndClientAddress } from './end-client-address.type'
+import { Address } from './address.type'
 import { Project } from './project.type'
 
 export type EndClientProject = {
@@ -7,7 +7,7 @@ export type EndClientProject = {
   project: Project
   endclientAddressId: number
   endclientAddressesId: number
-  endclientAddress: EndClientAddress
+  endclientAddress: Address
   endclientId: number
   ouUnitId: number
   createdAt: string
