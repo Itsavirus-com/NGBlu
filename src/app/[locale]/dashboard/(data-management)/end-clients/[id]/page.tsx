@@ -87,7 +87,7 @@ export default function EndClientDetails({ params }: { params: { id: number } })
     {
       id: 'address',
       title: t('projects.address'),
-      render: row => `${row.endclientAddressId} | ${row.endclientAddress.address.addressName}`,
+      render: row => `${row.endclientAddressId} | ${row.endclientAddress.addressName}`,
     },
   ]
 
