@@ -27,61 +27,61 @@ export default function EndClientProjectDetails({
             className="my-3"
             isLoading={isLoading}
             label={t('addressName')}
-            value={data?.endclientAddress.address.addressName}
+            value={data?.endclientAddress.addressName}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('streetName')}
-            value={data?.endclientAddress.address.streetname}
+            value={data?.endclientAddress.streetname}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('houseNumberSuffix')}
-            value={data?.endclientAddress.address.housenumberSuffix}
+            value={data?.endclientAddress.housenumberSuffix}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('houseNumber')}
-            value={data?.endclientAddress.address.housenumber}
+            value={data?.endclientAddress.housenumber}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('apartmentNumber')}
-            value={data?.endclientAddress.address.appartmentNumber}
+            value={data?.endclientAddress.appartmentNumber}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('area')}
-            value={data?.endclientAddress.address.area}
+            value={data?.endclientAddress.area}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('county')}
-            value={data?.endclientAddress.address.county}
+            value={data?.endclientAddress.county}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('city')}
-            value={data?.endclientAddress.address.city}
+            value={data?.endclientAddress.city}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('country')}
-            value={data?.endclientAddress.address.country?.name}
+            value={data?.endclientAddress.country?.name}
           />
           <TextView
             className="my-3"
             isLoading={isLoading}
             label={t('postalCode')}
-            value={data?.endclientAddress.address.postalcode}
+            value={data?.endclientAddress.postalcode}
           />
         </Row>
       </Page>
