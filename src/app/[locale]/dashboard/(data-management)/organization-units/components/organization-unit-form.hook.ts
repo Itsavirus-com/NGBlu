@@ -19,7 +19,7 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
     primaryAddressId: yup.number(),
     endclientId: yup.number(),
     businesspartnerId: yup.number(),
-    enterpriseRootId: yup.number(),
+    enterpriseRootId: yup.number().required(),
     inputType: yup.string().ensure().required(),
   })
 
