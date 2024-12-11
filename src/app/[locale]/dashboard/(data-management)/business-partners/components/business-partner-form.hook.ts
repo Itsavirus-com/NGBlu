@@ -15,11 +15,11 @@ export default function useBusinessPartnerForm(id?: number) {
   const { data: businessPartner } = useBusinessPartner(id)
 
   const schema = yup.object().shape({
-    name: yup.string().ensure().required(),
+    name: yup.string().ensure().required().max(255),
     businesspartnerTypeId: yup.number().required(),
     companyInfoId: yup.number().required(),
     enterpriseRootId: yup.number().required(),
-    businesspartnersAddressesId: yup.number(),
+    businesspartnersAddressesId: yup.number().required(),
     ouUnit: yup.number(),
   })
 
