@@ -17,8 +17,8 @@ export default function useUserForm(userId?: number) {
   const schema = yup.object().shape({
     displayName: yup.string().ensure().required(),
     email: yup.string().ensure().required(),
-    password: yup.string().ensure().required().min(6),
-    personId: yup.number().required(),
+    password: yup.string().ensure().min(12),
+    personId: yup.number(),
     blocked: yup.boolean(),
   })
 

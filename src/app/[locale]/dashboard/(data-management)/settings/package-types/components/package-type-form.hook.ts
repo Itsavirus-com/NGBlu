@@ -15,7 +15,7 @@ export default function usePackageTypeForm(typeId?: number) {
   const { data: packageType } = usePackageType(typeId)
 
   const schema = yup.object().shape({
-    name: yup.string().ensure().required(),
+    name: yup.string().ensure().required().max(255),
   })
 
   const methods = useForm<InferType<typeof schema>>({

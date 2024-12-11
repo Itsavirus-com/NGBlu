@@ -15,7 +15,7 @@ export default function useCompanyStatusForm(companyStatusId?: number) {
   const { data: companyStatus } = useCompanyStatus(companyStatusId)
 
   const schema = yup.object().shape({
-    status: yup.string().ensure().required(),
+    status: yup.string().ensure().required().max(45),
   })
 
   const methods = useForm<InferType<typeof schema>>({

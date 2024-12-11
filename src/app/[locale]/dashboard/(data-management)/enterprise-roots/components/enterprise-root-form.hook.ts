@@ -15,7 +15,7 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
   const { data: enterpriseRoot } = useEnterpriseRoot(enterpriseRootId)
 
   const schema = yup.object().shape({
-    name: yup.string().ensure().required(),
+    name: yup.string().ensure().required().max(255),
     enterpriseRootAddressesId: yup.number().required(),
   })
 

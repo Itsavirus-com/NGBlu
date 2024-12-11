@@ -15,11 +15,11 @@ export default function useCountryForm(countryId?: number) {
   const { data: country } = useCountry(countryId)
 
   const schema = yup.object().shape({
-    name: yup.string().ensure().required(),
-    currency: yup.string().ensure().required(),
-    locale: yup.string().ensure().required(),
-    decimalSymbol: yup.string().ensure().required(),
-    iso: yup.string().ensure().required(),
+    name: yup.string().ensure().required().max(150),
+    currency: yup.string().ensure().max(45),
+    locale: yup.string().ensure().max(45),
+    decimalSymbol: yup.string().ensure().max(45),
+    iso: yup.string().ensure().max(45),
   })
 
   const methods = useForm<InferType<typeof schema>>({

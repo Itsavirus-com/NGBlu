@@ -15,7 +15,7 @@ export default function useProjectTypeForm(typeId?: number) {
   const { data: projectType } = useProjectType(typeId)
 
   const schema = yup.object().shape({
-    projectType: yup.string().ensure().required(),
+    projectType: yup.string().ensure().required().max(150),
   })
 
   const methods = useForm<InferType<typeof schema>>({

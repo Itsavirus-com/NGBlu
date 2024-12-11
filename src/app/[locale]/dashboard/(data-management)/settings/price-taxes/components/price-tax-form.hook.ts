@@ -15,7 +15,7 @@ export default function usePriceTaxForm(taxId?: number) {
   const { data: priceTax } = usePriceTax(taxId)
 
   const schema = yup.object().shape({
-    name: yup.string().ensure().required(),
+    name: yup.string().ensure().required().max(150),
     taxValue: yup.number().typeError('Tax value must be a number').required(),
     priceUnitId: yup.number().required(),
     countryId: yup.number().required(),

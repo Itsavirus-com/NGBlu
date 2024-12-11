@@ -15,14 +15,14 @@ export default function useCompanyForm(companyId?: number) {
   const { data: company } = useCompany(companyId)
 
   const schema = yup.object().shape({
-    companyname: yup.string().ensure().required(),
+    companyname: yup.string().ensure().required().max(255),
     companyStatusId: yup.number().required(),
     visitAddressId: yup.number().required(),
-    postalAddressId: yup.number().required(),
+    postalAddressId: yup.number(),
     invoiceAddressId: yup.number().required(),
     legalAddressId: yup.number().required(),
     chamberOfCommerceId: yup.string().ensure().required(),
-    vatNumber: yup.string().ensure().required(),
+    vatNumber: yup.string().ensure(),
   })
 
   const methods = useForm<InferType<typeof schema>>({

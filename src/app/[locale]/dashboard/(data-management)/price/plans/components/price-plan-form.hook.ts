@@ -15,7 +15,7 @@ export default function usePricePlanForm(planId?: number) {
   const { data: pricePlan } = usePricePlan(planId)
 
   const schema = yup.object().shape({
-    name: yup.string().ensure().required(),
+    name: yup.string().ensure().required().max(255),
     productId: yup.number(),
     serviceId: yup.number(),
     priceConfigId: yup.number().required(),

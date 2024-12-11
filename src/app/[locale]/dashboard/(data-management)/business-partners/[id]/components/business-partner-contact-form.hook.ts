@@ -18,7 +18,7 @@ export const useBusinessPartnerContactForm = (businessPartnerId: number, contact
     personId: yup.number().required(),
     contactInfoId: yup.number().required(),
     enterpriseRootId: yup.number().required(),
-    responsibilityId: yup.number(),
+    responsibilityId: yup.number().required(),
   })
 
   const methods = useForm<InferType<typeof schema>>({

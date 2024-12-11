@@ -15,13 +15,13 @@ export default function useProjectForm(projectId?: number) {
   const { data: projectData } = useProject(projectId)
 
   const schema = yup.object().shape({
-    projectName: yup.string().ensure().required(),
+    projectName: yup.string().ensure().required().max(255),
     projectTypeId: yup.number().required(),
     projectInfoId: yup.number().required(),
-    addressId: yup.number().required(),
+    addressId: yup.number(),
     endclientId: yup.number(),
     businesspartnersId: yup.number(),
-    enterpriseRootId: yup.number(),
+    enterpriseRootId: yup.number().required(),
     ouUnitId: yup.number(),
     inputType: yup.string().ensure().required(),
   })

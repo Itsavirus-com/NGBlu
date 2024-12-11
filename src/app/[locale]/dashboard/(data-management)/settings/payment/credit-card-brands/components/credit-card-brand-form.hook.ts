@@ -15,7 +15,7 @@ export default function useCreditCardBrandForm(creditCardBrandId?: number) {
   const { data: ccType } = useCreditCardBrand(creditCardBrandId)
 
   const schema = yup.object().shape({
-    brandname: yup.string().ensure().required(),
+    brandname: yup.string().ensure().required().max(150),
   })
 
   const methods = useForm<InferType<typeof schema>>({

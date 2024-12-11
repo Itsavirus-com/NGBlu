@@ -15,7 +15,7 @@ export default function useContactTypeForm(contactTypeId?: number) {
   const { data: contactType } = useContactType(contactTypeId)
 
   const schema = yup.object().shape({
-    contactType: yup.string().ensure().required(),
+    contactType: yup.string().ensure().required().max(150),
   })
 
   const methods = useForm<InferType<typeof schema>>({

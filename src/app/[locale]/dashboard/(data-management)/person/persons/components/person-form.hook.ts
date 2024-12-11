@@ -15,17 +15,17 @@ export default function usePersonForm(personId?: number) {
   const { data: person } = usePerson(personId)
 
   const schema = yup.object().shape({
-    firstname: yup.string().ensure().required(),
-    lastname: yup.string().ensure().required(),
-    pronounce: yup.string().ensure().required(),
-    namePrefix: yup.string().ensure().required(),
-    nameSuffix: yup.string().ensure().required(),
-    genderId: yup.number().required(),
+    firstname: yup.string().ensure().required().max(45),
+    lastname: yup.string().ensure().max(45),
+    pronounce: yup.string().ensure().max(45),
+    namePrefix: yup.string().ensure().max(45),
+    nameSuffix: yup.string().ensure().max(45),
+    genderId: yup.number(),
     personTypeId: yup.number().required(),
-    titles: yup.string().ensure().required(),
-    salutation: yup.string().ensure().required(),
-    department: yup.string().ensure().required(),
-    role: yup.string().ensure().required(),
+    titles: yup.string().ensure().max(45),
+    salutation: yup.string().ensure().max(45),
+    department: yup.string().ensure().max(45),
+    role: yup.string().ensure().max(45),
   })
 
   const methods = useForm<InferType<typeof schema>>({

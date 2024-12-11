@@ -15,7 +15,7 @@ export default function useEndClientForm(id?: number) {
   const { data: endClient } = useEndClient(id)
 
   const schema = yup.object().shape({
-    name: yup.string().ensure().required(),
+    name: yup.string().ensure().required().max(255),
     typeId: yup.number().required(),
     statusId: yup.number().required(),
     locationAddressId: yup.number().required(),

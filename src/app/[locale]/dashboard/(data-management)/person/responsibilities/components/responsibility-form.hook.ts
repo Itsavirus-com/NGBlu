@@ -15,7 +15,7 @@ export default function useResponsibilityForm(responsibilityId?: number) {
   const { data: responsibility } = usePersonResponsibility(responsibilityId)
 
   const schema = yup.object().shape({
-    responsibility: yup.string().ensure().required(),
+    responsibility: yup.string().ensure().required().max(255),
   })
 
   const methods = useForm<InferType<typeof schema>>({
