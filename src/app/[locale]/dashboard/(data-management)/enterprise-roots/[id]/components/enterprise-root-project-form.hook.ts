@@ -17,8 +17,8 @@ export default function useEnterpriseRootProjectForm(projectId?: number) {
   const { data: project } = useEnterpriseRootProject(Number(id), projectId)
 
   const schema = yup.object().shape({
-    projectId: yup.number(),
-    enterpriseRootAddressesId: yup.number(),
+    projectId: yup.number().required(),
+    enterpriseRootAddressesId: yup.number().required(),
     ouUnitId: yup.number(),
   })
 
