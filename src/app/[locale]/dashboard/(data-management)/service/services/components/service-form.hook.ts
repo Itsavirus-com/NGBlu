@@ -15,8 +15,8 @@ export default function useServiceForm(serviceId?: number) {
   const { data: service } = useService(serviceId)
 
   const schema = yup.object().shape({
-    name: yup.string().ensure().required(),
-    description: yup.string().ensure().required(),
+    name: yup.string().ensure().required().max(255),
+    description: yup.string().ensure(),
     serviceTypeId: yup.number().required(),
     inputType: yup.string().ensure(),
   })
