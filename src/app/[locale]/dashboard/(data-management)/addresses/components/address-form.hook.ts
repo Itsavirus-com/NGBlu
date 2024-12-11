@@ -15,19 +15,19 @@ export default function useAddressForm(addressId?: number) {
   const { data: address } = useAddress(addressId)
 
   const schema = yup.object().shape({
-    addressName: yup.string().ensure().required(),
-    streetname: yup.string().ensure().required(),
-    housenumber: yup.string().ensure().required(),
-    housenumberSuffix: yup.string().ensure().required(),
-    appartmentNumber: yup.string().ensure().required(),
-    area: yup.string().ensure().required(),
-    county: yup.string().ensure().required(),
-    city: yup.string().ensure().required(),
-    postalcode: yup.string().ensure().required(),
+    addressName: yup.string().ensure().max(255),
+    streetname: yup.string().ensure().required().max(255),
+    housenumber: yup.string().ensure().max(45),
+    housenumberSuffix: yup.string().ensure().max(45),
+    appartmentNumber: yup.string().ensure().max(45),
+    area: yup.string().ensure().max(255),
+    county: yup.string().ensure().max(255),
+    city: yup.string().ensure().required().max(255),
+    postalcode: yup.string().ensure().required().max(45),
     countryId: yup.number().required(),
-    lat: yup.string().ensure().required().min(-90).max(90),
-    lng: yup.string().ensure().required().min(-180).max(180),
-    googleAddressId: yup.string().ensure().required(),
+    lat: yup.string().ensure().min(-90).max(90),
+    lng: yup.string().ensure().min(-180).max(180),
+    googleAddressId: yup.string().ensure().max(150),
   })
 
   const methods = useForm<InferType<typeof schema>>({
