@@ -17,7 +17,7 @@ export default function useEndClientProjectForm(endCliendId: number, projectId?:
   const schema = yup.object().shape({
     projectId: yup.number().required(),
     endclientAddressesId: yup.number().required(),
-    ouUnitId: yup.number().required(),
+    ouUnitId: yup.number(),
   })
 
   const methods = useForm<InferType<typeof schema>>({
