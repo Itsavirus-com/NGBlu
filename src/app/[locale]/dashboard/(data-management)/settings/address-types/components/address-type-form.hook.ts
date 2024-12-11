@@ -15,7 +15,7 @@ export default function useAddressTypeForm(addressTypeId?: number) {
   const { data: companyStatus } = useAddressType(addressTypeId)
 
   const schema = yup.object().shape({
-    addressType: yup.string().ensure().required(),
+    addressType: yup.string().ensure().required().max(150),
   })
 
   const methods = useForm<InferType<typeof schema>>({

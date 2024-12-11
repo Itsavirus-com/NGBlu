@@ -15,7 +15,7 @@ export default function usePriceIntervalForm(priceIntervalId?: number) {
   const { data: ccType } = usePriceInterval(priceIntervalId)
 
   const schema = yup.object().shape({
-    name: yup.string().ensure().required(),
+    name: yup.string().ensure().required().max(150),
   })
 
   const methods = useForm<InferType<typeof schema>>({

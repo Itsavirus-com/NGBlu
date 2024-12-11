@@ -15,7 +15,7 @@ export default function usePersonTypeForm(personTypeId?: number) {
   const { data: personType } = usePersonType(personTypeId)
 
   const schema = yup.object().shape({
-    type: yup.string().ensure().required(),
+    type: yup.string().ensure().required().max(45),
   })
 
   const methods = useForm<InferType<typeof schema>>({
