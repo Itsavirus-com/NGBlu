@@ -15,8 +15,8 @@ export default function useProductPriceConfigForm(configId?: number) {
   const { data: productPriceConfig } = useProductPriceConfig(configId)
 
   const schema = yup.object().shape({
-    activeFrom: yup.string().ensure().required(),
-    activeTo: yup.string().ensure().required(),
+    activeFrom: yup.string().ensure(),
+    activeTo: yup.string().ensure(),
     productId: yup.number().required(),
     priceplanId: yup.number().required(),
     enterpriseRootId: yup.number().required(),
