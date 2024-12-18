@@ -21,6 +21,7 @@ export default function useBusinessPartnerForm(id?: number) {
     enterpriseRootId: yup.number().required(),
     businesspartnersAddressesId: yup.number().required(),
     ouUnit: yup.number(),
+    id: yup.number(),
   })
 
   const methods = useForm<InferType<typeof schema>>({
@@ -29,12 +30,23 @@ export default function useBusinessPartnerForm(id?: number) {
       ...businessPartner,
       businesspartnerTypeId: businessPartner.businessPartnerType.id,
       companyInfoId: businessPartner.companyInfo.id,
+      id: businessPartner?.parent?.id ?? 0,
     },
   })
 
   const addNewBusinessPartner = async (data: InferType<typeof schema>) => {
+    const payload = {
+      name: data.name,
+      businesspartnerTypeId: data.businesspartnerTypeId,
+      businesspartnersAddressesId: data.businesspartnersAddressesId,
+      companyInfoId: data.companyInfoId,
+      ouUnit: data.ouUnit,
+      enterpriseRootId: data.enterpriseRootId,
+      parentId: data.id,
+    }
+
     try {
-      const res = await businessPartnerApi.new(data)
+      const res = await businessPartnerApi.new(payload)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner created successfully' })
@@ -52,8 +64,18 @@ export default function useBusinessPartnerForm(id?: number) {
   const updateBusinessPartner = async (data: InferType<typeof schema>) => {
     if (!id) return
 
+    const payload = {
+      name: data.name,
+      businesspartnerTypeId: data.businesspartnerTypeId,
+      businesspartnersAddressesId: data.businesspartnersAddressesId,
+      companyInfoId: data.companyInfoId,
+      ouUnit: data.ouUnit,
+      enterpriseRootId: data.enterpriseRootId,
+      parentId: data.id,
+    }
+
     try {
-      const res = await businessPartnerApi.update(id, data)
+      const res = await businessPartnerApi.update(id, payload)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner updated successfully' })

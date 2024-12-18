@@ -10,6 +10,7 @@ import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Address } from '@/services/swr/models/address.type'
 import { BusinessPartnerType } from '@/services/swr/models/business-partner-type.type'
+import { BusinessPartner } from '@/services/swr/models/business-partner.type'
 import { Company } from '@/services/swr/models/company.type'
 import { EnterpriseRoot } from '@/services/swr/models/enterprise-root-type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
@@ -75,7 +76,14 @@ export default function NewBusinessPartner() {
                 apiPath="organisational-units"
                 option={{ label: row => row.name, value: row => row.id }}
               />
-
+              <ControlledSelect<BusinessPartner>
+                label={t('parent')}
+                name="id"
+                containerClass="mb-3"
+                className="form-control-solid"
+                apiPath="business-partners"
+                option={{ label: row => row.name, value: row => row.id }}
+              />
               <FormButtons />
             </CardBody>
           </Card>
