@@ -1,3 +1,30 @@
+/**
+ * useEnterpriseRootForm Hook
+ *
+ * A custom React hook to manage the form logic for creating or updating an enterprise root.
+ * This hook integrates with `react-hook-form` for form handling and `yup` for schema validation.
+ *
+ * Features:
+ * - Schema-based validation using `yup`
+ * - Handles form submission for both creating and updating enterprise roots
+ * - Fetches initial data for updates and populates the form fields
+ * - Provides toast notifications for success and error scenarios
+ * - Navigates back to the previous page upon successful operation
+ *
+ * Dependencies:
+ * - `@hookform/resolvers/yup`: For integrating yup schema with react-hook-form
+ * - `react-hook-form`: For managing form state
+ * - `yup`: For schema validation
+ * - `@/hooks/use-toast.hook`: For showing toast notifications
+ * - `@/navigation`: For navigating between routes
+ * - `@/services/api/enterprise-root-api`: API service for managing enterprise roots
+ * - `@/services/swr/use-enterprise-root`: SWR hook for fetching enterprise root data
+ * - `@/utils/typescript`: Utility for inferring TypeScript types
+ *
+ * @param {number} [enterpriseRootId] - Optional ID of the enterprise root for editing
+ * @returns {object} - Form methods and submit handler
+ */
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
