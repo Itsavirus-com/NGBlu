@@ -78,7 +78,7 @@ export default function NewBusinessPartner() {
               />
               <ControlledSelect<BusinessPartner>
                 label={t('parent')}
-                name="id"
+                name="parentId"
                 containerClass="mb-3"
                 className="form-control-solid"
                 apiPath="business-partners"

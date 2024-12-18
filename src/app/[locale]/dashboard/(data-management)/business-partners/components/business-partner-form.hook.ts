@@ -21,7 +21,7 @@ export default function useBusinessPartnerForm(id?: number) {
     enterpriseRootId: yup.number().required(),
     businesspartnersAddressesId: yup.number().required(),
     ouUnit: yup.number(),
-    id: yup.number(),
+    parentId: yup.number(),
   })
 
   const methods = useForm<InferType<typeof schema>>({
@@ -30,7 +30,7 @@ export default function useBusinessPartnerForm(id?: number) {
       ...businessPartner,
       businesspartnerTypeId: businessPartner.businessPartnerType.id,
       companyInfoId: businessPartner.companyInfo.id,
-      id: businessPartner?.parent?.id ?? 0,
+      parentId: businessPartner?.parent?.id ?? 0,
     },
   })
 
@@ -42,7 +42,7 @@ export default function useBusinessPartnerForm(id?: number) {
       companyInfoId: data.companyInfoId,
       ouUnit: data.ouUnit,
       enterpriseRootId: data.enterpriseRootId,
-      parentId: data.id,
+      parentId: data.parentId,
     }
 
     try {
@@ -71,7 +71,7 @@ export default function useBusinessPartnerForm(id?: number) {
       companyInfoId: data.companyInfoId,
       ouUnit: data.ouUnit,
       enterpriseRootId: data.enterpriseRootId,
-      parentId: data.id,
+      parentId: data.parentId,
     }
 
     try {
