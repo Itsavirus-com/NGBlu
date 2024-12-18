@@ -34,7 +34,7 @@ export default function NewContactType() {
 
               <ControlledSelect<ContactType>
                 label={t('parent')}
-                name="id"
+                name="parentId"
                 containerClass="mb-3"
                 className="form-control-solid"
                 apiPath="contacts/types"

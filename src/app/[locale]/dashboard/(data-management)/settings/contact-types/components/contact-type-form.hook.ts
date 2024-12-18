@@ -36,21 +36,21 @@ export default function useContactTypeForm(contactTypeId?: number) {
 
   const schema = yup.object().shape({
     contactType: yup.string().ensure().required().max(150),
-    id: yup.number(),
+    parentId: yup.number(),
   })
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: {
       contactType: contactType?.contactType ?? '',
-      id: contactType?.parent.id ?? 0,
+      parentId: contactType?.parent.id ?? 0,
     },
   })
 
   const addNewContactType = async (data: InferType<typeof schema>) => {
     const payload = {
       contactType: data.contactType,
-      parentId: data.id,
+      parentId: data.parentId,
     }
 
     try {
@@ -70,7 +70,7 @@ export default function useContactTypeForm(contactTypeId?: number) {
 
     const payload = {
       contactType: data.contactType,
-      parentId: data.id,
+      parentId: data.parentId,
     }
 
     try {
