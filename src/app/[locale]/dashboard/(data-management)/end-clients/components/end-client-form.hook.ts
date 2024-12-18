@@ -1,3 +1,25 @@
+/**
+ * Custom hook for managing the End Client form using react-hook-form and Yup schema validation.
+ *
+ * @param {number} [id] - Optional ID of the end client to fetch and update.
+ * @returns {object} - Returns the `methods` from `react-hook-form` and `onSubmit` handler for the form.
+ *
+ * @dependencies
+ * - `yupResolver` from `@hookform/resolvers/yup` for schema validation.
+ * - `useForm` from `react-hook-form` for form state management.
+ * - `useToast` for showing success and error messages.
+ * - `useRouter` for navigation.
+ * - `endClientApi` for API requests to create or update end clients.
+ * - `useEndClient` for SWR data fetching of the end client.
+ *
+ * @example
+ * const { methods, onSubmit } = useEndClientForm(id);
+ * <form onSubmit={methods.handleSubmit(onSubmit)}>
+ *   <input {...methods.register('name')} />
+ *   <button type="submit">Submit</button>
+ * </form>
+ */
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
