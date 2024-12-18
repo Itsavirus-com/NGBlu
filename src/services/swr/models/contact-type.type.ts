@@ -5,3 +5,12 @@ export type ContactType = {
   createdAt: string
   updatedAt: string
 }
+
+export type ContactTypeResponse = {
+  id: number
+  parentId: number
+  parent: ContactType
+  contactType: string
+  createdAt: string
+  updatedAt: string
+}
