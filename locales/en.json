@@ -471,7 +471,8 @@
       "newContactType": "New Contact Type",
       "updateContactType": "Update Contact Type",
       "id": "ID",
-      "type": "Type"
+      "type": "Type",
+      "parent": "Parent"
     },
     "projects": {
       "title": "Projects",
@@ -525,6 +526,10 @@
       "accountNumber": "Account Number",
       "referenceId": "Reference ID",
       "afasId": "AFAS ID",
+      "contactPerson": "Contact Person",
+      "person": "Person",
+      "contact": "Contact",
+      "company": "Company",
       "address": "Address",
       "addressName": "Address Name",
       "streetName": "Street Name",
@@ -750,7 +755,8 @@
         "postalCode": "Postal Code",
         "latitude": "Latitude",
         "longitude": "Longitude",
-        "googleAddressId": "Google Address ID"
+        "googleAddressId": "Google Address ID",
+        "parent": "Parent"
       },
       "users": {
         "title": "Enterprise Root Users",
@@ -872,7 +878,8 @@
       "postalCode": "Postal Code",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "googleAddressId": "Google Address ID"
+      "googleAddressId": "Google Address ID",
+      "origin": "Origin"
     },
     "companyStatuses": {
       "title": "Company Statuses",
@@ -998,6 +1005,7 @@
       "customerCount": "Customer Count",
       "projectCount": "Project Count",
       "userCount": "User Count",
+      "parent": "Parent",
       "addresses": {
         "title": "Business Partners Addresses",
         "newAddress": "New Address",
