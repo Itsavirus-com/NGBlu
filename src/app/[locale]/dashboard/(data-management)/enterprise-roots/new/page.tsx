@@ -9,6 +9,7 @@ import { ControlledInput } from '@/components/forms/input'
 import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Address } from '@/services/swr/models/address.type'
+import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
 import useEnterpriseRootForm from '../components/enterprise-root-form.hook'
 
@@ -39,7 +40,14 @@ export default function NewEnterpriseRoot() {
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
               />
-
+              <ControlledSelect<OrganizationUnit>
+                label={t('organisationUnit')}
+                name="ouUnitId"
+                containerClass="mb-3"
+                className="form-control-solid"
+                apiPath={'organisational-units'}
+                option={{ label: row => row.name, value: row => row.id }}
+              />
               <FormButtons />
             </CardBody>
           </Card>

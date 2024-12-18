@@ -17,6 +17,7 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
   const schema = yup.object().shape({
     name: yup.string().ensure().required().max(255),
     enterpriseRootAddressesId: yup.number().required(),
+    ouUnitId: yup.number(),
   })
 
   const methods = useForm<InferType<typeof schema>>({
