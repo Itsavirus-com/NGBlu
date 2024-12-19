@@ -53,6 +53,9 @@ export default function UpdateEndClientProject({
                 className="form-control-solid"
                 apiPath={'organisational-units'}
                 option={{ label: row => row.name, value: row => row.id }}
+                filter={{
+                  endclientId: params.id,
+                }}
               />
 
               <FormButtons />
