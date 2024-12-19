@@ -1,7 +1,6 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { useState } from 'react'
 import { Card, CardBody } from 'react-bootstrap'
 
 import { ControlledDatetime } from '@/components/forms/datetime'
@@ -17,9 +16,15 @@ import useServicePriceConfigForm from '../../components/service-price-config-for
 
 export default function UpdateServicePriceConfig({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.services.priceConfig')
-  const [fromValue, setFromValue] = useState<Date | null>(null)
 
-  const { methods, onSubmit } = useServicePriceConfigForm(Number(params.id))
+  const {
+    methods,
+    formDateValue,
+    enterpriseRootId,
+    businessPartnerId,
+    setFormDateValue,
+    onSubmit,
+  } = useServicePriceConfigForm(Number(params.id))
 
   return (
     <>
@@ -34,16 +39,16 @@ export default function UpdateServicePriceConfig({ params }: { params: { id: str
                 name="activeFrom"
                 containerClass="mb-3"
                 className="form-control-solid"
-                onChange={([date]: any) => setFromValue(date)}
+                onChange={([date]: any) => setFormDateValue(date)}
               />
               <ControlledDatetime
                 label={t('activeTo')}
                 name="activeTo"
                 containerClass="mb-3"
                 className="form-control-solid"
-                disabled={fromValue === null}
+                disabled={formDateValue === null}
                 options={{
-                  minDate: fromValue,
+                  minDate: formDateValue,
                 }}
               />
               <ControlledSelect<Service>
@@ -85,6 +90,11 @@ export default function UpdateServicePriceConfig({ params }: { params: { id: str
                 className="form-control-solid"
                 apiPath="organisational-units"
                 option={{ label: row => row.name, value: row => row.id }}
+                filter={{
+                  enterpriseRootId: enterpriseRootId,
+                  businesspartnerId: businessPartnerId,
+                }}
+                disabled={!enterpriseRootId}
               />
 
               <FormButtons />
