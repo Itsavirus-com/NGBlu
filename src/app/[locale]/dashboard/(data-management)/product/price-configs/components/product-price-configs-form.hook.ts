@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
@@ -11,6 +12,7 @@ import { InferType } from '@/utils/typescript'
 export default function useProductPriceConfigForm(configId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const [formValue, setFormValue] = useState<Date | null>(null)
 
   const { data: productPriceConfig } = useProductPriceConfig(configId)
 
@@ -26,8 +28,19 @@ export default function useProductPriceConfigForm(configId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: productPriceConfig,
+    values: {
+      activeFrom: productPriceConfig?.activeFrom ?? '',
+      activeTo: productPriceConfig?.activeTo ?? '',
+      productId: productPriceConfig?.productId ?? 0,
+      priceplanId: productPriceConfig?.enterpriseRootId ?? 0,
+      enterpriseRootId: productPriceConfig?.enterpriseRootId ?? 0,
+      businesspartnerId: productPriceConfig?.businesspartnerId ?? 0,
+    },
   })
+
+  // Watch values for enterpriseRootId and businessPartnerId
+  const enterpriseRootId = methods.watch('enterpriseRootId')
+  const businessPartnerId = methods.watch('businesspartnerId')
 
   const addNewConfig = async (data: InferType<typeof schema>) => {
     try {
@@ -65,5 +78,5 @@ export default function useProductPriceConfigForm(configId?: number) {
     return addNewConfig(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, formValue, enterpriseRootId, businessPartnerId, onSubmit, setFormValue }
 }
