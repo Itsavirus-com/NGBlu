@@ -12,7 +12,7 @@ import { InferType } from '@/utils/typescript'
 export default function useProductPriceConfigForm(configId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
-  const [formValue, setFormValue] = useState<Date | null>(null)
+  const [formDateValue, setFormDateValue] = useState<Date | null>(null)
 
   const { data: productPriceConfig } = useProductPriceConfig(configId)
 
@@ -28,13 +28,13 @@ export default function useProductPriceConfigForm(configId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: {
+    values: productPriceConfig && {
       activeFrom: productPriceConfig?.activeFrom ?? '',
       activeTo: productPriceConfig?.activeTo ?? '',
-      productId: productPriceConfig?.productId ?? 0,
-      priceplanId: productPriceConfig?.enterpriseRootId ?? 0,
-      enterpriseRootId: productPriceConfig?.enterpriseRootId ?? 0,
-      businesspartnerId: productPriceConfig?.businesspartnerId ?? 0,
+      productId: productPriceConfig?.productId!,
+      priceplanId: productPriceConfig?.enterpriseRootId!,
+      enterpriseRootId: productPriceConfig?.enterpriseRootId!,
+      businesspartnerId: productPriceConfig?.businesspartnerId,
     },
   })
 
@@ -78,5 +78,5 @@ export default function useProductPriceConfigForm(configId?: number) {
     return addNewConfig(data)
   }
 
-  return { methods, formValue, enterpriseRootId, businessPartnerId, onSubmit, setFormValue }
+  return { methods, formDateValue, businessPartnerId, enterpriseRootId, setFormDateValue, onSubmit }
 }
