@@ -43,7 +43,7 @@ export default function useContactTypeForm(contactTypeId?: number) {
     resolver: yupResolver(schema),
     values: {
       contactType: contactType?.contactType ?? '',
-      parentId: contactType?.parent.id ?? 0,
+      parentId: contactType?.parent.id,
     },
   })
 

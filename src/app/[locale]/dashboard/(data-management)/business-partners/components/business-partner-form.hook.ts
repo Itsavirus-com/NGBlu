@@ -81,7 +81,7 @@ export default function useBusinessPartnerForm(id?: number) {
       ...businessPartner,
       businesspartnerTypeId: businessPartner.businessPartnerType.id,
       companyInfoId: businessPartner.companyInfo.id,
-      parentId: businessPartner?.parent?.id ?? 0,
+      parentId: businessPartner?.parent?.id,
     },
   })
 
