@@ -49,6 +49,7 @@ export default function NewEnterpriseRootProject({ params }: { params: { id: num
                 className="form-control-solid"
                 apiPath={'organisational-units'}
                 option={{ label: row => row.name, value: row => row.id }}
+                filter={{ enterpriseRootId: params.id }}
               />
 
               <FormButtons />

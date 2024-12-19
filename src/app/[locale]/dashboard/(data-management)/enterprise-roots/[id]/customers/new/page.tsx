@@ -13,7 +13,7 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
 import useEnterpriseRootCustomerForm from '../../components/enterprise-root-customer-form.hook'
 
-export default function NewEnterpriseRootCustomer() {
+export default function NewEnterpriseRootCustomer({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.customers')
 
   const { methods, onSubmit } = useEnterpriseRootCustomerForm()
@@ -49,6 +49,7 @@ export default function NewEnterpriseRootCustomer() {
                 className="form-control-solid"
                 apiPath={'organisational-units'}
                 option={{ label: row => row.name, value: row => row.id }}
+                filter={{ enterpriseRootId: params.id }}
               />
 
               <FormButtons />

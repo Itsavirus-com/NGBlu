@@ -53,6 +53,7 @@ export default function UpdateEnterpriseRootProject({
                 className="form-control-solid"
                 apiPath={'organisational-units'}
                 option={{ label: row => row.name, value: row => row.id }}
+                filter={{ enterpriseRootId: params.id }}
               />
 
               <FormButtons />

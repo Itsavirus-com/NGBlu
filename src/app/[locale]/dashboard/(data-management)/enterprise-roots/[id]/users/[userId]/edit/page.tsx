@@ -13,7 +13,11 @@ import { User } from '@/services/swr/models/user.type'
 
 import useEnterpriseRootUserForm from '../../../components/enterprise-root-user-form.hook'
 
-export default function UpdateEnterpriseRootUser({ params }: { params: { userId: number } }) {
+export default function UpdateEnterpriseRootUser({
+  params,
+}: {
+  params: { id: string; userId: number }
+}) {
   const t = useTranslations('dataManagement.enterpriseRoots.users')
 
   const { methods, onSubmit } = useEnterpriseRootUserForm(params.userId)
@@ -49,6 +53,7 @@ export default function UpdateEnterpriseRootUser({ params }: { params: { userId:
                 className="form-control-solid"
                 apiPath={'organisational-units'}
                 option={{ label: row => row.name, value: row => row.id }}
+                filter={{ enterpriseRootId: params.id }}
               />
 
               <FormButtons />

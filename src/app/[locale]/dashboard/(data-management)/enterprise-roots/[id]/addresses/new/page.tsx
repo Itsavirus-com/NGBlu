@@ -13,7 +13,7 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
 import useEnterpriseRootAddressForm from '../../components/enterprise-root-address-form.hook'
 
-export default function NewEnterpriseRoot() {
+export default function NewEnterpriseRoot({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.addresses')
 
   const { methods, onSubmit } = useEnterpriseRootAddressForm()
@@ -49,6 +49,7 @@ export default function NewEnterpriseRoot() {
                 className="form-control-solid"
                 apiPath="organisational-units"
                 option={{ label: row => row.name, value: row => row.id }}
+                filter={{ enterpriseRootId: params.id }}
               />
 
               <FormButtons />

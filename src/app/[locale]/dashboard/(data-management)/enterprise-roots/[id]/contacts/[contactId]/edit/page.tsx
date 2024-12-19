@@ -14,7 +14,11 @@ import { Person } from '@/services/swr/models/person.type'
 
 import useEnterpriseRootContactForm from '../../../components/enterprise-root-contact-form.hook'
 
-export default function UpdateEnterpriseRootContact({ params }: { params: { contactId: string } }) {
+export default function UpdateEnterpriseRootContact({
+  params,
+}: {
+  params: { contactId: string; id: string }
+}) {
   const t = useTranslations('dataManagement.enterpriseRoots.contacts')
 
   const { methods, onSubmit } = useEnterpriseRootContactForm(Number(params.contactId))
@@ -58,6 +62,7 @@ export default function UpdateEnterpriseRootContact({ params }: { params: { cont
                 className="form-control-solid"
                 apiPath={'organisational-units'}
                 option={{ label: row => row.name, value: row => row.id }}
+                filter={{ enterpriseRootId: params.id }}
               />
 
               <FormButtons />
