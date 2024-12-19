@@ -25,6 +25,7 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
     values: user && {
       ...user,
       userId: user.user.id,
+      personId: user.person.id,
     },
   })
 

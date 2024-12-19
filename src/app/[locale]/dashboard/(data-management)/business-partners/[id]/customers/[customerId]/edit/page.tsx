@@ -65,6 +65,9 @@ export default function UpdateBusinessPartnerCustomer({
                 className="form-control-solid"
                 apiPath={'organisational-units'}
                 option={{ label: row => row.name, value: row => row.id }}
+                filter={{
+                  businesspartnerId: params.id,
+                }}
               />
 
               <FormButtons />
