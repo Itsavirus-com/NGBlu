@@ -9,8 +9,10 @@ import { ControlledInput } from '@/components/forms/input'
 import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Address } from '@/services/swr/models/address.type'
+import { Company } from '@/services/swr/models/company.type'
 import { EndClientStatus } from '@/services/swr/models/end-client-status.type'
 import { EndClientType } from '@/services/swr/models/end-client-type.type'
+import { Person } from '@/services/swr/models/person.type'
 
 import useEndClientForm from '../components/end-client-form.hook'
 
@@ -30,6 +32,24 @@ export default function NewEndClient() {
               <ControlledInput
                 label={t('name')}
                 name="name"
+                containerClass="mb-3"
+                className="form-control-solid"
+              />
+              <ControlledInput
+                label={t('accountNumber')}
+                name="accountNumber"
+                containerClass="mb-3"
+                className="form-control-solid"
+              />
+              <ControlledInput
+                label={t('referenceId')}
+                name="referenceId"
+                containerClass="mb-3"
+                className="form-control-solid"
+              />
+              <ControlledInput
+                label={t('afasId')}
+                name="afasId"
                 containerClass="mb-3"
                 className="form-control-solid"
               />
@@ -56,6 +76,42 @@ export default function NewEndClient() {
                 className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
+              />
+
+              <ControlledSelect<EndClientType>
+                label={t('type')}
+                name="typeId"
+                containerClass="mb-3"
+                className="form-control-solid"
+                apiPath="end-clients/types"
+                option={{ label: row => row.type, value: row => row.id }}
+              />
+
+              <ControlledSelect<Person>
+                label={t('person')}
+                name="personId"
+                containerClass="mb-3"
+                className="form-control-solid"
+                apiPath="persons"
+                option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
+              />
+
+              <ControlledSelect<Person>
+                label={t('contactPerson')}
+                name="contactPersonId"
+                containerClass="mb-3"
+                className="form-control-solid"
+                apiPath="persons"
+                option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
+              />
+
+              <ControlledSelect<Company>
+                label={t('company')}
+                name="companyInfoId"
+                containerClass="mb-3"
+                className="form-control-solid"
+                apiPath="companies/infos"
+                option={{ label: row => row.companyname, value: row => row.id }}
               />
 
               <FormButtons />
