@@ -6,7 +6,9 @@ import { Card, CardBody } from 'react-bootstrap'
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
+import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
+import { ContactType } from '@/services/swr/models/contact-type.type'
 
 import useContactTypeForm from '../../components/contact-type-form.hook'
 
@@ -30,6 +32,14 @@ export default function UpdateContactType({ params }: { params: { id: number } }
                 className="form-control-solid"
               />
 
+              <ControlledSelect<ContactType>
+                label={t('parent')}
+                name="parentId"
+                containerClass="mb-3"
+                className="form-control-solid"
+                apiPath="contacts/types"
+                option={{ label: row => row.contactType, value: row => row.id }}
+              />
               <FormButtons />
             </CardBody>
           </Card>

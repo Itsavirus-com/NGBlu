@@ -46,8 +46,6 @@ export const camelizeKeys: KeyConverter = data => {
     Object.entries(data).forEach(([key, value]) => {
       const camelizedKey = camelCase(key)
 
-      if (!value) return
-
       if (Array.isArray(value)) {
         result[camelizedKey] = value.map((item: any) => camelizeKeys(item))
         return

@@ -9,11 +9,12 @@ import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Address } from '@/services/swr/models/address.type'
 import { EndClient } from '@/services/swr/models/end-client.type'
+import { EnterpriseRootCustomer } from '@/services/swr/models/enterprise-root-customer.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
 import useEnterpriseRootCustomerForm from '../../components/enterprise-root-customer-form.hook'
 
-export default function NewEnterpriseRootCustomer({ params }: { params: { id: string } }) {
+export default function NewEnterpriseRootCustomer({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.customers')
 
   const { methods, onSubmit } = useEnterpriseRootCustomerForm()
@@ -51,7 +52,17 @@ export default function NewEnterpriseRootCustomer({ params }: { params: { id: st
                 option={{ label: row => row.name, value: row => row.id }}
                 filter={{ enterpriseRootId: params.id }}
               />
-
+              <ControlledSelect<EnterpriseRootCustomer>
+                label={t('parent')}
+                name="parentId"
+                containerClass="mb-3"
+                className="form-control-solid"
+                apiPath={`enterprise-roots/${params.id}/customers`}
+                option={{
+                  label: row => `${row.endclientId} | ${row.endclient.name}`,
+                  value: row => row.id as number,
+                }}
+              />
               <FormButtons />
             </CardBody>
           </Card>
