@@ -58,6 +58,9 @@ export default function NewBusinessPartnerCustomer({ params }: { params: { id: s
                 className="form-control-solid"
                 apiPath={'organisational-units'}
                 option={{ label: row => row.name, value: row => row.id }}
+                filter={{
+                  businesspartnerId: params.id,
+                }}
               />
 
               <FormButtons />

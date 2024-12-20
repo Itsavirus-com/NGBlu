@@ -17,9 +17,14 @@ import useProductPriceConfigForm from '../components/product-price-configs-form.
 
 export default function NewProductPriceConfig() {
   const t = useTranslations('dataManagement.products.priceConfig')
-  const [fromValue, setFromValue] = useState<Date | null>(null)
-
-  const { methods, onSubmit } = useProductPriceConfigForm()
+  const {
+    methods,
+    formDateValue,
+    businessPartnerId,
+    enterpriseRootId,
+    setFormDateValue,
+    onSubmit,
+  } = useProductPriceConfigForm()
 
   return (
     <>
@@ -34,16 +39,16 @@ export default function NewProductPriceConfig() {
                 name="activeFrom"
                 containerClass="mb-3"
                 className="form-control-solid"
-                onChange={([date]: any) => setFromValue(date)}
+                onChange={([date]: any) => setFormDateValue(date)}
               />
               <ControlledDatetime
                 label={t('activeTo')}
                 name="activeTo"
                 containerClass="mb-3"
                 className="form-control-solid"
-                disabled={fromValue === null}
+                disabled={formDateValue === null}
                 options={{
-                  minDate: fromValue,
+                  minDate: formDateValue,
                 }}
               />
               <ControlledSelect<Product>
@@ -85,6 +90,11 @@ export default function NewProductPriceConfig() {
                 className="form-control-solid"
                 apiPath="organisational-units"
                 option={{ label: row => row.name, value: row => row.id }}
+                filter={{
+                  enterpriseRootId: enterpriseRootId,
+                  businesspartnerId: businessPartnerId,
+                }}
+                disabled={!enterpriseRootId}
               />
 
               <FormButtons />
