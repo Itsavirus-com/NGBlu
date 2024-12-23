@@ -3,6 +3,8 @@
 import { useTranslations } from 'next-intl'
 import { Row } from 'react-bootstrap'
 
+import { Breadcrumbs } from '@/components/breadcrumbs/breadcrumbs'
+import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
 import { Page } from '@/components/page/page'
 import { PageTitle } from '@/components/page-title'
 import { TextView } from '@/components/view/text-view/text-view'
@@ -19,6 +21,10 @@ export default function BusinessPartnerProjectDetails({
 
   return (
     <>
+      <div className="app-container">
+        <Breadcrumbs items={getBreadcrumbItems(data)} />
+      </div>
+
       <PageTitle title={t('title')} />
 
       <Page title={t('project')} className="mt-4">
