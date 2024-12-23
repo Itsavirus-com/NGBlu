@@ -11,6 +11,7 @@ import { TextView } from '@/components/view/text-view/text-view'
 import { Contact } from '@/services/swr/models/contact.type'
 import { PersonAddress } from '@/services/swr/models/person-address.type'
 import { usePerson } from '@/services/swr/use-person'
+import { safeRender } from '@/utils/safeRender'
 
 import { AddressFilter } from './components/address-filter'
 import { ContactFilter } from './components/contact-filter'
@@ -24,17 +25,17 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
     {
       id: 'id',
       title: t('contacts.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'contact',
       title: t('contacts.contact'),
-      render: row => row.contactInfo,
+      render: row => safeRender(row, 'contactInfo'),
     },
     {
       id: 'contactType',
       title: t('contacts.contactType'),
-      render: row => row.contactType?.contactType,
+      render: row => safeRender(row, 'contactType.contactType'),
     },
   ]
 
@@ -42,17 +43,17 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
     {
       id: 'id',
       title: t('addresses.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'address',
       title: t('addresses.address'),
-      render: row => `${row.addressId} | ${row.address.addressName}`,
+      render: row => safeRender(row, 'addressId') + ' | ' + safeRender(row, 'address.addressName'),
     },
     {
       id: 'isPrimaryAddress',
       title: t('addresses.primaryAddress'),
-      render: row => (row.isPrimaryAddress ? t('addresses.yes') : t('addresses.no')),
+      render: row => (safeRender(row, 'isPrimaryAddress') ? t('addresses.yes') : t('addresses.no')),
     },
   ]
 

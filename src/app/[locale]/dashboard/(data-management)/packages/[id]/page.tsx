@@ -10,6 +10,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { TextView } from '@/components/view/text-view/text-view'
 import { PackageProduct, PackageService } from '@/services/swr/models/package.type'
 import { usePackage } from '@/services/swr/use-package'
+import { safeRender } from '@/utils/safeRender'
 
 import { PackageProductFilter } from './components/package-product-filter'
 import { PackageServiceFilter } from './components/package-service-filter'
@@ -23,22 +24,22 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'package',
       title: t('package'),
-      render: row => row.package.name,
+      render: row => safeRender(row, 'package.name'),
     },
     {
       id: 'service',
       title: t('service'),
-      render: row => row.service.name,
+      render: row => safeRender(row, 'service.name'),
     },
     {
       id: 'servicePricingConfig',
       title: t('servicePricingConfig'),
-      render: row => row.servicePricingConfig.pricePlan.name,
+      render: row => safeRender(row, 'servicePricingConfig.pricePlan.name'),
     },
   ]
 
@@ -46,22 +47,22 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'package',
       title: t('package'),
-      render: row => row.package.name,
+      render: row => safeRender(row, 'package.name'),
     },
     {
       id: 'product',
       title: t('product'),
-      render: row => row.product.name,
+      render: row => safeRender(row, 'product.name'),
     },
     {
       id: 'productPricingConfig',
       title: t('productPricingConfig'),
-      render: row => row.productPricingConfig.pricePlan.name,
+      render: row => safeRender(row, 'productPricingConfig.pricePlan.name'),
     },
   ]
 

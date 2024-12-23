@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { Gender } from '@/services/swr/models/gender.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { GenderFilter } from './components/gender-filter'
 
@@ -14,12 +15,12 @@ export default function Genders() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'gender',
       title: t('gender'),
-      render: row => row.gender,
+      render: row => safeRender(row, 'gender'),
     },
   ]
 

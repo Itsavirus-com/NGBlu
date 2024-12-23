@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { Payment } from '@/services/swr/models/payment.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { PaymentFilter } from './components/payment-filter'
 
@@ -14,22 +15,22 @@ export default function Payments() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'personName',
       title: t('personName'),
-      render: row => (row.person ? `${row.person.firstname} ${row.person?.lastname}` : '-'),
+      render: row => safeRender(row, 'person.firstname') + ' ' + safeRender(row, 'person.lastname'),
     },
     {
       id: 'bankName',
       title: t('bankName'),
-      render: row => row.bankname,
+      render: row => safeRender(row, 'bankname'),
     },
     {
       id: 'paymentType',
       title: t('paymentType'),
-      render: row => row.paymentType?.paymentType,
+      render: row => safeRender(row, 'paymentType.paymentType'),
     },
   ]
 

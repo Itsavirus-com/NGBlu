@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { PriceConfig } from '@/services/swr/models/price-config.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { PriceConfigFilter } from './components/price-config-filter'
 
@@ -15,33 +16,38 @@ export default function PriceConfigs() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'price',
       title: t('price'),
-      render: row => `${row.priceCurrency.currency} ${row.priceValue}`,
+      render: row =>
+        safeRender(row, 'priceCurrency.currency') + ' ' + safeRender(row, 'priceValue'),
     },
     {
       id: 'unit',
       title: t('unit'),
-      render: row => row.priceUnit.unit,
+      render: row => safeRender(row, 'priceUnit.unit'),
     },
     {
       id: 'interval',
       title: t('interval'),
-      render: row => row.priceInterval.name,
+      render: row => safeRender(row, 'priceInterval.name'),
     },
     {
       id: 'type',
       title: t('type'),
-      render: row => row.priceType?.type,
+      render: row => safeRender(row, 'priceType.type'),
     },
     {
       id: 'tax',
       title: t('tax'),
       render: row =>
-        `${row.priceTax.country.currency} ${row.priceTax.taxValue} / ${row.priceTax.priceUnit.unit}`,
+        safeRender(row, 'priceTax.country.currency') +
+        ' ' +
+        safeRender(row, 'priceTax.taxValue') +
+        ' / ' +
+        safeRender(row, 'priceTax.priceUnit.unit'),
     },
   ]
 

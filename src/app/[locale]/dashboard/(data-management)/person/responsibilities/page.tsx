@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { PersonResponsibility } from '@/services/swr/models/person-responsibility.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { PersonResponsibilityFilter } from './components/responsibility-filter'
 
@@ -14,12 +15,12 @@ export default function PersonResponsibilities() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'responsibility',
       title: t('responsibility'),
-      render: row => row.responsibility,
+      render: row => safeRender(row, 'responsibility'),
     },
   ]
 

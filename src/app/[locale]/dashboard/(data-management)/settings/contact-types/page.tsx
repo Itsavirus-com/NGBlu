@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { ContactType } from '@/services/swr/models/contact-type.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { ContactTypeFilter } from './components/contact-type-filter'
 
@@ -15,12 +16,12 @@ export default function ContactTypes() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'type',
       title: t('type'),
-      render: row => row.contactType,
+      render: row => safeRender(row, 'type'),
     },
   ]
 

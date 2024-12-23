@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { Service } from '@/services/swr/models/service.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { ServiceFilter } from './components/service-filter'
 
@@ -14,31 +15,31 @@ export default function Services() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'name',
       title: t('name'),
-      render: row => row.name,
+      render: row => safeRender(row, 'name'),
     },
     {
       id: 'description',
       title: t('description'),
       headClassName: 'text-start',
-      render: row => row.description,
+      render: row => safeRender(row, 'description'),
     },
     {
       id: 'type',
       title: t('type'),
-      render: row => row.serviceType.serviceType,
+      render: row => safeRender(row, 'serviceType.serviceType'),
     },
     {
       id: 'category',
       title: t('category'),
       render: row =>
-        row.consumerOnlyService
+        row?.consumerOnlyService
           ? t('consumerServiceOnly')
-          : row.corporateOnlyService
+          : row?.corporateOnlyService
             ? t('corporateServiceOnly')
             : '-',
     },

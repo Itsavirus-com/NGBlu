@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { EndClientStatus } from '@/services/swr/models/end-client-status.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { EndClientStatusFilter } from './components/end-client-status-filter'
 
@@ -14,12 +15,12 @@ export default function EndClientStatuses() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'status',
       title: t('status'),
-      render: row => row.status,
+      render: row => safeRender(row, 'status'),
     },
   ]
 

@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { BusinessPartnerType } from '@/services/swr/models/business-partner-type.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { BusinessPartnerTypeFilter } from './components/business-partner-type-filter'
 
@@ -14,12 +15,12 @@ export default function BusinessPartnerTypes() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'type',
       title: t('type'),
-      render: row => row.name,
+      render: row => safeRender(row, 'type'),
     },
   ]
 

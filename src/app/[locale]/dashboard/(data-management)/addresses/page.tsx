@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { Address } from '@/services/swr/models/address.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { AddressFilter } from './components/address-filter'
 
@@ -14,12 +15,12 @@ export default function Users() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'name',
       title: t('name'),
-      render: row => row.addressName,
+      render: row => safeRender(row, 'addressName'),
     },
   ]
 

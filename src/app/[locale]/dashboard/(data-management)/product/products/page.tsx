@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { Product } from '@/services/swr/models/product.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { ProductFilter } from './components/product-filter'
 
@@ -14,31 +15,31 @@ export default function Products() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'name',
       title: t('name'),
-      render: row => row.name,
+      render: row => safeRender(row, 'name'),
     },
     {
       id: 'description',
       title: t('description'),
       headClassName: 'text-start',
-      render: row => row.description,
+      render: row => safeRender(row, 'description'),
     },
     {
       id: 'type',
       title: t('type'),
-      render: row => row.productType.productType,
+      render: row => safeRender(row, 'productType.productType'),
     },
     {
       id: 'category',
       title: t('category'),
       render: row =>
-        row.consumerProductOnly
+        row?.consumerProductOnly
           ? t('consumerProductOnly')
-          : row.corporateProductOnly
+          : row?.corporateProductOnly
             ? t('corporateProductOnly')
             : '-',
     },

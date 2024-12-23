@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { Country } from '@/services/swr/models/country.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { CountryFilter } from './components/country-filter'
 
@@ -14,32 +15,32 @@ export default function Countries() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'), // Updated line
     },
     {
       id: 'name',
       title: t('name'),
-      render: row => row.name,
+      render: row => safeRender(row, 'name'),
     },
     {
       id: 'iso',
       title: t('iso'),
-      render: row => row.iso,
+      render: row => safeRender(row, 'iso'),
     },
     {
       id: 'locale',
       title: t('locale'),
-      render: row => row.locale,
+      render: row => safeRender(row, 'locale'),
     },
     {
       id: 'currency',
       title: t('currency'),
-      render: row => row.currency,
+      render: row => safeRender(row, 'currency'),
     },
     {
       id: 'decimalSymbol',
       title: t('decimalSymbol'),
-      render: row => row.decimalSymbol,
+      render: row => safeRender(row, 'decimalSymbol'),
     },
   ]
 

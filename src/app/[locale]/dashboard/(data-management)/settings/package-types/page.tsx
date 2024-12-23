@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { PackageType } from '@/services/swr/models/package-type.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { PackageTypesFilter } from './components/package-type-filter'
 
@@ -15,12 +16,12 @@ export default function PackageTypes() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'name',
       title: t('name'),
-      render: row => row.name,
+      render: row => safeRender(row, 'name'),
     },
   ]
 

@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { EndClient } from '@/services/swr/models/end-client.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { EndClientFilter } from './components/end-client-filter'
 
@@ -15,22 +16,22 @@ export default function EndClients() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'name',
       title: t('name'),
-      render: row => row.name,
+      render: row => safeRender(row, 'name'),
     },
     {
       id: 'type',
       title: t('type'),
-      render: row => row.type?.type,
+      render: row => safeRender(row, 'type.type'),
     },
     {
       id: 'status',
       title: t('status'),
-      render: row => row.status?.status,
+      render: row => safeRender(row, 'status.status'),
     },
   ]
 

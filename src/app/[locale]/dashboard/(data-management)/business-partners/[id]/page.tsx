@@ -14,6 +14,7 @@ import { BusinessPartnerCustomer } from '@/services/swr/models/business-partner-
 import { BusinessPartnerProject } from '@/services/swr/models/business-partner-project.type'
 import { BusinessPartnerUser } from '@/services/swr/models/business-partner-user.type'
 import { useBusinessPartner } from '@/services/swr/use-business-partner'
+import { safeRender } from '@/utils/safeRender'
 
 import { BusinessPartnerAddressFilter } from './components/business-partner-address-filter'
 import { BusinessPartnerContactFilter } from './components/business-partner-contact-filter'
@@ -30,17 +31,18 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
     {
       id: 'id',
       title: t('addresses.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'address',
       title: t('addresses.addressName'),
-      render: row => `${row.address.id} | ${row.address.addressName}`,
+      render: row => `${safeRender(row, 'address.id')} | ${safeRender(row, 'address.addressName')}`,
     },
     {
       id: 'addressTyoe',
       title: t('addresses.addressType'),
-      render: row => `${row.addressType?.id} | ${row.addressType?.addressType}`,
+      render: row =>
+        `${safeRender(row, 'addressType.id')} | ${safeRender(row, 'addressType.addressType')}`,
     },
   ]
 
@@ -48,12 +50,12 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
     {
       id: 'id',
       title: t('contacts.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'person',
       title: t('contacts.person'),
-      render: row => `${row.person.firstname} ${row.person.lastname}`,
+      render: row => `${safeRender(row, 'person.firstname')} ${safeRender(row, 'person.lastname')}`,
     },
   ]
 
@@ -61,12 +63,12 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
     {
       id: 'id',
       title: t('customers.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'endClient',
       title: t('customers.endClient'),
-      render: row => `${row.endclientId} | ${row.endclient.name}`,
+      render: row => `${safeRender(row, 'endclientId')} | ${safeRender(row, 'endclient.name')}`,
     },
   ]
 
@@ -74,12 +76,12 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
     {
       id: 'id',
       title: t('projects.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'project',
       title: t('projects.project'),
-      render: row => `${row.projectId} | ${row.project.projectName}`,
+      render: row => `${safeRender(row, 'projectId')} | ${safeRender(row, 'project.projectName')}`,
     },
   ]
 
@@ -87,12 +89,12 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
     {
       id: 'id',
       title: t('users.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'user',
       title: t('users.user'),
-      render: row => `${row.user.id} | ${row.user.displayName}`,
+      render: row => `${safeRender(row, 'user.id')} | ${safeRender(row, 'user.displayName')}`,
     },
   ]
 

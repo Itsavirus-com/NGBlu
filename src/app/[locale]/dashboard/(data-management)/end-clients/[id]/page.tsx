@@ -13,6 +13,7 @@ import { EndClientContact } from '@/services/swr/models/end-client-contact.type'
 import { EndClientPaymentDetail } from '@/services/swr/models/end-client-payment-detail.type'
 import { EndClientProject } from '@/services/swr/models/end-client-project.type'
 import { useEndClient } from '@/services/swr/use-end-client'
+import { safeRender } from '@/utils/safeRender'
 
 import { EndClientAddressFilter } from './components/end-client-address-filter'
 import { EndClientContactFilter } from './components/end-client-contact-filter'
@@ -28,17 +29,17 @@ export default function EndClientDetails({ params }: { params: { id: number } })
     {
       id: 'id',
       title: t('addresses.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'address',
       title: t('addresses.address'),
-      render: row => `${row.addressId} | ${row.address.addressName}`,
+      render: row => `${safeRender(row, 'addressId')} | ${safeRender(row, 'address.addressName')}`,
     },
     {
       id: 'isPrimaryAddress',
       title: t('addresses.primaryAddress'),
-      render: row => (row.isPrimaryAddress ? t('addresses.yes') : t('addresses.no')),
+      render: row => (row?.isPrimaryAddress ? t('addresses.yes') : t('addresses.no')),
     },
   ]
 
@@ -46,17 +47,19 @@ export default function EndClientDetails({ params }: { params: { id: number } })
     {
       id: 'id',
       title: t('contacts.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'contact',
       title: t('contacts.contactInfo'),
-      render: row => `${row.contactInfoId} | ${row.contactInfo.contactInfo}`,
+      render: row =>
+        `${safeRender(row, 'contactInfoId')} | ${safeRender(row, 'contactInfo.contactInfo')}`,
     },
     {
       id: 'responsibility',
       title: t('contacts.responsibility'),
-      render: row => `${row.responsibilityId} | ${row.responsibility.responsibility}`,
+      render: row =>
+        `${safeRender(row, 'responsibilityId')} | ${safeRender(row, 'responsibility.responsibility')}`,
     },
   ]
 
@@ -64,12 +67,13 @@ export default function EndClientDetails({ params }: { params: { id: number } })
     {
       id: 'id',
       title: t('paymentDetails.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'person',
       title: t('paymentDetails.paymentInfo'),
-      render: row => `${row.paymentInfoId} | ${row.paymentInfo.paymentType?.paymentType}`,
+      render: row =>
+        `${safeRender(row, 'paymentInfoId')} | ${safeRender(row, 'paymentInfo.paymentType.paymentType')}`,
     },
   ]
 
@@ -77,17 +81,18 @@ export default function EndClientDetails({ params }: { params: { id: number } })
     {
       id: 'id',
       title: t('projects.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'project',
       title: t('projects.project'),
-      render: row => `${row.projectId} | ${row.project.projectName}`,
+      render: row => `${safeRender(row, 'projectId')} | ${safeRender(row, 'project.projectName')}`,
     },
     {
       id: 'address',
       title: t('projects.address'),
-      render: row => `${row.endclientAddressId} | ${row.endclientAddress.addressName}`,
+      render: row =>
+        `${safeRender(row, 'endclientAddressId')} | ${safeRender(row, 'endclientAddress.addressName')}`,
     },
   ]
 

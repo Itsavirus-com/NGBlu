@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { ProductType } from '@/services/swr/models/product-type.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { ProductTypesFilter } from './components/product-type-filter'
 
@@ -15,12 +16,12 @@ export default function ProductTypes() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'name',
       title: t('type'),
-      render: row => row.productType,
+      render: row => safeRender(row, 'productType'),
     },
   ]
 

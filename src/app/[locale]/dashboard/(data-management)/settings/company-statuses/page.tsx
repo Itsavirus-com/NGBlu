@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { CompanyStatus } from '@/services/swr/models/company-status.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { CompanyStatusFilter } from './components/company-status-filter'
 
@@ -15,12 +16,12 @@ export default function CompanyStatuses() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'status',
       title: t('status'),
-      render: row => row.status,
+      render: row => safeRender(row, 'status'),
     },
   ]
 
