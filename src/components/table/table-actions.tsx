@@ -23,9 +23,12 @@ export const TableActions = (props: TableActionsProps) => {
 
   const { showToast } = useToast()
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false)
+  const [loadingDelete, setLoadingDelete] = useState(false)
 
   const onConfirmDelete = async () => {
     if (!apiPath) return
+    setLoadingDelete(true)
+
     try {
       const res = await generalApi.deleteItem(`${apiPath}/${dataId}`)
 
@@ -33,10 +36,13 @@ export const TableActions = (props: TableActionsProps) => {
         onDelete?.()
         showToast({ variant: 'success', body: t('deleteSuccess') })
       }
-    } catch {
-      showToast({ variant: 'danger', body: t('deleteError') })
+    } catch (error: any) {
+      const errorMessage = error.message
+
+      showToast({ variant: 'danger', body: errorMessage ? errorMessage : t('deleteError') })
     } finally {
       setDeleteConfirmVisible(false)
+      setLoadingDelete(false)
     }
   }
 
@@ -87,6 +93,7 @@ export const TableActions = (props: TableActionsProps) => {
         title={t('deleteConfirmationTitle')}
         body={t('deleteConfirmationDesc')}
         variant="danger"
+        isLoading={loadingDelete}
       />
     </td>
   )

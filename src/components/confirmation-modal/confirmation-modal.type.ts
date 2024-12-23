@@ -7,4 +7,5 @@ export type ConfirmationModalProps = {
   cancelLabel?: string
   confirmLabel?: string
   variant?: 'success' | 'danger' | 'warning' | 'info'
+  isLoading?: boolean
 }
