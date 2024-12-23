@@ -20,7 +20,7 @@ export default function BusinessPartnerTypes() {
     {
       id: 'type',
       title: t('type'),
-      render: row => safeRender(row, 'type'),
+      render: row => safeRender(row, 'name'),
     },
   ]
 

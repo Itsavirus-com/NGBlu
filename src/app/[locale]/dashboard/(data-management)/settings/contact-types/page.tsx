@@ -21,7 +21,7 @@ export default function ContactTypes() {
     {
       id: 'type',
       title: t('type'),
-      render: row => safeRender(row, 'type'),
+      render: row => safeRender(row, 'contactType'),
     },
   ]
 
