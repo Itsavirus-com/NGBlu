@@ -6,6 +6,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { BinaryView } from '@/components/view/binary-view/binary-view'
 import { DateTimeView } from '@/components/view/date-time-view/date-time-view'
 import { User } from '@/services/swr/models/user.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { UserFilter } from './components/user-filter'
 
@@ -16,27 +17,27 @@ export default function Users() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'displayName',
       title: t('displayName'),
-      render: row => row.displayName,
+      render: row => safeRender(row, 'displayName'),
     },
     {
       id: 'email',
       title: t('email'),
-      render: row => row.email,
+      render: row => safeRender(row, 'email'),
     },
     {
       id: 'lastLogin',
       title: t('lastLogin'),
-      render: row => <DateTimeView value={row.lastLogin} disableColumn />,
+      render: row => <DateTimeView value={safeRender(row, 'lastLogin')} disableColumn />,
     },
     {
       id: 'blocked',
       title: t('blocked'),
-      render: row => <BinaryView value={!!row.blockedAt} disableColumn />,
+      render: row => <BinaryView value={!!safeRender(row, 'blockedAt')} disableColumn />,
     },
   ]
 

@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { AddressType } from '@/services/swr/models/address-type.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { AddressTypeFilter } from './components/address-type-filter'
 
@@ -15,12 +16,12 @@ export default function AddressTypes() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'addressType',
       title: t('addressType'),
-      render: row => row.addressType,
+      render: row => safeRender(row, 'addressType'),
     },
   ]
 

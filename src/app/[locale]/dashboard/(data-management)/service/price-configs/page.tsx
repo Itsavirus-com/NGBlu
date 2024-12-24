@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { ServicePriceConfig } from '@/services/swr/models/service.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { ServicePriceConfigsFilter } from './components/service-price-configs-filter'
 
@@ -15,27 +16,27 @@ export default function ServicePriceConfigs() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'activeFrom',
       title: t('activeFrom'),
-      render: row => row.activeFrom,
+      render: row => safeRender(row, 'activeFrom'),
     },
     {
       id: 'activeTo',
       title: t('activeTo'),
-      render: row => row.activeTo,
+      render: row => safeRender(row, 'activeTo'),
     },
     {
       id: 'service',
       title: t('service'),
-      render: row => row.service.name,
+      render: row => safeRender(row.service, 'name'),
     },
     {
       id: 'pricePlan',
       title: t('pricePlan'),
-      render: row => row.pricePlan.name,
+      render: row => safeRender(row.pricePlan, 'name'),
     },
   ]
 

@@ -6,6 +6,7 @@ import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { PriceConfig } from '@/services/swr/models/price-config.type'
 import { PricePlan } from '@/services/swr/models/price-plan.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { PricePlansFilter } from './components/price-plan-filter'
 
@@ -19,49 +20,55 @@ export default function PriceCurrencies() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'name',
       title: t('name'),
-      render: row => row.name,
+      render: row => safeRender(row, 'name'),
     },
     {
       id: 'price',
       title: t('price'),
       render: row =>
-        `${getPriceConfig(row).priceCurrency.currency} ${getPriceConfig(row).priceValue}`,
+        safeRender(row, 'priceConfig.priceCurrency.currency') +
+        ' ' +
+        safeRender(row, 'priceConfig.priceValue'),
     },
     {
       id: 'unit',
       title: t('unit'),
-      render: row => getPriceConfig(row).priceUnit.unit,
+      render: row => safeRender(row, 'priceConfig.priceUnit.unit'),
     },
     {
       id: 'interval',
       title: t('interval'),
-      render: row => getPriceConfig(row).priceInterval.name,
+      render: row => safeRender(row, 'priceConfig.priceInterval.name'),
     },
     {
       id: 'type',
       title: t('type'),
-      render: row => getPriceConfig(row).priceType.type,
+      render: row => safeRender(row, 'priceConfig.priceType.type'),
     },
     {
       id: 'tax',
       title: t('tax'),
       render: row =>
-        `${getPriceConfig(row).priceTax.country.currency} ${getPriceConfig(row).priceTax.taxValue} / ${getPriceConfig(row).priceTax.priceUnit.unit}`,
+        safeRender(row, 'priceConfig.priceTax.country.currency') +
+        ' ' +
+        safeRender(row, 'priceConfig.priceTax.taxValue') +
+        ' / ' +
+        safeRender(row, 'priceConfig.priceTax.priceUnit.unit'),
     },
     {
       id: 'default',
       title: t('default'),
-      render: row => (row.isDefault ? 'Yes' : 'No'),
+      render: row => (safeRender(row, 'isDefault') ? 'Yes' : 'No'),
     },
     {
       id: 'productOrService',
       title: t('productOrService'),
-      render: row => row.product?.name || row.service?.name || '-',
+      render: row => safeRender(row, 'product.name') || safeRender(row, 'service.name') || '-',
     },
   ]
 

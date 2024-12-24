@@ -64,7 +64,7 @@ export default function useCompanyForm(companyId?: number) {
       legalAddressId: company?.legalAddressId!,
       chamberOfCommerceId: company?.chamberOfCommerceId!,
       vatNumber: company?.vatNumber!,
-      originId: company?.origin.id,
+      originId: company?.origin?.id,
     },
   })
 

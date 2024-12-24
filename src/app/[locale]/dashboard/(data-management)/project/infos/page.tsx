@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { ProjectInfo } from '@/services/swr/models/project-info.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { ProjectInfoFilter } from './components/project-info-filter'
 
@@ -15,12 +16,12 @@ export default function ProjectInfos() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'projectInfo',
       title: t('projectInfo'),
-      render: row => row.projectInfo,
+      render: row => safeRender(row, 'projectInfo'),
     },
   ]
 

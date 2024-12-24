@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { ProjectType } from '@/services/swr/models/project-type'
+import { safeRender } from '@/utils/safeRender'
 
 import { ProjectTypesFilter } from './components/project-type-filter'
 
@@ -15,15 +16,14 @@ export default function PackageTypes() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'name',
       title: t('type'),
-      render: row => row.projectType,
+      render: row => safeRender(row, 'projectType'),
     },
   ]
-
   return (
     <Table<ProjectType>
       title={t('title')}

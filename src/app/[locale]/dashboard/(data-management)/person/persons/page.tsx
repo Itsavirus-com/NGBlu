@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { Person } from '@/services/swr/models/person.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { PersonFilter } from './components/person-filter'
 
@@ -14,32 +15,32 @@ export default function Persons() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'firstName',
       title: t('firstName'),
-      render: row => row.firstname,
+      render: row => safeRender(row, 'firstname'),
     },
     {
       id: 'lastName',
       title: t('lastName'),
-      render: row => row.lastname,
+      render: row => safeRender(row, 'lastname'),
     },
     {
       id: 'personType',
       title: t('personType'),
-      render: row => row.personType.type,
+      render: row => safeRender(row, 'personType.type'),
     },
     {
       id: 'department',
       title: t('department'),
-      render: row => row.department,
+      render: row => safeRender(row, 'department'),
     },
     {
       id: 'role',
       title: t('role'),
-      render: row => row.role,
+      render: row => safeRender(row, 'role'),
     },
   ]
 

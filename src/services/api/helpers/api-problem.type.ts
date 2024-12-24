@@ -66,4 +66,9 @@ export type GeneralApiProblem =
   /**
    * The data we received is not in the expected format.
    */
-  | { kind: ApiErrorKind.BAD_DATA; errors?: Record<string, object[]> }
+  | {
+      kind: ApiErrorKind.BAD_DATA
+      errors?: Record<string, object[]>
+      message?: string
+      relatedRecords?: string[]
+    }

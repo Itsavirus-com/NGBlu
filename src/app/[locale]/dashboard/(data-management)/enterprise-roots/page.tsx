@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { EnterpriseRoot } from '@/services/swr/models/enterprise-root.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { EnterpriseRootFilter } from './components/enterprise-root-filter'
 
@@ -15,25 +16,23 @@ export default function EnterpriseRoots() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'name',
       title: t('name'),
-      render: row => row.name,
+      render: row => safeRender(row, 'name'),
     },
     {
       id: 'enterpriseRootAddress',
       title: t('enterpriseRootAddress'),
       render: row =>
-        row.enterpriseRootAddresses
-          ? `${row.enterpriseRootAddressesId} | ${row.enterpriseRootAddresses.addressName}`
-          : '-',
+        `${safeRender(row, 'enterpriseRootAddressesId')} | ${safeRender(row, 'enterpriseRootAddresses.addressName')}`,
     },
     {
       id: 'organisationUnitId',
       title: t('organisationUnit'),
-      render: row => (row.ouUnit ? `${row.ouUnitId} | ${row.ouUnit.name}` : '-'),
+      render: row => `${safeRender(row, 'ouUnitId')} | ${safeRender(row, 'ouUnit.name')}`,
     },
   ]
 

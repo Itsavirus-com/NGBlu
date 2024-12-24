@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { BusinessPartner } from '@/services/swr/models/business-partner.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { BusinessPartnerFilter } from './components/business-partner-filter'
 
@@ -15,22 +16,22 @@ export default function BusinessPartners() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'name',
       title: t('name'),
-      render: row => row.name,
+      render: row => safeRender(row, 'name'),
     },
     {
       id: 'type',
       title: t('type'),
-      render: row => row.businessPartnerType.name,
+      render: row => safeRender(row, 'businessPartnerType.name'),
     },
     {
       id: 'company',
       title: t('company'),
-      render: row => row.companyInfo.companyname,
+      render: row => safeRender(row, 'companyInfo.companyname'),
     },
   ]
 

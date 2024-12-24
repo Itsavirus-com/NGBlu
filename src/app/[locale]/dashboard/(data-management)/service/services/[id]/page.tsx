@@ -9,6 +9,7 @@ import { PriceConfig } from '@/services/swr/models/price-config.type'
 import { PricePlan } from '@/services/swr/models/price-plan.type'
 import { ServicePriceConfig } from '@/services/swr/models/service.type'
 import { useService } from '@/services/swr/use-service'
+import { safeRender } from '@/utils/safeRender'
 
 export default function ServiceDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.services')
@@ -22,39 +23,39 @@ export default function ServiceDetails({ params }: { params: { id: number } }) {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'name',
       title: t('name'),
-      render: row => row.name,
+      render: row => safeRender(row, 'name'),
     },
     {
       id: 'price',
       title: t('price'),
       render: row =>
-        `${getPriceConfig(row).priceCurrency.currency} ${getPriceConfig(row).priceValue}`,
+        `${safeRender(getPriceConfig(row), 'priceCurrency.currency')} ${safeRender(getPriceConfig(row), 'priceValue')}`,
     },
     {
       id: 'unit',
       title: t('unit'),
-      render: row => getPriceConfig(row).priceUnit.unit,
+      render: row => safeRender(getPriceConfig(row), 'priceUnit.unit'),
     },
     {
       id: 'interval',
       title: t('interval'),
-      render: row => getPriceConfig(row).priceInterval.name,
+      render: row => safeRender(getPriceConfig(row), 'priceInterval.name'),
     },
     {
       id: 'type',
       title: t('type'),
-      render: row => getPriceConfig(row).priceType.type,
+      render: row => safeRender(getPriceConfig(row), 'priceType.type'),
     },
     {
       id: 'tax',
       title: t('tax'),
       render: row =>
-        `${getPriceConfig(row).priceTax.country.currency} ${getPriceConfig(row).priceTax.taxValue} / ${getPriceConfig(row).priceTax.priceUnit.unit}`,
+        `${safeRender(getPriceConfig(row).priceTax, 'country.currency')} ${safeRender(getPriceConfig(row).priceTax, 'taxValue')} / ${safeRender(getPriceConfig(row).priceTax, 'priceUnit.unit')}`,
     },
     {
       id: 'default',
@@ -67,27 +68,27 @@ export default function ServiceDetails({ params }: { params: { id: number } }) {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'activeFrom',
       title: t('activeFrom'),
-      render: row => row.activeFrom,
+      render: row => safeRender(row, 'activeFrom'),
     },
     {
       id: 'activeTo',
       title: t('activeTo'),
-      render: row => row.activeTo,
+      render: row => safeRender(row, 'activeTo'),
     },
     {
       id: 'product',
       title: t('product'),
-      render: row => `${row.service.id} | ${row.service.name}`,
+      render: row => `${safeRender(row.service, 'id')} | ${safeRender(row.service, 'name')}`,
     },
     {
       id: 'pricePlan',
       title: t('pricePlan'),
-      render: row => `${row.pricePlan.id} | ${row.pricePlan.name}`,
+      render: row => `${safeRender(row.pricePlan, 'id')} | ${safeRender(row.pricePlan, 'name')}`,
     },
   ]
 

@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { PriceInterval } from '@/services/swr/models/price-interval.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { PriceIntervalsFilter } from './components/price-interval-filter'
 
@@ -15,12 +16,12 @@ export default function PriceCurrencies() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'name',
       title: t('name'),
-      render: row => row.name,
+      render: row => safeRender(row, 'name'),
     },
   ]
 

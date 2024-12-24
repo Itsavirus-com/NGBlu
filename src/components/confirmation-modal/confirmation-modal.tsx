@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
 import React from 'react'
-import { Button, Modal } from 'react-bootstrap'
+import { Button, Modal, Spinner } from 'react-bootstrap'
 
 import { ConfirmationModalProps } from './confirmation-modal.type'
 
@@ -17,6 +17,7 @@ export const ConfirmationModal = (props: ConfirmationModalProps) => {
     cancelLabel = t('cancel'),
     confirmLabel = t('yesContinue'),
     variant = 'success',
+    isLoading,
   } = props
 
   return (
@@ -32,7 +33,14 @@ export const ConfirmationModal = (props: ConfirmationModalProps) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant={variant} onClick={onConfirm}>
-          {confirmLabel}
+          {isLoading ? (
+            <>
+              {' '}
+              <Spinner size="sm" /> Loading...
+            </>
+          ) : (
+            confirmLabel
+          )}
         </Button>
         <Button variant="light" onClick={onCancel}>
           {cancelLabel}

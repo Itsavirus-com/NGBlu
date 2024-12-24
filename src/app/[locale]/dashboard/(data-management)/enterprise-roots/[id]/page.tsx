@@ -16,6 +16,7 @@ import { EnterpriseRootCustomer } from '@/services/swr/models/enterprise-root-cu
 import { EnterpriseRootProject } from '@/services/swr/models/enterprise-root-project.type'
 import { EnterpriseRootUser } from '@/services/swr/models/enterprise-root-user.type'
 import { useEnterpriseRoot } from '@/services/swr/use-enterprise-root'
+import { safeRender } from '@/utils/safeRender'
 
 import { EnterpriseRootAddressFilter } from './components/enterprise-root-address-filter'
 import { EnterpriseRootContactFilter } from './components/enterprise-root-contact-filter'
@@ -37,12 +38,12 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     {
       id: 'address',
       title: t('addresses.addressName'),
-      render: row => `${row.addressId} | ${row.address.addressName}`,
+      render: row => `${safeRender(row, 'addressId')} | ${safeRender(row, 'address.addressName')}`,
     },
     {
       id: 'addressType',
       title: t('addresses.addressType'),
-      render: row => row.addressType.addressType,
+      render: row => safeRender(row, 'addressType?.addressType'),
     },
   ]
 
@@ -50,17 +51,19 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     {
       id: 'id',
       title: t('addresses.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'contact',
       title: t('contacts.contactInfo'),
-      render: row => `${row.contactInfoId} | ${row.contactInfo.contactInfo}`,
+      render: row =>
+        `${safeRender(row, 'contactInfoId')} | ${safeRender(row, 'contactInfo?.contactInfo')}`,
     },
     {
       id: 'responsibility',
       title: t('contacts.responsibility'),
-      render: row => `${row.responsibilityId} | ${row.responsibility.responsibility}`,
+      render: row =>
+        `${safeRender(row, 'responsibilityId')} | ${safeRender(row, 'responsibility?.responsibility')}`,
     },
   ]
 
@@ -68,18 +71,18 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     {
       id: 'id',
       title: t('projects.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'project',
       title: t('projects.project'),
-      render: row => `${row.projectId} | ${row.project.projectName}`,
+      render: row => `${safeRender(row, 'projectId')} | ${safeRender(row, 'project.projectName')}`,
     },
     {
       id: 'address',
       title: t('projects.address'),
       render: row =>
-        `${row.enterpriseRootAddressesId} | ${row.enterpriseRootAddresses.addressName}`,
+        `${safeRender(row, 'enterpriseRootAddressesId')} | ${safeRender(row, 'enterpriseRootAddresses.addressName')}`,
     },
   ]
 
@@ -87,18 +90,18 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     {
       id: 'id',
       title: t('customers.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'endClient',
       title: t('customers.endClient'),
-      render: row => `${row.endclientId} | ${row.endclient.name}`,
+      render: row => `${safeRender(row, 'endclientId')} | ${safeRender(row, 'endclient.name')}`,
     },
     {
       id: 'address',
       title: t('customers.address'),
       render: row =>
-        `${row.enterpriseRootAddressesId} | ${row.enterpriseRootAddresses.addressName}`,
+        `${safeRender(row, 'enterpriseRootAddressesId')} | ${safeRender(row, 'enterpriseRootAddresses.addressName')}`,
     },
   ]
 
@@ -106,22 +109,23 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     {
       id: 'id',
       title: t('users.id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'displayName',
       title: t('users.user'),
-      render: row => `${row.userId} | ${row.user.displayName}`,
+      render: row => `${safeRender(row, 'userId')} | ${safeRender(row, 'user.displayName')}`,
     },
     {
       id: 'person',
       title: t('users.person'),
-      render: row => `${row.personId} | ${row.person.firstname} ${row.person?.lastname}`,
+      render: row =>
+        `${safeRender(row, 'personId')} | ${safeRender(row, 'person.firstname')} ${safeRender(row, 'person.lastname')}`,
     },
     {
       id: 'personType',
       title: t('users.personType'),
-      render: row => row.person.personType.type,
+      render: row => safeRender(row, 'person.personType.type'),
     },
   ]
 

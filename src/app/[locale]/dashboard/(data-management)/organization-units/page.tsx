@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { OrganizationUnitFilter } from './components/organization-unit-filter'
 
@@ -14,12 +15,12 @@ export default function Countries() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'name',
       title: t('name'),
-      render: row => row.name,
+      render: row => safeRender(row, 'name'),
     },
   ]
 

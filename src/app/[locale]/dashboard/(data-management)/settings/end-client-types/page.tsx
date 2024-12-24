@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { EndClientType } from '@/services/swr/models/end-client-type.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { EndClientTypeFilter } from './components/end-client-type-filter'
 
@@ -14,12 +15,12 @@ export default function EndClientTypes() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'type',
       title: t('type'),
-      render: row => row.type,
+      render: row => safeRender(row, 'type'),
     },
   ]
 

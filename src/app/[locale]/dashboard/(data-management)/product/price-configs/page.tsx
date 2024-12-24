@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { ProductPriceConfig } from '@/services/swr/models/product.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { ProductPriceConfigsFilter } from './components/product-price-configs-filter'
 
@@ -15,30 +16,29 @@ export default function ProductPriceConfigs() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'activeFrom',
       title: t('activeFrom'),
-      render: row => row.activeFrom,
+      render: row => safeRender(row, 'activeFrom'),
     },
     {
       id: 'activeTo',
       title: t('activeTo'),
-      render: row => row.activeTo,
+      render: row => safeRender(row, 'activeTo'),
     },
     {
       id: 'product',
       title: t('product'),
-      render: row => row.product.name,
+      render: row => safeRender(row, 'product.name'),
     },
     {
       id: 'pricePlan',
       title: t('pricePlan'),
-      render: row => row.pricePlan.name,
+      render: row => safeRender(row, 'pricePlan.name'),
     },
   ]
-
   return (
     <Table<ProductPriceConfig>
       title={t('title')}

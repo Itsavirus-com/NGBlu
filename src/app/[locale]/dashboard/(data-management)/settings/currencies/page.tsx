@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { Currency } from '@/services/swr/models/currency.type'
+import { safeRender } from '@/utils/safeRender'
 
 import { CurrencyFilter } from './components/currency-filter'
 
@@ -15,12 +16,12 @@ export default function PriceCurrencies() {
     {
       id: 'id',
       title: t('id'),
-      render: row => row.id,
+      render: row => safeRender(row, 'id'),
     },
     {
       id: 'currency',
       title: t('currency'),
-      render: row => row.currency,
+      render: row => safeRender(row, 'currency'),
     },
   ]
 
