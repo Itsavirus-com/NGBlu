@@ -3,6 +3,8 @@
 import { useTranslations } from 'next-intl'
 import { Row } from 'react-bootstrap'
 
+import { Breadcrumbs } from '@/components/breadcrumbs/breadcrumbs'
+import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
 import { Page } from '@/components/page/page'
 import { PageTitle } from '@/components/page-title'
 import { Table } from '@/components/table/table'
@@ -98,6 +100,10 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
 
   return (
     <>
+      <div className="app-container">
+        <Breadcrumbs items={getBreadcrumbItems(data)} />
+      </div>
+
       <PageTitle title={data?.name || ''} />
 
       <Page>
