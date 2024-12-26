@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --ignore-unknown --write ."
   },
   "engines": {
@@ -40,6 +40,9 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@eslint/compat": "^1.2.4",
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.17.0",
     "@evilmartians/lefthook": "^1.6.10",
     "@popperjs/core": "^2.11.6",
     "@types/google.maps": "^3.55.9",
@@ -49,10 +52,10 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-flatpickr": "^3.8.11",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.10",
-    "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-import": "2.29.1",
+    "eslint": "^9.17.0",
+    "eslint-config-next": "^15.1.2",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.31.0",
     "prettier": "3.2.5",
     "typescript": "5.3.3"
   }
