@@ -8,4 +8,4 @@ pre-commit:
       run: yarn prettier --write {staged_files} && git add {staged_files}
     2-linting:
       glob: '*.{js,ts,tsx}'
-      run: yarn next lint --fix && git add {staged_files}
+      run: yarn eslint --fix {staged_files} && git add {staged_files}
