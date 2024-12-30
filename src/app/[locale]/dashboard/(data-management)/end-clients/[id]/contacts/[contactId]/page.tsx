@@ -1,12 +1,12 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
-import { TextView } from '@/components/view/text-view/text-view'
 import { useEndClientContact } from '@/services/swr/use-end-client-contact'
+
+import { ContactInfo } from './components/contact-info'
 
 export default function EndClientContactDetails({
   params,
@@ -17,44 +17,19 @@ export default function EndClientContactDetails({
 
   const { data, isLoading } = useEndClientContact(params.id, params.contactId)
 
+  const tabs = [
+    {
+      eventKey: 'contactInfo',
+      title: t('contactInfo'),
+      content: <ContactInfo data={data} isLoading={isLoading} />,
+      condition: Boolean(data),
+    },
+  ]
+
   return (
     <>
       <PageTitle title={t('title')} />
-
-      <Page>
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('contactInfo')}
-            value={data?.contactInfo.contactInfo}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('contactInfo')}
-            value={data?.contactInfo.contactType.contactType}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('responsibility')}
-            value={data?.responsibility.responsibility}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('person')}
-            value={data?.personId}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('enterpriseRoot')}
-            value={data?.enterpriseRootId}
-          />
-        </Row>
-      </Page>
+      <DynamicTabs tabs={tabs} defaultActiveKey="contactInfo" />
     </>
   )
 }
