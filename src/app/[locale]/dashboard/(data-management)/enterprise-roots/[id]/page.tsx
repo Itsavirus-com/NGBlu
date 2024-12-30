@@ -1,15 +1,13 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
 import { Breadcrumbs } from '@/components/breadcrumbs/breadcrumbs'
 import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
-import { TextView } from '@/components/view/text-view/text-view'
 import { EnterpriseRootAddress } from '@/services/swr/models/enterprise-root-address.type'
 import { EnterpriseRootContact } from '@/services/swr/models/enterprise-root-contact.type'
 import { EnterpriseRootCustomer } from '@/services/swr/models/enterprise-root-customer.type'
@@ -21,6 +19,7 @@ import { safeRender } from '@/utils/safeRender'
 import { EnterpriseRootAddressFilter } from './components/enterprise-root-address-filter'
 import { EnterpriseRootContactFilter } from './components/enterprise-root-contact-filter'
 import { EnterpriseRootCustomerFilter } from './components/enterprise-root-customer-filter'
+import { EnterpriseRootInfo } from './components/enterprise-root-info'
 import { EnterpriseRootProjectFilter } from './components/enterprise-root-project-filter'
 import { EnterpriseRootUserFilter } from './components/enterprise-root-user-filter'
 
@@ -43,7 +42,7 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     {
       id: 'addressType',
       title: t('addresses.addressType'),
-      render: row => safeRender(row, 'addressType?.addressType'),
+      render: row => safeRender(row, 'addressType.addressType'),
     },
   ]
 
@@ -57,13 +56,13 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       id: 'contact',
       title: t('contacts.contactInfo'),
       render: row =>
-        `${safeRender(row, 'contactInfoId')} | ${safeRender(row, 'contactInfo?.contactInfo')}`,
+        `${safeRender(row, 'contactInfoId')} | ${safeRender(row, 'contactInfo.contactInfo')}`,
     },
     {
       id: 'responsibility',
       title: t('contacts.responsibility'),
       render: row =>
-        `${safeRender(row, 'responsibilityId')} | ${safeRender(row, 'responsibility?.responsibility')}`,
+        `${safeRender(row, 'responsibilityId')} | ${safeRender(row, 'responsibility.responsibility')}`,
     },
   ]
 
@@ -129,6 +128,135 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     },
   ]
 
+  const tabs = [
+    {
+      eventKey: 'enterpriseRootInfo',
+      title: t('enterpriseRootInfo'),
+      content: <EnterpriseRootInfo data={data} isLoading={isLoading} />,
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'address',
+      title: t('addresses.title'),
+      content: (
+        <Table<EnterpriseRootAddress>
+          className="mt-4"
+          title={t('addresses.title')}
+          toolbars={[
+            {
+              icon: 'plus',
+              label: t('addresses.newAddress'),
+              colorClass: 'light-primary',
+              href: `${params.id}/addresses/new`,
+            },
+          ]}
+          filters={<EnterpriseRootAddressFilter />}
+          columns={addressColumns}
+          apiPath={`enterprise-roots/${params.id}/addresses`}
+          actionBasePath={`${params.id}/addresses`}
+          actions={['view', 'edit', 'delete']}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'contacts',
+      title: t('contacts.title'),
+      content: (
+        <Table<EnterpriseRootContact>
+          className="mt-4"
+          title={t('contacts.title')}
+          toolbars={[
+            {
+              icon: 'plus',
+              label: t('contacts.newContact'),
+              colorClass: 'light-primary',
+              href: `${params.id}/contacts/new`,
+            },
+          ]}
+          filters={<EnterpriseRootContactFilter />}
+          columns={contactColumns}
+          apiPath={`enterprise-roots/${params.id}/contacts`}
+          actionBasePath={`${params.id}/contacts`}
+          actions={['view', 'edit', 'delete']}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'projects',
+      title: t('projects.title'),
+      content: (
+        <Table<EnterpriseRootProject>
+          className="mt-4"
+          title={t('projects.title')}
+          toolbars={[
+            {
+              icon: 'plus',
+              label: t('projects.newProject'),
+              colorClass: 'light-primary',
+              href: `${params.id}/projects/new`,
+            },
+          ]}
+          filters={<EnterpriseRootProjectFilter />}
+          columns={projectColumns}
+          apiPath={`enterprise-roots/${params.id}/projects`}
+          actionBasePath={`${params.id}/projects`}
+          actions={['view', 'edit', 'delete']}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'customers',
+      title: t('customers.title'),
+      content: (
+        <Table<EnterpriseRootCustomer>
+          className="mt-4"
+          title={t('customers.title')}
+          toolbars={[
+            {
+              icon: 'plus',
+              label: t('customers.newCustomer'),
+              colorClass: 'light-primary',
+              href: `${params.id}/customers/new`,
+            },
+          ]}
+          filters={<EnterpriseRootCustomerFilter />}
+          columns={customerColumns}
+          apiPath={`enterprise-roots/${params.id}/customers`}
+          actionBasePath={`${params.id}/customers`}
+          actions={['view', 'edit', 'delete']}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'users',
+      title: t('users.title'),
+      content: (
+        <Table<EnterpriseRootUser>
+          className="mt-4"
+          title={t('users.title')}
+          toolbars={[
+            {
+              icon: 'plus',
+              label: t('users.newUser'),
+              colorClass: 'light-primary',
+              href: `${params.id}/users/new`,
+            },
+          ]}
+          filters={<EnterpriseRootUserFilter />}
+          columns={userColumns}
+          apiPath={`enterprise-roots/${params.id}/users`}
+          actionBasePath={`${params.id}/users`}
+          actions={['view', 'edit', 'delete']}
+        />
+      ),
+      condition: Boolean(data),
+    },
+  ]
+
   return (
     <>
       <div className="app-container">
@@ -136,138 +264,7 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       </div>
 
       <PageTitle title={data?.name || ''} />
-
-      <Page>
-        <Row>
-          <TextView className="my-3" isLoading={isLoading} label={t('name')} value={data?.name} />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('addressesCount')}
-            value={data?.addressesCount}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('contactsCount')}
-            value={data?.contactsCount}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('usersCount')}
-            value={data?.usersCount}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('projectsCount')}
-            value={data?.projectsCount}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('customersCount')}
-            value={data?.customersCount}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('businessPartnersCount')}
-            value={data?.businessPartnersCount}
-          />
-        </Row>
-      </Page>
-
-      <Table<EnterpriseRootAddress>
-        className="mt-4"
-        title={t('addresses.title')}
-        toolbars={[
-          {
-            icon: 'plus',
-            label: t('addresses.newAddress'),
-            colorClass: 'light-primary',
-            href: `${params.id}/addresses/new`,
-          },
-        ]}
-        filters={<EnterpriseRootAddressFilter />}
-        columns={addressColumns}
-        apiPath={`enterprise-roots/${params.id}/addresses`}
-        actionBasePath={`${params.id}/addresses`}
-        actions={['view', 'edit', 'delete']}
-      />
-
-      <Table<EnterpriseRootContact>
-        className="mt-4"
-        title={t('contacts.title')}
-        toolbars={[
-          {
-            icon: 'plus',
-            label: t('contacts.newContact'),
-            colorClass: 'light-primary',
-            href: `${params.id}/contacts/new`,
-          },
-        ]}
-        filters={<EnterpriseRootContactFilter />}
-        columns={contactColumns}
-        apiPath={`enterprise-roots/${params.id}/contacts`}
-        actionBasePath={`${params.id}/contacts`}
-        actions={['view', 'edit', 'delete']}
-      />
-
-      <Table<EnterpriseRootProject>
-        className="mt-4"
-        title={t('projects.title')}
-        toolbars={[
-          {
-            icon: 'plus',
-            label: t('projects.newProject'),
-            colorClass: 'light-primary',
-            href: `${params.id}/projects/new`,
-          },
-        ]}
-        filters={<EnterpriseRootProjectFilter />}
-        columns={projectColumns}
-        apiPath={`enterprise-roots/${params.id}/projects`}
-        actionBasePath={`${params.id}/projects`}
-        actions={['view', 'edit', 'delete']}
-      />
-
-      <Table<EnterpriseRootCustomer>
-        className="mt-4"
-        title={t('customers.title')}
-        toolbars={[
-          {
-            icon: 'plus',
-            label: t('customers.newCustomer'),
-            colorClass: 'light-primary',
-            href: `${params.id}/customers/new`,
-          },
-        ]}
-        filters={<EnterpriseRootCustomerFilter />}
-        columns={customerColumns}
-        apiPath={`enterprise-roots/${params.id}/customers`}
-        actionBasePath={`${params.id}/customers`}
-        actions={['view', 'edit', 'delete']}
-      />
-
-      <Table<EnterpriseRootUser>
-        className="mt-4"
-        title={t('users.title')}
-        toolbars={[
-          {
-            icon: 'plus',
-            label: t('users.newUser'),
-            colorClass: 'light-primary',
-            href: `${params.id}/users/new`,
-          },
-        ]}
-        filters={<EnterpriseRootUserFilter />}
-        columns={userColumns}
-        apiPath={`enterprise-roots/${params.id}/users`}
-        actionBasePath={`${params.id}/users`}
-        actions={['view', 'edit', 'delete']}
-      />
+      <DynamicTabs tabs={tabs} defaultActiveKey="enterpriseRootInfo" />
     </>
   )
 }
