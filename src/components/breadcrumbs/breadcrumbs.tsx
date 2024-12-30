@@ -11,11 +11,13 @@ export const Breadcrumbs = <T,>({ items, onBreadcrumbPress }: BreadcrumbProps<T>
   const { push } = useRouter()
   if (!items || !Array.isArray(items)) return null
 
-  const handleBreadcrumbClick = (item: BreadcrumbItem<T>) => {
-    onBreadcrumbPress?.(item)
-    // handle redirect to App Route
-    const appRoute = mapApiPathToAppRoute(item.path)
-    push(`/${appRoute}`)
+  const handleBreadcrumbClick = (index: number, item: BreadcrumbItem<T>) => {
+    if (index !== items.length - 1) {
+      onBreadcrumbPress?.(item)
+      // handle redirect to App Route
+      const appRoute = mapApiPathToAppRoute(item.path)
+      push(`/${appRoute}`)
+    }
   }
 
   return (
@@ -24,7 +26,7 @@ export const Breadcrumbs = <T,>({ items, onBreadcrumbPress }: BreadcrumbProps<T>
         <Breadcrumb.Item
           as="li"
           key={index}
-          onClick={() => handleBreadcrumbClick(item)}
+          onClick={() => handleBreadcrumbClick(index, item)}
           active={index === items.length - 1}
         >
           <KTIcon iconName={generateItemIcon(item.type)} className="me-1" />
