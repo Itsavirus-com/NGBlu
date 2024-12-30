@@ -541,6 +541,7 @@
       "county": "County",
       "country": "Country",
       "postalCode": "Postal Code",
+      "endClientInfo": "End Client Info",
       "addresses": {
         "title": "End Client Address",
         "newAddress": "New Address",
@@ -560,7 +561,8 @@
         "addressId": "Address ID",
         "primaryAddress": "Primary Address",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "addressInfo": "Address Info"
       },
       "contacts": {
         "title": "End Client Contact",
@@ -664,6 +666,7 @@
       "projectsCount": "Projects Count",
       "customersCount": "Customers Count",
       "businessPartnersCount": "Business Partners Count",
+      "enterpriseRootInfo": "Enterprise Root Info",
       "addresses": {
         "title": "Enterprise Root Addresses",
         "newAddress": "New Address",
@@ -686,7 +689,8 @@
         "postalCode": "Postal Code",
         "latitude": "Latitude",
         "longitude": "Longitude",
-        "googleAddressId": "Google Address ID"
+        "googleAddressId": "Google Address ID",
+        "addressInfo": "Address Info"
       },
       "contacts": {
         "title": "Enterprise Root Contacts",
@@ -700,7 +704,8 @@
         "responsibility": "Responsibility",
         "responsibilityId": "Responsibility ID",
         "enterpriseRoot": "Enterprise Root",
-        "organisationUnit": "Organisation Unit"
+        "organisationUnit": "Organisation Unit",
+        "contactType": "Contact Type"
       },
       "projects": {
         "title": "Enterprise Root Projects",
@@ -756,7 +761,8 @@
         "latitude": "Latitude",
         "longitude": "Longitude",
         "googleAddressId": "Google Address ID",
-        "parent": "Parent"
+        "parent": "Parent",
+        "endClientInfo": "End Client Info"
       },
       "users": {
         "title": "Enterprise Root Users",
@@ -786,7 +792,9 @@
         "gender": "Gender",
         "titles": "Titles",
         "department": "Department",
-        "role": "Role"
+        "role": "Role",
+        "userInfo": "User Info",
+        "personInfo": "Person Info"
       }
     },
     "packages": {
@@ -843,7 +851,8 @@
       "postalCode": "Postal Code",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "googleAddressId": "Google Address ID"
+      "googleAddressId": "Google Address ID",
+      "addressInfo": "Address Info"
     },
     "addressTypes": {
       "title": "Address Types",
@@ -879,7 +888,8 @@
       "latitude": "Latitude",
       "longitude": "Longitude",
       "googleAddressId": "Google Address ID",
-      "origin": "Origin"
+      "origin": "Origin",
+      "companyInfo": "Company Info"
     },
     "companyStatuses": {
       "title": "Company Statuses",
@@ -989,6 +999,7 @@
     },
     "businessPartners": {
       "title": "Business Partners",
+      "businessPartnerInfo": "Business Partner Info",
       "newBusinessPartner": "New Business Partner",
       "updateBusinessPartner": "Update Business Partner",
       "id": "ID",
@@ -1025,7 +1036,8 @@
         "address": "Address",
         "addressId": "Address ID",
         "addressTypeId": "Address Type ID",
-        "organisationalUnit": "Organizational Unit"
+        "organisationalUnit": "Organizational Unit",
+        "addressInfo": "Address Info"
       },
       "contacts": {
         "title": "Business Partner Contact",
@@ -1081,7 +1093,8 @@
         "postalCode": "Postal Code",
         "latitude": "Latitude",
         "longitude": "Longitude",
-        "googleAddressId": "Google Address ID"
+        "googleAddressId": "Google Address ID",
+        "customerInfo": "Customer Info"
       },
       "projects": {
         "title": "Business Partner Projects",
@@ -1132,7 +1145,8 @@
         "gender": "Gender",
         "titles": "Titles",
         "department": "Department",
-        "role": "Role"
+        "role": "Role",
+        "userInfo": "User Info"
       }
     },
     "businessPartnerTypes": {
