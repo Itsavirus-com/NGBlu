@@ -1,12 +1,12 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
-import { TextView } from '@/components/view/text-view/text-view'
 import { useBusinessPartnerContact } from '@/services/swr/use-business-partner-contact'
+
+import { ContactsInfo } from './components/contacts-info'
 
 export default function BusinessPartnerContactDetails({
   params,
@@ -17,86 +17,19 @@ export default function BusinessPartnerContactDetails({
 
   const { data, isLoading } = useBusinessPartnerContact(params.id, params.contactId)
 
+  const tabs = [
+    {
+      eventKey: 'contactsInfo',
+      title: t('contactInfo'),
+      content: <ContactsInfo data={data} isLoading={isLoading} />,
+      condition: Boolean(data),
+    },
+  ]
+
   return (
     <>
       <PageTitle title={t('title')} />
-
-      <Page>
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('salutation')}
-            value={data?.person.salutation}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('firstName')}
-            value={data?.person.firstname}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('lastName')}
-            value={data?.person.lastname}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('nameSuffix')}
-            value={data?.person.nameSuffix}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('nameSuffix')}
-            value={data?.person.nameSuffix}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('pronounce')}
-            value={data?.person.pronounce}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('gender')}
-            value={data?.person.gender?.gender}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('personType')}
-            value={data?.person.personType?.type}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('titles')}
-            value={data?.person.titles}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('department')}
-            value={data?.person.department}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('role')}
-            value={data?.person.role}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('enterpriseRoot')}
-            value={data?.enterpriseRootId}
-          />
-        </Row>
-      </Page>
+      <DynamicTabs tabs={tabs} defaultActiveKey="contactsInfo" />
     </>
   )
 }
