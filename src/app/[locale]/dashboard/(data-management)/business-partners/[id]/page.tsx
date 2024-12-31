@@ -8,6 +8,7 @@ import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { BusinessPartnerAddress } from '@/services/swr/models/business-partner-address.type'
 import { BusinessPartnerContact } from '@/services/swr/models/business-partner-contact.type'
 import { BusinessPartnerCustomer } from '@/services/swr/models/business-partner-customer.type'
@@ -19,7 +20,6 @@ import { safeRender } from '@/utils/safeRender'
 import { BusinessPartnerAddressFilter } from './components/business-partner-address-filter'
 import { BusinessPartnerContactFilter } from './components/business-partner-contact-filter'
 import { BusinessPartnerCustomerFilter } from './components/business-partner-customer-filter'
-import { BusinessPartnerInfo } from './components/business-partner-info'
 import { BusinessPartnerProjectFilter } from './components/business-partner-project-filter'
 import { BusinessPartnerUserFilter } from './components/business-partner-user-filter'
 
@@ -99,11 +99,29 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
     },
   ]
 
+  const businessPartnerInfofields = [
+    { label: t('name'), value: safeRender(data, 'name') },
+    { label: t('company'), value: safeRender(data, 'companyInfo.companyname') },
+    { label: t('type'), value: safeRender(data, 'businessPartnerType.name') },
+    { label: t('addressCount'), value: safeRender(data, 'businessPartnerAddressesCount') },
+    { label: t('contactCount'), value: safeRender(data, 'businessPartnerContactsCount') },
+    { label: t('customerCount'), value: safeRender(data, 'businessPartnerCustomersCount') },
+    { label: t('projectCount'), value: safeRender(data, 'businessPartnerProjectsCount') },
+    { label: t('userCount'), value: safeRender(data, 'businessPartnerUsersCount') },
+  ]
+
   const tabs = [
     {
       eventKey: 'businessPartnerInfo',
       title: t('businessPartnerInfo'),
-      content: <BusinessPartnerInfo data={data} isLoading={isLoading} />,
+      content: (
+        <FieldTextView
+          fields={businessPartnerInfofields}
+          isLoading={isLoading}
+          translation="dataManagement.businessPartners"
+          title={t('businessPartnerInfo')}
+        />
+      ),
       condition: Boolean(data),
     },
     {

@@ -4,9 +4,9 @@ import { useTranslations } from 'next-intl'
 
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useEnterpriseRootContact } from '@/services/swr/use-enterprise-root-contact'
-
-import { ContactInfo } from './components/contact-info'
+import { safeRender } from '@/utils/safeRender'
 
 export default function EnterpriseRootContactDetails({
   params,
@@ -17,11 +17,27 @@ export default function EnterpriseRootContactDetails({
 
   const { data, isLoading } = useEnterpriseRootContact(params.id, params.contactId)
 
+  const contactFields = [
+    { label: t('contactInfo'), value: safeRender(data, 'contactInfo.contactInfo') },
+    { label: t('contactType'), value: safeRender(data, 'contactInfo.contactType.contactType') },
+    { label: t('responsibility'), value: safeRender(data, 'responsibility.responsibility') },
+    { label: t('person'), value: safeRender(data, 'personId') },
+    { label: t('enterpriseRoot'), value: safeRender(data, 'enterpriseRootId') },
+    { label: t('organisationUnit'), value: safeRender(data, 'ouUnitId') },
+  ]
+
   const tabs = [
     {
       eventKey: 'contactInfo',
       title: t('contactInfo'),
-      content: <ContactInfo data={data} isLoading={isLoading} />,
+      content: (
+        <FieldTextView
+          fields={contactFields}
+          isLoading={isLoading}
+          translation="dataManagement.enterpriseRoots.contacts"
+          title={t('contactInfo')}
+        />
+      ),
       condition: Boolean(data),
     },
   ]

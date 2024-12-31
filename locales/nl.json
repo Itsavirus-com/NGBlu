@@ -824,6 +824,7 @@
       "productPricingConfig": "Product Pricing Config",
       "newPackageProduct": "New Package Product",
       "updatePackageProduct": "Update Package Product",
+      "packageInfo": "Package Info",
       "types": {
         "title": "Package Types",
         "newPackageType": "New Package Type",
@@ -956,7 +957,8 @@
       "googleAddressId": "Google Address ID",
       "endClient": "End Client",
       "businessPartner": "Business Partner",
-      "enterpriseRoot": "Enterprise Root"
+      "enterpriseRoot": "Enterprise Root",
+      "paymentInfo": "Payment Info"
     },
     "paymentTypes": {
       "title": "Payment Types",
@@ -1001,7 +1003,8 @@
       "googleAddressId": "Google Address ID",
       "endClient": "End Client",
       "businessPartner": "Business Partner",
-      "enterpriseRoot": "Enterprise Root"
+      "enterpriseRoot": "Enterprise Root",
+      "organizationUnitInfo": "Organization Unit Info"
     },
     "businessPartners": {
       "title": "Business Partners",

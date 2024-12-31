@@ -6,9 +6,9 @@ import { Breadcrumbs } from '@/components/breadcrumbs/breadcrumbs'
 import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useBusinessPartnerCustomer } from '@/services/swr/use-business-partner-customer'
-
-import { CustomerInfo } from './components/customer-info'
+import { safeRender } from '@/utils/safeRender'
 
 export default function BusinessPartnerCustomerDetails({
   params,
@@ -19,11 +19,27 @@ export default function BusinessPartnerCustomerDetails({
 
   const { data, isLoading } = useBusinessPartnerCustomer(params.id, params.customerId)
 
+  const customerFields = [
+    { label: t('name'), value: safeRender(data, 'endclient.name') },
+    { label: t('type'), value: safeRender(data, 'endclient.type.type') },
+    { label: t('status'), value: safeRender(data, 'endclient.status.status') },
+    { label: t('accountNumber'), value: safeRender(data, 'endclient.accountNumber') },
+    { label: t('referenceId'), value: safeRender(data, 'endclient.referenceId') },
+    { label: t('afasId'), value: safeRender(data, 'endclient.afasId') },
+  ]
+
   const tabs = [
     {
       eventKey: 'customerInfo',
       title: t('customerInfo'),
-      content: <CustomerInfo data={data} isLoading={isLoading} />,
+      content: (
+        <FieldTextView
+          fields={customerFields}
+          isLoading={isLoading}
+          translation="dataManagement.businessPartners.customers"
+          title={t('customerInfo')}
+        />
+      ),
       condition: Boolean(data),
     },
   ]

@@ -1,13 +1,12 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
-import { TextView } from '@/components/view/text-view/text-view'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { PackageProduct, PackageService } from '@/services/swr/models/package.type'
 import { usePackage } from '@/services/swr/use-package'
 import { safeRender } from '@/utils/safeRender'
@@ -66,88 +65,105 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
     },
   ]
 
+  const packageInfoFields = [
+    { label: t('name'), value: safeRender(data, 'name') },
+    { label: t('type'), value: safeRender(data, 'packageType.name') },
+    {
+      label: t('price'),
+      value: `${safeRender(data, 'priceConfig.priceCurrency.currency')} ${safeRender(
+        data,
+        'priceConfig.priceValue'
+      )}`,
+    },
+    {
+      label: t('priceUnit'),
+      value: safeRender(data, 'priceConfig.priceUnit.unit'),
+    },
+    {
+      label: t('priceInterval'),
+      value: safeRender(data, 'priceConfig.priceInterval.name'),
+    },
+    {
+      label: t('priceType'),
+      value: safeRender(data, 'priceConfig.priceType.type'),
+    },
+    {
+      label: t('tax'),
+      value: `${safeRender(data, 'priceConfig.priceTax.country.currency')} ${safeRender(
+        data,
+        'priceConfig.priceTax.taxValue'
+      )} / ${safeRender(data, 'priceConfig.priceTax.priceUnit.unit')}`,
+    },
+  ]
+
+  const tabs = [
+    {
+      eventKey: 'packageInfo',
+      title: t('packageInfo'),
+      content: (
+        <FieldTextView
+          fields={packageInfoFields}
+          isLoading={isLoading}
+          translation="dataManagement.packages"
+          title={t('packageInfo')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'packageServices',
+      title: t('packageServices'),
+      content: (
+        <Table<PackageService>
+          className="mt-4"
+          title={t('packageServices')}
+          toolbars={[
+            {
+              icon: 'plus',
+              label: t('newPackageService'),
+              colorClass: 'light-primary',
+              href: `${params.id}/services/new`,
+            },
+          ]}
+          filters={<PackageServiceFilter />}
+          columns={serviceColumns}
+          apiPath={`packages/${params.id}/services`}
+          actionBasePath={`${params.id}/services`}
+          actions={['edit', 'delete']}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'packageProducts',
+      title: t('packageProducts'),
+      content: (
+        <Table<PackageProduct>
+          className="mt-4"
+          title={t('packageProducts')}
+          toolbars={[
+            {
+              icon: 'plus',
+              label: t('newPackageProduct'),
+              colorClass: 'light-primary',
+              href: `${params.id}/products/new`,
+            },
+          ]}
+          filters={<PackageProductFilter />}
+          columns={productColumns}
+          apiPath={`packages/${params.id}/products`}
+          actionBasePath={`${params.id}/products`}
+          actions={['edit', 'delete']}
+        />
+      ),
+      condition: Boolean(data),
+    },
+  ]
+
   return (
     <>
       <PageTitle title={data?.name || ''} />
-
-      <Page>
-        <Row>
-          <TextView className="my-3" isLoading={isLoading} label={t('name')} value={data?.name} />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('type')}
-            value={data?.packageType?.name}
-          />
-        </Row>
-
-        <Row className="mt-6">
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('price')}
-            value={`${data?.priceConfig?.priceCurrency?.currency} ${data?.priceConfig?.priceValue}`}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('priceUnit')}
-            value={data?.priceConfig?.priceUnit?.unit}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('priceInterval')}
-            value={data?.priceConfig?.priceInterval?.name}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('priceType')}
-            value={data?.priceConfig?.priceType?.type}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('tax')}
-            value={`${data?.priceConfig?.priceTax.country.currency} ${data?.priceConfig?.priceTax.taxValue} / ${data?.priceConfig?.priceTax.priceUnit.unit}`}
-          />
-        </Row>
-      </Page>
-      <Table<PackageService>
-        className="mt-4"
-        title={t('packageServices')}
-        toolbars={[
-          {
-            icon: 'plus',
-            label: t('newPackageService'),
-            colorClass: 'light-primary',
-            href: `${params.id}/services/new`,
-          },
-        ]}
-        filters={<PackageServiceFilter />}
-        columns={serviceColumns}
-        apiPath={`packages/${params.id}/services`}
-        actionBasePath={`${params.id}/services`}
-        actions={['edit', 'delete']}
-      />
-      <Table<PackageProduct>
-        className="mt-4"
-        title={t('packageProducts')}
-        toolbars={[
-          {
-            icon: 'plus',
-            label: t('newPackageProduct'),
-            colorClass: 'light-primary',
-            href: `${params.id}/products/new`,
-          },
-        ]}
-        filters={<PackageProductFilter />}
-        columns={productColumns}
-        apiPath={`packages/${params.id}/products`}
-        actionBasePath={`${params.id}/products`}
-        actions={['edit', 'delete']}
-      />
+      <DynamicTabs tabs={tabs} defaultActiveKey="packageInfo" />
     </>
   )
 }

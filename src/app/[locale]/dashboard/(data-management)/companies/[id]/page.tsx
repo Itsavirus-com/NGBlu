@@ -4,21 +4,36 @@ import { useTranslations } from 'next-intl'
 
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useCompany } from '@/services/swr/use-company'
+import { safeRender } from '@/utils/safeRender'
 
 import { Address } from './components/address'
-import { CompanyInfo } from './components/company-info'
 
 export default function CompanyDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.companies')
 
   const { data, isLoading } = useCompany(params.id)
 
+  const companyInfoFields = [
+    { label: t('name'), value: safeRender(data, 'companyname') },
+    { label: t('status'), value: safeRender(data, 'companyStatus.status') },
+    { label: t('vatNumber'), value: safeRender(data, 'vatNumber') },
+    { label: t('kvkNumber'), value: safeRender(data, 'chamberOfCommerceId') },
+  ]
+
   const tabs = [
     {
       eventKey: 'companyInfo',
       title: t('companyInfo'),
-      content: <CompanyInfo data={data} isLoading={isLoading} />,
+      content: (
+        <FieldTextView
+          fields={companyInfoFields}
+          isLoading={isLoading}
+          translation="dataManagement.companies"
+          title={t('companyInfo')}
+        />
+      ),
       condition: Boolean(data),
     },
     {

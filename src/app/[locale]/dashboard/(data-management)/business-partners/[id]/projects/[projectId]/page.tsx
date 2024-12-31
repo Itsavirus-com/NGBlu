@@ -6,9 +6,9 @@ import { Breadcrumbs } from '@/components/breadcrumbs/breadcrumbs'
 import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useBusinessPartnerProject } from '@/services/swr/use-business-partner-project'
-
-import { ProjectInfo } from './components/project-info'
+import { safeRender } from '@/utils/safeRender'
 
 export default function BusinessPartnerProjectDetails({
   params,
@@ -19,11 +19,29 @@ export default function BusinessPartnerProjectDetails({
 
   const { data, isLoading } = useBusinessPartnerProject(params.id, params.projectId)
 
+  const projectFields = [
+    { label: t('projectName'), value: safeRender(data, 'project.projectName'), lg: 6 },
+    { label: t('projectType'), value: safeRender(data, 'project.projectType.projectType'), lg: 6 },
+    {
+      label: t('projectInfo'),
+      value: safeRender(data, 'project.projectInfo.projectInfo'),
+      md: 12,
+      lg: 12,
+    },
+  ]
+
   const tabs = [
     {
       eventKey: 'projectInfo',
       title: t('projectInfo'),
-      content: <ProjectInfo data={data} isLoading={isLoading} />,
+      content: (
+        <FieldTextView
+          fields={projectFields}
+          isLoading={isLoading}
+          translation="dataManagement.businessPartners.projects"
+          title={t('projectInfo')}
+        />
+      ),
       condition: Boolean(data),
     },
   ]

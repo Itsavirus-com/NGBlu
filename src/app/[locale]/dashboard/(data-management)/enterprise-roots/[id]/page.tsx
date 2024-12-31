@@ -8,6 +8,7 @@ import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { EnterpriseRootAddress } from '@/services/swr/models/enterprise-root-address.type'
 import { EnterpriseRootContact } from '@/services/swr/models/enterprise-root-contact.type'
 import { EnterpriseRootCustomer } from '@/services/swr/models/enterprise-root-customer.type'
@@ -19,7 +20,6 @@ import { safeRender } from '@/utils/safeRender'
 import { EnterpriseRootAddressFilter } from './components/enterprise-root-address-filter'
 import { EnterpriseRootContactFilter } from './components/enterprise-root-contact-filter'
 import { EnterpriseRootCustomerFilter } from './components/enterprise-root-customer-filter'
-import { EnterpriseRootInfo } from './components/enterprise-root-info'
 import { EnterpriseRootProjectFilter } from './components/enterprise-root-project-filter'
 import { EnterpriseRootUserFilter } from './components/enterprise-root-user-filter'
 
@@ -128,11 +128,28 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     },
   ]
 
+  const enterpriseRootInfoFields = [
+    { label: t('name'), value: safeRender(data, 'name') },
+    { label: t('addressesCount'), value: safeRender(data, 'addressesCount') },
+    { label: t('contactsCount'), value: safeRender(data, 'contactsCount') },
+    { label: t('usersCount'), value: safeRender(data, 'usersCount') },
+    { label: t('projectsCount'), value: safeRender(data, 'projectsCount') },
+    { label: t('customersCount'), value: safeRender(data, 'customersCount') },
+    { label: t('businessPartnersCount'), value: safeRender(data, 'businessPartnersCount') },
+  ]
+
   const tabs = [
     {
       eventKey: 'enterpriseRootInfo',
       title: t('enterpriseRootInfo'),
-      content: <EnterpriseRootInfo data={data} isLoading={isLoading} />,
+      content: (
+        <FieldTextView
+          fields={enterpriseRootInfoFields}
+          isLoading={isLoading}
+          translation="dataManagement.enterpriseRoots"
+          title={t('enterpriseRootInfo')}
+        />
+      ),
       condition: Boolean(data),
     },
     {

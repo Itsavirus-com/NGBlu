@@ -4,9 +4,9 @@ import { useTranslations } from 'next-intl'
 
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useEnterpriseRootAddress } from '@/services/swr/use-enterprise-root-address'
-
-import { AddressInfo } from './components/address-info'
+import { safeRender } from '@/utils/safeRender'
 
 export default function EnterpriseRootAddressDetails({
   params,
@@ -17,11 +17,35 @@ export default function EnterpriseRootAddressDetails({
 
   const { data, isLoading } = useEnterpriseRootAddress(params.id, params.addressId)
 
+  const addressInfoFields = [
+    { label: t('addressName'), value: safeRender(data, 'address.addressName') },
+    { label: t('addressType'), value: safeRender(data, 'addressType.addressType') },
+    { label: t('streetName'), value: safeRender(data, 'address.streetname') },
+    { label: t('houseNumberSuffix'), value: safeRender(data, 'address.housenumberSuffix') },
+    { label: t('houseNumber'), value: safeRender(data, 'address.housenumber') },
+    { label: t('apartmentNumber'), value: safeRender(data, 'address.appartmentNumber') },
+    { label: t('area'), value: safeRender(data, 'address.area') },
+    { label: t('county'), value: safeRender(data, 'address.county') },
+    { label: t('city'), value: safeRender(data, 'address.city') },
+    { label: t('country'), value: safeRender(data, 'address.country.name') },
+    { label: t('postalCode'), value: safeRender(data, 'address.postalcode') },
+    { label: t('latitude'), value: safeRender(data, 'address.lat') },
+    { label: t('longitude'), value: safeRender(data, 'address.lng') },
+    { label: t('googleAddressId'), value: safeRender(data, 'address.googleAddressId') },
+  ]
+
   const tabs = [
     {
       eventKey: 'addressInfo',
       title: t('addressInfo'),
-      content: <AddressInfo data={data} isLoading={isLoading} />,
+      content: (
+        <FieldTextView
+          fields={addressInfoFields}
+          isLoading={isLoading}
+          translation="dataManagement.enterpriseRoots.addresses"
+          title={t('addressInfo')}
+        />
+      ),
       condition: Boolean(data),
     },
   ]

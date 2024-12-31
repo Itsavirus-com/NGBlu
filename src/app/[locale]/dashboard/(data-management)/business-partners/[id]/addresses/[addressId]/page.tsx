@@ -4,9 +4,9 @@ import { useTranslations } from 'next-intl'
 
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useBusinessPartnerAddress } from '@/services/swr/use-business-partner-address'
-
-import { AddressInfo } from './components/address-info'
+import { safeRender } from '@/utils/safeRender'
 
 export default function BusinessPartnerAddressDetails({
   params,
@@ -17,11 +17,31 @@ export default function BusinessPartnerAddressDetails({
 
   const { data, isLoading } = useBusinessPartnerAddress(params.id, params.addressId)
 
+  const addressInfoFields = [
+    { label: t('addressName'), value: safeRender(data, 'address.addressName') },
+    { label: t('streetName'), value: safeRender(data, 'address.streetname') },
+    { label: t('houseNumberSuffix'), value: safeRender(data, 'address.housenumberSuffix') },
+    { label: t('houseNumber'), value: safeRender(data, 'address.housenumber') },
+    { label: t('apartmentNumber'), value: safeRender(data, 'address.appartmentNumber') },
+    { label: t('area'), value: safeRender(data, 'address.area') },
+    { label: t('county'), value: safeRender(data, 'address.county') },
+    { label: t('city'), value: safeRender(data, 'address.city') },
+    { label: t('country'), value: safeRender(data, 'address.country.name') },
+    { label: t('postalCode'), value: safeRender(data, 'address.postalcode') },
+  ]
+
   const tabs = [
     {
       eventKey: 'addressInfo',
       title: t('addressInfo'),
-      content: <AddressInfo data={data?.address} isLoading={isLoading} />,
+      content: (
+        <FieldTextView
+          fields={addressInfoFields}
+          isLoading={isLoading}
+          translation="dataManagement.businessPartners.addresses"
+          title={t('addressInfo')}
+        />
+      ),
       condition: Boolean(data),
     },
   ]

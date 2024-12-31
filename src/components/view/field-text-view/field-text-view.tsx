@@ -10,7 +10,7 @@ export const FieldTextView = ({ isLoading, title, fields, translation }: FieldTe
   const t = useTranslations(translation)
 
   return (
-    <Page title={title} className="pt-5">
+    <Page title={title || ''} className="pt-5">
       <Row>
         {fields.map(({ label, value, ...props }, index) => (
           <TextView

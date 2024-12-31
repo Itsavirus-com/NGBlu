@@ -14,7 +14,7 @@ interface EndClientInfoProps {
 export default function EndClientInfo({ data, isLoading }: EndClientInfoProps) {
   const t = useTranslations('dataManagement.endClients')
 
-  const fields1 = [
+  const generalInfoFields = [
     { label: t('name'), value: data?.name },
     { label: t('type'), value: data?.type?.type },
     { label: t('status'), value: data?.status?.status },
@@ -23,7 +23,7 @@ export default function EndClientInfo({ data, isLoading }: EndClientInfoProps) {
     { label: t('afasId'), value: data?.afasId },
   ]
 
-  const fields2 = [
+  const addressInfoFields = [
     { label: t('addressName'), value: data?.locationAddress?.addressName },
     { label: t('streetName'), value: data?.locationAddress?.streetname },
     { label: t('houseNumberSuffix'), value: data?.locationAddress?.housenumberSuffix },
@@ -40,7 +40,7 @@ export default function EndClientInfo({ data, isLoading }: EndClientInfoProps) {
     <>
       <Page title={t('endClientInfo')} className="pt-5">
         <Row>
-          {fields1.map(({ label, value }, index) => (
+          {generalInfoFields.map(({ label, value }, index) => (
             <TextView
               key={index}
               className="my-3"
@@ -51,7 +51,7 @@ export default function EndClientInfo({ data, isLoading }: EndClientInfoProps) {
           ))}
         </Row>
         <Row>
-          {fields2.map(({ label, value }, index) => (
+          {addressInfoFields.map(({ label, value }, index) => (
             <TextView
               key={index}
               className="my-3"
