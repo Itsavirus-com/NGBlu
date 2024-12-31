@@ -1,12 +1,12 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
-import { TextView } from '@/components/view/text-view/text-view'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useCompany } from '@/services/swr/use-company'
+import { safeRender } from '@/utils/safeRender'
 
 import { Address } from './components/address'
 
@@ -15,54 +15,69 @@ export default function CompanyDetails({ params }: { params: { id: number } }) {
 
   const { data, isLoading } = useCompany(params.id)
 
+  const companyInfoFields = [
+    { label: t('name'), value: safeRender(data, 'companyname') },
+    { label: t('status'), value: safeRender(data, 'companyStatus.status') },
+    { label: t('vatNumber'), value: safeRender(data, 'vatNumber') },
+    { label: t('kvkNumber'), value: safeRender(data, 'chamberOfCommerceId') },
+  ]
+
+  const tabs = [
+    {
+      eventKey: 'companyInfo',
+      title: t('companyInfo'),
+      content: (
+        <FieldTextView
+          fields={companyInfoFields}
+          isLoading={isLoading}
+          translation="dataManagement.companies"
+          title={t('companyInfo')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'legalAddress',
+      title: t('legalAddress'),
+      content: (
+        <Address title={t('legalAddress')} address={data?.legalAddress!} isLoading={isLoading} />
+      ),
+      condition: Boolean(data?.legalAddress),
+    },
+    {
+      eventKey: 'visitAddress',
+      title: t('visitAddress'),
+      content: (
+        <Address title={t('visitAddress')} address={data?.visitAddress!} isLoading={isLoading} />
+      ),
+      condition: Boolean(data?.visitAddress),
+    },
+    {
+      eventKey: 'postalAddress',
+      title: t('postalAddress'),
+      content: (
+        <Address title={t('postalAddress')} address={data?.postalAddress!} isLoading={isLoading} />
+      ),
+      condition: Boolean(data?.postalAddress),
+    },
+    {
+      eventKey: 'invoiceAddress',
+      title: t('invoiceAddress'),
+      content: (
+        <Address
+          title={t('invoiceAddress')}
+          address={data?.invoiceAddress!}
+          isLoading={isLoading}
+        />
+      ),
+      condition: Boolean(data?.invoiceAddress),
+    },
+  ]
+
   return (
     <>
       <PageTitle title={data?.companyname || ''} />
-
-      <Page title={t('generalInfo')}>
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('name')}
-            value={data?.companyname}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('status')}
-            value={data?.companyStatus?.status}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('vatNumber')}
-            value={data?.vatNumber}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('kvkNumber')}
-            value={data?.chamberOfCommerceId}
-          />
-        </Row>
-      </Page>
-
-      {data?.legalAddress && (
-        <Address title={t('legalAddress')} address={data.legalAddress} isLoading={isLoading} />
-      )}
-
-      {data?.visitAddress && (
-        <Address title={t('visitAddress')} address={data.visitAddress} isLoading={isLoading} />
-      )}
-
-      {data?.postalAddress && (
-        <Address title={t('postalAddress')} address={data.postalAddress} isLoading={isLoading} />
-      )}
-
-      {data?.invoiceAddress && (
-        <Address title={t('invoiceAddress')} address={data.invoiceAddress} isLoading={isLoading} />
-      )}
+      <DynamicTabs tabs={tabs} defaultActiveKey="companyInfo" />
     </>
   )
 }

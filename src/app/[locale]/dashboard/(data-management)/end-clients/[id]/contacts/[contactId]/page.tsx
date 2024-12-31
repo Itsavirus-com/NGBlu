@@ -1,12 +1,12 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
-import { TextView } from '@/components/view/text-view/text-view'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useEndClientContact } from '@/services/swr/use-end-client-contact'
+import { safeRender } from '@/utils/safeRender'
 
 export default function EndClientContactDetails({
   params,
@@ -17,44 +17,34 @@ export default function EndClientContactDetails({
 
   const { data, isLoading } = useEndClientContact(params.id, params.contactId)
 
+  const contactFields = [
+    { label: 'Contact Info', value: safeRender(data, 'contactInfo.contactInfo') },
+    { label: 'Contact Type', value: safeRender(data, 'contactInfo.contactType.contactType') },
+    { label: 'Responsibility', value: safeRender(data, 'responsibility.responsibility') },
+    { label: 'Person', value: safeRender(data, 'personId') },
+    { label: 'Enterprise Root', value: safeRender(data, 'enterpriseRootId') },
+  ]
+
+  const tabs = [
+    {
+      eventKey: 'contactInfo',
+      title: t('contactInfo'),
+      content: (
+        <FieldTextView
+          fields={contactFields}
+          isLoading={isLoading}
+          translation="dataManagement.endClients.contacts"
+          title={t('contactInfo')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+  ]
+
   return (
     <>
       <PageTitle title={t('title')} />
-
-      <Page>
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('contactInfo')}
-            value={data?.contactInfo.contactInfo}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('contactInfo')}
-            value={data?.contactInfo.contactType.contactType}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('responsibility')}
-            value={data?.responsibility.responsibility}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('person')}
-            value={data?.personId}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('enterpriseRoot')}
-            value={data?.enterpriseRootId}
-          />
-        </Row>
-      </Page>
+      <DynamicTabs tabs={tabs} defaultActiveKey="contactInfo" />
     </>
   )
 }

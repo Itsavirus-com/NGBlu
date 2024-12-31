@@ -1,14 +1,14 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
 import { Breadcrumbs } from '@/components/breadcrumbs/breadcrumbs'
 import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
-import { TextView } from '@/components/view/text-view/text-view'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useEnterpriseRootCustomer } from '@/services/swr/use-enterprise-root-customer'
+import { safeRender } from '@/utils/safeRender'
 
 export default function EnterpriseRootCustomerDetails({
   params,
@@ -19,137 +19,77 @@ export default function EnterpriseRootCustomerDetails({
 
   const { data, isLoading } = useEnterpriseRootCustomer(params.id, params.customerId)
 
+  const customerInfoFields = [
+    { label: t('name'), value: safeRender(data, 'endclient.name') },
+    { label: t('type'), value: safeRender(data, 'endclient.type.type') },
+    { label: t('status'), value: safeRender(data, 'endclient.status.status') },
+    { label: t('accountNumber'), value: safeRender(data, 'endclient.accountNumber') },
+    { label: t('referenceId'), value: safeRender(data, 'endclient.referenceId') },
+    { label: t('afasId'), value: safeRender(data, 'endclient.afasId') },
+  ]
+
+  const addressFields = [
+    { label: t('addressName'), value: safeRender(data, 'enterpriseRootAddresses.addressName') },
+    { label: t('streetName'), value: safeRender(data, 'enterpriseRootAddresses.streetname') },
+    {
+      label: t('houseNumberSuffix'),
+      value: safeRender(data, 'enterpriseRootAddresses.housenumberSuffix'),
+    },
+    { label: t('houseNumber'), value: safeRender(data, 'enterpriseRootAddresses.housenumber') },
+    {
+      label: t('apartmentNumber'),
+      value: safeRender(data, 'enterpriseRootAddresses.appartmentNumber'),
+    },
+    { label: t('area'), value: safeRender(data, 'enterpriseRootAddresses.area') },
+    { label: t('county'), value: safeRender(data, 'enterpriseRootAddresses.county') },
+    { label: t('city'), value: safeRender(data, 'enterpriseRootAddresses.city') },
+    { label: t('country'), value: safeRender(data, 'enterpriseRootAddresses.country.name') },
+    { label: t('postalCode'), value: safeRender(data, 'enterpriseRootAddresses.postalcode') },
+    { label: t('latitude'), value: safeRender(data, 'enterpriseRootAddresses.lat') },
+    { label: t('longitude'), value: safeRender(data, 'enterpriseRootAddresses.lng') },
+    {
+      label: t('googleAddressId'),
+      value: safeRender(data, 'enterpriseRootAddresses.googleAddressId'),
+    },
+  ]
+
+  const tabs = [
+    {
+      eventKey: 'customerInfo',
+      title: t('endClientInfo'),
+      content: (
+        <FieldTextView
+          fields={customerInfoFields}
+          isLoading={isLoading}
+          translation="dataManagement.enterpriseRoots.customers"
+          title={t('endClientInfo')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'address',
+      title: t('address'),
+      content: (
+        <FieldTextView
+          fields={addressFields}
+          isLoading={isLoading}
+          translation="dataManagement.enterpriseRoots.customers"
+          title={t('address')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+  ]
+
   return (
     <>
       <div className="app-container">
         <Breadcrumbs items={getBreadcrumbItems(data)} />
       </div>
 
-      <PageTitle title={data?.endclient.name || ''} />
-
-      <Page title={t('endClient')}>
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('name')}
-            value={data?.endclient.name}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('type')}
-            value={data?.endclient.type?.type}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('status')}
-            value={data?.endclient.status?.status}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('accountNumber')}
-            value={data?.endclient.accountNumber}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('referenceId')}
-            value={data?.endclient.referenceId}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('afasId')}
-            value={data?.endclient.afasId}
-          />
-        </Row>
-      </Page>
-
-      <Page title={t('address')} className="mt-4">
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('addressName')}
-            value={data?.enterpriseRootAddresses.addressName}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('streetName')}
-            value={data?.enterpriseRootAddresses.streetname}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('houseNumberSuffix')}
-            value={data?.enterpriseRootAddresses.housenumberSuffix}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('houseNumber')}
-            value={data?.enterpriseRootAddresses.housenumber}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('apartmentNumber')}
-            value={data?.enterpriseRootAddresses.appartmentNumber}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('area')}
-            value={data?.enterpriseRootAddresses.area}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('county')}
-            value={data?.enterpriseRootAddresses.county}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('city')}
-            value={data?.enterpriseRootAddresses.city}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('country')}
-            value={data?.enterpriseRootAddresses.country?.name}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('postalCode')}
-            value={data?.enterpriseRootAddresses.postalcode}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('latitude')}
-            value={data?.enterpriseRootAddresses.lat}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('longitude')}
-            value={data?.enterpriseRootAddresses.lng}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('googleAddressId')}
-            value={data?.enterpriseRootAddresses.googleAddressId}
-          />
-        </Row>
-      </Page>
+      <PageTitle title={data?.endclient?.name || ''} />
+      <DynamicTabs tabs={tabs} defaultActiveKey="customerInfo" />
     </>
   )
 }

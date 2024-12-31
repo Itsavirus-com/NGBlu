@@ -1,12 +1,15 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
-import { TextView } from '@/components/view/text-view/text-view'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useEndClientProject } from '@/services/swr/use-end-client-project'
+import { safeRender } from '@/utils/safeRender'
+
+import { ProjectAddress } from './components/project-address'
+import { ProjectInfo } from './components/project-info'
 
 export default function EndClientProjectDetails({
   params,
@@ -17,101 +20,66 @@ export default function EndClientProjectDetails({
 
   const { data, isLoading } = useEndClientProject(params.id, params.projectId)
 
+  const addressFields = [
+    { label: t('addressName'), value: safeRender(data, 'endclientAddress.addressName') },
+    { label: t('streetName'), value: safeRender(data, 'endclientAddress.streetname') },
+    {
+      label: t('houseNumberSuffix'),
+      value: safeRender(data, 'endclientAddress.housenumberSuffix'),
+    },
+    { label: t('houseNumber'), value: safeRender(data, 'endclientAddress.housenumber') },
+    { label: t('apartmentNumber'), value: safeRender(data, 'endclientAddress.appartmentNumber') },
+    { label: t('area'), value: safeRender(data, 'endclientAddress.area') },
+    { label: t('county'), value: safeRender(data, 'endclientAddress.county') },
+    { label: t('city'), value: safeRender(data, 'endclientAddress.city') },
+    { label: t('country'), value: safeRender(data, 'endclientAddress.country.name') },
+    { label: t('postalCode'), value: safeRender(data, 'endclientAddress.postalcode') },
+  ]
+
+  const projectInfoFields = [
+    { label: t('projectName'), value: safeRender(data, 'project.projectName'), lg: 6 },
+    { label: t('projectType'), value: safeRender(data, 'project.projectType.projectType'), lg: 6 },
+    {
+      label: t('projectInfo'),
+      value: safeRender(data, 'project.projectInfo.projectInfo'),
+      md: 12,
+      lg: 12,
+    },
+  ]
+
+  const tabs = [
+    {
+      eventKey: 'projectInfo',
+      title: t('projectInfo'),
+      content: (
+        <FieldTextView
+          fields={projectInfoFields}
+          isLoading={isLoading}
+          translation="dataManagement.endClients.projects"
+          title={t('projectInfo')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'address',
+      title: t('address'),
+      content: (
+        <FieldTextView
+          fields={addressFields}
+          isLoading={isLoading}
+          translation="dataManagement.endClients.projects"
+          title={t('address')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+  ]
+
   return (
     <>
       <PageTitle title={t('title')} />
-
-      <Page title={t('address')}>
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('addressName')}
-            value={data?.endclientAddress.addressName}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('streetName')}
-            value={data?.endclientAddress.streetname}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('houseNumberSuffix')}
-            value={data?.endclientAddress.housenumberSuffix}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('houseNumber')}
-            value={data?.endclientAddress.housenumber}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('apartmentNumber')}
-            value={data?.endclientAddress.appartmentNumber}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('area')}
-            value={data?.endclientAddress.area}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('county')}
-            value={data?.endclientAddress.county}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('city')}
-            value={data?.endclientAddress.city}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('country')}
-            value={data?.endclientAddress.country?.name}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('postalCode')}
-            value={data?.endclientAddress.postalcode}
-          />
-        </Row>
-      </Page>
-
-      <Page title={t('project')} className="mt-4">
-        <Row>
-          <TextView
-            lg={6}
-            className="my-3"
-            isLoading={isLoading}
-            label={t('projectName')}
-            value={data?.project.projectName}
-          />
-          <TextView
-            lg={6}
-            className="my-3"
-            isLoading={isLoading}
-            label={t('projectType')}
-            value={data?.project.projectType?.projectType}
-          />
-          <TextView
-            md={12}
-            lg={12}
-            className="my-3"
-            isLoading={isLoading}
-            label={t('projectInfo')}
-            value={data?.project.projectInfo?.projectInfo}
-          />
-        </Row>
-      </Page>
+      <DynamicTabs tabs={tabs} defaultActiveKey="projectInfo" />
     </>
   )
 }

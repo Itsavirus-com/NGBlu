@@ -1,13 +1,14 @@
 'use client'
 
+import dayjs from 'dayjs'
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
-import { DateTimeView } from '@/components/view/date-time-view/date-time-view'
-import { TextView } from '@/components/view/text-view/text-view'
+import { dateTimeFormats } from '@/components/view/date-time-view/date-time-view.type'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useEndClientPaymentDetail } from '@/services/swr/use-end-client-payment-detail'
+import { safeRender } from '@/utils/safeRender'
 
 export default function EndClientPaymentDetails({
   params,
@@ -21,167 +22,109 @@ export default function EndClientPaymentDetails({
     Number(params.paymentDetailId)
   )
 
+  const bankAddressFields = [
+    { label: t('addressName'), value: safeRender(data, 'paymentInfo.bankAddress.addressName') },
+    { label: t('streetName'), value: safeRender(data, 'paymentInfo.bankAddress.streetname') },
+    {
+      label: t('houseNumberSuffix'),
+      value: safeRender(data, 'paymentInfo.bankAddress.housenumberSuffix'),
+    },
+    { label: t('houseNumber'), value: safeRender(data, 'paymentInfo.bankAddress.housenumber') },
+    {
+      label: t('apartmentNumber'),
+      value: safeRender(data, 'paymentInfo.bankAddress.appartmentNumber'),
+    },
+    { label: t('area'), value: safeRender(data, 'paymentInfo.bankAddress.area') },
+    { label: t('county'), value: safeRender(data, 'paymentInfo.bankAddress.county') },
+    { label: t('city'), value: safeRender(data, 'paymentInfo.bankAddress.city') },
+    { label: t('country'), value: safeRender(data, 'paymentInfo.bankAddress.country.name') },
+    { label: t('postalCode'), value: safeRender(data, 'paymentInfo.bankAddress.postalcode') },
+    { label: t('latitude'), value: safeRender(data, 'paymentInfo.bankAddress.lat') },
+    { label: t('longitude'), value: safeRender(data, 'paymentInfo.bankAddress.lng') },
+    {
+      label: t('googleAddressId'),
+      value: safeRender(data, 'paymentInfo.bankAddress.googleAddressId'),
+    },
+  ]
+
+  const creditCardFields = [
+    { label: t('creditCardNumber'), value: safeRender(data, 'paymentInfo.creditcardNumber') },
+    { label: t('ccv'), value: safeRender(data, 'paymentInfo.ccv') },
+    {
+      label: t('validTo'),
+      value: data?.paymentInfo.validTo
+        ? dayjs(data.paymentInfo.validTo).format(dateTimeFormats.date)
+        : '-',
+    },
+    {
+      label: t('creditCardType'),
+      value: safeRender(data, 'paymentInfo.creditCardType.creditcardType'),
+    },
+    {
+      label: t('creditCardBrand'),
+      value: safeRender(data, 'paymentInfo.creditCardBrand.brandname'),
+    },
+  ]
+
+  const detailInfoFields = [
+    {
+      label: t('personName'),
+      value: data?.paymentInfo.person
+        ? `${data?.paymentInfo.person.firstname} ${data?.paymentInfo.person.lastname}`
+        : '-',
+    },
+    { label: t('paymentType'), value: safeRender(data, 'paymentInfo.paymentType.paymentType') },
+    { label: t('bankName'), value: safeRender(data, 'paymentInfo.bankname') },
+    { label: t('bankIban'), value: safeRender(data, 'paymentInfo.bankIban') },
+    { label: t('bankBic'), value: safeRender(data, 'paymentInfo.bankBic') },
+  ]
+
+  const tabs = [
+    {
+      eventKey: 'generalInfo',
+      title: t('generalInfo'),
+      content: (
+        <FieldTextView
+          fields={detailInfoFields}
+          isLoading={isLoading}
+          translation="dataManagement.endClients.paymentDetails"
+          title={t('generalInfo')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'creditCardInfo',
+      title: t('creditCardInfo'),
+      content: (
+        <FieldTextView
+          fields={creditCardFields}
+          isLoading={isLoading}
+          translation="dataManagement.endClients.paymentDetails"
+          title={t('creditCardInfo')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'bankAddress',
+      title: t('bankAddress'),
+      content: (
+        <FieldTextView
+          fields={bankAddressFields}
+          isLoading={isLoading}
+          translation="dataManagement.endClients.paymentDetails"
+          title={t('bankAddress')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+  ]
+
   return (
     <>
       <PageTitle title={t('title')} />
-
-      <Page title={t('generalInfo')}>
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('personName')}
-            value={
-              data?.paymentInfo.person
-                ? `${data?.paymentInfo.person.firstname} ${data?.paymentInfo.person.lastname}`
-                : '-'
-            }
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('paymentType')}
-            value={data?.paymentInfo.paymentType?.paymentType}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('bankName')}
-            value={data?.paymentInfo.bankname}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('bankIban')}
-            value={data?.paymentInfo.bankIban}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('bankBic')}
-            value={data?.paymentInfo.bankBic}
-          />
-        </Row>
-      </Page>
-
-      <Page title={t('creditCardInfo')} className="mt-5">
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('creditCardNumber')}
-            value={data?.paymentInfo.creditcardNumber}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('ccv')}
-            value={data?.paymentInfo.ccv}
-          />
-          <DateTimeView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('validTo')}
-            value={data?.paymentInfo.validTo}
-            format="date"
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('creditCardType')}
-            value={data?.paymentInfo.creditCardType.creditcardType}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('creditCardBrand')}
-            value={data?.paymentInfo.creditCardBrand.brandname}
-          />
-        </Row>
-      </Page>
-
-      <Page title={t('bankAddress')} className="mt-5">
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('addressName')}
-            value={data?.paymentInfo.bankAddress?.addressName}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('streetName')}
-            value={data?.paymentInfo.bankAddress?.streetname}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('houseNumberSuffix')}
-            value={data?.paymentInfo.bankAddress?.housenumberSuffix}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('houseNumber')}
-            value={data?.paymentInfo.bankAddress?.housenumber}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('apartmentNumber')}
-            value={data?.paymentInfo.bankAddress?.appartmentNumber}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('area')}
-            value={data?.paymentInfo.bankAddress?.area}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('county')}
-            value={data?.paymentInfo.bankAddress?.county}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('city')}
-            value={data?.paymentInfo.bankAddress?.city}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('country')}
-            value={data?.paymentInfo.bankAddress?.country?.name}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('postalCode')}
-            value={data?.paymentInfo.bankAddress?.postalcode}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('latitude')}
-            value={data?.paymentInfo.bankAddress?.lat}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('longitude')}
-            value={data?.paymentInfo.bankAddress?.lng}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('googleAddressId')}
-            value={data?.paymentInfo.bankAddress?.googleAddressId}
-          />
-        </Row>
-      </Page>
+      <DynamicTabs tabs={tabs} defaultActiveKey="generalInfo" />
     </>
   )
 }

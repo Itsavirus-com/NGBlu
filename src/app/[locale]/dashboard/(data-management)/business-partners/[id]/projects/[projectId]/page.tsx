@@ -1,14 +1,14 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
 import { Breadcrumbs } from '@/components/breadcrumbs/breadcrumbs'
 import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
-import { TextView } from '@/components/view/text-view/text-view'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useBusinessPartnerProject } from '@/services/swr/use-business-partner-project'
+import { safeRender } from '@/utils/safeRender'
 
 export default function BusinessPartnerProjectDetails({
   params,
@@ -19,40 +19,40 @@ export default function BusinessPartnerProjectDetails({
 
   const { data, isLoading } = useBusinessPartnerProject(params.id, params.projectId)
 
+  const projectFields = [
+    { label: t('projectName'), value: safeRender(data, 'project.projectName'), lg: 6 },
+    { label: t('projectType'), value: safeRender(data, 'project.projectType.projectType'), lg: 6 },
+    {
+      label: t('projectInfo'),
+      value: safeRender(data, 'project.projectInfo.projectInfo'),
+      md: 12,
+      lg: 12,
+    },
+  ]
+
+  const tabs = [
+    {
+      eventKey: 'projectInfo',
+      title: t('projectInfo'),
+      content: (
+        <FieldTextView
+          fields={projectFields}
+          isLoading={isLoading}
+          translation="dataManagement.businessPartners.projects"
+          title={t('projectInfo')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+  ]
+
   return (
     <>
       <div className="app-container">
         <Breadcrumbs items={getBreadcrumbItems(data)} />
       </div>
-
       <PageTitle title={t('title')} />
-
-      <Page title={t('project')} className="mt-4">
-        <Row>
-          <TextView
-            lg={6}
-            className="my-3"
-            isLoading={isLoading}
-            label={t('projectName')}
-            value={data?.project.projectName}
-          />
-          <TextView
-            lg={6}
-            className="my-3"
-            isLoading={isLoading}
-            label={t('projectType')}
-            value={data?.project.projectType?.projectType}
-          />
-          <TextView
-            md={12}
-            lg={12}
-            className="my-3"
-            isLoading={isLoading}
-            label={t('projectInfo')}
-            value={data?.project.projectInfo?.projectInfo}
-          />
-        </Row>
-      </Page>
+      <DynamicTabs tabs={tabs} defaultActiveKey="projectInfo" />
     </>
   )
 }

@@ -1,12 +1,14 @@
 'use client'
 
+import dayjs from 'dayjs'
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
-import { TextView } from '@/components/view/text-view/text-view'
+import { dateTimeFormats } from '@/components/view/date-time-view/date-time-view.type'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useEnterpriseRootUser } from '@/services/swr/use-enterprise-root-user'
+import { safeRender } from '@/utils/safeRender'
 
 export default function EnterpriseRootUserDetails({
   params,
@@ -17,109 +19,64 @@ export default function EnterpriseRootUserDetails({
 
   const { data, isLoading } = useEnterpriseRootUser(params.id, params.userId)
 
+  const userInfoFields = [
+    { label: t('displayName'), value: safeRender(data, 'user.displayName') },
+    { label: t('email'), value: safeRender(data, 'user.email') },
+    {
+      label: t('lastLogin'),
+      value: data?.user.lastLogin
+        ? dayjs(data.user.lastLogin).format(dateTimeFormats.default)
+        : '-',
+    },
+    { label: t('blocked'), value: safeRender(data, 'user.blockedAt') ? t('yes') : t('no') },
+  ]
+
+  const contactFields = [
+    { label: t('salutation'), value: safeRender(data, 'person.salutation') },
+    { label: t('firstName'), value: safeRender(data, 'person.firstname') },
+    { label: t('lastName'), value: safeRender(data, 'person.lastname') },
+    { label: t('nameSuffix'), value: safeRender(data, 'person.nameSuffix') },
+    { label: t('pronounce'), value: safeRender(data, 'person.pronounce') },
+    { label: t('gender'), value: safeRender(data, 'person.gender.gender') },
+    { label: t('personType'), value: safeRender(data, 'person.personType.type') },
+    { label: t('titles'), value: safeRender(data, 'person.titles') },
+    { label: t('department'), value: safeRender(data, 'person.department') },
+    { label: t('role'), value: safeRender(data, 'person.role') },
+  ]
+
+  const tabs = [
+    {
+      eventKey: 'userInfo',
+      title: t('userInfo'),
+      content: (
+        <FieldTextView
+          fields={userInfoFields}
+          isLoading={isLoading}
+          translation="dataManagement.enterpriseRoots.users"
+          title={t('userInfo')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'contact',
+      title: t('personInfo'),
+      content: (
+        <FieldTextView
+          fields={contactFields}
+          isLoading={isLoading}
+          translation="dataManagement.enterpriseRoots.users"
+          title={t('personInfo')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+  ]
+
   return (
     <>
       <PageTitle title={t('title')} />
-
-      <Page title={t('enterpriseRootUser')}>
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('displayName')}
-            value={data?.user.displayName}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('email')}
-            value={data?.user.email}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('lastLogin')}
-            value={data?.user.lastLogin || '-'}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('blocked')}
-            value={data?.user.blockedAt ? t('yes') : t('no')}
-          />
-        </Row>
-      </Page>
-
-      <Page title={t('enterpriseRootPerson')} className="mt-4">
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('salutation')}
-            value={data?.person.salutation}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('firstName')}
-            value={data?.person.firstname}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('lastName')}
-            value={data?.person.lastname}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('nameSuffix')}
-            value={data?.person.nameSuffix}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('nameSuffix')}
-            value={data?.person.nameSuffix}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('pronounce')}
-            value={data?.person.pronounce}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('gender')}
-            value={data?.person.gender?.gender}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('personType')}
-            value={data?.person.personType?.type}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('titles')}
-            value={data?.person.titles}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('department')}
-            value={data?.person.department}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('role')}
-            value={data?.person.role}
-          />
-        </Row>
-      </Page>
+      <DynamicTabs tabs={tabs} defaultActiveKey="userInfo" />
     </>
   )
 }

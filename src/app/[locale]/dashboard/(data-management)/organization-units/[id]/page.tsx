@@ -1,19 +1,51 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
 import { Breadcrumbs } from '@/components/breadcrumbs/breadcrumbs'
 import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
-import { TextView } from '@/components/view/text-view/text-view'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useOrganizationUnit } from '@/services/swr/use-organization-unit'
+import { safeRender } from '@/utils/safeRender'
 
 export default function OrganizationUnitDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.organizationUnits')
 
   const { data, isLoading } = useOrganizationUnit(params.id)
+
+  const organizationUnitInfoFields = [
+    { label: t('addressName'), value: safeRender(data, 'primaryAddress.addressName') },
+    { label: t('streetName'), value: safeRender(data, 'primaryAddress.streetname') },
+    { label: t('houseNumberSuffix'), value: safeRender(data, 'primaryAddress.housenumberSuffix') },
+    { label: t('houseNumber'), value: safeRender(data, 'primaryAddress.housenumber') },
+    { label: t('apartmentNumber'), value: safeRender(data, 'primaryAddress.appartmentNumber') },
+    { label: t('area'), value: safeRender(data, 'primaryAddress.area') },
+    { label: t('county'), value: safeRender(data, 'primaryAddress.county') },
+    { label: t('city'), value: safeRender(data, 'primaryAddress.city') },
+    { label: t('country'), value: safeRender(data, 'primaryAddress.country.name') },
+    { label: t('postalCode'), value: safeRender(data, 'primaryAddress.postalcode') },
+    { label: t('latitude'), value: safeRender(data, 'primaryAddress.lat') },
+    { label: t('longitude'), value: safeRender(data, 'primaryAddress.lng') },
+    { label: t('googleAddressId'), value: safeRender(data, 'primaryAddress.googleAddressId') },
+  ]
+
+  const tabs = [
+    {
+      eventKey: 'organizationUnitInfo',
+      title: t('organizationUnitInfo'),
+      content: (
+        <FieldTextView
+          fields={organizationUnitInfoFields}
+          isLoading={isLoading}
+          translation="dataManagement.organizationUnits"
+          title={t('organizationUnitInfo')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+  ]
 
   return (
     <>
@@ -22,89 +54,7 @@ export default function OrganizationUnitDetails({ params }: { params: { id: numb
       </div>
 
       <PageTitle title={data?.name || ''} />
-
-      <Page>
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('addressName')}
-            value={data?.primaryAddress?.addressName}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('streetName')}
-            value={data?.primaryAddress?.streetname}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('houseNumberSuffix')}
-            value={data?.primaryAddress?.housenumberSuffix}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('houseNumber')}
-            value={data?.primaryAddress?.housenumber}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('apartmentNumber')}
-            value={data?.primaryAddress?.appartmentNumber}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('area')}
-            value={data?.primaryAddress?.area}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('county')}
-            value={data?.primaryAddress?.county}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('city')}
-            value={data?.primaryAddress?.city}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('country')}
-            value={data?.primaryAddress?.country?.name}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('postalCode')}
-            value={data?.primaryAddress?.postalcode}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('latitude')}
-            value={data?.primaryAddress?.lat}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('longitude')}
-            value={data?.primaryAddress?.lng}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('googleAddressId')}
-            value={data?.primaryAddress?.googleAddressId}
-          />
-        </Row>
-      </Page>
+      <DynamicTabs tabs={tabs} defaultActiveKey="organizationUnitInfo" />
     </>
   )
 }
