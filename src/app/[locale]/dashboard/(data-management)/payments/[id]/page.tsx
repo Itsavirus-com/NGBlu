@@ -106,8 +106,8 @@ export default function PaymentDetails({ params }: { params: { id: number } }) {
 
   const tabs = [
     {
-      eventKey: 'paymentInfo',
-      title: t('paymentInfo'),
+      eventKey: 'generalInfo',
+      title: t('generalInfo'),
       content: (
         <FieldTextView
           fields={paymentInfoFields}
@@ -148,7 +148,7 @@ export default function PaymentDetails({ params }: { params: { id: number } }) {
   return (
     <>
       <PageTitle title={t('paymentDetails')} />
-      <DynamicTabs tabs={tabs} defaultActiveKey="paymentInfo" />
+      <DynamicTabs tabs={tabs} defaultActiveKey="generalInfo" />
     </>
   )
 }
