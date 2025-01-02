@@ -1,13 +1,12 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
-import { TextView } from '@/components/view/text-view/text-view'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { Contact } from '@/services/swr/models/contact.type'
 import { PersonAddress } from '@/services/swr/models/person-address.type'
 import { usePerson } from '@/services/swr/use-person'
@@ -57,113 +56,89 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
     },
   ]
 
+  const personField = [
+    { label: t('salutation'), value: safeRender(data, 'salutation') },
+    { label: t('firstName'), value: safeRender(data, 'firstname') },
+    { label: t('lastName'), value: safeRender(data, 'lastname') },
+    { label: t('namePrefix'), value: safeRender(data, 'namePrefix') },
+    { label: t('nameSuffix'), value: safeRender(data, 'nameSuffix') },
+    { label: t('pronounce'), value: safeRender(data, 'pronounce') },
+    { label: t('gender'), value: safeRender(data, 'gender.gender') },
+    { label: t('personType'), value: safeRender(data, 'personType.type') },
+    { label: t('titles'), value: safeRender(data, 'titles') },
+    { label: t('department'), value: safeRender(data, 'department') },
+    { label: t('role'), value: safeRender(data, 'role') },
+  ]
+
+  const tabs = [
+    {
+      eventKey: 'generalInfo',
+      title: t('generalInfo'),
+      content: (
+        <FieldTextView
+          fields={personField}
+          isLoading={isLoading}
+          translation="dataManagement.persons"
+          title={t('generalInfo')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'contacts',
+      title: t('contacts.title'),
+      content: (
+        <Table<Contact>
+          title={t('contacts.title')}
+          toolbars={[
+            {
+              icon: 'plus',
+              label: t('contacts.newContact'),
+              colorClass: 'light-primary',
+              href: `${params.id}/contacts/new`,
+            },
+          ]}
+          filters={<ContactFilter />}
+          columns={contactColumn}
+          apiPath="contacts/infos"
+          actionBasePath={`${params.id}/contacts`}
+          actions={['edit', 'delete']}
+          className="mt-6"
+          defaultFilters={{ personId: params.id }}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'addresses',
+      title: t('addresses.title'),
+      content: (
+        <Table<PersonAddress>
+          title={t('addresses.title')}
+          toolbars={[
+            {
+              icon: 'plus',
+              label: t('addresses.newAddress'),
+              colorClass: 'light-primary',
+              href: `${params.id}/addresses/new`,
+            },
+          ]}
+          filters={<AddressFilter />}
+          columns={addressColumn}
+          apiPath={`persons/${params.id}/addresses`}
+          actionBasePath={`${params.id}/addresses`}
+          actions={['edit', 'delete']}
+          className="mt-6"
+          defaultFilters={{ personId: params.id }}
+        />
+      ),
+      condition: Boolean(data),
+    },
+  ]
   return (
     <>
       <PageTitle title={`${data?.firstname || ''} ${data?.lastname || ''}`} />
-
-      <Page title={t('generalInfo')}>
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('salutation')}
-            value={data?.salutation}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('firstName')}
-            value={data?.firstname}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('lastName')}
-            value={data?.lastname}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('namePrefix')}
-            value={data?.namePrefix}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('nameSuffix')}
-            value={data?.nameSuffix}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('pronounce')}
-            value={data?.pronounce}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('gender')}
-            value={data?.gender?.gender}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('personType')}
-            value={data?.personType?.type}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('titles')}
-            value={data?.titles}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('department')}
-            value={data?.department}
-          />
-          <TextView className="my-3" isLoading={isLoading} label={t('role')} value={data?.role} />
-        </Row>
-      </Page>
-
-      <Table<Contact>
-        title={t('contacts.title')}
-        toolbars={[
-          {
-            icon: 'plus',
-            label: t('contacts.newContact'),
-            colorClass: 'light-primary',
-            href: `${params.id}/contacts/new`,
-          },
-        ]}
-        filters={<ContactFilter />}
-        columns={contactColumn}
-        apiPath="contacts/infos"
-        actionBasePath={`${params.id}/contacts`}
-        actions={['edit', 'delete']}
-        className="mt-6"
-        defaultFilters={{ personId: params.id }}
-      />
-
-      <Table<PersonAddress>
-        title={t('addresses.title')}
-        toolbars={[
-          {
-            icon: 'plus',
-            label: t('addresses.newAddress'),
-            colorClass: 'light-primary',
-            href: `${params.id}/addresses/new`,
-          },
-        ]}
-        filters={<AddressFilter />}
-        columns={addressColumn}
-        apiPath={`persons/${params.id}/addresses`}
-        actionBasePath={`${params.id}/addresses`}
-        actions={['edit', 'delete']}
-        className="mt-6"
-        defaultFilters={{ personId: params.id }}
-      />
+      <DynamicTabs tabs={tabs} defaultActiveKey="generalInfo" />
     </>
   )
 }

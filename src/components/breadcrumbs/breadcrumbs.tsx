@@ -16,7 +16,7 @@ export const Breadcrumbs = <T,>({ items, onBreadcrumbPress }: BreadcrumbProps<T>
       onBreadcrumbPress?.(item)
       // handle redirect to App Route
       const appRoute = mapApiPathToAppRoute(item.path)
-      push(`/${appRoute}`)
+      push(appRoute)
     }
   }
 

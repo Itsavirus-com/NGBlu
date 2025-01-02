@@ -39,7 +39,7 @@ export default function PersonResponsibilities() {
       columns={columns}
       apiPath="persons/responsibilities"
       actionBasePath="responsibilities"
-      actions={['view', 'edit', 'delete']}
+      actions={['edit', 'delete']}
     />
   )
 }

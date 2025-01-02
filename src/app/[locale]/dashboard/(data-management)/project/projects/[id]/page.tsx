@@ -1,113 +1,83 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Row } from 'react-bootstrap'
 
-import { Page } from '@/components/page/page'
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
-import { TextView } from '@/components/view/text-view/text-view'
+import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useProject } from '@/services/swr/use-project'
+import { safeRender } from '@/utils/safeRender'
 
 export default function ProjectDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.projects')
 
   const { data, isLoading } = useProject(params.id)
 
+  const generalInfoFields = [
+    {
+      label: t('projectName'),
+      value: safeRender(data, 'projectName'),
+      lg: 6,
+    },
+    {
+      label: t('projectType'),
+      value: safeRender(data, 'projectType.projectType'),
+      lg: 6,
+    },
+    {
+      label: t('projectInfo'),
+      value: safeRender(data, 'projectInfo.projectInfo'),
+      md: 12,
+      lg: 12,
+    },
+  ]
+
+  const locationFields = [
+    { label: t('addressName'), value: safeRender(data, 'address.addressName') },
+    { label: t('streetName'), value: safeRender(data, 'address.streetname') },
+    { label: t('houseNumberSuffix'), value: safeRender(data, 'address.housenumberSuffix') },
+    { label: t('houseNumber'), value: safeRender(data, 'address.housenumber') },
+    { label: t('apartmentNumber'), value: safeRender(data, 'address.appartmentNumber') },
+    { label: t('area'), value: safeRender(data, 'address.area') },
+    { label: t('county'), value: safeRender(data, 'address.county') },
+    { label: t('city'), value: safeRender(data, 'address.city') },
+    { label: t('country'), value: safeRender(data, 'address.country.name') },
+    { label: t('postalCode'), value: safeRender(data, 'address.postalcode') },
+  ]
+
+  const tabs = [
+    {
+      eventKey: 'generalInfo',
+      title: t('generalInfo'),
+      content: (
+        <FieldTextView
+          fields={generalInfoFields}
+          isLoading={isLoading}
+          translation="dataManagement.projects"
+          title={t('generalInfo')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'location',
+      title: t('location'),
+      content: (
+        <FieldTextView
+          fields={locationFields}
+          isLoading={isLoading}
+          translation="dataManagement.projects"
+          title={t('location')}
+        />
+      ),
+      condition: Boolean(data),
+    },
+  ]
+
   return (
     <>
       <PageTitle title={data?.projectName || ''} />
-
-      <Page title={t('generalInfo')}>
-        <Row>
-          <TextView
-            lg={6}
-            className="my-3"
-            isLoading={isLoading}
-            label={t('projectName')}
-            value={data?.projectName}
-          />
-          <TextView
-            lg={6}
-            className="my-3"
-            isLoading={isLoading}
-            label={t('projectType')}
-            value={data?.projectType?.projectType}
-          />
-          <TextView
-            md={12}
-            lg={12}
-            className="my-3"
-            isLoading={isLoading}
-            label={t('projectInfo')}
-            value={data?.projectInfo?.projectInfo}
-          />
-        </Row>
-      </Page>
-
-      <Page className="mt-6" title={t('location')}>
-        <Row>
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('addressName')}
-            value={data?.address?.addressName}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('streetName')}
-            value={data?.address?.streetname}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('houseNumberSuffix')}
-            value={data?.address?.housenumberSuffix}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('houseNumber')}
-            value={data?.address?.housenumber}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('apartmentNumber')}
-            value={data?.address?.appartmentNumber}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('area')}
-            value={data?.address?.area}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('county')}
-            value={data?.address?.county}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('city')}
-            value={data?.address?.city}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('country')}
-            value={data?.address?.country?.name}
-          />
-          <TextView
-            className="my-3"
-            isLoading={isLoading}
-            label={t('postalCode')}
-            value={data?.address?.postalcode}
-          />
-        </Row>
-      </Page>
+      <DynamicTabs tabs={tabs} defaultActiveKey="generalInfo" />
     </>
   )
 }
