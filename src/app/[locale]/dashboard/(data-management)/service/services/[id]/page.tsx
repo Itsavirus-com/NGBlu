@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 
+import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
@@ -92,22 +93,39 @@ export default function ServiceDetails({ params }: { params: { id: number } }) {
     },
   ]
 
+  const tabs = [
+    {
+      eventKey: 'pricePlans',
+      title: t('pricePlans'),
+      content: (
+        <Table<PricePlan>
+          className="mt-6"
+          title={t('pricePlans')}
+          columns={pricePlanColumns}
+          data={data?.pricePlans}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'priceConfigs',
+      title: t('priceConfigs'),
+      content: (
+        <Table<ServicePriceConfig>
+          className="mt-6"
+          title={t('priceConfigs')}
+          columns={priceConfigColumns}
+          data={data?.servicePriceConfigs}
+        />
+      ),
+      condition: Boolean(data),
+    },
+  ]
+
   return (
     <>
       <PageTitle title={data?.name || ''} description={data?.description} />
-
-      <Table<PricePlan>
-        title={t('pricePlans')}
-        columns={pricePlanColumns}
-        data={data?.pricePlans}
-      />
-
-      <Table<ServicePriceConfig>
-        className="mt-6"
-        title={t('priceConfigs')}
-        columns={priceConfigColumns}
-        data={data?.servicePriceConfigs}
-      />
+      <DynamicTabs tabs={tabs} defaultActiveKey="pricePlans" />
     </>
   )
 }

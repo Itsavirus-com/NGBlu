@@ -264,7 +264,8 @@
         "activeTo": "Active To",
         "createdAt": "Created At",
         "updatedAt": "Updated At",
-        "deletedAt": "Deleted At"
+        "deletedAt": "Deleted At",
+        "generalInfo": "General Info"
       }
     },
     "services": {
@@ -315,7 +316,8 @@
         "activeTo": "Active To",
         "createdAt": "Created At",
         "updatedAt": "Updated At",
-        "deletedAt": "Deleted At"
+        "deletedAt": "Deleted At",
+        "generalInfo": "General Info"
       }
     },
     "prices": {
