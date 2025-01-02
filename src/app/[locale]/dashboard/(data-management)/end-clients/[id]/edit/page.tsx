@@ -46,6 +46,7 @@ export default function UpdateEndClient({ params }: { params: { id: string } }) 
                 name="referenceId"
                 containerClass="mb-3"
                 className="form-control-solid"
+                type="number"
               />
               <ControlledInput
                 label={t('afasId')}
