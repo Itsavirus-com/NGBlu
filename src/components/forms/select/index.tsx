@@ -18,6 +18,8 @@ type SelectProps<OptionValue> = FormSelectProps & {
   }
   filter?: Record<string, any>
   onChange?: (value: string | number) => void
+  isHidden?: boolean
+  isRequired?: boolean
 }
 
 export const ControlledSelect = <OptionValue extends Record<string, any>>(
@@ -32,6 +34,8 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     apiPath,
     option,
     filter,
+    isHidden,
+    isRequired,
     onChange,
     ...otherProps
   } = props
@@ -75,9 +79,21 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     }
   }
 
+  useEffect(() => {
+    if (isHidden && allData.length === 0) {
+      field.onChange(null)
+    }
+  }, [isHidden, allData.length])
+
+  if (isHidden && allData.length === 0) {
+    return null
+  }
+
   return (
     <Form.Group className={containerClass}>
-      {label && <Form.Label className="fw-bold">{label}</Form.Label>}
+      <Form.Label className="fw-bold">
+        {label} {isRequired && <span className="text-danger">*</span>}
+      </Form.Label>
       {allData.length === 0 ? (
         <Placeholder as="div" animation="wave">
           <Placeholder
