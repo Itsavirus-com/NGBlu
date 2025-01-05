@@ -15,7 +15,7 @@ import { BusinessPartner } from '@/services/swr/models/business-partner.type'
 import { EndClient } from '@/services/swr/models/end-client.type'
 import { EnterpriseRoot } from '@/services/swr/models/enterprise-root.type'
 
-import useOrganizationUnitForm from '../../components/organization-unit-form.hook'
+import useOrganizationUnitForm from '../../hooks/organization-unit-form.hook'
 
 export default function UpdateOrganizationUnit({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.organizationUnits')
@@ -89,34 +89,39 @@ export default function UpdateOrganizationUnit({ params }: { params: { id: strin
                   onChange={() => handleChange('enterpriseRootId')}
                 />
               </div>
-              <ControlledSelect<EndClient>
-                label={t('endClient')}
-                name="endclientId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="end-clients"
-                option={{ label: row => row.name, value: row => row.id }}
-                disabled={inputType !== 'endclientId'}
-              />
-              <ControlledSelect<BusinessPartner>
-                label={t('businessPartner')}
-                name="businesspartnerId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="business-partners"
-                option={{ label: row => row.name, value: row => row.id }}
-                disabled={inputType !== 'businesspartnerId'}
-              />
-              <ControlledSelect<EnterpriseRoot>
-                label={t('enterpriseRoot')}
-                name="enterpriseRootId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="enterprise-roots"
-                option={{ label: row => row.name, value: row => row.id }}
-                disabled={inputType !== 'enterpriseRootId'}
-              />
-
+              {inputType === 'endclientId' && (
+                <ControlledSelect<EndClient>
+                  label={t('endClient')}
+                  name="endclientId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath="end-clients"
+                  option={{ label: row => row.name, value: row => row.id }}
+                  isRequired
+                />
+              )}
+              {inputType === 'businesspartnerId' && (
+                <ControlledSelect<BusinessPartner>
+                  label={t('businessPartner')}
+                  name="businesspartnerId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath="business-partners"
+                  option={{ label: row => row.name, value: row => row.id }}
+                  isRequired
+                />
+              )}
+              {(inputType === 'endclientId' || inputType === 'enterpriseRootId') && (
+                <ControlledSelect<EnterpriseRoot>
+                  label={t('enterpriseRoot')}
+                  name="enterpriseRootId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath="enterprise-roots"
+                  option={{ label: row => row.name, value: row => row.id }}
+                  isRequired
+                />
+              )}
               <FormButtons />
             </CardBody>
           </Card>

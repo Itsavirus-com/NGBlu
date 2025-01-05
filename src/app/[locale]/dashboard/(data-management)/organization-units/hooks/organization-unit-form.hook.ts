@@ -1,12 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { organizationUnitApi } from '@/services/api/organization-unit-api'
 import { useOrganizationUnit } from '@/services/swr/use-organization-unit'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
+
+import { schema } from '../schemas/organization-unit-form.schema'
 
 export default function useOrganizationUnitForm(organizationUnitId?: number) {
   const { back } = useRouter()
@@ -14,19 +17,18 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
 
   const { data: organizationUnit } = useOrganizationUnit(organizationUnitId)
 
-  const schema = yup.object().shape({
-    name: yup.string().ensure().required(),
-    primaryAddressId: yup.number(),
-    endclientId: yup.number(),
-    businesspartnerId: yup.number(),
-    enterpriseRootId: yup.number().required(),
-    inputType: yup.string().ensure().required(),
-  })
+  const [inputType, setInputType] = useState<
+    'endclientId' | 'businesspartnerId' | 'enterpriseRootId' | null
+  >(null)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: organizationUnit && {
-      ...organizationUnit,
+      name: organizationUnit.name,
+      primaryAddressId: organizationUnit.primaryAddressId,
+      endclientId: organizationUnit.endclientId,
+      businesspartnerId: organizationUnit.businesspartnerId,
+      enterpriseRootId: organizationUnit.enterpriseRootId,
       inputType: organizationUnit.endclientId
         ? 'endclientId'
         : organizationUnit.businesspartnerId
@@ -36,6 +38,13 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
             : '',
     },
   })
+
+  const handleChange = (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => {
+    setInputType(value)
+    methods.setValue('endclientId', 0)
+    methods.setValue('businesspartnerId', 0)
+    methods.setValue('enterpriseRootId', 0)
+  }
 
   const addNewOrganizationUnit = async (data: InferType<typeof schema>) => {
     try {
@@ -106,12 +115,22 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
   }
 
   const onSubmit = (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (organizationUnitId) {
-      return updateOrganizationUnit(data)
+      return updateOrganizationUnit(submitData)
     }
 
-    return addNewOrganizationUnit(data)
+    return addNewOrganizationUnit(submitData)
   }
 
-  return { methods, onSubmit }
+  useEffect(() => {
+    if (organizationUnitId && inputType === null) {
+      setInputType(
+        methods.getValues('inputType') as 'endclientId' | 'businesspartnerId' | 'enterpriseRootId'
+      )
+    }
+  }, [methods.watch()])
+
+  return { methods, inputType, setInputType, handleChange, onSubmit }
 }
