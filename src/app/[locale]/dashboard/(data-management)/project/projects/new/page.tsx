@@ -1,7 +1,6 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { useState } from 'react'
 import { Card, CardBody } from 'react-bootstrap'
 
 import { ControlledSwitch } from '@/components/forms/checkbox'
@@ -16,26 +15,13 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { ProjectInfo } from '@/services/swr/models/project-info.type'
 import { ProjectType } from '@/services/swr/models/project-type'
 
-import useProjectForm from '../components/project-form.hook'
+import useProjectForm from '../hooks/project-form.hook'
 
 export default function NewProjectType() {
   const t = useTranslations('dataManagement.projects')
 
-  const { methods, onSubmit } = useProjectForm()
-
-  const [inputType, setInputType] = useState<
-    'endclientId' | 'businesspartnerId' | 'enterpriseRootId' | null
-  >(null)
-  const [inputValue, setInputValue] = useState<number>(0)
-
-  const handleChange = (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => {
-    setInputType(value)
-    setInputValue(0)
-    methods.resetField('ouUnitId')
-    methods.resetField('endclientId')
-    methods.resetField('businesspartnersId')
-    methods.resetField('enterpriseRootId')
-  }
+  const { methods, inputType, inputValue, setInputType, setInputValue, handleChange, onSubmit } =
+    useProjectForm()
 
   return (
     <>
@@ -50,6 +36,7 @@ export default function NewProjectType() {
                 name="projectName"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledSelect<ProjectType>
                 label={t('projectType')}
@@ -58,6 +45,7 @@ export default function NewProjectType() {
                 className="form-control-solid"
                 apiPath="projects/types"
                 option={{ label: row => row.projectType, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<ProjectInfo>
                 label={t('projectInfo')}
@@ -66,6 +54,7 @@ export default function NewProjectType() {
                 className="form-control-solid"
                 apiPath="projects/infos"
                 option={{ label: row => row.projectInfo, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Address>
                 label={t('address')}
@@ -80,6 +69,7 @@ export default function NewProjectType() {
                   type="radio"
                   label={t('endClient')}
                   name="inputType"
+                  value="endclientId"
                   containerClass="mb-3"
                   onChange={() => handleChange('endclientId')}
                 />
@@ -87,6 +77,7 @@ export default function NewProjectType() {
                   type="radio"
                   label={t('businessPartner')}
                   name="inputType"
+                  value="businesspartnerId"
                   containerClass="mb-3"
                   onChange={() => handleChange('businesspartnerId')}
                 />
@@ -94,56 +85,67 @@ export default function NewProjectType() {
                   type="radio"
                   label={t('enterpriseRoot')}
                   name="inputType"
+                  value="enterpriseRootId"
                   containerClass="mb-3"
                   onChange={() => handleChange('enterpriseRootId')}
                 />
               </div>
-              <ControlledSelect<EndClient>
-                label={t('endClient')}
-                name="endclientId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="end-clients"
-                option={{ label: row => row.name, value: row => row.id }}
-                onChange={value => setInputValue(Number(value))}
-                disabled={inputType !== 'endclientId'}
-              />
-              <ControlledSelect
-                label={t('businessPartner')}
-                name="businesspartnersId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="business-partners"
-                option={{ label: row => row.name, value: row => row.id }}
-                onChange={value => setInputValue(Number(value))}
-                disabled={inputType !== 'businesspartnerId'}
-              />
-              <ControlledSelect
-                label={t('enterpriseRoot')}
-                name="enterpriseRootId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="enterprise-roots"
-                option={{ label: row => row.name, value: row => row.id }}
-                onChange={value => setInputValue(Number(value))}
-                disabled={inputType !== 'enterpriseRootId'}
-              />
-              <ControlledSelect<OrganizationUnit>
-                label={t('organizationUnit')}
-                name="ouUnitId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="organisational-units"
-                filter={
-                  inputType && inputValue
-                    ? {
-                        [inputType]: inputValue,
-                      }
-                    : {}
-                }
-                option={{ label: row => row.name, value: row => row.id }}
-                disabled={!inputType || inputValue === 0}
-              />
+              {inputType === 'endclientId' && (
+                <ControlledSelect<EndClient>
+                  label={t('endClient')}
+                  name="endclientId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath="end-clients"
+                  option={{ label: row => row.name, value: row => row.id }}
+                  onChange={value => setInputValue(Number(value))}
+                  isRequired
+                />
+              )}
+              {inputType === 'businesspartnerId' && (
+                <ControlledSelect
+                  label={t('businessPartner')}
+                  name="businesspartnersId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath="business-partners"
+                  option={{ label: row => row.name, value: row => row.id }}
+                  onChange={value => setInputValue(Number(value))}
+                  isRequired
+                />
+              )}
+              {(inputType === 'enterpriseRootId' || inputType === 'endclientId') && (
+                <ControlledSelect
+                  label={t('enterpriseRoot')}
+                  name="enterpriseRootId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath="enterprise-roots"
+                  option={{ label: row => row.name, value: row => row.id }}
+                  onChange={value => setInputValue(Number(value))}
+                  isRequired
+                />
+              )}
+
+              {!!inputType && (
+                <ControlledSelect<OrganizationUnit>
+                  label={t('organizationUnit')}
+                  name="ouUnitId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath="organisational-units"
+                  filter={
+                    inputType && inputValue
+                      ? {
+                          [inputType]: inputValue,
+                        }
+                      : {}
+                  }
+                  option={{ label: row => row.name, value: row => row.id }}
+                  disabled={!inputType || inputValue === 0}
+                  isHidden
+                />
+              )}
 
               <FormButtons />
             </CardBody>

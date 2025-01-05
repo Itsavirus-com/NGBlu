@@ -1,7 +1,6 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { useEffect, useState } from 'react'
 import { Card, CardBody } from 'react-bootstrap'
 
 import { ControlledSwitch } from '@/components/forms/checkbox'
@@ -16,35 +15,13 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { ProjectInfo } from '@/services/swr/models/project-info.type'
 import { ProjectType } from '@/services/swr/models/project-type'
 
-import useProjectForm from '../../components/project-form.hook'
+import useProjectForm from '../../hooks/project-form.hook'
 
 export default function UpdateProjectType({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.projects')
 
-  const { methods, onSubmit } = useProjectForm(Number(params.id))
-
-  const [inputType, setInputType] = useState<
-    'endclientId' | 'businesspartnerId' | 'enterpriseRootId' | null
-  >(null)
-  const [inputValue, setInputValue] = useState<number>(0)
-
-  const handleChange = (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => {
-    setInputType(value)
-    setInputValue(0)
-    methods.resetField('ouUnitId', { defaultValue: 0 })
-    methods.resetField('endclientId', { defaultValue: 0 })
-    methods.resetField('businesspartnersId', { defaultValue: 0 })
-    methods.resetField('enterpriseRootId', { defaultValue: 0 })
-  }
-
-  useEffect(() => {
-    if (inputType === null) {
-      setInputType(
-        methods.getValues('inputType') as 'endclientId' | 'businesspartnerId' | 'enterpriseRootId'
-      )
-      setInputValue(methods.getValues('ouUnitId') as number)
-    }
-  }, [methods.watch()])
+  const { methods, inputType, inputValue, handleChange, onSubmit, setInputType, setInputValue } =
+    useProjectForm(Number(params.id))
 
   return (
     <>
@@ -59,6 +36,7 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                 name="projectName"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledSelect<ProjectType>
                 label={t('projectType')}
@@ -67,6 +45,7 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                 className="form-control-solid"
                 apiPath="projects/types"
                 option={{ label: row => row.projectType, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<ProjectInfo>
                 label={t('projectInfo')}
@@ -75,6 +54,7 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                 className="form-control-solid"
                 apiPath="projects/infos"
                 option={{ label: row => row.projectInfo, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Address>
                 label={t('address')}
@@ -89,57 +69,63 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                   type="radio"
                   label={t('endClient')}
                   name="inputType"
+                  value="endclientId"
                   containerClass="mb-3"
-                  value={'endclientId'}
                   onChange={() => handleChange('endclientId')}
                 />
                 <ControlledSwitch
                   type="radio"
                   label={t('businessPartner')}
                   name="inputType"
+                  value="businesspartnerId"
                   containerClass="mb-3"
-                  value={'businesspartnerId'}
                   onChange={() => handleChange('businesspartnerId')}
                 />
                 <ControlledSwitch
                   type="radio"
                   label={t('enterpriseRoot')}
                   name="inputType"
+                  value="enterpriseRootId"
                   containerClass="mb-3"
-                  value={'enterpriseRootId'}
                   onChange={() => handleChange('enterpriseRootId')}
                 />
               </div>
-              <ControlledSelect<EndClient>
-                label={t('endClient')}
-                name="endclientId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="end-clients"
-                option={{ label: row => row.name, value: row => row.id }}
-                onChange={value => setInputValue(Number(value))}
-                disabled={inputType !== 'endclientId'}
-              />
-              <ControlledSelect
-                label={t('businessPartner')}
-                name="businesspartnersId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="business-partners"
-                option={{ label: row => row.name, value: row => row.id }}
-                onChange={value => setInputValue(Number(value))}
-                disabled={inputType !== 'businesspartnerId'}
-              />
-              <ControlledSelect
-                label={t('enterpriseRoot')}
-                name="enterpriseRootId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="enterprise-roots"
-                option={{ label: row => row.name, value: row => row.id }}
-                onChange={value => setInputValue(Number(value))}
-                disabled={inputType !== 'enterpriseRootId'}
-              />
+              {inputType === 'endclientId' && (
+                <ControlledSelect<EndClient>
+                  label={t('endClient')}
+                  name="endclientId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath="end-clients"
+                  option={{ label: row => row.name, value: row => row.id }}
+                  onChange={value => setInputValue(Number(value))}
+                  isRequired
+                />
+              )}
+              {inputType === 'businesspartnerId' && (
+                <ControlledSelect
+                  label={t('businessPartner')}
+                  name="businesspartnersId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath="business-partners"
+                  option={{ label: row => row.name, value: row => row.id }}
+                  onChange={value => setInputValue(Number(value))}
+                  isRequired
+                />
+              )}
+              {(inputType === 'enterpriseRootId' || inputType === 'endclientId') && (
+                <ControlledSelect
+                  label={t('enterpriseRoot')}
+                  name="enterpriseRootId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath="enterprise-roots"
+                  option={{ label: row => row.name, value: row => row.id }}
+                  onChange={value => setInputValue(Number(value))}
+                  isRequired
+                />
+              )}
               <ControlledSelect<OrganizationUnit>
                 label={t('organizationUnit')}
                 name="ouUnitId"
@@ -155,6 +141,7 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                 }
                 option={{ label: row => row.name, value: row => row.id }}
                 disabled={!inputType || inputValue === 0}
+                isHidden
               />
 
               <FormButtons />
