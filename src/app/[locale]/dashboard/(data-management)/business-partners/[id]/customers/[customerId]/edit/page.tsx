@@ -12,7 +12,7 @@ import { EndClient } from '@/services/swr/models/end-client.type'
 import { EnterpriseRoot } from '@/services/swr/models/enterprise-root-type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
-import useBusinessPartnerCustomerForm from '../../../components/business-partner-customer-form.hook'
+import useBusinessPartnerCustomerForm from '../../hooks/customer-form.hook'
 
 export default function UpdateBusinessPartnerCustomer({
   params,
@@ -40,14 +40,6 @@ export default function UpdateBusinessPartnerCustomer({
                 containerClass="mb-3"
                 className="form-control-solid"
                 apiPath={'end-clients'}
-                option={{ label: row => row.name, value: row => row.id }}
-              />
-              <ControlledSelect<EnterpriseRoot>
-                label={t('enterpriseRoot')}
-                name="enterpriseRootId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath={`enterprise-roots`}
                 option={{ label: row => row.name, value: row => row.id }}
               />
               <ControlledSelect<Address>

@@ -1,12 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { businessPartnerCustomerApi } from '@/services/api/business-partner-customer-api'
 import { useBusinessPartnerCustomer } from '@/services/swr/use-business-partner-customer'
 import { InferType } from '@/utils/typescript'
+
+import { schema } from '../schemas/customer-form.schema'
 
 export default function useBusinessPartnerCustomerForm(
   businessPartnerId: number,
@@ -17,18 +18,12 @@ export default function useBusinessPartnerCustomerForm(
 
   const { data: customer } = useBusinessPartnerCustomer(businessPartnerId, customerId)
 
-  const schema = yup.object().shape({
-    endclientId: yup.number().required(),
-    enterpriseRootId: yup.number().required(),
-    businesspartnersAddressesId: yup.number().required(),
-    ouUnitId: yup.number(),
-  })
-
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: customer && {
-      ...customer,
+      endclientId: customer.endclientId,
       businesspartnersAddressesId: customer.businesspartnerAddressId,
+      ouUnitId: customer.ouUnitId,
     },
   })
 

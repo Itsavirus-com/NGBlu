@@ -12,7 +12,7 @@ import { EnterpriseRoot } from '@/services/swr/models/enterprise-root-type'
 import { PersonResponsibility } from '@/services/swr/models/person-responsibility.type'
 import { Person } from '@/services/swr/models/person.type'
 
-import { useBusinessPartnerContactForm } from '../../../components/business-partner-contact-form.hook'
+import { useBusinessPartnerContactForm } from '../../hooks/contact-form.hook'
 
 export default function UpdateBusinessPartnerContact({
   params,
@@ -57,14 +57,6 @@ export default function UpdateBusinessPartnerContact({
                 className="form-control-solid"
                 apiPath={'persons/responsibilities'}
                 option={{ label: row => row.responsibility, value: row => row.id }}
-              />
-              <ControlledSelect<EnterpriseRoot>
-                label={t('enterpriseRoot')}
-                name="enterpriseRootId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath={'enterprise-roots'}
-                option={{ label: row => row.name, value: row => row.id }}
               />
 
               <FormButtons />
