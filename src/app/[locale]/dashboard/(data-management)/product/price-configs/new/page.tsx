@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { Card, CardBody } from 'react-bootstrap'
 
+import { ControlledSwitch } from '@/components/forms/checkbox'
 import { ControlledDatetime } from '@/components/forms/datetime'
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
@@ -13,7 +14,7 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { PricePlan } from '@/services/swr/models/price-plan.type'
 import { Product } from '@/services/swr/models/product.type'
 
-import useProductPriceConfigForm from '../components/product-price-configs-form.hook'
+import useProductPriceConfigForm from '../hooks/product-price-configs-form.hook'
 
 export default function NewProductPriceConfig() {
   const t = useTranslations('dataManagement.products.priceConfig')
@@ -22,6 +23,8 @@ export default function NewProductPriceConfig() {
     formDateValue,
     businessPartnerId,
     enterpriseRootId,
+    inputType,
+    handleChange,
     setFormDateValue,
     onSubmit,
   } = useProductPriceConfigForm()
@@ -67,36 +70,62 @@ export default function NewProductPriceConfig() {
                 apiPath="prices/plans"
                 option={{ label: row => row.name, value: row => row.id }}
               />
-              <ControlledSelect
-                label={t('businessPartner')}
-                name="businesspartnerId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="business-partners"
-                option={{ label: row => row.name, value: row => row.id }}
-              />
-              <ControlledSelect
-                label={t('enterpriseRoot')}
-                name="enterpriseRootId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="enterprise-roots"
-                option={{ label: row => row.name, value: row => row.id }}
-              />
-              <ControlledSelect<OrganizationUnit>
-                label={t('orgUnit')}
-                name="orgUnitId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="organisational-units"
-                option={{ label: row => row.name, value: row => row.id }}
-                filter={{
-                  enterpriseRootId: enterpriseRootId,
-                  businesspartnerId: businessPartnerId,
-                }}
-                disabled={!enterpriseRootId}
-              />
-
+              <div className="d-flex gap-3">
+                <ControlledSwitch
+                  type="radio"
+                  label={t('businessPartner')}
+                  name="inputType"
+                  containerClass="mb-3"
+                  value={'businesspartnerId'}
+                  onChange={() => handleChange('businesspartnerId')}
+                />
+                <ControlledSwitch
+                  type="radio"
+                  label={t('enterpriseRoot')}
+                  name="inputType"
+                  containerClass="mb-3"
+                  value={'enterpriseRootId'}
+                  onChange={() => handleChange('enterpriseRootId')}
+                />
+              </div>
+              {inputType === 'businesspartnerId' && (
+                <ControlledSelect
+                  label={t('businessPartner')}
+                  name="businesspartnerId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath="business-partners"
+                  option={{ label: row => row.name, value: row => row.id }}
+                />
+              )}
+              {inputType === 'enterpriseRootId' && (
+                <ControlledSelect
+                  label={t('enterpriseRoot')}
+                  name="enterpriseRootId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath="enterprise-roots"
+                  option={{ label: row => row.name, value: row => row.id }}
+                />
+              )}
+              {!!inputType && (
+                <ControlledSelect<OrganizationUnit>
+                  label={t('orgUnit')}
+                  name="orgUnitId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath="organisational-units"
+                  option={{ label: row => row.name, value: row => row.id }}
+                  filter={
+                    inputType && enterpriseRootId
+                      ? {
+                          [inputType]: enterpriseRootId,
+                        }
+                      : { [inputType]: businessPartnerId }
+                  }
+                  isHidden
+                />
+              )}
               <FormButtons />
             </CardBody>
           </Card>

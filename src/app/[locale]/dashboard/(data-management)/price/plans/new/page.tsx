@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Card, CardBody } from 'react-bootstrap'
+import { Card, CardBody, Form } from 'react-bootstrap'
 
 import { ControlledSwitch } from '@/components/forms/checkbox'
 import { FormButtons } from '@/components/forms/form-buttons'
@@ -13,12 +13,12 @@ import { PriceConfig } from '@/services/swr/models/price-config.type'
 import { Product } from '@/services/swr/models/product.type'
 import { Service } from '@/services/swr/models/service.type'
 
-import usePricePlanForm from '../components/price-plan-form.hook'
+import usePricePlanForm from '../hooks/price-plan-form.hook'
 
 export default function NewPriceConfig() {
   const t = useTranslations('dataManagement.prices.plans')
 
-  const { methods, onSubmit } = usePricePlanForm()
+  const { methods, inputType, handleChange, onSubmit } = usePricePlanForm()
 
   return (
     <>
@@ -34,22 +34,45 @@ export default function NewPriceConfig() {
                 containerClass="mb-3"
                 className="form-control-solid"
               />
-              <ControlledSelect<Product>
-                label={t('product')}
-                name="productId"
-                containerClass="mb-3"
-                className="form-select"
-                apiPath="products"
-                option={{ label: row => row.name, value: row => row.id }}
-              />
-              <ControlledSelect<Service>
-                label={t('service')}
-                name="serviceId"
-                containerClass="mb-3"
-                className="form-select"
-                apiPath="services"
-                option={{ label: row => row.name, value: row => row.id }}
-              />
+              <Form.Label className="fw-bold">Choose Product or Service</Form.Label>
+              <div className="d-flex gap-3">
+                <ControlledSwitch
+                  type="radio"
+                  label={t('product')}
+                  name="inputType"
+                  containerClass="mb-3"
+                  value="productId"
+                  onChange={() => handleChange('productId')}
+                />
+                <ControlledSwitch
+                  type="radio"
+                  label={t('service')}
+                  name="inputType"
+                  containerClass="mb-3"
+                  value="serviceId"
+                  onChange={() => handleChange('serviceId')}
+                />
+              </div>
+              {inputType === 'productId' && (
+                <ControlledSelect<Product>
+                  label={t('product')}
+                  name="productId"
+                  containerClass="mb-3"
+                  className="form-select"
+                  apiPath="products"
+                  option={{ label: row => row.name, value: row => row.id }}
+                />
+              )}
+              {inputType === 'serviceId' && (
+                <ControlledSelect<Service>
+                  label={t('service')}
+                  name="serviceId"
+                  containerClass="mb-3"
+                  className="form-select"
+                  apiPath="services"
+                  option={{ label: row => row.name, value: row => row.id }}
+                />
+              )}
               <ControlledSelect<PriceConfig>
                 label={t('priceConfig')}
                 name="priceConfigId"

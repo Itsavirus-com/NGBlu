@@ -9,10 +9,11 @@ type InputProps = FormControlProps & {
   step?: number
   min?: number
   max?: number
+  isRequired?: boolean
 }
 
 export const ControlledInput = (props: InputProps) => {
-  const { label, name, containerClass, children, step, ...otherProps } = props
+  const { label, name, containerClass, children, step, isRequired, ...otherProps } = props
 
   const { register, control } = useFormContext()
   const {
@@ -21,7 +22,11 @@ export const ControlledInput = (props: InputProps) => {
 
   return (
     <Form.Group className={containerClass}>
-      {label && <Form.Label className="fw-bold">{label}</Form.Label>}
+      {label && (
+        <Form.Label className="fw-bold">
+          {label} {isRequired && <span className="text-danger">*</span>}
+        </Form.Label>
+      )}
       <Form.Control
         id={name}
         as="input"

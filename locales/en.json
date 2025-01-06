@@ -221,6 +221,7 @@
     "products": {
       "title": "Products",
       "newProduct": "New Product",
+      "updateProduct": "Update Product",
       "id": "ID",
       "name": "Name",
       "description": "Description",

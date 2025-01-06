@@ -1,12 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { pricePlanApi } from '@/services/api/price-plan-api'
 import { usePricePlan } from '@/services/swr/use-price-plan'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
+
+import { schema } from '../schemas/price-plan-form.schema.hook'
 
 export default function usePricePlanForm(planId?: number) {
   const { back } = useRouter()
@@ -14,19 +17,26 @@ export default function usePricePlanForm(planId?: number) {
 
   const { data: pricePlan } = usePricePlan(planId)
 
-  const schema = yup.object().shape({
-    name: yup.string().ensure().required().max(255),
-    productId: yup.number(),
-    serviceId: yup.number(),
-    priceConfigId: yup.number().required(),
-    fallbackPriceConfigId: yup.number(),
-    isDefault: yup.boolean(),
-  })
+  const [inputType, setInputType] = useState<'productId' | 'serviceId' | null>(null)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: pricePlan,
+    values: pricePlan && {
+      name: pricePlan.name,
+      productId: pricePlan.productId,
+      serviceId: pricePlan.serviceId,
+      priceConfigId: pricePlan.priceConfigId,
+      isDefault: pricePlan.isDefault,
+      fallbackPriceConfigId: pricePlan.fallbackPriceConfigId,
+      inputType: pricePlan.productId ? 'productId' : 'serviceId',
+    },
   })
+
+  const handleChange = (value: 'productId' | 'serviceId') => {
+    setInputType(value)
+    methods.setValue('productId', 0)
+    methods.setValue('serviceId', 0)
+  }
 
   const addNewPlan = async (data: InferType<typeof schema>) => {
     try {
@@ -57,12 +67,20 @@ export default function usePricePlanForm(planId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (planId) {
-      return updatePlan(data)
+      return updatePlan(submitData)
     }
 
-    return addNewPlan(data)
+    return addNewPlan(submitData)
   }
 
-  return { methods, onSubmit }
+  useEffect(() => {
+    if (planId && inputType === null) {
+      setInputType(methods.getValues('inputType') as 'productId' | 'serviceId')
+    }
+  }, [methods.watch()])
+
+  return { methods, inputType, handleChange, onSubmit }
 }

@@ -1,30 +1,23 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { servicePriceConfigApi } from '@/services/api/service-price-config-api'
 import { useServicePriceConfig } from '@/services/swr/use-service-price-config'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
+
+import { schema } from '../schemas/service-price-config-form.schema'
 
 export default function useServicePriceConfigForm(configId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
   const [formDateValue, setFormDateValue] = useState<Date | null>(null)
+  const [inputType, setInputType] = useState<'businesspartnerId' | 'enterpriseRootId' | null>(null)
 
   const { data: servicePriceConfig } = useServicePriceConfig(configId)
-
-  const schema = yup.object().shape({
-    activeFrom: yup.string().ensure(),
-    activeTo: yup.string().ensure(),
-    serviceId: yup.number().required(),
-    priceplanId: yup.number().required(),
-    businesspartnerId: yup.number(),
-    enterpriseRootId: yup.number().required(),
-    orgUnitId: yup.number(),
-  })
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -36,12 +29,20 @@ export default function useServicePriceConfigForm(configId?: number) {
       businesspartnerId: servicePriceConfig?.businesspartnerId,
       enterpriseRootId: servicePriceConfig?.enterpriseRootId!,
       orgUnitId: servicePriceConfig?.orgUnitId,
+      inputType: servicePriceConfig?.enterpriseRootId ? 'enterpriseRootId' : 'businesspartnerId',
     },
   })
 
   // Watch values for enterpriseRootId and businessPartnerId
   const enterpriseRootId = methods.watch('enterpriseRootId')
   const businessPartnerId = methods.watch('businesspartnerId')
+
+  const handleChange = (value: 'businesspartnerId' | 'enterpriseRootId') => {
+    setInputType(value)
+    methods.setValue('businesspartnerId', 0)
+    methods.setValue('enterpriseRootId', 0)
+    methods.setValue('orgUnitId', null)
+  }
 
   const addNewConfig = async (data: InferType<typeof schema>) => {
     try {
@@ -72,12 +73,28 @@ export default function useServicePriceConfigForm(configId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
     if (configId) {
-      return updateConfig(data)
+      return updateConfig(submitData)
     }
 
-    return addNewConfig(data)
+    return addNewConfig(submitData)
   }
 
-  return { methods, formDateValue, enterpriseRootId, businessPartnerId, onSubmit, setFormDateValue }
+  useEffect(() => {
+    if (configId && inputType === null) {
+      setInputType(methods.getValues('inputType') as 'businesspartnerId' | 'enterpriseRootId')
+    }
+  }, [methods.watch()])
+
+  return {
+    methods,
+    formDateValue,
+    enterpriseRootId,
+    businessPartnerId,
+    inputType,
+    handleChange,
+    onSubmit,
+    setFormDateValue,
+  }
 }
