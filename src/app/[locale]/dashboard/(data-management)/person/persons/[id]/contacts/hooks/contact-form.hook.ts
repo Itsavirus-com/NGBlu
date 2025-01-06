@@ -1,13 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { personContactApi } from '@/services/api/person-contact-api'
 import { usePersonContact } from '@/services/swr/use-person-contact'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
+
+import { schema } from '../schemas/contact-form.schema'
+
 
 export default function usePersonContactForm(personContactId?: number) {
   const { id } = useParams()
@@ -16,17 +20,33 @@ export default function usePersonContactForm(personContactId?: number) {
 
   const { data: personContact } = usePersonContact(personContactId)
 
-  const schema = yup.object().shape({
-    contactInfo: yup.string().ensure().required(),
-    contactTypeId: yup.number().required(),
-    enterpriseRootId: yup.number(),
-    businesspartnerId: yup.number(),
-    endclientId: yup.number(),
-  })
+  const [inputType, setInputType] = useState<
+    'endclientId' | 'businesspartnerId' | 'enterpriseRootId' | null
+  >(null)
+
+  const handleChange = (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => {
+    setInputType(value)
+    methods.setValue('endclientId', null)
+    methods.setValue('businesspartnerId', null)
+    methods.setValue('enterpriseRootId', 0)
+  }
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: personContact,
+    values: personContact && {
+      contactInfo: personContact.contactInfo,
+      contactTypeId: personContact.contactTypeId,
+      businesspartnerId: personContact.businesspartnerId,
+      endclientId: personContact.endclientId,
+      enterpriseRootId: personContact.enterpriseRootId,
+      inputType: personContact.endclientId
+        ? 'endclientId'
+        : personContact.businesspartnerId
+          ? 'businesspartnerId'
+          : personContact.enterpriseRootId
+            ? 'enterpriseRootId'
+            : '',
+    },
   })
 
   const addPersonContact = async (data: InferType<typeof schema>) => {
@@ -58,12 +78,21 @@ export default function usePersonContactForm(personContactId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
     if (personContactId) {
-      return updatePersonContact(data)
+      return updatePersonContact(submitData)
     }
 
-    return addPersonContact(data)
+    return addPersonContact(submitData)
   }
 
-  return { methods, onSubmit }
+  useEffect(() => {
+    if (personContactId && inputType === null) {
+      setInputType(
+        methods.getValues('inputType') as 'endclientId' | 'businesspartnerId' | 'enterpriseRootId'
+      )
+    }
+  }, [methods.watch()])
+
+  return { methods, inputType, onSubmit, handleChange }
 }
