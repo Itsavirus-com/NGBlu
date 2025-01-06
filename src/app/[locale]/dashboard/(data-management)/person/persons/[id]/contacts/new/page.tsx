@@ -31,6 +31,7 @@ export default function NewPersonContact() {
                 name="contactInfo"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledSelect<ContactType>
                 label={t('contactType')}
@@ -39,6 +40,7 @@ export default function NewPersonContact() {
                 className="form-control-solid"
                 apiPath="contacts/types"
                 option={{ label: row => row.contactType, value: row => row.id }}
+                isRequired
               />
 
               <div className="d-flex gap-3">
@@ -76,6 +78,7 @@ export default function NewPersonContact() {
                   className="form-control-solid"
                   apiPath="business-partners"
                   option={{ label: row => row.name, value: row => row.id }}
+                  isRequired
                 />
               )}
               {inputType === 'endclientId' && (
@@ -86,6 +89,7 @@ export default function NewPersonContact() {
                   className="form-control-solid"
                   apiPath="end-clients"
                   option={{ label: row => row.name, value: row => row.id }}
+                  isRequired
                 />
               )}
               {!!inputType && (
@@ -96,6 +100,7 @@ export default function NewPersonContact() {
                   className="form-control-solid"
                   apiPath="enterprise-roots"
                   option={{ label: row => row.name, value: row => row.id }}
+                  isRequired
                 />
               )}
               <FormButtons />
