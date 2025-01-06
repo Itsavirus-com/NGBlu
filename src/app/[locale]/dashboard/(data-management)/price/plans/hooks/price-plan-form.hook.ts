@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { pricePlanApi } from '@/services/api/price-plan-api'
 import { usePricePlan } from '@/services/swr/use-price-plan'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../schemas/price-plan-form.schema.hook'
@@ -66,14 +67,7 @@ export default function usePricePlanForm(planId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
-    const submitData = {
-      name: data.name,
-      isDefault: data.isDefault,
-      productId: data.productId,
-      serviceId: data.serviceId,
-      priceConfigId: data.priceConfigId,
-      fallbackPriceConfigId: data.fallbackPriceConfigId,
-    }
+    const submitData = omitNullAndUndefined(data)
 
     if (planId) {
       return updatePlan(submitData)
