@@ -123,5 +123,5 @@ export default function useProjectForm(projectId?: number) {
     }
   }, [methods.watch()])
 
-  return { methods, inputType, inputValue, handleChange, onSubmit, setInputType, setInputValue }
+  return { methods, inputType, inputValue, handleChange, onSubmit, setInputValue }
 }
