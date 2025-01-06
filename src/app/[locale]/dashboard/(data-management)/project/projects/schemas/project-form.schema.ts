@@ -11,7 +11,6 @@ export const schema = yup.object().shape({
     .test({
       name: 'is-endclientId-required',
       test(value, ctx) {
-        console.log('valu', value, ctx.parent)
         if (
           ctx.parent.inputType === 'endclientId' &&
           (value === undefined || value === null || value === 0)
