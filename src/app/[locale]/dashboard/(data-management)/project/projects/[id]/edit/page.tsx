@@ -20,8 +20,9 @@ import useProjectForm from '../../hooks/project-form.hook'
 export default function UpdateProjectType({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.projects')
 
-  const { methods, inputType, inputValue, handleChange, onSubmit, setInputType, setInputValue } =
-    useProjectForm(Number(params.id))
+  const { methods, inputType, inputValue, handleChange, onSubmit, setInputValue } = useProjectForm(
+    Number(params.id)
+  )
 
   return (
     <>

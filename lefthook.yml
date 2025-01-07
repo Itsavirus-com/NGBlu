@@ -9,3 +9,6 @@ pre-commit:
     2-linting:
       glob: '*.{js,ts,tsx}'
       run: yarn eslint --fix {staged_files} && git add {staged_files}
+    3-type-check:
+      glob: '*.{ts,tsx}'
+      run: yarn tsc --noEmit
