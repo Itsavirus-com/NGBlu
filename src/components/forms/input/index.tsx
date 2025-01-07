@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import { Form, FormControlProps } from 'react-bootstrap'
 import { useController, useFormContext } from 'react-hook-form'
@@ -23,9 +24,7 @@ export const ControlledInput = (props: InputProps) => {
   return (
     <Form.Group className={containerClass}>
       {label && (
-        <Form.Label className="fw-bold">
-          {label} {isRequired && <span className="text-danger">*</span>}
-        </Form.Label>
+        <Form.Label className={clsx('fw-bold', { required: isRequired })}>{label}</Form.Label>
       )}
       <Form.Control
         id={name}
