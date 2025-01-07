@@ -28,26 +28,16 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { endClientApi } from '@/services/api/end-client-api'
 import { useEndClient } from '@/services/swr/use-end-client'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
+
+import { schema } from '../schemas/end-client-form.schema'
 
 export default function useEndClientForm(id?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: endClient } = useEndClient(id)
-
-  const schema = yup.object().shape({
-    name: yup.string().ensure().required().max(255),
-    typeId: yup.number().required(),
-    statusId: yup.number().required(),
-    locationAddressId: yup.number().required(),
-    contactPersonId: yup.number(),
-    accountNumber: yup.string().ensure().max(45),
-    referenceId: yup.string(),
-    personId: yup.number(),
-    afasId: yup.string().ensure().max(45),
-    companyInfoId: yup.number(),
-  })
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -58,7 +48,6 @@ export default function useEndClientForm(id?: number) {
       locationAddressId: endClient?.locationAddressId!,
       contactPersonId: endClient?.contactPersonId,
       accountNumber: endClient?.accountNumber!,
-      referenceId: endClient?.referenceId,
       personId: endClient?.personId,
       afasId: endClient?.afasId!,
       companyInfoId: endClient?.companyInfoId,
@@ -66,21 +55,8 @@ export default function useEndClientForm(id?: number) {
   })
 
   const addNewEndClient = async (data: InferType<typeof schema>) => {
-    const payload = {
-      name: data.name,
-      typeId: data.typeId,
-      statusId: data.statusId,
-      locationAddressId: data.locationAddressId,
-      contactPersonId: data.contactPersonId,
-      accountNumber: data.accountNumber,
-      referenceId: data.referenceId,
-      personId: data.personId,
-      afasId: data.afasId,
-      companyInfoId: data.companyInfoId,
-    }
-
     try {
-      const res = await endClientApi.new(payload)
+      const res = await endClientApi.new(data)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client created successfully' })
@@ -94,21 +70,8 @@ export default function useEndClientForm(id?: number) {
   const updateEndClient = async (data: InferType<typeof schema>) => {
     if (!id) return
 
-    const payload = {
-      name: data.name,
-      typeId: data.typeId,
-      statusId: data.statusId,
-      locationAddressId: data.locationAddressId,
-      contactPersonId: data.contactPersonId,
-      accountNumber: data.accountNumber,
-      referenceId: data.referenceId,
-      personId: data.personId,
-      afasId: data.afasId,
-      companyInfoId: data.companyInfoId,
-    }
-
     try {
-      const res = await endClientApi.update(id, payload)
+      const res = await endClientApi.update(id, data)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client updated successfully' })
@@ -120,11 +83,13 @@ export default function useEndClientForm(id?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (id) {
-      return updateEndClient(data)
+      return updateEndClient(submitData)
     }
 
-    return addNewEndClient(data)
+    return addNewEndClient(submitData)
   }
 
   return { methods, onSubmit }
