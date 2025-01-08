@@ -28,6 +28,7 @@ export default function NewPriceType() {
                 name="type"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

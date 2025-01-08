@@ -11,7 +11,7 @@ import { PageTitle } from '@/components/page-title'
 import { Gender } from '@/services/swr/models/gender.type'
 import { PersonType } from '@/services/swr/models/person-type.type'
 
-import usePersonForm from '../../components/person-form.hook'
+import usePersonForm from '../../_hooks/person-form.hook'
 
 export default function UpdatePerson({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.persons')
@@ -31,6 +31,7 @@ export default function UpdatePerson({ params }: { params: { id: number } }) {
                 name="firstname"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('lastName')}
@@ -71,6 +72,7 @@ export default function UpdatePerson({ params }: { params: { id: number } }) {
                 className="form-control-solid"
                 apiPath="persons/types"
                 option={{ label: row => row.type, value: row => row.id }}
+                isRequired
               />
               <ControlledInput
                 label={t('titles')}

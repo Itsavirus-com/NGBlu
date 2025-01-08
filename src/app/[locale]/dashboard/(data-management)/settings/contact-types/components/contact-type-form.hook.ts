@@ -35,7 +35,11 @@ export default function useContactTypeForm(contactTypeId?: number) {
   const { data: contactType } = useContactType(contactTypeId)
 
   const schema = yup.object().shape({
-    contactType: yup.string().ensure().required().max(150),
+    contactType: yup
+      .string()
+      .ensure()
+      .required('Contact type is required')
+      .max(150, 'Contact type must be less than 150 characters'),
     parentId: yup.number(),
   })
 

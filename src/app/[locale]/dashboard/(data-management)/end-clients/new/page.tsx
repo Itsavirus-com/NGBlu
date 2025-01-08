@@ -14,7 +14,7 @@ import { EndClientStatus } from '@/services/swr/models/end-client-status.type'
 import { EndClientType } from '@/services/swr/models/end-client-type.type'
 import { Person } from '@/services/swr/models/person.type'
 
-import useEndClientForm from '../hooks/end-client-form.hook'
+import useEndClientForm from '../_hooks/end-client-form.hook'
 
 export default function NewEndClient() {
   const t = useTranslations('dataManagement.endClients')

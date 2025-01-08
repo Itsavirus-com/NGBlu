@@ -17,11 +17,11 @@ import { BusinessPartnerUser } from '@/services/swr/models/business-partner-user
 import { useBusinessPartner } from '@/services/swr/use-business-partner'
 import { safeRender } from '@/utils/safeRender'
 
-import { BusinessPartnerAddressFilter } from './components/business-partner-address-filter'
-import { BusinessPartnerContactFilter } from './components/business-partner-contact-filter'
-import { BusinessPartnerCustomerFilter } from './components/business-partner-customer-filter'
-import { BusinessPartnerProjectFilter } from './components/business-partner-project-filter'
-import { BusinessPartnerUserFilter } from './components/business-partner-user-filter'
+import { BusinessPartnerAddressFilter } from './_components/business-partner-address-filter'
+import { BusinessPartnerContactFilter } from './_components/business-partner-contact-filter'
+import { BusinessPartnerCustomerFilter } from './_components/business-partner-customer-filter'
+import { BusinessPartnerProjectFilter } from './_components/business-partner-project-filter'
+import { BusinessPartnerUserFilter } from './_components/business-partner-user-filter'
 
 export default function BusinessPartnerDetails({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners')

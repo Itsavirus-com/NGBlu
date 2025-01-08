@@ -15,7 +15,7 @@ import { BusinessPartner } from '@/services/swr/models/business-partner.type'
 import { EndClient } from '@/services/swr/models/end-client.type'
 import { EnterpriseRoot } from '@/services/swr/models/enterprise-root.type'
 
-import useOrganizationUnitForm from '../../hooks/organization-unit-form.hook'
+import useOrganizationUnitForm from '../../_hooks/organization-unit-form.hook'
 
 export default function UpdateOrganizationUnit({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.organizationUnits')
@@ -54,6 +54,7 @@ export default function UpdateOrganizationUnit({ params }: { params: { id: strin
                 name="name"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledSelect<Address>
                 label={t('primaryAddress')}
@@ -111,7 +112,7 @@ export default function UpdateOrganizationUnit({ params }: { params: { id: strin
                   isRequired
                 />
               )}
-              {(inputType === 'endclientId' || inputType === 'enterpriseRootId') && (
+              {(inputType === 'enterpriseRootId' || inputType === 'endclientId') && (
                 <ControlledSelect<EnterpriseRoot>
                   label={t('enterpriseRoot')}
                   name="enterpriseRootId"
@@ -119,6 +120,7 @@ export default function UpdateOrganizationUnit({ params }: { params: { id: strin
                   className="form-control-solid"
                   apiPath="enterprise-roots"
                   option={{ label: row => row.name, value: row => row.id }}
+                  isHidden
                   isRequired
                 />
               )}

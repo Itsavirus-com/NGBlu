@@ -31,12 +31,14 @@ export default function UpdatePriceTax({ params }: { params: { taxId: number } }
                 name="name"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('tax')}
                 name="taxValue"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledSelect<PriceUnit>
                 label={t('priceUnit')}
@@ -45,6 +47,7 @@ export default function UpdatePriceTax({ params }: { params: { taxId: number } }
                 className="form-select"
                 apiPath="prices/units"
                 option={{ label: row => row.unit, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Country>
                 label={t('country')}
@@ -53,6 +56,7 @@ export default function UpdatePriceTax({ params }: { params: { taxId: number } }
                 className="form-select"
                 apiPath="countries"
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
 
               <FormButtons />

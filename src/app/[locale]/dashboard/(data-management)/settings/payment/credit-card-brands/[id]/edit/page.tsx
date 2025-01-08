@@ -28,6 +28,7 @@ export default function UpdateCreditCardBrand({ params }: { params: { id: number
                 name="brandname"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

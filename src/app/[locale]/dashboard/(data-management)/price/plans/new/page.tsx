@@ -13,7 +13,7 @@ import { PriceConfig } from '@/services/swr/models/price-config.type'
 import { Product } from '@/services/swr/models/product.type'
 import { Service } from '@/services/swr/models/service.type'
 
-import usePricePlanForm from '../hooks/price-plan-form.hook'
+import usePricePlanForm from '../_hooks/price-plan-form.hook'
 
 export default function NewPriceConfig() {
   const t = useTranslations('dataManagement.prices.plans')
@@ -33,6 +33,7 @@ export default function NewPriceConfig() {
                 name="name"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <Form.Label className="fw-bold">Choose Product or Service</Form.Label>
               <div className="d-flex gap-3">
@@ -61,6 +62,7 @@ export default function NewPriceConfig() {
                   className="form-select"
                   apiPath="products"
                   option={{ label: row => row.name, value: row => row.id }}
+                  isRequired
                 />
               )}
               {inputType === 'serviceId' && (
@@ -71,6 +73,7 @@ export default function NewPriceConfig() {
                   className="form-select"
                   apiPath="services"
                   option={{ label: row => row.name, value: row => row.id }}
+                  isRequired
                 />
               )}
               <ControlledSelect<PriceConfig>
@@ -83,6 +86,7 @@ export default function NewPriceConfig() {
                   label: row => `${row.priceCurrency.currency} ${row.priceValue}`,
                   value: row => row.id,
                 }}
+                isRequired
               />
               <ControlledSelect<PriceConfig>
                 label={t('fallbackPriceConfig')}

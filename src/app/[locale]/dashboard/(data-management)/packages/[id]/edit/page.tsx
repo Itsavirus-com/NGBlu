@@ -11,7 +11,7 @@ import { PageTitle } from '@/components/page-title'
 import { PackageType } from '@/services/swr/models/package-type.type'
 import { PriceConfig } from '@/services/swr/models/price-config.type'
 
-import usePackageForm from '../../components/package-form.hook'
+import usePackageForm from '../../_hooks/package-form.hook'
 
 export default function UpdatePackage({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.packages')
@@ -31,6 +31,7 @@ export default function UpdatePackage({ params }: { params: { id: number } }) {
                 name="name"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledSelect<PackageType>
                 label={t('types.name')}
@@ -39,6 +40,7 @@ export default function UpdatePackage({ params }: { params: { id: number } }) {
                 className="form-control-solid"
                 apiPath="packages/types"
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<PriceConfig>
                 label={t('priceConfig')}
@@ -47,6 +49,7 @@ export default function UpdatePackage({ params }: { params: { id: number } }) {
                 className="form-control-solid"
                 apiPath="prices/configs"
                 option={{ label: row => row.priceType.type, value: row => row.id }}
+                isRequired
               />
 
               <FormButtons />

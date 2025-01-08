@@ -28,6 +28,7 @@ export default function NewGender() {
                 name="gender"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

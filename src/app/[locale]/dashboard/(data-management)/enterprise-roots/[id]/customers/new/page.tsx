@@ -12,7 +12,7 @@ import { EndClient } from '@/services/swr/models/end-client.type'
 import { EnterpriseRootCustomer } from '@/services/swr/models/enterprise-root-customer.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
-import useEnterpriseRootCustomerForm from '../../components/enterprise-root-customer-form.hook'
+import useEnterpriseRootCustomerForm from '../_hooks/enterprise-root-customer-form.hook'
 
 export default function NewEnterpriseRootCustomer({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.customers')
@@ -34,6 +34,7 @@ export default function NewEnterpriseRootCustomer({ params }: { params: { id: nu
                 className="form-control-solid"
                 apiPath={'end-clients'}
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Address>
                 label={t('address')}
@@ -42,6 +43,7 @@ export default function NewEnterpriseRootCustomer({ params }: { params: { id: nu
                 className="form-control-solid"
                 apiPath={`addresses`}
                 option={{ label: row => row.addressName, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<OrganizationUnit>
                 label={t('organisationalUnit')}

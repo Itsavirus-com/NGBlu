@@ -28,6 +28,7 @@ export default function NewCountry() {
                 name="name"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('currency')}

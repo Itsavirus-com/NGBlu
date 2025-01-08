@@ -11,7 +11,7 @@ import { Address } from '@/services/swr/models/address.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { Project } from '@/services/swr/models/project.type'
 
-import useEndClientProjectForm from '../../../components/end-client-project-form.hook'
+import useEndClientProjectForm from '../../_hooks/end-client-project-form.hook'
 
 export default function UpdateEndClientProject({
   params,

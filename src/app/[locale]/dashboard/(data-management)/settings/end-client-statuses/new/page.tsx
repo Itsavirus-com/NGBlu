@@ -28,6 +28,7 @@ export default function NewEndClientStatus() {
                 name="status"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

@@ -6,7 +6,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { Product } from '@/services/swr/models/product.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { ProductFilter } from './components/product-filter'
+import { ProductFilter } from './_components/product-filter'
 
 export default function Products() {
   const t = useTranslations('dataManagement.products')

@@ -6,7 +6,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { OrganizationUnitFilter } from './components/organization-unit-filter'
+import { OrganizationUnitFilter } from './_components/organization-unit-filter'
 
 export default function Countries() {
   const t = useTranslations('dataManagement.organizationUnits')

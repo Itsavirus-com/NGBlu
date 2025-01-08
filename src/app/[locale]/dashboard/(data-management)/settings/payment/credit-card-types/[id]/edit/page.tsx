@@ -28,6 +28,7 @@ export default function UpdateCreditCardType({ params }: { params: { id: number 
                 name="creditcardType"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

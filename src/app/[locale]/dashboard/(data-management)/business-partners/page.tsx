@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { BusinessPartner } from '@/services/swr/models/business-partner.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { BusinessPartnerFilter } from './components/business-partner-filter'
+import { BusinessPartnerFilter } from './_components/business-partner-filter'
 
 export default function BusinessPartners() {
   const t = useTranslations('dataManagement.businessPartners')

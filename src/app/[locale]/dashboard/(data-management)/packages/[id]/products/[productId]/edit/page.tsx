@@ -10,7 +10,7 @@ import { PageTitle } from '@/components/page-title'
 import { Package } from '@/services/swr/models/package.type'
 import { Product, ProductPriceConfig } from '@/services/swr/models/product.type'
 
-import usePackageProductForm from '../../component/package-product-form.hook'
+import usePackageProductForm from '../../_hooks/package-product-form.hook'
 
 export default function UpdatePackageProduct({
   params,
@@ -38,6 +38,7 @@ export default function UpdatePackageProduct({
                 apiPath="packages"
                 option={{ label: row => row.name, value: row => row.id }}
                 disabled
+                isRequired
               />
               <ControlledSelect<Product>
                 label={t('product')}
@@ -47,6 +48,7 @@ export default function UpdatePackageProduct({
                 className="form-control-solid"
                 apiPath="products"
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<ProductPriceConfig>
                 label={t('productPricingConfig')}
@@ -56,6 +58,7 @@ export default function UpdatePackageProduct({
                 className="form-control-solid"
                 apiPath="products/price-configs"
                 option={{ label: row => row.pricePlan.name, value: row => row.id }}
+                isRequired
               />
 
               <FormButtons />

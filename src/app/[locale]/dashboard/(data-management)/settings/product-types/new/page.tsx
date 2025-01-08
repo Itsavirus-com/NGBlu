@@ -28,6 +28,7 @@ export default function NewProductType() {
                 name="productType"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

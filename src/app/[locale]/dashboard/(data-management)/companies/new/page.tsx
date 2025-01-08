@@ -12,7 +12,7 @@ import { Address } from '@/services/swr/models/address.type'
 import { CompanyStatus } from '@/services/swr/models/company-status.type'
 import { Company } from '@/services/swr/models/company.type'
 
-import useCompanyForm from '../components/company-form.hook'
+import useCompanyForm from '../_hooks/company-form.hook'
 
 export default function NewCompany() {
   const t = useTranslations('dataManagement.companies')
@@ -32,6 +32,7 @@ export default function NewCompany() {
                 name="companyname"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledSelect<CompanyStatus>
                 label={t('status')}
@@ -40,6 +41,7 @@ export default function NewCompany() {
                 className="form-control-solid"
                 apiPath="companies/statuses"
                 option={{ label: row => row.status, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Address>
                 label={t('visitAddress')}
@@ -48,6 +50,7 @@ export default function NewCompany() {
                 className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Address>
                 label={t('postalAddress')}
@@ -64,6 +67,7 @@ export default function NewCompany() {
                 className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Address>
                 label={t('legalAddress')}
@@ -72,12 +76,14 @@ export default function NewCompany() {
                 className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
+                isRequired
               />
               <ControlledInput
                 label={t('kvkNumber')}
                 name="chamberOfCommerceId"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('vatNumber')}

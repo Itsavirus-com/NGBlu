@@ -11,7 +11,7 @@ import { AddressType } from '@/services/swr/models/address-type.type'
 import { Address } from '@/services/swr/models/address.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
-import useBusinessPartnerAddressForm from '../../../components/business-partner-address-form.hook'
+import useBusinessPartnerAddressForm from '../../_hooks/business-partner-address-form.hook'
 
 export default function UpdateBusinessPartnerAddress({
   params,
@@ -40,6 +40,7 @@ export default function UpdateBusinessPartnerAddress({
                 className="form-control-solid"
                 apiPath={'addresses'}
                 option={{ label: row => row.addressName, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<AddressType>
                 label={t('addressType')}
@@ -48,6 +49,7 @@ export default function UpdateBusinessPartnerAddress({
                 className="form-control-solid"
                 apiPath={'addresses/types'}
                 option={{ label: row => row.addressType, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<OrganizationUnit>
                 label={t('organisationalUnit')}

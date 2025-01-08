@@ -30,6 +30,7 @@ export default function NewContactType() {
                 name="contactType"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <ControlledSelect<ContactType>

@@ -14,7 +14,7 @@ import { PriceTax } from '@/services/swr/models/price-tax.type'
 import { PriceType } from '@/services/swr/models/price-type.type'
 import { PriceUnit } from '@/services/swr/models/price-unit.type'
 
-import usePriceConfigForm from '../../components/price-config-form.hook'
+import usePriceConfigForm from '../../_hooks/price-config-form.hook'
 
 export default function UpdatePriceConfig({ params }: { params: { configId: number } }) {
   const t = useTranslations('dataManagement.prices.configs')
@@ -34,6 +34,7 @@ export default function UpdatePriceConfig({ params }: { params: { configId: numb
                 name="priceValue"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledSelect<PriceUnit>
                 label={t('unit')}
@@ -42,6 +43,7 @@ export default function UpdatePriceConfig({ params }: { params: { configId: numb
                 className="form-select"
                 apiPath="prices/units"
                 option={{ label: row => row.unit, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<PriceCurrency>
                 label={t('currency')}
@@ -50,6 +52,7 @@ export default function UpdatePriceConfig({ params }: { params: { configId: numb
                 className="form-select"
                 apiPath="prices/currencies"
                 option={{ label: row => row.currency, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<PriceType>
                 label={t('type')}
@@ -58,6 +61,7 @@ export default function UpdatePriceConfig({ params }: { params: { configId: numb
                 className="form-select"
                 apiPath="prices/types"
                 option={{ label: row => row.type, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<PriceInterval>
                 label={t('interval')}
@@ -66,6 +70,7 @@ export default function UpdatePriceConfig({ params }: { params: { configId: numb
                 className="form-select"
                 apiPath="prices/intervals"
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<PriceTax>
                 label={t('tax')}
@@ -74,6 +79,7 @@ export default function UpdatePriceConfig({ params }: { params: { configId: numb
                 className="form-select"
                 apiPath="prices/taxes"
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
 
               <FormButtons />

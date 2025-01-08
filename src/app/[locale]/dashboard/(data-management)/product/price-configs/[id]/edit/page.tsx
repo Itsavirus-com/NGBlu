@@ -13,7 +13,7 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { PricePlan } from '@/services/swr/models/price-plan.type'
 import { Product } from '@/services/swr/models/product.type'
 
-import useProductPriceConfigForm from '../../hooks/product-price-configs-form.hook'
+import useProductPriceConfigForm from '../../_hooks/product-price-configs-form.hook'
 
 export default function UpdateProductPriceConfig({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.products.priceConfig')
@@ -61,6 +61,7 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                 className="form-control-solid"
                 apiPath="products"
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<PricePlan>
                 label={t('pricePlan')}
@@ -69,6 +70,7 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                 className="form-control-solid"
                 apiPath="prices/plans"
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
               <div className="d-flex gap-3">
                 <ControlledSwitch
@@ -96,6 +98,7 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                   className="form-control-solid"
                   apiPath="business-partners"
                   option={{ label: row => row.name, value: row => row.id }}
+                  isRequired
                 />
               )}
               {inputType === 'enterpriseRootId' && (
@@ -106,6 +109,7 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                   className="form-control-solid"
                   apiPath="enterprise-roots"
                   option={{ label: row => row.name, value: row => row.id }}
+                  isRequired
                 />
               )}
               {!!inputType && (

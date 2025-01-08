@@ -11,7 +11,7 @@ import { AddressType } from '@/services/swr/models/address-type.type'
 import { Address } from '@/services/swr/models/address.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
-import useEnterpriseRootAddressForm from '../../components/enterprise-root-address-form.hook'
+import useEnterpriseRootAddressForm from '../_hooks/enterprise-root-address-form.hook'
 
 export default function NewEnterpriseRoot({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.addresses')
@@ -33,6 +33,7 @@ export default function NewEnterpriseRoot({ params }: { params: { id: string } }
                 className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<AddressType>
                 label={t('addressType')}
@@ -41,6 +42,7 @@ export default function NewEnterpriseRoot({ params }: { params: { id: string } }
                 className="form-control-solid"
                 apiPath="addresses/types"
                 option={{ label: row => row.addressType, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<OrganizationUnit>
                 label={t('organisationUnit')}
@@ -50,6 +52,7 @@ export default function NewEnterpriseRoot({ params }: { params: { id: string } }
                 apiPath="organisational-units"
                 option={{ label: row => row.name, value: row => row.id }}
                 filter={{ enterpriseRootId: params.id }}
+                isRequired
               />
 
               <FormButtons />

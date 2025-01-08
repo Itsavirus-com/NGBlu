@@ -10,7 +10,7 @@ import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Address } from '@/services/swr/models/address.type'
 
-import useEndClientAddressForm from '../../../components/end-client-address-form.hook'
+import useEndClientAddressForm from '../../_hooks/end-client-address-form.hook'
 
 export default function UpdateEndClientAddress({
   params,
@@ -36,6 +36,7 @@ export default function UpdateEndClientAddress({
                 className="form-control-solid"
                 apiPath={'addresses'}
                 option={{ label: row => row.addressName, value: row => row.id }}
+                isRequired
               />
               <ControlledSwitch label={t('primaryAddress')} name="isPrimaryLocation" />
 

@@ -10,7 +10,7 @@ import { PageTitle } from '@/components/page-title'
 import { Package } from '@/services/swr/models/package.type'
 import { Service, ServicePriceConfig } from '@/services/swr/models/service.type'
 
-import usePackageServiceForm from '../component/package-service-form.hook'
+import usePackageServiceForm from '../_hooks/package-service-form.hook'
 
 export default function NewPackageService({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.packages')
@@ -33,6 +33,7 @@ export default function NewPackageService({ params }: { params: { id: number } }
                 apiPath="packages"
                 option={{ label: row => row.name, value: row => row.id }}
                 disabled
+                isRequired
               />
               <ControlledSelect<Service>
                 label={t('service')}
@@ -41,6 +42,7 @@ export default function NewPackageService({ params }: { params: { id: number } }
                 className="form-control-solid"
                 apiPath="services"
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<ServicePriceConfig>
                 label={t('servicePricingConfig')}
@@ -49,6 +51,7 @@ export default function NewPackageService({ params }: { params: { id: number } }
                 className="form-control-solid"
                 apiPath="services/price-configs"
                 option={{ label: row => row.pricePlan.name, value: row => row.id }}
+                isRequired
               />
 
               <FormButtons />

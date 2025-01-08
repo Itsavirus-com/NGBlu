@@ -15,7 +15,11 @@ export default function useCreditCardTypeForm(creditCardTypeId?: number) {
   const { data: ccType } = useCreditCardType(creditCardTypeId)
 
   const schema = yup.object().shape({
-    creditcardType: yup.string().ensure().required().max(45),
+    creditcardType: yup
+      .string()
+      .ensure()
+      .required('Credit card type is required')
+      .max(45, 'Credit card type must be less than 45 characters'),
   })
 
   const methods = useForm<InferType<typeof schema>>({

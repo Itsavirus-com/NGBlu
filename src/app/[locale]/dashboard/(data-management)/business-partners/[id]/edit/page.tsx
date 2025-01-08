@@ -15,7 +15,7 @@ import { Company } from '@/services/swr/models/company.type'
 import { EnterpriseRoot } from '@/services/swr/models/enterprise-root-type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
-import useBusinessPartnerForm from '../../components/business-partner-form.hook'
+import useBusinessPartnerForm from '../../_hooks/business-partner-form.hook'
 
 export default function UpdateBusinessPartner({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners')
@@ -35,6 +35,7 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
                 name="name"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledSelect<BusinessPartnerType>
                 label={t('businessPartnerType')}
@@ -43,6 +44,7 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
                 className="form-control-solid"
                 apiPath="business-partners/types"
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Address>
                 label={t('businessPartnersAddresses')}
@@ -51,6 +53,7 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
                 className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Company>
                 label={t('company')}
@@ -59,6 +62,7 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
                 className="form-control-solid"
                 apiPath="companies/infos"
                 option={{ label: row => row.companyname, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<EnterpriseRoot>
                 label={t('enterpriseRoot')}
@@ -67,6 +71,7 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
                 className="form-control-solid"
                 apiPath="enterprise-roots"
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<OrganizationUnit>
                 label={t('organisationalUnit')}

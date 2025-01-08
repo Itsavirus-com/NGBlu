@@ -14,7 +14,7 @@ import { BusinessPartner } from '@/services/swr/models/business-partner.type'
 import { EndClient } from '@/services/swr/models/end-client.type'
 import { EnterpriseRoot } from '@/services/swr/models/enterprise-root.type'
 
-import useOrganizationUnitForm from '../hooks/organization-unit-form.hook'
+import useOrganizationUnitForm from '../_hooks/organization-unit-form.hook'
 
 export default function NewOrganizationUnit() {
   const t = useTranslations('dataManagement.organizationUnits')

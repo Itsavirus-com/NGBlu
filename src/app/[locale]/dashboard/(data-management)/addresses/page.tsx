@@ -6,7 +6,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { Address } from '@/services/swr/models/address.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { AddressFilter } from './components/address-filter'
+import { AddressFilter } from './_components/address-filter'
 
 export default function Users() {
   const t = useTranslations('dataManagement.addresses')

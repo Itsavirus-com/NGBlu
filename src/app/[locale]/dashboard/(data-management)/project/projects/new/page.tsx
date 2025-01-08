@@ -15,7 +15,7 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { ProjectInfo } from '@/services/swr/models/project-info.type'
 import { ProjectType } from '@/services/swr/models/project-type'
 
-import useProjectForm from '../hooks/project-form.hook'
+import useProjectForm from '../_hooks/project-form.hook'
 
 export default function NewProjectType() {
   const t = useTranslations('dataManagement.projects')

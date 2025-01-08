@@ -12,7 +12,7 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { PersonResponsibility } from '@/services/swr/models/person-responsibility.type'
 import { Person } from '@/services/swr/models/person.type'
 
-import useEnterpriseRootContactForm from '../../components/enterprise-root-contact-form.hook'
+import useEnterpriseRootContactForm from '../_hooks/enterprise-root-contact-form.hook'
 
 export default function NewEnterpriseRootContact({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.contacts')
@@ -34,6 +34,7 @@ export default function NewEnterpriseRootContact({ params }: { params: { id: str
                 className="form-control-solid"
                 apiPath={'persons'}
                 option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Contact>
                 label={t('contactInfo')}
@@ -42,6 +43,7 @@ export default function NewEnterpriseRootContact({ params }: { params: { id: str
                 className="form-control-solid"
                 apiPath={'contacts/infos'}
                 option={{ label: row => row.contactInfo, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<PersonResponsibility>
                 label={t('responsibility')}
@@ -50,6 +52,7 @@ export default function NewEnterpriseRootContact({ params }: { params: { id: str
                 className="form-control-solid"
                 apiPath={'persons/responsibilities'}
                 option={{ label: row => row.responsibility, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<OrganizationUnit>
                 label={t('organisationUnit')}

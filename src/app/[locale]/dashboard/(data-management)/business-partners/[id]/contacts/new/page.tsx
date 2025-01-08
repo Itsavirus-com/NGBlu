@@ -8,11 +8,10 @@ import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Contact } from '@/services/swr/models/contact.type'
-import { EnterpriseRoot } from '@/services/swr/models/enterprise-root-type'
 import { PersonResponsibility } from '@/services/swr/models/person-responsibility.type'
 import { Person } from '@/services/swr/models/person.type'
 
-import { useBusinessPartnerContactForm } from '../hooks/contact-form.hook'
+import { useBusinessPartnerContactForm } from '../_hooks/business-partner-contact-form.hook'
 
 export default function NewBusinessPartnerContact({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners.contacts')
@@ -34,6 +33,7 @@ export default function NewBusinessPartnerContact({ params }: { params: { id: st
                 className="form-control-solid"
                 apiPath={'persons'}
                 option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Contact>
                 label={t('contactInfo')}
@@ -42,6 +42,7 @@ export default function NewBusinessPartnerContact({ params }: { params: { id: st
                 className="form-control-solid"
                 apiPath={'contacts/infos'}
                 option={{ label: row => row.contactInfo, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<PersonResponsibility>
                 label={t('responsibility')}
@@ -50,6 +51,7 @@ export default function NewBusinessPartnerContact({ params }: { params: { id: st
                 className="form-control-solid"
                 apiPath={'persons/responsibilities'}
                 option={{ label: row => row.responsibility, value: row => row.id }}
+                isRequired
               />
 
               <FormButtons />

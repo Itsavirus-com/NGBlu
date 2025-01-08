@@ -15,7 +15,11 @@ export default function useProductTypeForm(typeId?: number) {
   const { data: productType } = useProductType(typeId)
 
   const schema = yup.object().shape({
-    productType: yup.string().ensure().required().max(45),
+    productType: yup
+      .string()
+      .ensure()
+      .required('Product type is required')
+      .max(45, 'Product type must be less than 45 characters'),
   })
 
   const methods = useForm<InferType<typeof schema>>({

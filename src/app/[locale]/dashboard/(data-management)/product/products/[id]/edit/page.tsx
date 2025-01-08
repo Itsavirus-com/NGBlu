@@ -12,7 +12,7 @@ import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { ProductType } from '@/services/swr/models/product-type.type'
 
-import useProductForm from '../../components/product-form.hook'
+import useProductForm from '../../_hooks/product-form.hook'
 
 export default function UpdateProduct({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.products')
@@ -45,12 +45,14 @@ export default function UpdateProduct({ params }: { params: { id: string } }) {
                 name="name"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('description')}
                 name="description"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledSelect<ProductType>
                 label={t('type')}
@@ -59,6 +61,7 @@ export default function UpdateProduct({ params }: { params: { id: string } }) {
                 className="form-control-solid"
                 apiPath="products/types"
                 option={{ label: row => row.productType, value: row => row.id }}
+                isRequired
               />
               <div className="d-flex gap-3">
                 <ControlledSwitch

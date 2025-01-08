@@ -8,7 +8,7 @@ import { DateTimeView } from '@/components/view/date-time-view/date-time-view'
 import { User } from '@/services/swr/models/user.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { UserFilter } from './components/user-filter'
+import { UserFilter } from './_components/user-filter'
 
 export default function Users() {
   const t = useTranslations('dataManagement.users')

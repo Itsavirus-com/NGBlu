@@ -15,10 +15,17 @@ export default function usePriceTaxForm(taxId?: number) {
   const { data: priceTax } = usePriceTax(taxId)
 
   const schema = yup.object().shape({
-    name: yup.string().ensure().required().max(150),
-    taxValue: yup.number().typeError('Tax value must be a number').required(),
-    priceUnitId: yup.number().required(),
-    countryId: yup.number().required(),
+    name: yup
+      .string()
+      .ensure()
+      .required('Name is required')
+      .max(150, 'Name must be less than 150 characters'),
+    taxValue: yup
+      .number()
+      .typeError('Tax value must be a number')
+      .required('Tax value is required'),
+    priceUnitId: yup.number().required('Price unit is required'),
+    countryId: yup.number().required('Country is required'),
   })
 
   const methods = useForm<InferType<typeof schema>>({

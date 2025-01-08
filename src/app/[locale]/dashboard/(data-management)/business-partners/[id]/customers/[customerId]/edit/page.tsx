@@ -9,10 +9,9 @@ import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Address } from '@/services/swr/models/address.type'
 import { EndClient } from '@/services/swr/models/end-client.type'
-import { EnterpriseRoot } from '@/services/swr/models/enterprise-root-type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
-import useBusinessPartnerCustomerForm from '../../hooks/customer-form.hook'
+import useBusinessPartnerCustomerForm from '../../_hooks/business-partner-customer-form.hook'
 
 export default function UpdateBusinessPartnerCustomer({
   params,
@@ -41,6 +40,7 @@ export default function UpdateBusinessPartnerCustomer({
                 className="form-control-solid"
                 apiPath={'end-clients'}
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Address>
                 label={t('businessPartnerAddress')}
@@ -49,6 +49,7 @@ export default function UpdateBusinessPartnerCustomer({
                 className="form-control-solid"
                 apiPath={`addresses`}
                 option={{ label: row => row.addressName, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<OrganizationUnit>
                 label={t('organisationalUnit')}

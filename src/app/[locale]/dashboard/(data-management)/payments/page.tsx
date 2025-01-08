@@ -6,7 +6,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { Payment } from '@/services/swr/models/payment.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { PaymentFilter } from './components/payment-filter'
+import { PaymentFilter } from './_components/payment-filter'
 
 export default function Payments() {
   const t = useTranslations('dataManagement.payments')

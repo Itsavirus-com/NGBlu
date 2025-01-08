@@ -28,6 +28,7 @@ export default function UpdateBusinessPartnerType({ params }: { params: { id: nu
                 name="name"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

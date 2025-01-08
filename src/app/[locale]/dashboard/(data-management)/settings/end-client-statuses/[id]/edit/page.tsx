@@ -28,6 +28,7 @@ export default function UpdateEndClientStatus({ params }: { params: { id: number
                 name="status"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

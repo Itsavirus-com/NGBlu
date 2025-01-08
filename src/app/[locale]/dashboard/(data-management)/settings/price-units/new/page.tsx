@@ -28,6 +28,7 @@ export default function NewPriceUnit() {
                 name="unit"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

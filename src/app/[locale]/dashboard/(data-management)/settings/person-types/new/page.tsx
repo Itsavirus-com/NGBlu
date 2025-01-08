@@ -28,6 +28,7 @@ export default function NewPersonType() {
                 name="type"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

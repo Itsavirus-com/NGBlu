@@ -9,7 +9,7 @@ import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Payment } from '@/services/swr/models/payment.type'
 
-import useEndClientPaymentDetailForm from '../../../components/end-client-payment-detail-form.hook'
+import useEndClientPaymentDetailForm from '../../_hooks/end-client-payment-detail-form.hook'
 
 export default function UpdateEndClientPaymentDetail({
   params,
@@ -38,6 +38,7 @@ export default function UpdateEndClientPaymentDetail({
                 className="form-control-solid"
                 apiPath={'payments/details'}
                 option={{ label: row => row.paymentType.paymentType, value: row => row.id }}
+                isRequired
               />
 
               <FormButtons />

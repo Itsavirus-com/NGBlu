@@ -15,7 +15,11 @@ export default function useBusinessPartnerTypeForm(businessPartnerTypeId?: numbe
   const { data: businessPartnerType } = useBusinessPartnerType(businessPartnerTypeId)
 
   const schema = yup.object().shape({
-    name: yup.string().ensure().required().max(150),
+    name: yup
+      .string()
+      .ensure()
+      .required('Name is required')
+      .max(150, 'Name must be less than 150 characters'),
   })
 
   const methods = useForm<InferType<typeof schema>>({

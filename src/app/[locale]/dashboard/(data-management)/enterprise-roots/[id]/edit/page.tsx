@@ -11,7 +11,7 @@ import { PageTitle } from '@/components/page-title'
 import { Address } from '@/services/swr/models/address.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
-import useEnterpriseRootForm from '../../components/enterprise-root-form.hook'
+import useEnterpriseRootForm from '../../_hooks/enterprise-root-form.hook'
 
 export default function UpdateEnterpriseRoot({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.enterpriseRoots')
@@ -31,6 +31,7 @@ export default function UpdateEnterpriseRoot({ params }: { params: { id: number 
                 name="name"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledSelect<Address>
                 label={t('enterpriseRootAddress')}
@@ -39,6 +40,7 @@ export default function UpdateEnterpriseRoot({ params }: { params: { id: number 
                 className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<OrganizationUnit>
                 label={t('organisationUnit')}

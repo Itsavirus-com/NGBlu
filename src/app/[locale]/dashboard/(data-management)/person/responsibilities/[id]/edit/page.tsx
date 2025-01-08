@@ -8,7 +8,7 @@ import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
 import { PageTitle } from '@/components/page-title'
 
-import useResponsibilityForm from '../../components/responsibility-form.hook'
+import useResponsibilityForm from '../../_hooks/responsibility-form.hook'
 
 export default function UpdatePersonResponsibility({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.personResponsibilities')
@@ -28,6 +28,7 @@ export default function UpdatePersonResponsibility({ params }: { params: { id: s
                 name="responsibility"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

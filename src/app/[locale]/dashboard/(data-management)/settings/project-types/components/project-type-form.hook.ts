@@ -15,7 +15,11 @@ export default function useProjectTypeForm(typeId?: number) {
   const { data: projectType } = useProjectType(typeId)
 
   const schema = yup.object().shape({
-    projectType: yup.string().ensure().required().max(150),
+    projectType: yup
+      .string()
+      .ensure()
+      .required('Project type is required')
+      .max(150, 'Project type must be less than 150 characters'),
   })
 
   const methods = useForm<InferType<typeof schema>>({
