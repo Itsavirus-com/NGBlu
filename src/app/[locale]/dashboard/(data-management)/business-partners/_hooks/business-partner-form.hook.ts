@@ -64,7 +64,7 @@ export default function useBusinessPartnerForm(id?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: businessPartner } = useBusinessPartner(id)
+  const { data: businessPartner, isLoading } = useBusinessPartner(id)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -140,5 +140,5 @@ export default function useBusinessPartnerForm(id?: number) {
     return addNewBusinessPartner(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

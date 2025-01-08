@@ -12,7 +12,7 @@ export default function usePackageProductForm(id: number, packageProductId?: num
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: productType } = usePackageProduct(Number(id), packageProductId)
+  const { data: productType, isLoading } = usePackageProduct(Number(id), packageProductId)
 
   const schema = yup.object().shape({
     packageId: yup.string().ensure().required(),
@@ -64,5 +64,5 @@ export default function usePackageProductForm(id: number, packageProductId?: num
     return addNewPackageProduct(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
@@ -16,7 +15,7 @@ export default function useProjectForm(projectId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: projectData } = useProject(projectId)
+  const { data: projectData, isLoading } = useProject(projectId)
 
   const [inputType, setInputType] = useState<
     'endclientId' | 'businesspartnerId' | 'enterpriseRootId' | null
@@ -123,5 +122,5 @@ export default function useProjectForm(projectId?: number) {
     }
   }, [methods.watch()])
 
-  return { methods, inputType, inputValue, handleChange, onSubmit, setInputValue }
+  return { methods, inputType, inputValue, handleChange, onSubmit, setInputValue, isLoading }
 }

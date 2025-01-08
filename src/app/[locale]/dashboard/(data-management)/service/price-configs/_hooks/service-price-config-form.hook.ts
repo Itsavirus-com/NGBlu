@@ -17,7 +17,7 @@ export default function useServicePriceConfigForm(configId?: number) {
   const [formDateValue, setFormDateValue] = useState<Date | null>(null)
   const [inputType, setInputType] = useState<'businesspartnerId' | 'enterpriseRootId' | null>(null)
 
-  const { data: servicePriceConfig } = useServicePriceConfig(configId)
+  const { data: servicePriceConfig, isLoading } = useServicePriceConfig(configId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -96,5 +96,6 @@ export default function useServicePriceConfigForm(configId?: number) {
     handleChange,
     onSubmit,
     setFormDateValue,
+    isLoading,
   }
 }

@@ -15,7 +15,7 @@ export default function useAddressForm(addressId?: number) {
   const { showToast, showUnexpectedToast } = useToast()
   const t = useTranslations('dataManagement.addresses')
 
-  const { data: address } = useAddress(addressId)
+  const { data: address, isLoading } = useAddress(addressId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -73,5 +73,5 @@ export default function useAddressForm(addressId?: number) {
     return addNewAddress(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

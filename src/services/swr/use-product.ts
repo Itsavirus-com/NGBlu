@@ -5,7 +5,7 @@ import { modelAdaptor } from './middleware/model-adaptor'
 import { Product } from './models/product.type'
 
 export const useProduct = (productId?: number) => {
-  const { data, mutate } = useSWR<Product>(
+  const { data, mutate, isLoading } = useSWR<Product>(
     () =>
       productId && {
         path: `products/${productId}`,
@@ -15,5 +15,5 @@ export const useProduct = (productId?: number) => {
     }
   )
 
-  return { data, mutate }
+  return { data, mutate, isLoading }
 }

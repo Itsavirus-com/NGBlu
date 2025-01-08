@@ -6,6 +6,7 @@ import { Card, CardBody } from 'react-bootstrap'
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledSelect } from '@/components/forms/select'
+import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 import { Contact } from '@/services/swr/models/contact.type'
 import { EnterpriseRoot } from '@/services/swr/models/enterprise-root-type'
@@ -21,58 +22,67 @@ export default function UpdateEndClientContact({
 }) {
   const t = useTranslations('dataManagement.endClients.contacts')
 
-  const { methods, onSubmit } = useEndClientContactForm(Number(params.id), Number(params.contactId))
+  const { methods, onSubmit, isLoading } = useEndClientContactForm(
+    Number(params.id),
+    Number(params.contactId)
+  )
 
   return (
     <>
       <PageTitle title={t('updateContact')} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <FormProvider methods={methods} onSubmit={onSubmit}>
+          <div className="app-container container-fluid">
+            <Card>
+              <CardBody>
+                <ControlledSelect<Person>
+                  label={t('person')}
+                  name="personId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath={'persons'}
+                  option={{
+                    label: row => `${row.firstname} ${row.lastname}`,
+                    value: row => row.id,
+                  }}
+                  isRequired
+                />
+                <ControlledSelect<Contact>
+                  label={t('contactInfo')}
+                  name="contactInfoId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath={'contacts/infos'}
+                  option={{ label: row => row.contactInfo, value: row => row.id }}
+                  isRequired
+                />
+                <ControlledSelect<PersonResponsibility>
+                  label={t('responsibility')}
+                  name="responsibilityId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath={'persons/responsibilities'}
+                  option={{ label: row => row.responsibility, value: row => row.id }}
+                  isRequired
+                />
+                <ControlledSelect<EnterpriseRoot>
+                  label={t('enterpriseRoot')}
+                  name="enterpriseRootId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath={'enterprise-roots'}
+                  option={{ label: row => row.name, value: row => row.id }}
+                  isRequired
+                />
 
-      <FormProvider methods={methods} onSubmit={onSubmit}>
-        <div className="app-container container-fluid">
-          <Card>
-            <CardBody>
-              <ControlledSelect<Person>
-                label={t('person')}
-                name="personId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath={'persons'}
-                option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<Contact>
-                label={t('contactInfo')}
-                name="contactInfoId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath={'contacts/infos'}
-                option={{ label: row => row.contactInfo, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<PersonResponsibility>
-                label={t('responsibility')}
-                name="responsibilityId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath={'persons/responsibilities'}
-                option={{ label: row => row.responsibility, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<EnterpriseRoot>
-                label={t('enterpriseRoot')}
-                name="enterpriseRootId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath={'enterprise-roots'}
-                option={{ label: row => row.name, value: row => row.id }}
-                isRequired
-              />
-
-              <FormButtons />
-            </CardBody>
-          </Card>
-        </div>
-      </FormProvider>
+                <FormButtons />
+              </CardBody>
+            </Card>
+          </div>
+        </FormProvider>
+      )}
     </>
   )
 }

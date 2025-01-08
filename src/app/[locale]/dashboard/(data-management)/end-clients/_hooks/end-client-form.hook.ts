@@ -22,7 +22,6 @@
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
@@ -37,7 +36,7 @@ export default function useEndClientForm(id?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: endClient } = useEndClient(id)
+  const { data: endClient, isLoading } = useEndClient(id)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -92,5 +91,5 @@ export default function useEndClientForm(id?: number) {
     return addNewEndClient(submitData)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

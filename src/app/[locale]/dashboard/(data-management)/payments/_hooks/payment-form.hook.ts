@@ -13,7 +13,7 @@ export default function usePaymentForm(paymentId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: payment } = usePayment(paymentId)
+  const { data: payment, isLoading } = usePayment(paymentId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -55,5 +55,5 @@ export default function usePaymentForm(paymentId?: number) {
     return addNewPayment(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

@@ -13,7 +13,7 @@ export default function usePackageForm(packageId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: packageData } = usePackage(packageId)
+  const { data: packageData, isLoading } = usePackage(packageId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -56,5 +56,5 @@ export default function usePackageForm(packageId?: number) {
     return addNewPackage(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

@@ -13,7 +13,7 @@ export default function usePriceConfigForm(configId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: priceConfig } = usePriceConfig(configId)
+  const { data: priceConfig, isLoading } = usePriceConfig(configId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -56,5 +56,5 @@ export default function usePriceConfigForm(configId?: number) {
     return addNewConfig(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

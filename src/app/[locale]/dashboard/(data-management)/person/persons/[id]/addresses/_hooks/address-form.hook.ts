@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
@@ -16,7 +15,7 @@ export default function usePersonAddressForm(personAddressId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: personAddress } = usePersonAddress(Number(id), personAddressId)
+  const { data: personAddress, isLoading } = usePersonAddress(Number(id), personAddressId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -68,5 +67,5 @@ export default function usePersonAddressForm(personAddressId?: number) {
     return addPersonAddress(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

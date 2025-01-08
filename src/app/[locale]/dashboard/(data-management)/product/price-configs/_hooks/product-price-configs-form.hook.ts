@@ -17,7 +17,7 @@ export default function useProductPriceConfigForm(configId?: number) {
   const [formDateValue, setFormDateValue] = useState<Date | null>(null)
   const [inputType, setInputType] = useState<'businesspartnerId' | 'enterpriseRootId' | null>(null)
 
-  const { data: productPriceConfig } = useProductPriceConfig(configId)
+  const { data: productPriceConfig, isLoading } = useProductPriceConfig(configId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -95,5 +95,6 @@ export default function useProductPriceConfigForm(configId?: number) {
     handleChange,
     setFormDateValue,
     onSubmit,
+    isLoading,
   }
 }

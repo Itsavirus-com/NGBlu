@@ -40,7 +40,7 @@ export default function useCompanyForm(companyId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: company } = useCompany(companyId)
+  const { data: company, isLoading } = useCompany(companyId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -105,5 +105,5 @@ export default function useCompanyForm(companyId?: number) {
     return addNewCompany(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

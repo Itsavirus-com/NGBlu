@@ -13,7 +13,10 @@ export const useBusinessPartnerContactForm = (businessPartnerId: number, contact
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: businessPartnerContact } = useBusinessPartnerContact(businessPartnerId, contactId)
+  const { data: businessPartnerContact, isLoading } = useBusinessPartnerContact(
+    businessPartnerId,
+    contactId
+  )
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -66,5 +69,5 @@ export const useBusinessPartnerContactForm = (businessPartnerId: number, contact
     return addNewBusinessPartnerContact(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

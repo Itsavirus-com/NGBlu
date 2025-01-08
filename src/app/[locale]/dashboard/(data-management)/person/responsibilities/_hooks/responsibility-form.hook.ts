@@ -13,7 +13,7 @@ export default function useResponsibilityForm(responsibilityId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: responsibility } = usePersonResponsibility(responsibilityId)
+  const { data: responsibility, isLoading } = usePersonResponsibility(responsibilityId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -56,5 +56,5 @@ export default function useResponsibilityForm(responsibilityId?: number) {
     return addNewResponsibility(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

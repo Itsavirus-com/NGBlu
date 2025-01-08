@@ -13,7 +13,7 @@ export default function useEndClientContactForm(endCliendId: number, contactId?:
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: endClientContact } = useEndClientContact(endCliendId, contactId)
+  const { data: endClientContact, isLoading } = useEndClientContact(endCliendId, contactId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -62,5 +62,5 @@ export default function useEndClientContactForm(endCliendId: number, contactId?:
     return addNewEndClientContact(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

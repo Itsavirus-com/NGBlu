@@ -40,7 +40,7 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: enterpriseRoot } = useEnterpriseRoot(enterpriseRootId)
+  const { data: enterpriseRoot, isLoading } = useEnterpriseRoot(enterpriseRootId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -83,5 +83,5 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
     return addNewEnterpriseRoot(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

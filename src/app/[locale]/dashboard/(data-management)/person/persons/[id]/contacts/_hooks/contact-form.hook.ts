@@ -17,7 +17,7 @@ export default function usePersonContactForm(personContactId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: personContact } = usePersonContact(personContactId)
+  const { data: personContact, isLoading } = usePersonContact(personContactId)
 
   const [inputType, setInputType] = useState<
     'endclientId' | 'businesspartnerId' | 'enterpriseRootId' | null
@@ -93,5 +93,5 @@ export default function usePersonContactForm(personContactId?: number) {
     }
   }, [methods.watch()])
 
-  return { methods, inputType, onSubmit, handleChange }
+  return { methods, inputType, onSubmit, handleChange, isLoading }
 }

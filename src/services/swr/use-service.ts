@@ -5,7 +5,7 @@ import { modelAdaptor } from './middleware/model-adaptor'
 import { Service } from './models/service.type'
 
 export const useService = (serviceId?: number) => {
-  const { data, mutate } = useSWR<Service>(
+  const { data, mutate, isLoading } = useSWR<Service>(
     () =>
       serviceId && {
         path: `services/${serviceId}`,
@@ -15,5 +15,5 @@ export const useService = (serviceId?: number) => {
     }
   )
 
-  return { data, mutate }
+  return { data, mutate, isLoading }
 }

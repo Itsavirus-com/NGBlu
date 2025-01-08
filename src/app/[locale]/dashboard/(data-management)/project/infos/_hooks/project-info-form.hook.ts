@@ -13,7 +13,7 @@ export default function useProjectInfoForm(id?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: projectInfoData } = useProjectInfo(id)
+  const { data: projectInfoData, isLoading } = useProjectInfo(id)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -56,5 +56,5 @@ export default function useProjectInfoForm(id?: number) {
     return addNewProjectInfo(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

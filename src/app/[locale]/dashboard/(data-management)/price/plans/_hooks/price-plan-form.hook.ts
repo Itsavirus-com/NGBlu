@@ -15,7 +15,7 @@ export default function usePricePlanForm(planId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: pricePlan } = usePricePlan(planId)
+  const { data: pricePlan, isLoading } = usePricePlan(planId)
 
   const [inputType, setInputType] = useState<'productId' | 'serviceId' | null>(null)
 
@@ -82,5 +82,5 @@ export default function usePricePlanForm(planId?: number) {
     }
   }, [methods.watch()])
 
-  return { methods, inputType, handleChange, onSubmit }
+  return { methods, inputType, handleChange, onSubmit, isLoading }
 }

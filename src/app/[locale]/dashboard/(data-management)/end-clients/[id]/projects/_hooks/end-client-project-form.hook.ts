@@ -13,7 +13,7 @@ export default function useEndClientProjectForm(endCliendId: number, projectId?:
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: endClientProject } = useEndClientProject(endCliendId, projectId)
+  const { data: endClientProject, isLoading } = useEndClientProject(endCliendId, projectId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -65,5 +65,5 @@ export default function useEndClientProjectForm(endCliendId: number, projectId?:
     return addNewEndClientProject(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

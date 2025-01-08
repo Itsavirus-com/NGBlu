@@ -13,7 +13,7 @@ export default function useProductForm(productId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: product } = useProduct(productId)
+  const { data: product, isLoading } = useProduct(productId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -73,5 +73,5 @@ export default function useProductForm(productId?: number) {
     return addNewProduct(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

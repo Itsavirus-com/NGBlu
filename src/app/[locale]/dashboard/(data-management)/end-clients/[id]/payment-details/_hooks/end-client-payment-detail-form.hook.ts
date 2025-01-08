@@ -16,7 +16,10 @@ export default function useEndClientPaymentDetailForm(
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: endClientPaymentDetail } = useEndClientPaymentDetail(endCliendId, paymentDetailId)
+  const { data: endClientPaymentDetail, isLoading } = useEndClientPaymentDetail(
+    endCliendId,
+    paymentDetailId
+  )
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -65,5 +68,5 @@ export default function useEndClientPaymentDetailForm(
     return addNewEndClientPaymentDetail(data)
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading }
 }

@@ -15,7 +15,7 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: organizationUnit } = useOrganizationUnit(organizationUnitId)
+  const { data: organizationUnit, isLoading } = useOrganizationUnit(organizationUnitId)
 
   const [inputType, setInputType] = useState<
     'endclientId' | 'businesspartnerId' | 'enterpriseRootId' | null
@@ -132,5 +132,5 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
     }
   }, [methods.watch()])
 
-  return { methods, inputType, setInputType, handleChange, onSubmit }
+  return { methods, inputType, setInputType, handleChange, onSubmit, isLoading }
 }
