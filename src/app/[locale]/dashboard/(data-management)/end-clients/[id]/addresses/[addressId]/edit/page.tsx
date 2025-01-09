@@ -11,7 +11,7 @@ import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 import { Address } from '@/services/swr/models/address.type'
 
-import useEndClientAddressForm from '../../_hooks/end-client-address-form.hook'
+import useEndClientAddressForm from '../../../_hooks/end-client-address-form.hook'
 
 export default function UpdateEndClientAddress({
   params,

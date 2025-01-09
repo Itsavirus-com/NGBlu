@@ -11,7 +11,7 @@ import { PageTitle } from '@/components/page-title'
 import { Package } from '@/services/swr/models/package.type'
 import { Service, ServicePriceConfig } from '@/services/swr/models/service.type'
 
-import usePackageServiceForm from '../../_hooks/package-service-form.hook'
+import usePackageServiceForm from '../../../_hooks/package-service-form.hook'
 
 export default function UpdatePackageService({
   params,

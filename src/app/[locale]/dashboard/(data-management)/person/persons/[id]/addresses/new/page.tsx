@@ -10,7 +10,7 @@ import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Address } from '@/services/swr/models/address.type'
 
-import usePersonAddressForm from '../_hooks/address-form.hook'
+import usePersonAddressForm from '../../_hooks/address-form.hook'
 
 export default function NewPersonAddress() {
   const t = useTranslations('dataManagement.persons.addresses')

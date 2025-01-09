@@ -10,7 +10,7 @@ import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 import { Payment } from '@/services/swr/models/payment.type'
 
-import useEndClientPaymentDetailForm from '../../_hooks/end-client-payment-detail-form.hook'
+import useEndClientPaymentDetailForm from '../../../_hooks/end-client-payment-detail-form.hook'
 
 export default function UpdateEndClientPaymentDetail({
   params,

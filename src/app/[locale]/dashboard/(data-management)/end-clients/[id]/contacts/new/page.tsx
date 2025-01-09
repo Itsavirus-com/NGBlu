@@ -12,7 +12,7 @@ import { EnterpriseRoot } from '@/services/swr/models/enterprise-root-type'
 import { PersonResponsibility } from '@/services/swr/models/person-responsibility.type'
 import { Person } from '@/services/swr/models/person.type'
 
-import useEndClientContactForm from '../_hooks/end-client-contact-form.hook'
+import useEndClientContactForm from '../../_hooks/end-client-contact-form.hook'
 
 export default function NewEndClientContact({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.endClients.contacts')

@@ -12,7 +12,7 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { Person } from '@/services/swr/models/person.type'
 import { User } from '@/services/swr/models/user.type'
 
-import useBusinessPartnerUserForm from '../../_hooks/business-partner-user-form.hook'
+import useBusinessPartnerUserForm from '../../../_hooks/business-partner-user-form.hook'
 
 export default function UpdateBusinessPartnerUser({
   params,

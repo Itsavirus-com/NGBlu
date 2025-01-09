@@ -12,7 +12,7 @@ import { Address } from '@/services/swr/models/address.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { Project } from '@/services/swr/models/project.type'
 
-import useBusinessPartnerProjectForm from '../../_hooks/business-partner-project-form.hook'
+import useBusinessPartnerProjectForm from '../../../_hooks/business-partner-project-form.hook'
 
 export default function UpdateBusinessPartnerProject({
   params,

@@ -10,7 +10,7 @@ import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Address } from '@/services/swr/models/address.type'
 
-import useEndClientAddressForm from '../_hooks/end-client-address-form.hook'
+import useEndClientAddressForm from '../../_hooks/end-client-address-form.hook'
 
 export default function NewEndClientAddress({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.endClients.addresses')

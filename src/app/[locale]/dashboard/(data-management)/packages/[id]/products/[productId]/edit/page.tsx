@@ -11,7 +11,7 @@ import { PageTitle } from '@/components/page-title'
 import { Package } from '@/services/swr/models/package.type'
 import { Product, ProductPriceConfig } from '@/services/swr/models/product.type'
 
-import usePackageProductForm from '../../_hooks/package-product-form.hook'
+import usePackageProductForm from '../../../_hooks/package-product-form.hook'
 
 export default function UpdatePackageProduct({
   params,

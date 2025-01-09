@@ -11,7 +11,7 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { Person } from '@/services/swr/models/person.type'
 import { User } from '@/services/swr/models/user.type'
 
-import useEnterpriseRootUserForm from '../_hooks/enterprise-root-user-form.hook'
+import useEnterpriseRootUserForm from '../../_hooks/enterprise-root-user-form.hook'
 
 export default function NewEnterpriseRootUser({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.users')

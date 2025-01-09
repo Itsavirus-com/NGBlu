@@ -12,7 +12,7 @@ import { Address } from '@/services/swr/models/address.type'
 import { EndClient } from '@/services/swr/models/end-client.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
-import useBusinessPartnerCustomerForm from '../../_hooks/business-partner-customer-form.hook'
+import useBusinessPartnerCustomerForm from '../../../_hooks/business-partner-customer-form.hook'
 
 export default function UpdateBusinessPartnerCustomer({
   params,

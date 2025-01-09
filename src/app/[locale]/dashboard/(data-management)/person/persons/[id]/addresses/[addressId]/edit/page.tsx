@@ -11,7 +11,7 @@ import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 import { Address } from '@/services/swr/models/address.type'
 
-import usePersonAddressForm from '../../_hooks/address-form.hook'
+import usePersonAddressForm from '../../../_hooks/address-form.hook'
 
 export default function UpdatePersonAddress({ params }: { params: { addressId: number } }) {
   const t = useTranslations('dataManagement.persons.addresses')

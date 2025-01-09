@@ -12,7 +12,7 @@ import { Address } from '@/services/swr/models/address.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { Project } from '@/services/swr/models/project.type'
 
-import useEndClientProjectForm from '../../_hooks/end-client-project-form.hook'
+import useEndClientProjectForm from '../../../_hooks/end-client-project-form.hook'
 
 export default function UpdateEndClientProject({
   params,
@@ -43,6 +43,7 @@ export default function UpdateEndClientProject({
                   className="form-control-solid"
                   apiPath={'projects'}
                   option={{ label: row => row.projectName, value: row => row.id }}
+                  isRequired
                 />
                 <ControlledSelect<Address>
                   label={t('address')}
@@ -51,6 +52,7 @@ export default function UpdateEndClientProject({
                   className="form-control-solid"
                   apiPath={`addresses`}
                   option={{ label: row => row.addressName, value: row => row.id }}
+                  isRequired
                 />
                 <ControlledSelect<OrganizationUnit>
                   label={t('organisationalUnit')}

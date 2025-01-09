@@ -12,7 +12,7 @@ import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 import { ContactType } from '@/services/swr/models/contact-type.type'
 
-import usePersonContactForm from '../../_hooks/contact-form.hook'
+import usePersonContactForm from '../../../_hooks/contact-form.hook'
 
 export default function UpdatePersonContact({ params }: { params: { contactId: number } }) {
   const t = useTranslations('dataManagement.persons.contacts')

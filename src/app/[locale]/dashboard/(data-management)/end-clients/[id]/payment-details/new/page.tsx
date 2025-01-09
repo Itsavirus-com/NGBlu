@@ -9,7 +9,7 @@ import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Payment } from '@/services/swr/models/payment.type'
 
-import useEndClientPaymentDetailForm from '../_hooks/end-client-payment-detail-form.hook'
+import useEndClientPaymentDetailForm from '../../_hooks/end-client-payment-detail-form.hook'
 
 export default function NewEndClientPaymentDetail({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.endClients.paymentDetails')

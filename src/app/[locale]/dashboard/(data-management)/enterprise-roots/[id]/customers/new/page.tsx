@@ -12,7 +12,7 @@ import { EndClient } from '@/services/swr/models/end-client.type'
 import { EnterpriseRootCustomer } from '@/services/swr/models/enterprise-root-customer.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
-import useEnterpriseRootCustomerForm from '../_hooks/enterprise-root-customer-form.hook'
+import useEnterpriseRootCustomerForm from '../../_hooks/enterprise-root-customer-form.hook'
 
 export default function NewEnterpriseRootCustomer({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.customers')

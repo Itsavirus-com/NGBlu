@@ -12,7 +12,7 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { PersonResponsibility } from '@/services/swr/models/person-responsibility.type'
 import { Person } from '@/services/swr/models/person.type'
 
-import useEnterpriseRootContactForm from '../../_hooks/enterprise-root-contact-form.hook'
+import useEnterpriseRootContactForm from '../../../_hooks/enterprise-root-contact-form.hook'
 
 export default function UpdateEnterpriseRootContact({
   params,

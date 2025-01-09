@@ -11,7 +11,7 @@ import { AddressType } from '@/services/swr/models/address-type.type'
 import { Address } from '@/services/swr/models/address.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
-import useEnterpriseRootAddressForm from '../../_hooks/enterprise-root-address-form.hook'
+import useEnterpriseRootAddressForm from '../../../_hooks/enterprise-root-address-form.hook'
 
 export default function UpdateEnterpriseRoot({
   params,

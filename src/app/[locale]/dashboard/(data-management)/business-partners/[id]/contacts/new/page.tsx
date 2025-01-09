@@ -11,7 +11,7 @@ import { Contact } from '@/services/swr/models/contact.type'
 import { PersonResponsibility } from '@/services/swr/models/person-responsibility.type'
 import { Person } from '@/services/swr/models/person.type'
 
-import { useBusinessPartnerContactForm } from '../_hooks/business-partner-contact-form.hook'
+import { useBusinessPartnerContactForm } from '../../_hooks/business-partner-contact-form.hook'
 
 export default function NewBusinessPartnerContact({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners.contacts')
