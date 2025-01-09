@@ -10,7 +10,7 @@ import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Country } from '@/services/swr/models/country.type'
 
-import useAddressForm from '../components/address-form.hook'
+import useAddressForm from '../_hooks/address-form.hook'
 
 export default function NewAddress() {
   const t = useTranslations('dataManagement.addresses')
@@ -30,18 +30,21 @@ export default function NewAddress() {
                 name="addressName"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('streetName')}
                 name="streetname"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('houseNumber')}
                 name="housenumber"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('houseNumberSuffix')}
@@ -72,12 +75,14 @@ export default function NewAddress() {
                 name="city"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('postalCode')}
                 name="postalcode"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledSelect<Country>
                 label={t('country')}
@@ -86,6 +91,7 @@ export default function NewAddress() {
                 className="form-control-solid"
                 apiPath="countries"
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
               <ControlledInput
                 label={t('latitude')}

@@ -8,7 +8,7 @@ import { FieldTextView } from '@/components/view/field-text-view/field-text-view
 import { useCompany } from '@/services/swr/use-company'
 import { safeRender } from '@/utils/safeRender'
 
-import { Address } from './components/address'
+import { Address } from './_components/address'
 
 export default function CompanyDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.companies')

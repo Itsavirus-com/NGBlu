@@ -6,12 +6,13 @@ import { Card, CardBody } from 'react-bootstrap'
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledSelect } from '@/components/forms/select'
+import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 import { AddressType } from '@/services/swr/models/address-type.type'
 import { Address } from '@/services/swr/models/address.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
-import useBusinessPartnerAddressForm from '../../../components/business-partner-address-form.hook'
+import useBusinessPartnerAddressForm from '../../../_hooks/business-partner-address-form.hook'
 
 export default function UpdateBusinessPartnerAddress({
   params,
@@ -20,7 +21,7 @@ export default function UpdateBusinessPartnerAddress({
 }) {
   const t = useTranslations('dataManagement.businessPartners.addresses')
 
-  const { methods, onSubmit } = useBusinessPartnerAddressForm(
+  const { methods, onSubmit, isLoading } = useBusinessPartnerAddressForm(
     Number(params.id),
     Number(params.addressId)
   )
@@ -28,44 +29,49 @@ export default function UpdateBusinessPartnerAddress({
   return (
     <>
       <PageTitle title={t('updateAddress')} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <FormProvider methods={methods} onSubmit={onSubmit}>
+          <div className="app-container container-fluid">
+            <Card>
+              <CardBody>
+                <ControlledSelect<Address>
+                  label={t('address')}
+                  name="addressId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath={'addresses'}
+                  option={{ label: row => row.addressName, value: row => row.id }}
+                  isRequired
+                />
+                <ControlledSelect<AddressType>
+                  label={t('addressType')}
+                  name="addressTypeId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath={'addresses/types'}
+                  option={{ label: row => row.addressType, value: row => row.id }}
+                  isRequired
+                />
+                <ControlledSelect<OrganizationUnit>
+                  label={t('organisationalUnit')}
+                  name="ouUnitId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath={'organisational-units'}
+                  option={{ label: row => row.name, value: row => row.id }}
+                  filter={{
+                    businesspartnerId: params.id,
+                  }}
+                />
 
-      <FormProvider methods={methods} onSubmit={onSubmit}>
-        <div className="app-container container-fluid">
-          <Card>
-            <CardBody>
-              <ControlledSelect<Address>
-                label={t('address')}
-                name="addressId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath={'addresses'}
-                option={{ label: row => row.addressName, value: row => row.id }}
-              />
-              <ControlledSelect<AddressType>
-                label={t('addressType')}
-                name="addressTypeId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath={'addresses/types'}
-                option={{ label: row => row.addressType, value: row => row.id }}
-              />
-              <ControlledSelect<OrganizationUnit>
-                label={t('organisationalUnit')}
-                name="ouUnitId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath={'organisational-units'}
-                option={{ label: row => row.name, value: row => row.id }}
-                filter={{
-                  businesspartnerId: params.id,
-                }}
-              />
-
-              <FormButtons />
-            </CardBody>
-          </Card>
-        </div>
-      </FormProvider>
+                <FormButtons />
+              </CardBody>
+            </Card>
+          </div>
+        </FormProvider>
+      )}
     </>
   )
 }

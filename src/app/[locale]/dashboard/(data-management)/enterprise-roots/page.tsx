@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { EnterpriseRoot } from '@/services/swr/models/enterprise-root.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { EnterpriseRootFilter } from './components/enterprise-root-filter'
+import { EnterpriseRootFilter } from './_components/enterprise-root-filter'
 
 export default function EnterpriseRoots() {
   const t = useTranslations('dataManagement.enterpriseRoots')

@@ -15,7 +15,11 @@ export default function useEndClientStatusForm(endClientStatusId?: number) {
   const { data: ccType } = useEndClientStatus(endClientStatusId)
 
   const schema = yup.object().shape({
-    status: yup.string().ensure().required().max(45),
+    status: yup
+      .string()
+      .ensure()
+      .required('Status is required')
+      .max(45, 'Status must be less than 45 characters'),
   })
 
   const methods = useForm<InferType<typeof schema>>({

@@ -15,7 +15,11 @@ export default function useServiceTypeForm(typeId?: number) {
   const { data: serviceType } = useServiceType(typeId)
 
   const schema = yup.object().shape({
-    serviceType: yup.string().ensure().required().max(45),
+    serviceType: yup
+      .string()
+      .ensure()
+      .required('Service type is required')
+      .max(45, 'Service type must be less than 45 characters'),
   })
 
   const methods = useForm<InferType<typeof schema>>({

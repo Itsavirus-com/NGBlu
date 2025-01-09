@@ -11,7 +11,7 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { Person } from '@/services/swr/models/person.type'
 import { User } from '@/services/swr/models/user.type'
 
-import useBusinessPartnerUserForm from '../../components/business-partner-user-form.hook'
+import useBusinessPartnerUserForm from '../../_hooks/business-partner-user-form.hook'
 
 export default function NewBusinessPartnerUser({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners.users')
@@ -33,6 +33,7 @@ export default function NewBusinessPartnerUser({ params }: { params: { id: strin
                 className="form-control-solid"
                 apiPath={'users'}
                 option={{ label: row => row.displayName, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Person>
                 label={t('person')}
@@ -41,6 +42,7 @@ export default function NewBusinessPartnerUser({ params }: { params: { id: strin
                 className="form-control-solid"
                 apiPath="persons"
                 option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<OrganizationUnit>
                 label={t('organisationalUnit')}

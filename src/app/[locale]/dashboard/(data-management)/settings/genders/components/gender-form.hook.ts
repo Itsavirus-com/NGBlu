@@ -15,7 +15,11 @@ export default function useGenderForm(genderId?: number) {
   const { data: gender } = useGender(genderId)
 
   const schema = yup.object().shape({
-    gender: yup.string().ensure().required().max(45),
+    gender: yup
+      .string()
+      .ensure()
+      .required('Gender is required')
+      .max(45, 'Gender must be less than 45 characters'),
   })
 
   const methods = useForm<InferType<typeof schema>>({

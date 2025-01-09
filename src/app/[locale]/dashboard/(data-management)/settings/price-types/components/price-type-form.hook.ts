@@ -15,7 +15,11 @@ export default function usePriceTypeForm(priceTypeId?: number) {
   const { data: ccType } = usePriceType(priceTypeId)
 
   const schema = yup.object().shape({
-    type: yup.string().ensure().required().max(150),
+    type: yup
+      .string()
+      .ensure()
+      .required('Type is required')
+      .max(150, 'Type must be less than 150 characters'),
   })
 
   const methods = useForm<InferType<typeof schema>>({

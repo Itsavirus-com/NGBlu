@@ -12,7 +12,7 @@ import { EnterpriseRoot } from '@/services/swr/models/enterprise-root-type'
 import { PersonResponsibility } from '@/services/swr/models/person-responsibility.type'
 import { Person } from '@/services/swr/models/person.type'
 
-import useEndClientContactForm from '../../components/end-client-contact-form.hook'
+import useEndClientContactForm from '../../_hooks/end-client-contact-form.hook'
 
 export default function NewEndClientContact({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.endClients.contacts')
@@ -34,6 +34,7 @@ export default function NewEndClientContact({ params }: { params: { id: string }
                 className="form-control-solid"
                 apiPath={'persons'}
                 option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Contact>
                 label={t('contactInfo')}
@@ -42,6 +43,7 @@ export default function NewEndClientContact({ params }: { params: { id: string }
                 className="form-control-solid"
                 apiPath={'contacts/infos'}
                 option={{ label: row => row.contactInfo, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<PersonResponsibility>
                 label={t('responsibility')}
@@ -50,6 +52,7 @@ export default function NewEndClientContact({ params }: { params: { id: string }
                 className="form-control-solid"
                 apiPath={'persons/responsibilities'}
                 option={{ label: row => row.responsibility, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<EnterpriseRoot>
                 label={t('enterpriseRoot')}
@@ -58,6 +61,7 @@ export default function NewEndClientContact({ params }: { params: { id: string }
                 className="form-control-solid"
                 apiPath={'enterprise-roots'}
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
 
               <FormButtons />

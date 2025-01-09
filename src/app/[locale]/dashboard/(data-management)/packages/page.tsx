@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { Package } from '@/services/swr/models/package.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { PackageFilter } from './components/package-filter'
+import { PackageFilter } from './_components/package-filter'
 
 export default function Packages() {
   const t = useTranslations('dataManagement.packages')

@@ -28,6 +28,7 @@ export default function UpdateGender({ params }: { params: { genderId: number } 
                 name="gender"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

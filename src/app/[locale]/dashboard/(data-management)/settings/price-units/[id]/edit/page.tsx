@@ -28,6 +28,7 @@ export default function UpdatePriceUnit({ params }: { params: { id: number } }) 
                 name="unit"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

@@ -17,11 +17,11 @@ import { EnterpriseRootUser } from '@/services/swr/models/enterprise-root-user.t
 import { useEnterpriseRoot } from '@/services/swr/use-enterprise-root'
 import { safeRender } from '@/utils/safeRender'
 
-import { EnterpriseRootAddressFilter } from './components/enterprise-root-address-filter'
-import { EnterpriseRootContactFilter } from './components/enterprise-root-contact-filter'
-import { EnterpriseRootCustomerFilter } from './components/enterprise-root-customer-filter'
-import { EnterpriseRootProjectFilter } from './components/enterprise-root-project-filter'
-import { EnterpriseRootUserFilter } from './components/enterprise-root-user-filter'
+import { EnterpriseRootAddressFilter } from './_components/enterprise-root-address-filter'
+import { EnterpriseRootContactFilter } from './_components/enterprise-root-contact-filter'
+import { EnterpriseRootCustomerFilter } from './_components/enterprise-root-customer-filter'
+import { EnterpriseRootProjectFilter } from './_components/enterprise-root-project-filter'
+import { EnterpriseRootUserFilter } from './_components/enterprise-root-user-filter'
 
 export default function EnterpriseRootDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.enterpriseRoots')

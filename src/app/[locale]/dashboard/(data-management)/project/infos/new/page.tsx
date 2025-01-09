@@ -1,6 +1,5 @@
 'use client'
 
-import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -9,7 +8,7 @@ import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
 import { PageTitle } from '@/components/page-title'
 
-import useProjectInfoForm from '../components/project-info-form.hook'
+import useProjectInfoForm from '../_hooks/project-info-form.hook'
 
 export default function NewProjectInfo() {
   const t = useTranslations('dataManagement.projects.infos')
@@ -29,6 +28,7 @@ export default function NewProjectInfo() {
                 name="projectInfo"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

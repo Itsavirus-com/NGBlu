@@ -15,7 +15,11 @@ export default function useCurrencyForm(currencyId?: number) {
   const { data: ccType } = useCurrency(currencyId)
 
   const schema = yup.object().shape({
-    currency: yup.string().ensure().required().max(45),
+    currency: yup
+      .string()
+      .ensure()
+      .required('Currency is required')
+      .max(45, 'Currency must be less than 45 characters'),
   })
 
   const methods = useForm<InferType<typeof schema>>({

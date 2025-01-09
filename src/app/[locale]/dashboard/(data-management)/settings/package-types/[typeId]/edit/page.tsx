@@ -28,6 +28,7 @@ export default function UpdatePackageType({ params }: { params: { typeId: number
                 name="name"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

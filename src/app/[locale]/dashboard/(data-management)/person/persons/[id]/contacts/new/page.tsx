@@ -11,7 +11,7 @@ import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { ContactType } from '@/services/swr/models/contact-type.type'
 
-import usePersonContactForm from '../hooks/contact-form.hook'
+import usePersonContactForm from '../../_hooks/contact-form.hook'
 
 export default function NewPersonContact() {
   const t = useTranslations('dataManagement.persons.contacts')

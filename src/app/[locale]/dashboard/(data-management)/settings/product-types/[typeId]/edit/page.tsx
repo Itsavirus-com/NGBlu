@@ -28,6 +28,7 @@ export default function UpdateProductType({ params }: { params: { typeId: string
                 name="productType"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

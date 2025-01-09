@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { ProjectInfo } from '@/services/swr/models/project-info.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { ProjectInfoFilter } from './components/project-info-filter'
+import { ProjectInfoFilter } from './_components/project-info-filter'
 
 export default function ProjectInfos() {
   const t = useTranslations('dataManagement.projects.infos')

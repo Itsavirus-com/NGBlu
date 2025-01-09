@@ -1,5 +1,6 @@
 'use client'
 
+import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
 import { Form, FormSelectProps, Placeholder } from 'react-bootstrap'
 import { useController, useFormContext } from 'react-hook-form'
@@ -91,9 +92,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
 
   return (
     <Form.Group className={containerClass}>
-      <Form.Label className="fw-bold">
-        {label} {isRequired && <span className="text-danger">*</span>}
-      </Form.Label>
+      <Form.Label className={clsx('fw-bold', { required: isRequired })}>{label}</Form.Label>
       {allData.length === 0 ? (
         <Placeholder as="div" animation="wave">
           <Placeholder

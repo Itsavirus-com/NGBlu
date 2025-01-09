@@ -16,7 +16,7 @@ import { EndClient } from '@/services/swr/models/end-client.type'
 import { PaymentType } from '@/services/swr/models/payment-type.type'
 import { Person } from '@/services/swr/models/person.type'
 
-import usePaymentForm from '../components/payment-form.hook'
+import usePaymentForm from '../_hooks/payment-form.hook'
 
 export default function NewPayment() {
   const t = useTranslations('dataManagement.payments')
@@ -60,6 +60,7 @@ export default function NewPayment() {
                 name="validTo"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('ccv')}
@@ -74,6 +75,7 @@ export default function NewPayment() {
                 className="form-control-solid"
                 apiPath="payments/types"
                 option={{ label: row => row.paymentType, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<CreditCardType>
                 label={t('creditCardType')}
@@ -106,6 +108,7 @@ export default function NewPayment() {
                 className="form-control-solid"
                 apiPath="persons"
                 option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<EndClient>
                 label={t('endClient')}
@@ -130,6 +133,7 @@ export default function NewPayment() {
                 className="form-control-solid"
                 apiPath="enterprise-roots"
                 option={{ label: row => row.name, value: row => row.id }}
+                isRequired
               />
 
               <FormButtons />

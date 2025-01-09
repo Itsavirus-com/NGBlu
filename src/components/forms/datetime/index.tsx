@@ -13,11 +13,12 @@ type DatetimeProps = FormControlProps & {
   max?: number
   disabled?: boolean
   options?: Object
+  isRequired?: boolean
   onChange?: ([value]: any) => void
 }
 
 export const ControlledDatetime = (props: DatetimeProps) => {
-  const { label, name, containerClass, className, children, step } = props
+  const { label, name, containerClass, className, children, step, isRequired } = props
 
   const { register, control, setValue } = useFormContext()
   const {
@@ -28,7 +29,9 @@ export const ControlledDatetime = (props: DatetimeProps) => {
 
   return (
     <Form.Group className={containerClass}>
-      {label && <Form.Label className="fw-bold">{label}</Form.Label>}
+      {label && (
+        <Form.Label className={clsx('fw-bold', { required: isRequired })}>{label}</Form.Label>
+      )}
       <Form.Control isInvalid={invalid} type="hidden" />
       <Flatpickr
         id={name}

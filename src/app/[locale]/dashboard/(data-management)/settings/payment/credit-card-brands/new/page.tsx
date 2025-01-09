@@ -28,6 +28,7 @@ export default function NewCreditCardBrand() {
                 name="brandname"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

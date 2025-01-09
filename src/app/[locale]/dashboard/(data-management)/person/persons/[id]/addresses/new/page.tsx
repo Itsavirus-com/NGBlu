@@ -10,7 +10,7 @@ import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Address } from '@/services/swr/models/address.type'
 
-import usePersonAddressForm from '../../components/address-form.hook'
+import usePersonAddressForm from '../../_hooks/address-form.hook'
 
 export default function NewPersonAddress() {
   const t = useTranslations('dataManagement.persons.addresses')
@@ -32,6 +32,7 @@ export default function NewPersonAddress() {
                 className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
+                isRequired
               />
               <ControlledSwitch
                 label={t('primaryAddress')}

@@ -6,10 +6,11 @@ import { Card, CardBody } from 'react-bootstrap'
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledSelect } from '@/components/forms/select'
+import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 import { Payment } from '@/services/swr/models/payment.type'
 
-import useEndClientPaymentDetailForm from '../../../components/end-client-payment-detail-form.hook'
+import useEndClientPaymentDetailForm from '../../../_hooks/end-client-payment-detail-form.hook'
 
 export default function UpdateEndClientPaymentDetail({
   params,
@@ -18,7 +19,7 @@ export default function UpdateEndClientPaymentDetail({
 }) {
   const t = useTranslations('dataManagement.endClients.paymentDetails')
 
-  const { methods, onSubmit } = useEndClientPaymentDetailForm(
+  const { methods, onSubmit, isLoading } = useEndClientPaymentDetailForm(
     Number(params.id),
     Number(params.paymentDetailId)
   )
@@ -26,25 +27,29 @@ export default function UpdateEndClientPaymentDetail({
   return (
     <>
       <PageTitle title={t('updatePaymentDetail')} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <FormProvider methods={methods} onSubmit={onSubmit}>
+          <div className="app-container container-fluid">
+            <Card>
+              <CardBody>
+                <ControlledSelect<Payment>
+                  label={t('paymentInfo')}
+                  name="paymentInfoId"
+                  containerClass="mb-3"
+                  className="form-control-solid"
+                  apiPath={'payments/details'}
+                  option={{ label: row => row.paymentType.paymentType, value: row => row.id }}
+                  isRequired
+                />
 
-      <FormProvider methods={methods} onSubmit={onSubmit}>
-        <div className="app-container container-fluid">
-          <Card>
-            <CardBody>
-              <ControlledSelect<Payment>
-                label={t('paymentInfo')}
-                name="paymentInfoId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath={'payments/details'}
-                option={{ label: row => row.paymentType.paymentType, value: row => row.id }}
-              />
-
-              <FormButtons />
-            </CardBody>
-          </Card>
-        </div>
-      </FormProvider>
+                <FormButtons />
+              </CardBody>
+            </Card>
+          </div>
+        </FormProvider>
+      )}
     </>
   )
 }

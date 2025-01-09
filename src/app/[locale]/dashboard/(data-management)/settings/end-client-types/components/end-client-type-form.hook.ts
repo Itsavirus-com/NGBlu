@@ -15,7 +15,11 @@ export default function useEndClientTypeForm(endClientTypeId?: number) {
   const { data: endClientType } = useEndClientType(endClientTypeId)
 
   const schema = yup.object().shape({
-    type: yup.string().ensure().required().max(45),
+    type: yup
+      .string()
+      .ensure()
+      .required('Type is required')
+      .max(45, 'Type must be less than 45 characters'),
   })
 
   const methods = useForm<InferType<typeof schema>>({

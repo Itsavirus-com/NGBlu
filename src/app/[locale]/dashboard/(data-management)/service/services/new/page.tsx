@@ -12,7 +12,7 @@ import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { ServiceType } from '@/services/swr/models/service-type.type'
 
-import useServiceForm from '../components/service-form.hook'
+import useServiceForm from '../_hooks/service-form.hook'
 
 export default function NewService() {
   const t = useTranslations('dataManagement.services')
@@ -39,6 +39,7 @@ export default function NewService() {
                 name="name"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('description')}
@@ -53,6 +54,7 @@ export default function NewService() {
                 className="form-control-solid"
                 apiPath="services/types"
                 option={{ label: row => row.serviceType, value: row => row.id }}
+                isRequired
               />
               <div className="d-flex gap-3">
                 <ControlledSwitch

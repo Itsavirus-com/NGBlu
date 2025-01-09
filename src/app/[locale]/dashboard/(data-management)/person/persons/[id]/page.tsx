@@ -12,8 +12,8 @@ import { PersonAddress } from '@/services/swr/models/person-address.type'
 import { usePerson } from '@/services/swr/use-person'
 import { safeRender } from '@/utils/safeRender'
 
-import { AddressFilter } from './components/address-filter'
-import { ContactFilter } from './components/contact-filter'
+import { AddressFilter } from './_components/address-filter'
+import { ContactFilter } from './_components/contact-filter'
 
 export default function PersonDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.persons')

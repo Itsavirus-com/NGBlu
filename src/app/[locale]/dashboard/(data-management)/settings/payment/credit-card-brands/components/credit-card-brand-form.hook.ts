@@ -15,7 +15,11 @@ export default function useCreditCardBrandForm(creditCardBrandId?: number) {
   const { data: ccType } = useCreditCardBrand(creditCardBrandId)
 
   const schema = yup.object().shape({
-    brandname: yup.string().ensure().required().max(150),
+    brandname: yup
+      .string()
+      .ensure()
+      .required('Brand name is required')
+      .max(150, 'Brand name must be less than 150 characters'),
   })
 
   const methods = useForm<InferType<typeof schema>>({

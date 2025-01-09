@@ -14,7 +14,7 @@ import { EndClientStatus } from '@/services/swr/models/end-client-status.type'
 import { EndClientType } from '@/services/swr/models/end-client-type.type'
 import { Person } from '@/services/swr/models/person.type'
 
-import useEndClientForm from '../components/end-client-form.hook'
+import useEndClientForm from '../_hooks/end-client-form.hook'
 
 export default function NewEndClient() {
   const t = useTranslations('dataManagement.endClients')
@@ -34,19 +34,13 @@ export default function NewEndClient() {
                 name="name"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('accountNumber')}
                 name="accountNumber"
                 containerClass="mb-3"
                 className="form-control-solid"
-              />
-              <ControlledInput
-                label={t('referenceId')}
-                name="referenceId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                type="number"
               />
               <ControlledInput
                 label={t('afasId')}
@@ -61,6 +55,7 @@ export default function NewEndClient() {
                 className="form-control-solid"
                 apiPath="end-clients/types"
                 option={{ label: row => row.type, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<EndClientStatus>
                 label={t('status')}
@@ -69,6 +64,7 @@ export default function NewEndClient() {
                 className="form-control-solid"
                 apiPath="end-clients/statuses"
                 option={{ label: row => row.status, value: row => row.id }}
+                isRequired
               />
               <ControlledSelect<Address>
                 label={t('locationAddress')}
@@ -77,17 +73,8 @@ export default function NewEndClient() {
                 className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
+                isRequired
               />
-
-              <ControlledSelect<EndClientType>
-                label={t('type')}
-                name="typeId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="end-clients/types"
-                option={{ label: row => row.type, value: row => row.id }}
-              />
-
               <ControlledSelect<Person>
                 label={t('person')}
                 name="personId"
@@ -96,7 +83,6 @@ export default function NewEndClient() {
                 apiPath="persons"
                 option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
               />
-
               <ControlledSelect<Person>
                 label={t('contactPerson')}
                 name="contactPersonId"

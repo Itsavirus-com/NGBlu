@@ -28,6 +28,7 @@ export default function UpdateProjectType({ params }: { params: { typeId: string
                 name="projectType"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

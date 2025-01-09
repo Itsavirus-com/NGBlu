@@ -13,7 +13,7 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 import { PricePlan } from '@/services/swr/models/price-plan.type'
 import { Service } from '@/services/swr/models/service.type'
 
-import useServicePriceConfigForm from '../hooks/service-price-config-form.hook'
+import useServicePriceConfigForm from '../_hooks/service-price-config-form.hook'
 
 export default function NewServicePriceConfig() {
   const t = useTranslations('dataManagement.services.priceConfig')

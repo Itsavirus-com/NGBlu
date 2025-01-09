@@ -8,9 +8,6 @@ import { FieldTextView } from '@/components/view/field-text-view/field-text-view
 import { useEndClientProject } from '@/services/swr/use-end-client-project'
 import { safeRender } from '@/utils/safeRender'
 
-import { ProjectAddress } from './components/project-address'
-import { ProjectInfo } from './components/project-info'
-
 export default function EndClientProjectDetails({
   params,
 }: {
