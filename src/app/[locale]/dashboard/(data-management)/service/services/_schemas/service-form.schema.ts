@@ -8,5 +8,5 @@ export const schema = yup.object().shape({
     .max(255, 'Name must be at most 255 characters'),
   description: yup.string().ensure(),
   serviceTypeId: yup.number().required('Service type is required'),
-  inputType: yup.string().ensure(),
+  inputType: yup.string().ensure().required(),
 })

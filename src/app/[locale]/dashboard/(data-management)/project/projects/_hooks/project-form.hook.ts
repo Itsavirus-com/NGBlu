@@ -120,6 +120,13 @@ export default function useProjectForm(projectId?: number) {
     if (projectId && inputType === null) {
       setInputValueBasedOnInputType()
     }
+
+    setTimeout(() => {
+      methods.setValue('enterpriseRootId', projectData?.enterpriseRootId)
+      methods.setValue('endclientId', projectData?.endclientId)
+      methods.setValue('businesspartnersId', projectData?.businesspartnersId)
+      methods.setValue('ouUnitId', projectData?.ouUnitId)
+    }, 1000)
   }, [methods.watch()])
 
   return { methods, inputType, inputValue, handleChange, onSubmit, setInputValue, isLoading }

@@ -54,7 +54,11 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
 
   const selectRef = useRef<HTMLSelectElement>(null)
 
-  const { data, pagination } = useOptionData<OptionValue>(apiPath, {
+  const {
+    data,
+    pagination,
+    isLoading: isLoadingData,
+  } = useOptionData<OptionValue>(apiPath, {
     page,
     limit: 10,
     filter: {
@@ -121,6 +125,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
               handleLoadMore()
             }
           }}
+          disabled={isLoadingData}
         >
           {detailData ? (
             <option value={option.value(detailData)}>{option.label(detailData)}</option>
