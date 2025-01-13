@@ -46,7 +46,7 @@ export default function UpdateEndClientProject({
                   isRequired
                 />
                 <ControlledSelect<Address>
-                  label={t('address')}
+                  label={t('endClientAddress')}
                   name="endclientAddressesId"
                   containerClass="mb-3"
                   className="form-control-solid"

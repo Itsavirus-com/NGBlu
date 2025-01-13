@@ -79,7 +79,7 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     },
     {
       id: 'address',
-      title: t('projects.address'),
+      title: t('projects.enterpriseRootAddress'),
       render: row =>
         `${safeRender(row, 'enterpriseRootAddressesId')} | ${safeRender(row, 'enterpriseRootAddresses.addressName')}`,
     },
@@ -98,7 +98,7 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     },
     {
       id: 'address',
-      title: t('customers.address'),
+      title: t('customers.enterpriseRootAddress'),
       render: row =>
         `${safeRender(row, 'enterpriseRootAddressesId')} | ${safeRender(row, 'enterpriseRootAddresses.addressName')}`,
     },
@@ -141,24 +141,22 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
   const tabs = [
     {
       eventKey: 'enterpriseRootInfo',
-      title: t('enterpriseRootInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={enterpriseRootInfoFields}
           isLoading={isLoading}
           translation="dataManagement.enterpriseRoots"
-          title={t('enterpriseRootInfo')}
         />
       ),
       condition: Boolean(data),
     },
     {
       eventKey: 'address',
-      title: t('addresses.title'),
+      title: t('addresses.addresses'),
       content: (
         <Table<EnterpriseRootAddress>
           className="mt-4"
-          title={t('addresses.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -178,11 +176,10 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     },
     {
       eventKey: 'contacts',
-      title: t('contacts.title'),
+      title: t('contacts.contacts'),
       content: (
         <Table<EnterpriseRootContact>
           className="mt-4"
-          title={t('contacts.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -202,11 +199,10 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     },
     {
       eventKey: 'projects',
-      title: t('projects.title'),
+      title: t('projects.projects'),
       content: (
         <Table<EnterpriseRootProject>
           className="mt-4"
-          title={t('projects.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -226,11 +222,10 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     },
     {
       eventKey: 'customers',
-      title: t('customers.title'),
+      title: t('customers.endClients'),
       content: (
         <Table<EnterpriseRootCustomer>
           className="mt-4"
-          title={t('customers.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -250,11 +245,10 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
     },
     {
       eventKey: 'users',
-      title: t('users.title'),
+      title: t('users.users'),
       content: (
         <Table<EnterpriseRootUser>
           className="mt-4"
-          title={t('users.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -280,7 +274,7 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
         <Breadcrumbs items={getBreadcrumbItems(data)} />
       </div>
 
-      <PageTitle title={data?.name || ''} />
+      <PageTitle title={`${t('enterpriseRoot')}: ${safeRender(data, 'name')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="enterpriseRootInfo" />
     </>
   )

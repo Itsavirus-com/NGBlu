@@ -32,13 +32,12 @@ export default function AddressDetails({ params }: { params: { id: number } }) {
   const tabs = [
     {
       eventKey: 'addressInfo',
-      title: t('addressInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={addressInfoFields}
           isLoading={isLoading}
           translation="dataManagement.addresses"
-          title={t('addressInfo')}
         />
       ),
       condition: Boolean(data),
@@ -47,7 +46,7 @@ export default function AddressDetails({ params }: { params: { id: number } }) {
 
   return (
     <>
-      <PageTitle title={data?.addressName || ''} />
+      <PageTitle title={`${t('addressInfo')}: ${safeRender(data, 'addressName')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="addressInfo" />
     </>
   )

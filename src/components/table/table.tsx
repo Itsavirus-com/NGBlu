@@ -27,18 +27,20 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
   return (
     <div className={`app-container container-fluid ${className}`}>
       <div className="card card-xxl-stretch">
-        <div className="card-header border-0 pt-5">
-          <h3 className="card-title align-items-start flex-column">
-            <span className="card-label fw-bold fs-3 mb-1">{title}</span>
-            {description && <span className="text-muted fw-semibold fs-7">{description}</span>}
-          </h3>
+        {title && (
+          <div className="card-header border-0 pt-5">
+            <h3 className="card-title align-items-start flex-column">
+              <span className="card-label fw-bold fs-3 mb-1">{title}</span>
+              {description && <span className="text-muted fw-semibold fs-7">{description}</span>}
+            </h3>
 
-          <div className="card-toolbar">
-            {toolbars?.map((toolbar, index) => <Button key={index} {...toolbar} />)}
+            <div className="card-toolbar">
+              {toolbars?.map((toolbar, index) => <Button key={index} {...toolbar} />)}
 
-            <Filter onFilter={setFilters}>{filterComponents}</Filter>
+              <Filter onFilter={setFilters}>{filterComponents}</Filter>
+            </div>
           </div>
-        </div>
+        )}
         <div className="card-body py-3">
           {!!data && (
             <StaticTableBody<TableValues>

@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -6,6 +7,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { productPriceConfigApi } from '@/services/api/product-price-config-api'
 import { useProductPriceConfig } from '@/services/swr/use-product-price-config'
+import { combineDateTime } from '@/utils/dateTime'
 import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
@@ -22,8 +24,14 @@ export default function useProductPriceConfigForm(configId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: productPriceConfig && {
-      activeFrom: productPriceConfig?.activeFrom ?? '',
-      activeTo: productPriceConfig?.activeTo ?? '',
+      activeFromDate: productPriceConfig?.activeFrom
+        ? format(new Date(productPriceConfig.activeFrom.replace(' ', 'T')), 'yyyy-MM-dd')
+        : '',
+      activeFromTime: productPriceConfig?.activeFrom,
+      activeToDate: productPriceConfig?.activeTo
+        ? format(new Date(productPriceConfig.activeTo.replace(' ', 'T')), 'yyyy-MM-dd')
+        : '',
+      activeToTime: productPriceConfig?.activeTo,
       productId: productPriceConfig?.productId!,
       priceplanId: productPriceConfig?.enterpriseRootId!,
       enterpriseRootId: productPriceConfig?.enterpriseRootId!,
@@ -45,7 +53,9 @@ export default function useProductPriceConfigForm(configId?: number) {
 
   const addNewConfig = async (data: InferType<typeof schema>) => {
     try {
-      const res = await productPriceConfigApi.new(data)
+      const res = await productPriceConfigApi.new(
+        data as Omit<InferType<typeof schema>, 'inputType'>
+      )
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Product price config created successfully' })
@@ -60,7 +70,10 @@ export default function useProductPriceConfigForm(configId?: number) {
     if (!configId) return
 
     try {
-      const res = await productPriceConfigApi.update(configId, data)
+      const res = await productPriceConfigApi.update(
+        configId,
+        data as Omit<InferType<typeof schema>, 'inputType'>
+      )
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Product price config updated successfully' })
@@ -72,7 +85,19 @@ export default function useProductPriceConfigForm(configId?: number) {
   }
 
   const onSubmit = (data: InferType<typeof schema>) => {
-    const submitData = omitNullAndUndefined(data)
+    const activeFrom = combineDateTime(data?.activeFromDate ?? '', data?.activeFromTime ?? '')
+    const activeTo = combineDateTime(data?.activeToDate ?? '', data?.activeToTime ?? '')
+
+    const submitData = omitNullAndUndefined({
+      activeFrom,
+      activeTo,
+      productId: data.productId,
+      orgUnitId: data.orgUnitId,
+      businesspartnerId: data.businesspartnerId,
+      enterpriseRootId: data.enterpriseRootId,
+      priceplanId: data.priceplanId,
+    }) as any
+
     if (configId) {
       return updateConfig(submitData)
     }
@@ -81,10 +106,16 @@ export default function useProductPriceConfigForm(configId?: number) {
   }
 
   useEffect(() => {
-    if (configId && inputType === null) {
+    if (configId && inputType === null && !isLoading) {
       setInputType(methods.getValues('inputType') as 'businesspartnerId' | 'enterpriseRootId')
+
+      setTimeout(() => {
+        methods.setValue('enterpriseRootId', productPriceConfig?.enterpriseRootId)
+        methods.setValue('businesspartnerId', productPriceConfig?.businesspartnerId)
+        methods.setValue('orgUnitId', productPriceConfig?.orgUnitId)
+      }, 1000)
     }
-  }, [methods.watch()])
+  }, [methods.watch(), isLoading, configId])
 
   return {
     methods,

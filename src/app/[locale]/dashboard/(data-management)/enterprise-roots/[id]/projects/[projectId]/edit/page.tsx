@@ -40,7 +40,7 @@ export default function UpdateEnterpriseRootProject({
                 isRequired
               />
               <ControlledSelect<Address>
-                label={t('address')}
+                label={t('enterpriseRootAddress')}
                 name="enterpriseRootAddressesId"
                 containerClass="mb-3"
                 className="form-control-solid"

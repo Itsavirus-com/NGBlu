@@ -34,13 +34,12 @@ export default function BusinessPartnerContactDetails({
   const tabs = [
     {
       eventKey: 'contactsInfo',
-      title: t('contactInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={contactFields}
           isLoading={isLoading}
           translation="dataManagement.businessPartners.contacts"
-          title={t('contactInfo')}
         />
       ),
       condition: Boolean(data),
@@ -49,7 +48,9 @@ export default function BusinessPartnerContactDetails({
 
   return (
     <>
-      <PageTitle title={t('title')} />
+      <PageTitle
+        title={`${t('contactInfo')}: ${safeRender(data, 'person.firstname')} ${safeRender(data, 'person.lastname')}`}
+      />
       <DynamicTabs tabs={tabs} defaultActiveKey="contactsInfo" />
     </>
   )

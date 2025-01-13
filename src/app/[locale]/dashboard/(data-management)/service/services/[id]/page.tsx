@@ -98,12 +98,7 @@ export default function ServiceDetails({ params }: { params: { id: number } }) {
       eventKey: 'pricePlans',
       title: t('pricePlans'),
       content: (
-        <Table<PricePlan>
-          className="mt-6"
-          title={t('pricePlans')}
-          columns={pricePlanColumns}
-          data={data?.pricePlans}
-        />
+        <Table<PricePlan> className="mt-6" columns={pricePlanColumns} data={data?.pricePlans} />
       ),
       condition: Boolean(data),
     },
@@ -113,7 +108,6 @@ export default function ServiceDetails({ params }: { params: { id: number } }) {
       content: (
         <Table<ServicePriceConfig>
           className="mt-6"
-          title={t('priceConfigs')}
           columns={priceConfigColumns}
           data={data?.servicePriceConfigs}
         />
@@ -124,7 +118,10 @@ export default function ServiceDetails({ params }: { params: { id: number } }) {
 
   return (
     <>
-      <PageTitle title={data?.name || ''} description={data?.description} />
+      <PageTitle
+        title={`${t('service')}: ${safeRender(data, 'name')}`}
+        description={data?.description}
+      />
       <DynamicTabs tabs={tabs} defaultActiveKey="pricePlans" />
     </>
   )

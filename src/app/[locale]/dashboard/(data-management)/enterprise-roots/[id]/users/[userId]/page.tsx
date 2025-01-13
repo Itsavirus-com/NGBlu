@@ -47,13 +47,12 @@ export default function EnterpriseRootUserDetails({
   const tabs = [
     {
       eventKey: 'userInfo',
-      title: t('userInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={userInfoFields}
           isLoading={isLoading}
           translation="dataManagement.enterpriseRoots.users"
-          title={t('userInfo')}
         />
       ),
       condition: Boolean(data),
@@ -66,7 +65,6 @@ export default function EnterpriseRootUserDetails({
           fields={contactFields}
           isLoading={isLoading}
           translation="dataManagement.enterpriseRoots.users"
-          title={t('personInfo')}
         />
       ),
       condition: Boolean(data),
@@ -75,7 +73,7 @@ export default function EnterpriseRootUserDetails({
 
   return (
     <>
-      <PageTitle title={t('title')} />
+      <PageTitle title={`${t('user')}: ${safeRender(data, 'user.displayName')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="userInfo" />
     </>
   )

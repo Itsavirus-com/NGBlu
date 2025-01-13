@@ -42,23 +42,43 @@ export default function UpdateServicePriceConfig({ params }: { params: { id: str
           <div className="app-container container-fluid">
             <Card>
               <CardBody>
-                <ControlledDatetime
-                  label={t('activeFrom')}
-                  name="activeFrom"
-                  containerClass="mb-3"
-                  className="form-control-solid"
-                  onChange={([date]: any) => setFormDateValue(date)}
-                />
-                <ControlledDatetime
-                  label={t('activeTo')}
-                  name="activeTo"
-                  containerClass="mb-3"
-                  className="form-control-solid"
-                  disabled={formDateValue === null}
-                  options={{
-                    minDate: formDateValue,
-                  }}
-                />
+                <div className="d-flex gap-3 mb-3">
+                  <ControlledDatetime
+                    name="activeFromDate"
+                    label={t('activeFromDate')}
+                    enableTime={false}
+                    onChange={([date]: any) => setFormDateValue(date)}
+                  />
+                  <ControlledDatetime
+                    name="activeFromTime"
+                    label={t('activeFromTime')}
+                    options={{
+                      noCalendar: true,
+                      enableTime: true,
+                      dateFormat: 'H:i',
+                    }}
+                  />
+                </div>
+                <div className="d-flex gap-3 mb-3">
+                  <ControlledDatetime
+                    name="activeToDate"
+                    label={t('activeToDate')}
+                    enableTime={false}
+                    options={{
+                      minDate: formDateValue,
+                    }}
+                  />
+                  <ControlledDatetime
+                    name="activeToTime"
+                    label={t('activeToTime')}
+                    options={{
+                      noCalendar: true,
+                      enableTime: true,
+                      dateFormat: 'H:i',
+                    }}
+                  />
+                </div>
+
                 <ControlledSelect<Service>
                   label={t('service')}
                   name="serviceId"

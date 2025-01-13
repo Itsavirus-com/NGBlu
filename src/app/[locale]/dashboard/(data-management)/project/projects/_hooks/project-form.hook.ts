@@ -117,10 +117,16 @@ export default function useProjectForm(projectId?: number) {
   }
 
   useEffect(() => {
-    if (projectId && inputType === null) {
+    if (projectId && inputType === null && !isLoading) {
       setInputValueBasedOnInputType()
+      setTimeout(() => {
+        methods.setValue('enterpriseRootId', projectData?.enterpriseRootId)
+        methods.setValue('endclientId', projectData?.endclientId)
+        methods.setValue('businesspartnersId', projectData?.businesspartnersId)
+        methods.setValue('ouUnitId', projectData?.ouUnitId)
+      }, 1000)
     }
-  }, [methods.watch()])
+  }, [methods.watch(), projectId, isLoading])
 
   return { methods, inputType, inputValue, handleChange, onSubmit, setInputValue, isLoading }
 }

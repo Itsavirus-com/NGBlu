@@ -34,13 +34,12 @@ export default function BusinessPartnerUserDetails({
   const tabs = [
     {
       eventKey: 'userInfo',
-      title: t('userInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={userFields}
           isLoading={isLoading}
           translation="dataManagement.businessPartners.users"
-          title={t('userInfo')}
         />
       ),
       condition: Boolean(data),
@@ -49,7 +48,7 @@ export default function BusinessPartnerUserDetails({
 
   return (
     <>
-      <PageTitle title={t('title')} />
+      <PageTitle title={`${t('userInfo')}: ${safeRender(data, 'user.displayName')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="userInfo" />
     </>
   )

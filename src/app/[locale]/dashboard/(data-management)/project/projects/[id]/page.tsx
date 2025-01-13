@@ -54,7 +54,6 @@ export default function ProjectDetails({ params }: { params: { id: number } }) {
           fields={generalInfoFields}
           isLoading={isLoading}
           translation="dataManagement.projects"
-          title={t('generalInfo')}
         />
       ),
       condition: Boolean(data),
@@ -67,7 +66,6 @@ export default function ProjectDetails({ params }: { params: { id: number } }) {
           fields={locationFields}
           isLoading={isLoading}
           translation="dataManagement.projects"
-          title={t('location')}
         />
       ),
       condition: Boolean(data),
@@ -76,7 +74,7 @@ export default function ProjectDetails({ params }: { params: { id: number } }) {
 
   return (
     <>
-      <PageTitle title={data?.projectName || ''} />
+      <PageTitle title={`${t('project')}: ${safeRender(data, 'projectName')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="generalInfo" />
     </>
   )

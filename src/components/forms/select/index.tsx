@@ -51,10 +51,15 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
   const [lastPage, setLastPage] = useState<number>(1)
   const [allData, setAllData] = useState<OptionValue[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  const selectRef = useRef<HTMLSelectElement>(null)
-
-  const { data, pagination } = useOptionData<OptionValue>(apiPath, {
+  const {
+    data,
+    pagination,
+    isLoading: isLoadingData,
+  } = useOptionData<OptionValue>(apiPath, {
     page,
     limit: 10,
     filter: {
@@ -73,11 +78,33 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     }
   }, [data, pagination])
 
-  const handleLoadMore = () => {
-    if (page < lastPage && !isLoading) {
-      setIsLoading(true)
-      setPage(prev => prev + 1)
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
     }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const handleScroll = () => {
+    if (!dropdownRef.current) return
+
+    const { scrollTop, scrollHeight, clientHeight } = dropdownRef.current
+    if (scrollHeight - scrollTop <= clientHeight + 1) {
+      if (page < lastPage && !isLoading) {
+        setIsLoading(true)
+        setPage(prev => prev + 1)
+      }
+    }
+  }
+
+  const handleSelect = (value: string | number) => {
+    onChange && onChange(value)
+    field.onChange(value)
+    setIsOpen(false)
   }
 
   useEffect(() => {
@@ -91,7 +118,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
   }
 
   return (
-    <Form.Group className={containerClass}>
+    <Form.Group className={containerClass} ref={containerRef}>
       <Form.Label className={clsx('fw-bold', { required: isRequired })}>{label}</Form.Label>
       {allData.length === 0 ? (
         <Placeholder as="div" animation="wave">
@@ -103,43 +130,52 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
           />
         </Placeholder>
       ) : (
-        <Form.Select
-          id={name}
-          isInvalid={invalid}
-          {...field}
-          {...otherProps}
-          ref={selectRef}
-          value={field.value || 'select_option'}
-          autoComplete={name}
-          data-test-id={name}
-          onChange={e => {
-            onChange && onChange(e.target.value)
-            field.onChange(e.target.value)
-            const value = e.target.value
-            if (value === 'load_more') {
-              field.onChange(field.value || 'select_option')
-              handleLoadMore()
-            }
-          }}
-        >
-          {detailData ? (
-            <option value={option.value(detailData)}>{option.label(detailData)}</option>
-          ) : (
-            <option disabled value={'select_option'}>
-              {isLoading ? 'Loading more...' : 'Select one'}
-            </option>
+        <div className="position-relative">
+          <div
+            className={clsx('form-select', { 'is-invalid': invalid })}
+            onClick={() => setIsOpen(!isOpen)}
+            style={{ cursor: 'pointer' }}
+          >
+            {detailData
+              ? option.label(detailData)
+              : field.value
+                ? allData.find(item => String(option.value(item)) === field.value)
+                  ? option.label(
+                      allData.find(
+                        item => String(option.value(item)) === field.value
+                      ) as OptionValue
+                    )
+                  : 'Select one'
+                : 'Select one'}
+          </div>
+
+          {isOpen && (
+            <div
+              ref={dropdownRef}
+              className="position-absolute w-100 bg-white border rounded mt-1 shadow py-2"
+              style={{
+                maxHeight: '25rem',
+                overflowY: 'auto',
+                zIndex: 1000,
+              }}
+              onScroll={handleScroll}
+            >
+              {allData.map((item: OptionValue, index: number) => (
+                <div
+                  key={index}
+                  className={clsx('px-3 py-2 cursor-pointer', {
+                    'bg-light': String(option.value(item)) === field.value,
+                  })}
+                  onClick={() => handleSelect(String(option.value(item)))}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {option.label(item)}
+                </div>
+              ))}
+              {isLoading && <div className="text-center py-2 text-muted">Loading more...</div>}
+            </div>
           )}
-          {allData.map((item: OptionValue, index: number) => (
-            <option key={index} value={String(option.value(item))}>
-              {option.label(item)}
-            </option>
-          ))}
-          {page < lastPage && (
-            <option value="load_more" disabled={isLoading}>
-              Load more...
-            </option>
-          )}
-        </Form.Select>
+        </div>
       )}
 
       {error && <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>}

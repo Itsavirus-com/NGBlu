@@ -86,12 +86,17 @@ export default function usePersonContactForm(personContactId?: number) {
   }
 
   useEffect(() => {
-    if (personContactId && inputType === null) {
+    if (personContactId && inputType === null && !isLoading) {
       setInputType(
         methods.getValues('inputType') as 'endclientId' | 'businesspartnerId' | 'enterpriseRootId'
       )
+      setTimeout(() => {
+        methods.setValue('enterpriseRootId', personContact?.enterpriseRootId)
+        methods.setValue('endclientId', personContact?.endclientId)
+        methods.setValue('businesspartnerId', personContact?.businesspartnerId)
+      }, 1000)
     }
-  }, [methods.watch()])
+  }, [methods.watch(), isLoading, personContactId])
 
   return { methods, inputType, onSubmit, handleChange, isLoading }
 }

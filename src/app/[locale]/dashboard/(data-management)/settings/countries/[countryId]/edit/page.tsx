@@ -41,18 +41,21 @@ export default function UpdateCountry({ params }: { params: { countryId: number 
                 name="locale"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('decimalSymbol')}
                 name="decimalSymbol"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
               <ControlledInput
                 label={t('iso')}
                 name="iso"
                 containerClass="mb-3"
                 className="form-control-solid"
+                isRequired
               />
 
               <FormButtons />

@@ -79,7 +79,6 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
           fields={personField}
           isLoading={isLoading}
           translation="dataManagement.persons"
-          title={t('generalInfo')}
         />
       ),
       condition: Boolean(data),
@@ -89,7 +88,6 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
       title: t('contacts.title'),
       content: (
         <Table<Contact>
-          title={t('contacts.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -114,7 +112,6 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
       title: t('addresses.title'),
       content: (
         <Table<PersonAddress>
-          title={t('addresses.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -137,7 +134,7 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
   ]
   return (
     <>
-      <PageTitle title={`${data?.firstname || ''} ${data?.lastname || ''}`} />
+      <PageTitle title={`${t('title')}: ${data?.firstname || ''} ${data?.lastname || ''}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="generalInfo" />
     </>
   )

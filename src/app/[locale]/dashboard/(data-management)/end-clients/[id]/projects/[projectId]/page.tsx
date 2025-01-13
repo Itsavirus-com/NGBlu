@@ -47,13 +47,12 @@ export default function EndClientProjectDetails({
   const tabs = [
     {
       eventKey: 'projectInfo',
-      title: t('projectInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={projectInfoFields}
           isLoading={isLoading}
           translation="dataManagement.endClients.projects"
-          title={t('projectInfo')}
         />
       ),
       condition: Boolean(data),
@@ -66,7 +65,6 @@ export default function EndClientProjectDetails({
           fields={addressFields}
           isLoading={isLoading}
           translation="dataManagement.endClients.projects"
-          title={t('address')}
         />
       ),
       condition: Boolean(data),
@@ -75,7 +73,7 @@ export default function EndClientProjectDetails({
 
   return (
     <>
-      <PageTitle title={t('title')} />
+      <PageTitle title={`${t('project')}: ${safeRender(data, 'project.projectName')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="projectInfo" />
     </>
   )

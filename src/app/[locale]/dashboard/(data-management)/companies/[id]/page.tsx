@@ -25,13 +25,12 @@ export default function CompanyDetails({ params }: { params: { id: number } }) {
   const tabs = [
     {
       eventKey: 'companyInfo',
-      title: t('companyInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={companyInfoFields}
           isLoading={isLoading}
           translation="dataManagement.companies"
-          title={t('companyInfo')}
         />
       ),
       condition: Boolean(data),
@@ -39,44 +38,32 @@ export default function CompanyDetails({ params }: { params: { id: number } }) {
     {
       eventKey: 'legalAddress',
       title: t('legalAddress'),
-      content: (
-        <Address title={t('legalAddress')} address={data?.legalAddress!} isLoading={isLoading} />
-      ),
+      content: <Address address={data?.legalAddress!} isLoading={isLoading} />,
       condition: Boolean(data?.legalAddress),
     },
     {
       eventKey: 'visitAddress',
       title: t('visitAddress'),
-      content: (
-        <Address title={t('visitAddress')} address={data?.visitAddress!} isLoading={isLoading} />
-      ),
+      content: <Address address={data?.visitAddress!} isLoading={isLoading} />,
       condition: Boolean(data?.visitAddress),
     },
     {
       eventKey: 'postalAddress',
       title: t('postalAddress'),
-      content: (
-        <Address title={t('postalAddress')} address={data?.postalAddress!} isLoading={isLoading} />
-      ),
+      content: <Address address={data?.postalAddress!} isLoading={isLoading} />,
       condition: Boolean(data?.postalAddress),
     },
     {
       eventKey: 'invoiceAddress',
       title: t('invoiceAddress'),
-      content: (
-        <Address
-          title={t('invoiceAddress')}
-          address={data?.invoiceAddress!}
-          isLoading={isLoading}
-        />
-      ),
+      content: <Address address={data?.invoiceAddress!} isLoading={isLoading} />,
       condition: Boolean(data?.invoiceAddress),
     },
   ]
 
   return (
     <>
-      <PageTitle title={data?.companyname || ''} />
+      <PageTitle title={`${t('company')}: ${safeRender(data, 'companyname')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="companyInfo" />
     </>
   )

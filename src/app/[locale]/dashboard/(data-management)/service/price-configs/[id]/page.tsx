@@ -54,7 +54,6 @@ export default function ServicePriceConfigDetails({ params }: { params: { id: nu
           fields={priceConfigFields}
           isLoading={isLoading}
           translation="dataManagement.services.priceConfig"
-          title={t('generalInfo')}
         />
       ),
       condition: Boolean(data),
@@ -63,7 +62,7 @@ export default function ServicePriceConfigDetails({ params }: { params: { id: nu
 
   return (
     <>
-      <PageTitle title={t('title')} />
+      <PageTitle title={`${t('servicePriceConfig')}: ${safeRender(data, 'service.name')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="generalInfo" />
     </>
   )

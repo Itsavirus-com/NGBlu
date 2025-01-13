@@ -1,8 +1,10 @@
 import * as yup from 'yup'
 
 export const schema = yup.object().shape({
-  activeFrom: yup.string().ensure(),
-  activeTo: yup.string().ensure(),
+  activeFromDate: yup.string().ensure(),
+  activeFromTime: yup.string().ensure(),
+  activeToDate: yup.string().ensure(),
+  activeToTime: yup.string().ensure(),
   productId: yup.number().required('Product is required'),
   priceplanId: yup.number().required('Price Plan is required'),
   businesspartnerId: yup
@@ -40,5 +42,5 @@ export const schema = yup.object().shape({
       },
     }),
   orgUnitId: yup.number().nullable(),
-  inputType: yup.string().required(),
+  inputType: yup.string().oneOf(['businesspartnerId', 'enterpriseRootId']),
 })

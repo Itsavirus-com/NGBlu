@@ -1,7 +1,6 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { useEffect, useState } from 'react'
 import { Card, CardBody } from 'react-bootstrap'
 
 import { ControlledSwitch } from '@/components/forms/checkbox'
@@ -21,26 +20,9 @@ import useOrganizationUnitForm from '../../_hooks/organization-unit-form.hook'
 export default function UpdateOrganizationUnit({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.organizationUnits')
 
-  const { methods, onSubmit, isLoading } = useOrganizationUnitForm(Number(params.id))
-
-  const [inputType, setInputType] = useState<
-    'endclientId' | 'businesspartnerId' | 'enterpriseRootId' | null
-  >(null)
-
-  const handleChange = (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => {
-    setInputType(value)
-    methods.resetField('endclientId', { defaultValue: 0 })
-    methods.resetField('businesspartnerId', { defaultValue: 0 })
-    methods.resetField('enterpriseRootId', { defaultValue: 0 })
-  }
-
-  useEffect(() => {
-    if (inputType === null) {
-      setInputType(
-        methods.getValues('inputType') as 'endclientId' | 'businesspartnerId' | 'enterpriseRootId'
-      )
-    }
-  }, [methods.watch()])
+  const { methods, onSubmit, inputType, handleChange, isLoading } = useOrganizationUnitForm(
+    Number(params.id)
+  )
 
   return (
     <>

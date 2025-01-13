@@ -77,10 +77,14 @@ export default function usePricePlanForm(planId?: number) {
   }
 
   useEffect(() => {
-    if (planId && inputType === null) {
+    if (planId && inputType === null && !isLoading) {
       setInputType(methods.getValues('inputType') as 'productId' | 'serviceId')
+      setTimeout(() => {
+        methods.setValue('productId', pricePlan?.productId)
+        methods.setValue('serviceId', pricePlan?.serviceId)
+      }, 1000)
     }
-  }, [methods.watch()])
+  }, [methods.watch(), isLoading, planId])
 
   return { methods, inputType, handleChange, onSubmit, isLoading }
 }

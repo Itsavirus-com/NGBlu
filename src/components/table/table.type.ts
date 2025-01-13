@@ -13,7 +13,7 @@ export type TableColumn<TableValues> = {
 }
 
 export type TableProps<TableValues> = {
-  title: string
+  title?: string
   description?: string
   columns: TableColumn<TableValues>[]
   toolbars?: ButtonProps[]

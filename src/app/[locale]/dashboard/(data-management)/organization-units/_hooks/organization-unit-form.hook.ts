@@ -125,12 +125,17 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
   }
 
   useEffect(() => {
-    if (organizationUnitId && inputType === null) {
+    if (organizationUnitId && inputType === null && !isLoading) {
       setInputType(
         methods.getValues('inputType') as 'endclientId' | 'businesspartnerId' | 'enterpriseRootId'
       )
+      setTimeout(() => {
+        methods.setValue('enterpriseRootId', organizationUnit?.enterpriseRootId)
+        methods.setValue('endclientId', organizationUnit?.endclientId)
+        methods.setValue('businesspartnerId', organizationUnit?.businesspartnerId)
+      }, 1000)
     }
-  }, [methods.watch()])
+  }, [methods.watch(), isLoading, organizationUnitId])
 
   return { methods, inputType, setInputType, handleChange, onSubmit, isLoading }
 }
