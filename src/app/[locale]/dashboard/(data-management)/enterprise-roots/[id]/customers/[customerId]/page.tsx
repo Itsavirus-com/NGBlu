@@ -56,13 +56,12 @@ export default function EnterpriseRootCustomerDetails({
   const tabs = [
     {
       eventKey: 'customerInfo',
-      title: t('endClientInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={customerInfoFields}
           isLoading={isLoading}
           translation="dataManagement.enterpriseRoots.customers"
-          title={t('endClientInfo')}
         />
       ),
       condition: Boolean(data),
@@ -75,7 +74,6 @@ export default function EnterpriseRootCustomerDetails({
           fields={addressFields}
           isLoading={isLoading}
           translation="dataManagement.enterpriseRoots.customers"
-          title={t('address')}
         />
       ),
       condition: Boolean(data),
@@ -88,7 +86,7 @@ export default function EnterpriseRootCustomerDetails({
         <Breadcrumbs items={getBreadcrumbItems(data)} />
       </div>
 
-      <PageTitle title={data?.endclient?.name || ''} />
+      <PageTitle title={`${t('endClient')}: ${safeRender(data, 'endclient.name')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="customerInfo" />
     </>
   )

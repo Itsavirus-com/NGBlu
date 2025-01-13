@@ -119,18 +119,16 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
           fields={businessPartnerInfofields}
           isLoading={isLoading}
           translation="dataManagement.businessPartners"
-          title={t('businessPartnerInfo')}
         />
       ),
       condition: Boolean(data),
     },
     {
       eventKey: 'addresses',
-      title: t('addresses.title'),
+      title: t('addresses.addresses'),
       content: (
         <Table<BusinessPartnerAddress>
           className="mt-4"
-          title={t('addresses.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -150,11 +148,10 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
     },
     {
       eventKey: 'contacts',
-      title: t('contacts.title'),
+      title: t('contacts.contacts'),
       content: (
         <Table<BusinessPartnerContact>
           className="mt-4"
-          title={t('contacts.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -174,11 +171,10 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
     },
     {
       eventKey: 'customers',
-      title: t('customers.title'),
+      title: t('customers.customers'),
       content: (
         <Table<BusinessPartnerCustomer>
           className="mt-4"
-          title={t('customers.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -198,11 +194,10 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
     },
     {
       eventKey: 'projects',
-      title: t('projects.title'),
+      title: t('projects.projects'),
       content: (
         <Table<BusinessPartnerProject>
           className="mt-4"
-          title={t('projects.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -222,11 +217,10 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
     },
     {
       eventKey: 'users',
-      title: t('users.title'),
+      title: t('users.users'),
       content: (
         <Table<BusinessPartnerUser>
           className="mt-4"
-          title={t('users.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -252,7 +246,7 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
         <Breadcrumbs items={getBreadcrumbItems(data)} />
       </div>
 
-      <PageTitle title={data?.name || ''} />
+      <PageTitle title={`${t('businessPartner')}: ${safeRender(data, 'name')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="businessPartnerInfo" />
     </>
   )

@@ -33,13 +33,12 @@ export default function BusinessPartnerProjectDetails({
   const tabs = [
     {
       eventKey: 'projectInfo',
-      title: t('projectInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={projectFields}
           isLoading={isLoading}
           translation="dataManagement.businessPartners.projects"
-          title={t('projectInfo')}
         />
       ),
       condition: Boolean(data),
@@ -51,7 +50,7 @@ export default function BusinessPartnerProjectDetails({
       <div className="app-container">
         <Breadcrumbs items={getBreadcrumbItems(data)} />
       </div>
-      <PageTitle title={t('title')} />
+      <PageTitle title={`${t('projectInfo')}: ${safeRender(data, 'project.projectName')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="projectInfo" />
     </>
   )

@@ -28,13 +28,12 @@ export default function EndClientContactDetails({
   const tabs = [
     {
       eventKey: 'contactInfo',
-      title: t('contactInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={contactFields}
           isLoading={isLoading}
           translation="dataManagement.endClients.contacts"
-          title={t('contactInfo')}
         />
       ),
       condition: Boolean(data),
@@ -43,7 +42,7 @@ export default function EndClientContactDetails({
 
   return (
     <>
-      <PageTitle title={t('title')} />
+      <PageTitle title={`${t('contactInfo')}: ${safeRender(data, 'contactInfo.contactInfo')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="contactInfo" />
     </>
   )

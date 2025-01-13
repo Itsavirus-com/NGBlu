@@ -37,7 +37,7 @@ export default function NewEnterpriseRootCustomer({ params }: { params: { id: nu
                 isRequired
               />
               <ControlledSelect<Address>
-                label={t('address')}
+                label={t('enterpriseRootAddress')}
                 name="enterpriseRootAddressesId"
                 containerClass="mb-3"
                 className="form-control-solid"

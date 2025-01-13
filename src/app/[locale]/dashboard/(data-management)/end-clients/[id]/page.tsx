@@ -89,7 +89,7 @@ export default function EndClientDetails({ params }: { params: { id: number } })
     },
     {
       id: 'address',
-      title: t('projects.address'),
+      title: t('projects.endClientAddress'),
       render: row =>
         `${safeRender(row, 'endclientAddressId')} | ${safeRender(row, 'endclientAddress.addressName')}`,
     },
@@ -98,17 +98,16 @@ export default function EndClientDetails({ params }: { params: { id: number } })
   const tabs = [
     {
       eventKey: 'endClientInfo',
-      title: t('endClientInfo'),
+      title: t('info'),
       content: <EndClientInfo data={data} isLoading={isLoading} />,
       condition: Boolean(data),
     },
     {
       eventKey: 'addresses',
-      title: t('addresses.title'),
+      title: t('addresses.addresses'),
       content: (
         <Table<EndClientAddress>
           className="mt-4"
-          title={t('addresses.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -128,11 +127,10 @@ export default function EndClientDetails({ params }: { params: { id: number } })
     },
     {
       eventKey: 'contacts',
-      title: t('contacts.title'),
+      title: t('contacts.contacts'),
       content: (
         <Table<EndClientContact>
           className="mt-4"
-          title={t('contacts.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -152,11 +150,10 @@ export default function EndClientDetails({ params }: { params: { id: number } })
     },
     {
       eventKey: 'paymentDetails',
-      title: t('paymentDetails.title'),
+      title: t('paymentDetails.paymentDetails'),
       content: (
         <Table<EndClientPaymentDetail>
           className="mt-4"
-          title={t('paymentDetails.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -176,11 +173,10 @@ export default function EndClientDetails({ params }: { params: { id: number } })
     },
     {
       eventKey: 'projects',
-      title: t('projects.title'),
+      title: t('projects.projects'),
       content: (
         <Table<EndClientProject>
           className="mt-4"
-          title={t('projects.title')}
           toolbars={[
             {
               icon: 'plus',
@@ -202,7 +198,7 @@ export default function EndClientDetails({ params }: { params: { id: number } })
 
   return (
     <>
-      <PageTitle title={data?.name || ''} />
+      <PageTitle title={`${t('endClient')}: ${safeRender(data, 'name')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="endClientInfo" />
     </>
   )

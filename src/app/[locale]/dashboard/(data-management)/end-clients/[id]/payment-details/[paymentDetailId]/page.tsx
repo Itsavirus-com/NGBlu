@@ -88,7 +88,6 @@ export default function EndClientPaymentDetails({
           fields={detailInfoFields}
           isLoading={isLoading}
           translation="dataManagement.endClients.paymentDetails"
-          title={t('generalInfo')}
         />
       ),
       condition: Boolean(data),
@@ -101,7 +100,6 @@ export default function EndClientPaymentDetails({
           fields={creditCardFields}
           isLoading={isLoading}
           translation="dataManagement.endClients.paymentDetails"
-          title={t('creditCardInfo')}
         />
       ),
       condition: Boolean(data),
@@ -114,7 +112,6 @@ export default function EndClientPaymentDetails({
           fields={bankAddressFields}
           isLoading={isLoading}
           translation="dataManagement.endClients.paymentDetails"
-          title={t('bankAddress')}
         />
       ),
       condition: Boolean(data),
@@ -123,7 +120,13 @@ export default function EndClientPaymentDetails({
 
   return (
     <>
-      <PageTitle title={t('title')} />
+      <PageTitle
+        title={`${t('paymentDetails')}: ${
+          data?.paymentInfo.person
+            ? `${data?.paymentInfo.person.firstname} ${data?.paymentInfo.person.lastname}`
+            : '-'
+        }`}
+      />
       <DynamicTabs tabs={tabs} defaultActiveKey="generalInfo" />
     </>
   )

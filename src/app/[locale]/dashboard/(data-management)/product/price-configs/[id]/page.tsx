@@ -54,7 +54,6 @@ export default function ProductPriceConfigDetails({ params }: { params: { id: nu
           fields={priceConfigFields}
           isLoading={isLoading}
           translation="dataManagement.products.priceConfig"
-          title={t('generalInfo')}
         />
       ),
       condition: Boolean(data),
@@ -63,7 +62,7 @@ export default function ProductPriceConfigDetails({ params }: { params: { id: nu
 
   return (
     <>
-      <PageTitle title={t('title')} />
+      <PageTitle title={`${t('priceConfig')}: ${safeRender(data, 'product.name')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="generalInfo" />
     </>
   )

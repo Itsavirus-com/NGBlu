@@ -99,24 +99,22 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
   const tabs = [
     {
       eventKey: 'packageInfo',
-      title: t('packageInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={packageInfoFields}
           isLoading={isLoading}
           translation="dataManagement.packages"
-          title={t('packageInfo')}
         />
       ),
       condition: Boolean(data),
     },
     {
       eventKey: 'packageServices',
-      title: t('packageServices'),
+      title: t('services.title'),
       content: (
         <Table<PackageService>
           className="mt-4"
-          title={t('packageServices')}
           toolbars={[
             {
               icon: 'plus',
@@ -136,11 +134,10 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
     },
     {
       eventKey: 'packageProducts',
-      title: t('packageProducts'),
+      title: t('products'),
       content: (
         <Table<PackageProduct>
           className="mt-4"
-          title={t('packageProducts')}
           toolbars={[
             {
               icon: 'plus',
@@ -162,7 +159,7 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
 
   return (
     <>
-      <PageTitle title={data?.name || ''} />
+      <PageTitle title={`${t('package')}: ${safeRender(data, 'name')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="packageInfo" />
     </>
   )

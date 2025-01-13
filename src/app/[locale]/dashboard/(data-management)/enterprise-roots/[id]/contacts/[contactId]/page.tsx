@@ -29,13 +29,12 @@ export default function EnterpriseRootContactDetails({
   const tabs = [
     {
       eventKey: 'contactInfo',
-      title: t('contactInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={contactFields}
           isLoading={isLoading}
           translation="dataManagement.enterpriseRoots.contacts"
-          title={t('contactInfo')}
         />
       ),
       condition: Boolean(data),
@@ -44,7 +43,7 @@ export default function EnterpriseRootContactDetails({
 
   return (
     <>
-      <PageTitle title={t('title')} />
+      <PageTitle title={`${t('contact')}: ${safeRender(data, 'contactInfo.contactInfo')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="contactInfo" />
     </>
   )

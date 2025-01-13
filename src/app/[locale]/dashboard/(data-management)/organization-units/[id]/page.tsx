@@ -34,13 +34,12 @@ export default function OrganizationUnitDetails({ params }: { params: { id: numb
   const tabs = [
     {
       eventKey: 'organizationUnitInfo',
-      title: t('organizationUnitInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={organizationUnitInfoFields}
           isLoading={isLoading}
           translation="dataManagement.organizationUnits"
-          title={t('organizationUnitInfo')}
         />
       ),
       condition: Boolean(data),
@@ -53,7 +52,7 @@ export default function OrganizationUnitDetails({ params }: { params: { id: numb
         <Breadcrumbs items={getBreadcrumbItems(data)} />
       </div>
 
-      <PageTitle title={data?.name || ''} />
+      <PageTitle title={`${t('organizationUnit')}: ${safeRender(data, 'name')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="organizationUnitInfo" />
     </>
   )

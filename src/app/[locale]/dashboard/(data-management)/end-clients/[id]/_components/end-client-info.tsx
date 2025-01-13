@@ -38,7 +38,7 @@ export default function EndClientInfo({ data, isLoading }: EndClientInfoProps) {
 
   return (
     <>
-      <Page title={t('endClientInfo')} className="pt-5">
+      <Page className="pt-5">
         <Row>
           {generalInfoFields.map(({ label, value }, index) => (
             <TextView

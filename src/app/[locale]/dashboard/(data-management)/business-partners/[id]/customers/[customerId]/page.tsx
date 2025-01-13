@@ -31,13 +31,12 @@ export default function BusinessPartnerCustomerDetails({
   const tabs = [
     {
       eventKey: 'customerInfo',
-      title: t('customerInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={customerFields}
           isLoading={isLoading}
           translation="dataManagement.businessPartners.customers"
-          title={t('customerInfo')}
         />
       ),
       condition: Boolean(data),
@@ -50,7 +49,7 @@ export default function BusinessPartnerCustomerDetails({
         <Breadcrumbs items={getBreadcrumbItems(data)} />
       </div>
 
-      <PageTitle title={t('title')} />
+      <PageTitle title={`${t('customerInfo')}: ${safeRender(data, 'endclient.name')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="customerInfo" />
     </>
   )

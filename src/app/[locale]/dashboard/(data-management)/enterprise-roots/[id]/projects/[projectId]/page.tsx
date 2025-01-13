@@ -52,13 +52,12 @@ export default function EnterpriseRootProjectDetails({
   const tabs = [
     {
       eventKey: 'projectInfo',
-      title: t('projectInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={projectInfoFields}
           isLoading={isLoading}
           translation="dataManagement.enterpriseRoots.projects"
-          title={t('projectInfo')}
         />
       ),
       condition: Boolean(data),
@@ -71,7 +70,6 @@ export default function EnterpriseRootProjectDetails({
           fields={addressFields}
           isLoading={isLoading}
           translation="dataManagement.enterpriseRoots.projects"
-          title={t('address')}
         />
       ),
       condition: Boolean(data),
@@ -83,7 +81,7 @@ export default function EnterpriseRootProjectDetails({
       <div className="app-container">
         <Breadcrumbs items={getBreadcrumbItems(data)} />
       </div>
-      <PageTitle title={t('title')} />
+      <PageTitle title={`${t('project')}: ${safeRender(data, 'project.projectName')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="projectInfo" />
     </>
   )

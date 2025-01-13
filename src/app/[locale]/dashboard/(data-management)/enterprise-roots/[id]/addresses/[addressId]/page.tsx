@@ -37,13 +37,12 @@ export default function EnterpriseRootAddressDetails({
   const tabs = [
     {
       eventKey: 'addressInfo',
-      title: t('addressInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={addressInfoFields}
           isLoading={isLoading}
           translation="dataManagement.enterpriseRoots.addresses"
-          title={t('addressInfo')}
         />
       ),
       condition: Boolean(data),
@@ -52,7 +51,7 @@ export default function EnterpriseRootAddressDetails({
 
   return (
     <>
-      <PageTitle title={data?.address?.addressName || ''} />
+      <PageTitle title={`${t('address')}: ${safeRender(data, 'address.addressName')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="addressInfo" />
     </>
   )

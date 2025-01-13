@@ -33,13 +33,12 @@ export default function EndClientAddressDetails({
   const tabs = [
     {
       eventKey: 'addressInfo',
-      title: t('addressInfo'),
+      title: t('info'),
       content: (
         <FieldTextView
           fields={addressInfoFields}
           isLoading={isLoading}
           translation="dataManagement.businessPartners.users"
-          title={t('addressInfo')}
         />
       ),
       condition: Boolean(data),
@@ -48,7 +47,7 @@ export default function EndClientAddressDetails({
 
   return (
     <>
-      <PageTitle title={t('title')} />
+      <PageTitle title={`${t('addressInfo')}: ${safeRender(data, 'address.addressName')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="addressInfo" />
     </>
   )
