@@ -109,13 +109,13 @@ export default function useServicePriceConfigForm(configId?: number) {
   useEffect(() => {
     if (configId && inputType === null && !isLoading) {
       setInputType(methods.getValues('inputType') as 'businesspartnerId' | 'enterpriseRootId')
-    }
 
-    setTimeout(() => {
-      methods.setValue('enterpriseRootId', servicePriceConfig?.enterpriseRootId)
-      methods.setValue('businesspartnerId', servicePriceConfig?.businesspartnerId)
-      methods.setValue('orgUnitId', servicePriceConfig?.orgUnitId)
-    }, 1000)
+      setTimeout(() => {
+        methods.setValue('enterpriseRootId', servicePriceConfig?.enterpriseRootId)
+        methods.setValue('businesspartnerId', servicePriceConfig?.businesspartnerId)
+        methods.setValue('orgUnitId', servicePriceConfig?.orgUnitId)
+      }, 1000)
+    }
   }, [methods.watch(), isLoading, configId])
 
   return {
