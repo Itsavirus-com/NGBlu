@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
@@ -14,6 +15,9 @@ export default function useServiceForm(serviceId?: number) {
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: service, isLoading } = useService(serviceId)
+  const [inputType, setInputType] = useState<'corporateOnlyService' | 'consumerOnlyService' | null>(
+    null
+  )
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -26,6 +30,11 @@ export default function useServiceForm(serviceId?: number) {
           : '',
     },
   })
+
+  const handleChange = (value: 'corporateOnlyService' | 'consumerOnlyService') => {
+    setInputType(value)
+    methods.setValue('inputType', value)
+  }
 
   const addNewService = async (data: InferType<typeof schema>) => {
     try {
@@ -73,5 +82,11 @@ export default function useServiceForm(serviceId?: number) {
     return addNewService(data)
   }
 
-  return { methods, onSubmit, isLoading }
+  useEffect(() => {
+    if (serviceId && inputType === null && !isLoading) {
+      setInputType(methods.getValues('inputType') as 'corporateOnlyService' | 'consumerOnlyService')
+    }
+  }, [serviceId, inputType, isLoading])
+
+  return { methods, onSubmit, isLoading, handleChange }
 }

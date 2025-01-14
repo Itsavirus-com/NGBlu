@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
@@ -14,6 +15,9 @@ export default function useProductForm(productId?: number) {
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: product, isLoading } = useProduct(productId)
+  const [inputType, setInputType] = useState<'corporateProductOnly' | 'consumerProductOnly' | null>(
+    null
+  )
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -26,6 +30,11 @@ export default function useProductForm(productId?: number) {
           : '',
     },
   })
+
+  const handleChange = (value: 'corporateProductOnly' | 'consumerProductOnly') => {
+    setInputType(value)
+    methods.setValue('inputType', value)
+  }
 
   const addNewProduct = async (data: InferType<typeof schema>) => {
     try {
@@ -73,5 +82,11 @@ export default function useProductForm(productId?: number) {
     return addNewProduct(data)
   }
 
-  return { methods, onSubmit, isLoading }
+  useEffect(() => {
+    if (productId && inputType === null && !isLoading) {
+      setInputType(methods.getValues('inputType') as 'corporateProductOnly' | 'consumerProductOnly')
+    }
+  }, [productId, inputType, isLoading])
+
+  return { methods, onSubmit, isLoading, handleChange }
 }

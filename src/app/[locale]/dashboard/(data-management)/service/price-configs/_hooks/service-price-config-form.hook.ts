@@ -47,6 +47,7 @@ export default function useServicePriceConfigForm(configId?: number) {
 
   const handleChange = (value: 'businesspartnerId' | 'enterpriseRootId') => {
     setInputType(value)
+    methods.setValue('inputType', value)
     methods.setValue('businesspartnerId', 0)
     methods.setValue('enterpriseRootId', 0)
     methods.setValue('orgUnitId', null)

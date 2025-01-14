@@ -46,6 +46,7 @@ export default function useProjectForm(projectId?: number) {
   const handleChange = (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => {
     setInputType(value)
     setInputValue(0)
+    methods.setValue('inputType', value)
     methods.setValue('ouUnitId', null)
     methods.setValue('endclientId', null)
     methods.setValue('businesspartnersId', null)

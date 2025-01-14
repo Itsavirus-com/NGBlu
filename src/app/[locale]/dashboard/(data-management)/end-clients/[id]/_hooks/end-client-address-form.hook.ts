@@ -17,6 +17,9 @@ export default function useEndClientAddressForm(endCliendId: number, addressId?:
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      isPrimaryLocation: !addressId && true,
+    },
     values: endClientAddress && {
       ...endClientAddress,
       isPrimaryLocation: endClientAddress.isPrimaryAddress === 1 ? true : false,

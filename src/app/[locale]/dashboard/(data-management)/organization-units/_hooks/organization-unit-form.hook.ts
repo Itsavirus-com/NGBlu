@@ -41,6 +41,7 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
 
   const handleChange = (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => {
     setInputType(value)
+    methods.setValue('inputType', value)
     methods.setValue('endclientId', 0)
     methods.setValue('businesspartnerId', 0)
     methods.setValue('enterpriseRootId', 0)
