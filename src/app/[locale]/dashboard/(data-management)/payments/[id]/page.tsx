@@ -22,7 +22,6 @@ export default function PaymentDetails({ params }: { params: { id: number } }) {
     queryParams.selectedpayment === 'bank' ? 'bank' : 'credit-card'
   )
 
-  console.log('object', queryParams.selectedpayment)
   const paymentInfoFields = [
     {
       label: t('personName'),
