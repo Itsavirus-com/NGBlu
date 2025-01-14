@@ -159,10 +159,10 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
               {isLoading && <div className="text-center py-2 text-muted">Loading more...</div>}
             </div>
           )}
+
+          {invalid && error && <div className="invalid-feedback d-block">{error.message}</div>}
         </div>
       )}
-
-      {error && <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>}
     </Form.Group>
   )
 }
