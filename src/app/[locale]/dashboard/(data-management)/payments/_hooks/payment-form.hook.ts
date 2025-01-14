@@ -24,27 +24,15 @@ export default function usePaymentForm(paymentId?: number) {
     queryParams.selectedpayment === 'bank' ? 'bank' : 'credit-card'
   )
 
-  const [selectedPayment, setSelectedPayment] = useState<number | null>(1)
+  const [selectedPayment, setSelectedPayment] = useState<number | null>(paymentId ? null : 1)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     defaultValues: {
-      selectedPayment: 1,
-      bankname: null,
-      bankIban: null,
-      bankBic: null,
-      creditcardNumber: null,
-      validTo: null,
-      ccv: null,
-      paymentTypeId: 0,
-      creditcardTypeId: null,
-      creditcardBrandId: null,
-      bankAddressId: null,
-      personId: 0,
-      endclientId: null,
+      selectedPayment: paymentId ? undefined : 1,
     },
     values: payment && {
-      selectedPayment: payment.paymentTypeId,
+      selectedPayment: payment?.paymentTypeId,
       ...payment,
     },
   })
@@ -65,6 +53,8 @@ export default function usePaymentForm(paymentId?: number) {
       personId: 0,
       endclientId: null,
     })
+    methods.setValue('selectedPayment', value)
+    setSelectedPayment(value)
   }
   const addNewPayment = async (data: InferType<typeof schema>) => {
     try {
@@ -141,11 +131,10 @@ export default function usePaymentForm(paymentId?: number) {
   }
 
   useEffect(() => {
-    if (paymentId && payment) {
+    if (paymentId && payment && !isLoading) {
       setSelectedPayment(payment.paymentTypeId)
-      methods.setValue('paymentTypeId', payment.paymentTypeId)
     }
-  }, [paymentId, payment, methods])
+  }, [paymentId, payment, isLoading])
 
   return { methods, onSubmit, isLoading, selectedPayment, setSelectedPayment, handleChange }
 }
