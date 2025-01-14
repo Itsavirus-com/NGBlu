@@ -35,6 +35,7 @@ export const ControlledInput = (props: InputProps) => {
         {...otherProps}
         autoComplete={name}
         data-test-id={name}
+        className={clsx('form-select', { 'is-invalid': invalid })}
       >
         {children}
       </Form.Control>

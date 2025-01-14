@@ -12,4 +12,5 @@ export type TableActionsProps = TableActionsHeadProps & {
   dataId?: number
   apiPath?: string
   onDelete?: () => void
+  queryParams?: Record<string, string>
 }

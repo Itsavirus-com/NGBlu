@@ -1,6 +1,7 @@
 'use client'
 
 import dayjs from 'dayjs'
+import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
@@ -8,13 +9,20 @@ import { PageTitle } from '@/components/page-title'
 import { dateTimeFormats } from '@/components/view/date-time-view/date-time-view.type'
 import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { usePayment } from '@/services/swr/use-payment'
+import { getSearchQueryParams } from '@/utils/queryParams'
 import { safeRender } from '@/utils/safeRender'
 
 export default function PaymentDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.payments')
+  const searchParams = useSearchParams()
+  const queryParams = getSearchQueryParams(searchParams.toString().toLowerCase())
 
-  const { data, isLoading } = usePayment(params.id)
+  const { data, isLoading } = usePayment(
+    params.id,
+    queryParams.selectedpayment === 'bank' ? 'bank' : 'credit-card'
+  )
 
+  console.log('object', queryParams.selectedpayment)
   const paymentInfoFields = [
     {
       label: t('personName'),
@@ -113,7 +121,6 @@ export default function PaymentDetails({ params }: { params: { id: number } }) {
           fields={paymentInfoFields}
           isLoading={isLoading}
           translation="dataManagement.payments"
-          title={t('generalInfo')}
         />
       ),
       condition: Boolean(data),
@@ -126,10 +133,9 @@ export default function PaymentDetails({ params }: { params: { id: number } }) {
           fields={creditCardInfoFields}
           isLoading={isLoading}
           translation="dataManagement.payments"
-          title={t('creditCardInfo')}
         />
       ),
-      condition: Boolean(data),
+      condition: Boolean(data && queryParams.selectedpayment === 'credit card'),
     },
     {
       eventKey: 'bankAddress',
@@ -139,15 +145,16 @@ export default function PaymentDetails({ params }: { params: { id: number } }) {
           fields={bankAddressFields}
           isLoading={isLoading}
           translation="dataManagement.payments"
-          title={t('bankAddress')}
         />
       ),
-      condition: Boolean(data),
+      condition: Boolean(data && queryParams.selectedpayment === 'bank'),
     },
   ]
   return (
     <>
-      <PageTitle title={t('paymentDetails')} />
+      <PageTitle
+        title={`${t('paymentDetail')}: ${data?.person.firstname || ''} ${data?.person.lastname || ''}`}
+      />
       <DynamicTabs tabs={tabs} defaultActiveKey="generalInfo" />
     </>
   )

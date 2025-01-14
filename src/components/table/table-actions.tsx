@@ -17,7 +17,7 @@ export const TableActionsHead = ({ actions, customActions }: TableActionsHeadPro
 }
 
 export const TableActions = (props: TableActionsProps) => {
-  const { actions, customActions, actionBasePath, dataId, apiPath, onDelete } = props
+  const { actions, customActions, actionBasePath, dataId, apiPath, onDelete, queryParams } = props
 
   const t = useTranslations('common.table')
 
@@ -55,7 +55,9 @@ export const TableActions = (props: TableActionsProps) => {
 
         {actions?.includes('view') && (
           <Button
-            href={`${actionBasePath}/${dataId}`}
+            href={`${actionBasePath}/${dataId}${
+              queryParams ? `?${new URLSearchParams(queryParams).toString()}` : ''
+            }`}
             icon="book"
             colorClass="light"
             activeColorClass="color-primary"
@@ -66,7 +68,9 @@ export const TableActions = (props: TableActionsProps) => {
 
         {actions?.includes('edit') && (
           <Button
-            href={`${actionBasePath}/${dataId}/edit`}
+            href={`${actionBasePath}/${dataId}/edit${
+              queryParams ? `?${new URLSearchParams(queryParams).toString()}` : ''
+            }`}
             icon="pencil"
             colorClass="light"
             activeColorClass="color-primary"

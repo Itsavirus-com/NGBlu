@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useState } from 'react'
 
 import { Button } from '@/components/button/button'
@@ -20,6 +21,7 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
     actions,
     actionBasePath,
     className,
+    queryParams,
   } = props
 
   const [filters, setFilters] = useState<Record<string, any>>({})
@@ -27,20 +29,22 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
   return (
     <div className={`app-container container-fluid ${className}`}>
       <div className="card card-xxl-stretch">
-        {title && (
-          <div className="card-header border-0 pt-5">
-            <h3 className="card-title align-items-start flex-column">
-              <span className="card-label fw-bold fs-3 mb-1">{title}</span>
-              {description && <span className="text-muted fw-semibold fs-7">{description}</span>}
-            </h3>
+        <div
+          className={clsx('card-header border-0', {
+            'pt-5': title || filterComponents,
+          })}
+        >
+          <h3 className="card-title align-items-start flex-column">
+            <span className="card-label fw-bold fs-3 mb-1">{title}</span>
+            {description && <span className="text-muted fw-semibold fs-7">{description}</span>}
+          </h3>
 
-            <div className="card-toolbar">
-              {toolbars?.map((toolbar, index) => <Button key={index} {...toolbar} />)}
+          <div className="card-toolbar">
+            {toolbars?.map((toolbar, index) => <Button key={index} {...toolbar} />)}
 
-              <Filter onFilter={setFilters}>{filterComponents}</Filter>
-            </div>
+            <Filter onFilter={setFilters}>{filterComponents}</Filter>
           </div>
-        )}
+        </div>
         <div className="card-body py-3">
           {!!data && (
             <StaticTableBody<TableValues>
@@ -48,6 +52,7 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
               data={data}
               actions={actions}
               actionBasePath={actionBasePath}
+              queryParams={queryParams}
             />
           )}
 
@@ -59,6 +64,7 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
               actionBasePath={actionBasePath}
               filters={filters}
               defaultFilters={defaultFilters}
+              queryParams={queryParams}
             />
           )}
         </div>

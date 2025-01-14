@@ -4,12 +4,14 @@ import { derive } from 'valtio/utils'
 import { modelAdaptor } from './middleware/model-adaptor'
 import { Payment } from './models/payment.type'
 
-export const usePayment = (paymentId?: number) => {
+export const usePayment = (paymentId?: number, selectedPayment?: string) => {
   const { data, mutate, isLoading } = useSWR<Payment>(
     () =>
-      paymentId && {
-        path: `payments/details/${paymentId}`,
-      },
+      paymentId && selectedPayment
+        ? {
+            path: `payments/details/${selectedPayment}/${paymentId}`,
+          }
+        : null,
     {
       use: [modelAdaptor(() => derive({}), 'data')],
     }
