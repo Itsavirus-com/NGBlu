@@ -73,7 +73,7 @@ export default function useBusinessPartnerForm(id?: number) {
       businesspartnerTypeId: businessPartner.businessPartnerType.id,
       companyInfoId: businessPartner.companyInfo.id,
       parentId: businessPartner?.parent?.id,
-      ouUnit: businessPartner?.ouUnitId,
+      ouUnitId: businessPartner?.ouUnitId,
     },
   })
 
@@ -83,7 +83,7 @@ export default function useBusinessPartnerForm(id?: number) {
       businesspartnerTypeId: data.businesspartnerTypeId,
       businesspartnersAddressesId: data.businesspartnersAddressesId,
       companyInfoId: data.companyInfoId,
-      ouUnit: data.ouUnit,
+      ouUnitId: data.ouUnitId,
       enterpriseRootId: data.enterpriseRootId,
       parentId: data.parentId,
     }
@@ -112,7 +112,7 @@ export default function useBusinessPartnerForm(id?: number) {
       businesspartnerTypeId: data.businesspartnerTypeId,
       businesspartnersAddressesId: data.businesspartnersAddressesId,
       companyInfoId: data.companyInfoId,
-      ouUnit: data.ouUnit,
+      ouUnitId: data.ouUnitId,
       enterpriseRootId: data.enterpriseRootId,
       parentId: data.parentId,
     }

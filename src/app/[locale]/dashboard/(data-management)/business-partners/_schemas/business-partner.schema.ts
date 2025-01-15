@@ -10,6 +10,6 @@ export const schema = yup.object().shape({
   companyInfoId: yup.number().required('Company is required'),
   enterpriseRootId: yup.number().required('Enterprise root is required'),
   businesspartnersAddressesId: yup.number().required('Business partner address is required'),
-  ouUnit: yup.number(),
+  ouUnitId: yup.number(),
   parentId: yup.number(),
 })
