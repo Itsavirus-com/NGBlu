@@ -73,6 +73,7 @@ export default function useBusinessPartnerForm(id?: number) {
       businesspartnerTypeId: businessPartner.businessPartnerType.id,
       companyInfoId: businessPartner.companyInfo.id,
       parentId: businessPartner?.parent?.id,
+      ouUnit: businessPartner?.ouUnitId,
     },
   })
 
