@@ -77,6 +77,7 @@ export default function NewProductPriceConfig() {
                   className="form-control-solid"
                 />
               </div>
+
               <ControlledSelect<Product>
                 label={t('product')}
                 name="productId"
@@ -122,6 +123,9 @@ export default function NewProductPriceConfig() {
                   apiPath="business-partners"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired
+                  onChange={() => {
+                    methods.setValue('orgUnitId', 0)
+                  }}
                 />
               )}
               {inputType === 'enterpriseRootId' && (
@@ -133,6 +137,9 @@ export default function NewProductPriceConfig() {
                   apiPath="enterprise-roots"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired
+                  onChange={() => {
+                    methods.setValue('orgUnitId', 0)
+                  }}
                 />
               )}
               {!!inputType && (
@@ -144,7 +151,7 @@ export default function NewProductPriceConfig() {
                   apiPath="organisational-units"
                   option={{ label: row => row.name, value: row => row.id }}
                   filter={
-                    inputType && enterpriseRootId
+                    inputType === 'enterpriseRootId'
                       ? {
                           [inputType]: enterpriseRootId,
                         }

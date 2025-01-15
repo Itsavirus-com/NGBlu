@@ -43,7 +43,6 @@ export default function NewServicePriceConfig() {
                   label={t('activeFromDate')}
                   enableTime={false}
                   onChange={([date]: any) => setFormDateValue(date)}
-                  className="form-control-solid"
                 />
                 <ControlledDatetime
                   name="activeFromTime"
@@ -53,7 +52,6 @@ export default function NewServicePriceConfig() {
                     enableTime: true,
                     dateFormat: 'H:i',
                   }}
-                  className="form-control-solid"
                 />
               </div>
               <div className="d-flex gap-3 mb-3">
@@ -64,7 +62,6 @@ export default function NewServicePriceConfig() {
                   options={{
                     minDate: formDateValue,
                   }}
-                  className="form-control-solid"
                 />
                 <ControlledDatetime
                   name="activeToTime"
@@ -74,7 +71,6 @@ export default function NewServicePriceConfig() {
                     enableTime: true,
                     dateFormat: 'H:i',
                   }}
-                  className="form-control-solid"
                 />
               </div>
 
@@ -123,6 +119,9 @@ export default function NewServicePriceConfig() {
                   apiPath="business-partners"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired
+                  onChange={() => {
+                    methods.setValue('orgUnitId', 0)
+                  }}
                 />
               )}
               {inputType === 'enterpriseRootId' && (
@@ -134,6 +133,9 @@ export default function NewServicePriceConfig() {
                   apiPath="enterprise-roots"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired
+                  onChange={() => {
+                    methods.setValue('orgUnitId', 0)
+                  }}
                 />
               )}
               {!!inputType && (
@@ -145,7 +147,7 @@ export default function NewServicePriceConfig() {
                   apiPath="organisational-units"
                   option={{ label: row => row.name, value: row => row.id }}
                   filter={
-                    inputType && enterpriseRootId
+                    inputType === 'enterpriseRootId'
                       ? {
                           [inputType]: enterpriseRootId,
                         }

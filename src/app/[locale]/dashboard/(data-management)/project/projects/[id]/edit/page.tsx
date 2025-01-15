@@ -101,7 +101,10 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                     className="form-control-solid"
                     apiPath="end-clients"
                     option={{ label: row => row.name, value: row => row.id }}
-                    onChange={value => setInputValue(Number(value))}
+                    onChange={value => {
+                      setInputValue(Number(value))
+                      methods.setValue('ouUnitId', 0)
+                    }}
                     isRequired
                   />
                 )}
@@ -113,7 +116,10 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                     className="form-control-solid"
                     apiPath="business-partners"
                     option={{ label: row => row.name, value: row => row.id }}
-                    onChange={value => setInputValue(Number(value))}
+                    onChange={value => {
+                      setInputValue(Number(value))
+                      methods.setValue('ouUnitId', 0)
+                    }}
                     isRequired
                   />
                 )}
@@ -125,7 +131,10 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                     className="form-control-solid"
                     apiPath="enterprise-roots"
                     option={{ label: row => row.name, value: row => row.id }}
-                    onChange={value => setInputValue(Number(value))}
+                    onChange={value => {
+                      setInputValue(Number(value))
+                      methods.setValue('ouUnitId', 0)
+                    }}
                     isRequired
                   />
                 )}
