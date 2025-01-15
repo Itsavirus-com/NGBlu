@@ -10,7 +10,8 @@
     "format": "prettier --ignore-unknown --write ."
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20",
+    "npm": ">=10"
   },
   "dependencies": {
     "@googlemaps/react-wrapper": "^1.1.35",
