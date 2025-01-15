@@ -8,6 +8,8 @@
 import { parse } from 'date-fns'
 
 export function combineDateTime(date: string, time: string) {
+  if (!date || !time) return null
+
   // Extract just the time part from the time string
   const timeOnly = time.split(' ')[1]
 
