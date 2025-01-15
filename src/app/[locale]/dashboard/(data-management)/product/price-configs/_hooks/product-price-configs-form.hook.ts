@@ -36,7 +36,7 @@ export default function useProductPriceConfigForm(configId?: number) {
       priceplanId: productPriceConfig?.enterpriseRootId!,
       enterpriseRootId: productPriceConfig?.enterpriseRootId!,
       businesspartnerId: productPriceConfig?.businesspartnerId,
-      inputType: productPriceConfig?.enterpriseRootId ? 'enterpriseRootId' : 'businesspartnerId',
+      inputType: productPriceConfig?.businesspartnerId ? 'businesspartnerId' : 'enterpriseRootId',
     },
   })
 
@@ -108,11 +108,18 @@ export default function useProductPriceConfigForm(configId?: number) {
 
   useEffect(() => {
     if (configId && inputType === null && !isLoading) {
-      setInputType(methods.getValues('inputType') as 'businesspartnerId' | 'enterpriseRootId')
+      const businessPartnerId = methods.getValues('businesspartnerId')
+      const enterpriseRootId = methods.getValues('enterpriseRootId')
+
+      if (businessPartnerId) {
+        setInputType('businesspartnerId')
+      } else if (enterpriseRootId && (!businessPartnerId || businessPartnerId === 0)) {
+        setInputType('enterpriseRootId')
+      }
 
       setTimeout(() => {
-        methods.setValue('enterpriseRootId', productPriceConfig?.enterpriseRootId)
         methods.setValue('businesspartnerId', productPriceConfig?.businesspartnerId)
+        methods.setValue('enterpriseRootId', productPriceConfig?.enterpriseRootId)
         methods.setValue('orgUnitId', productPriceConfig?.orgUnitId)
       }, 1000)
     }

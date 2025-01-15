@@ -37,7 +37,7 @@ export default function useServicePriceConfigForm(configId?: number) {
       businesspartnerId: servicePriceConfig?.businesspartnerId,
       enterpriseRootId: servicePriceConfig?.enterpriseRootId!,
       orgUnitId: servicePriceConfig?.orgUnitId,
-      inputType: servicePriceConfig?.enterpriseRootId ? 'enterpriseRootId' : 'businesspartnerId',
+      inputType: servicePriceConfig?.businesspartnerId ? 'businesspartnerId' : 'enterpriseRootId',
     },
   })
 
@@ -109,7 +109,14 @@ export default function useServicePriceConfigForm(configId?: number) {
 
   useEffect(() => {
     if (configId && inputType === null && !isLoading) {
-      setInputType(methods.getValues('inputType') as 'businesspartnerId' | 'enterpriseRootId')
+      const businessPartnerId = methods.getValues('businesspartnerId')
+      const enterpriseRootId = methods.getValues('enterpriseRootId')
+
+      if (businessPartnerId) {
+        setInputType('businesspartnerId')
+      } else if (enterpriseRootId && (!businessPartnerId || businessPartnerId === 0)) {
+        setInputType('enterpriseRootId')
+      }
 
       setTimeout(() => {
         methods.setValue('enterpriseRootId', servicePriceConfig?.enterpriseRootId)
