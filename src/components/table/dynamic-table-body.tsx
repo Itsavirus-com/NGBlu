@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { useTableData } from '@/services/swr/use-table-data'
+import { processQueryParams } from '@/utils/queryParams'
 
 import { DynamicTableBodyProps } from './dynamic-table-body.type'
 import { TableActions, TableActionsHead } from './table-actions'
@@ -19,6 +20,7 @@ export const DynamicTableBody = <TableValues extends Record<string, any>>(
     actionBasePath,
     filters,
     defaultFilters = {},
+    queryParams,
   } = props
   const hasActions = !!actions?.length || !!customActions?.length
 
@@ -69,6 +71,7 @@ export const DynamicTableBody = <TableValues extends Record<string, any>>(
                     dataId={row.id}
                     apiPath={apiPath}
                     onDelete={mutate}
+                    queryParams={processQueryParams(row, queryParams)}
                   />
                 </tr>
               ))}

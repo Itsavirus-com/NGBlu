@@ -25,6 +25,7 @@ export default function usePersonContactForm(personContactId?: number) {
 
   const handleChange = (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => {
     setInputType(value)
+    methods.setValue('inputType', value)
     methods.setValue('endclientId', null)
     methods.setValue('businesspartnerId', null)
     methods.setValue('enterpriseRootId', 0)

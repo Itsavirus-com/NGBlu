@@ -1004,7 +1004,11 @@
       "endClient": "End Client",
       "businessPartner": "Business Partner",
       "enterpriseRoot": "Enterprise Root",
-      "paymentInfo": "Payment Info"
+      "paymentInfo": "Payment Info",
+      "bankAccount": "Bank Account",
+      "creditCard": "Credit Card",
+      "bankCreditCardName": "Bank/Credit Card Name",
+      "paymentDetail": "Payment Detail"
     },
     "paymentTypes": {
       "title": "Payment Types",

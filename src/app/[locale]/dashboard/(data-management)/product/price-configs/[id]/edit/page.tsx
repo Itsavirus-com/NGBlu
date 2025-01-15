@@ -128,6 +128,9 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                     apiPath="business-partners"
                     option={{ label: row => row.name, value: row => row.id }}
                     isRequired
+                    onChange={() => {
+                      methods.setValue('orgUnitId', 0)
+                    }}
                   />
                 )}
                 {inputType === 'enterpriseRootId' && (
@@ -139,6 +142,9 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                     apiPath="enterprise-roots"
                     option={{ label: row => row.name, value: row => row.id }}
                     isRequired
+                    onChange={() => {
+                      methods.setValue('orgUnitId', 0)
+                    }}
                   />
                 )}
                 {!!inputType && (
@@ -150,7 +156,7 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                     apiPath="organisational-units"
                     option={{ label: row => row.name, value: row => row.id }}
                     filter={
-                      inputType && enterpriseRootId
+                      inputType === 'enterpriseRootId'
                         ? {
                             [inputType]: enterpriseRootId,
                           }

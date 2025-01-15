@@ -27,19 +27,10 @@ export default function PaymentTypes() {
   return (
     <Table<PaymentType>
       title={t('title')}
-      toolbars={[
-        {
-          icon: 'plus',
-          label: t('newPaymentType'),
-          colorClass: 'light-primary',
-          href: 'types/new',
-        },
-      ]}
       filters={<PaymentTypeFilter />}
       columns={columns}
       apiPath="payments/types"
       actionBasePath="types"
-      actions={['edit', 'delete']}
     />
   )
 }

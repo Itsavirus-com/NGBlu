@@ -62,41 +62,6 @@ export default function UpdateUser({ params }: { params: { id: string } }) {
 
               <FormButtons />
             </CardBody>
-          </Card>{' '}
-          <Card>
-            <CardBody>
-              <ControlledInput
-                label={t('displayName')}
-                name="displayName"
-                containerClass="mb-3"
-                className="form-control-solid"
-                isRequired
-              />
-              <ControlledInput
-                label={t('email')}
-                name="email"
-                containerClass="mb-3"
-                className="form-control-solid"
-                isRequired
-              />
-              <ControlledInput
-                label={t('password')}
-                name="password"
-                containerClass="mb-3"
-                className="form-control-solid"
-                isRequired
-              />
-              <ControlledSelect<Person>
-                label={t('person')}
-                name="personId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="persons"
-                option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
-              />
-
-              <FormButtons />
-            </CardBody>
           </Card>
         </div>
       </FormProvider>

@@ -26,20 +26,8 @@ type SelectProps<OptionValue> = FormSelectProps & {
 export const ControlledSelect = <OptionValue extends Record<string, any>>(
   props: SelectProps<OptionValue>
 ) => {
-  const {
-    label,
-    name,
-    filterName,
-    containerClass,
-    children,
-    apiPath,
-    option,
-    filter,
-    isHidden,
-    isRequired,
-    onChange,
-    ...otherProps
-  } = props
+  const { label, name, containerClass, apiPath, option, filter, isHidden, isRequired, onChange } =
+    props
 
   const { control } = useFormContext()
   const {
@@ -55,11 +43,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
   const dropdownRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const {
-    data,
-    pagination,
-    isLoading: isLoadingData,
-  } = useOptionData<OptionValue>(apiPath, {
+  const { data, pagination } = useOptionData<OptionValue>(apiPath, {
     page,
     limit: 10,
     filter: {
@@ -175,10 +159,10 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
               {isLoading && <div className="text-center py-2 text-muted">Loading more...</div>}
             </div>
           )}
+
+          {invalid && error && <div className="invalid-feedback d-block">{error.message}</div>}
         </div>
       )}
-
-      {error && <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>}
     </Form.Group>
   )
 }

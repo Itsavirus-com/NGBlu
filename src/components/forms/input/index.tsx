@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import React from 'react'
 import { Form, FormControlProps } from 'react-bootstrap'
 import { useController, useFormContext } from 'react-hook-form'
 
@@ -35,6 +34,7 @@ export const ControlledInput = (props: InputProps) => {
         {...otherProps}
         autoComplete={name}
         data-test-id={name}
+        className={clsx('form-select', { 'is-invalid': invalid })}
       >
         {children}
       </Form.Control>

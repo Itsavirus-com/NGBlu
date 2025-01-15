@@ -75,7 +75,7 @@ export default function NewBusinessPartner() {
               />
               <ControlledSelect<OrganizationUnit>
                 label={t('organisationalUnit')}
-                name="ouUnit"
+                name="ouUnitId"
                 containerClass="mb-3"
                 className="form-control-solid"
                 apiPath="organisational-units"

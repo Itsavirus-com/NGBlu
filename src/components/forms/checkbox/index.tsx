@@ -1,4 +1,5 @@
-import React from 'react'
+import clsx from 'clsx'
+import { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { FormCheckInputProps } from 'react-bootstrap/esm/FormCheckInput'
 import { useController, useFormContext } from 'react-hook-form'
@@ -9,15 +10,32 @@ type SwitchProps = FormCheckInputProps & {
   containerClass?: string
   step?: number
   type?: 'checkbox' | 'radio' | 'switch'
+  value?: any
 }
 
 export const ControlledSwitch = (props: SwitchProps) => {
-  const { label, name, containerClass, children, step, type = 'switch', ...otherProps } = props
+  const {
+    label,
+    name,
+    containerClass,
+    children,
+    step,
+    type = 'switch',
+    value,
+    ...otherProps
+  } = props
 
   const { register, control } = useFormContext()
   const {
+    field: { value: selectedValue, onChange },
     fieldState: { invalid, error },
   } = useController({ control, name })
+
+  const [isChecked, setIsChecked] = useState(false)
+
+  useEffect(() => {
+    setIsChecked(value ? selectedValue === value : selectedValue)
+  }, [selectedValue, value])
 
   return (
     <Form.Group className={containerClass}>
@@ -28,11 +46,25 @@ export const ControlledSwitch = (props: SwitchProps) => {
           isInvalid={invalid}
           step={step}
           {...register(name)}
+          checked={isChecked}
+          onChange={e => {
+            setIsChecked(e.target.checked)
+            onChange(value || e.target.checked)
+          }}
           {...otherProps}
           autoComplete={name}
           data-test-id={name}
+          value={value}
         />
-        {label && <Form.Check.Label className="fw-bold ms-3">{label}</Form.Check.Label>}
+        {label && (
+          <Form.Check.Label
+            className={clsx('fw-bold ms-3', {
+              'text-dark': isChecked,
+            })}
+          >
+            {label}
+          </Form.Check.Label>
+        )}
       </div>
 
       {error && <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>}

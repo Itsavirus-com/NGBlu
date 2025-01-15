@@ -32,5 +32,6 @@ export type BusinessPartner = {
   createdAt: string
   updatedAt: string
   namespace: Namespace
+  ouUnitId: number
   parent: Parent
 }

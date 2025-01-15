@@ -1,3 +1,5 @@
+import { processQueryParams } from '@/utils/queryParams'
+
 import { StaticTableBodyProps } from './static-table-body.type'
 import { TableActions, TableActionsHead } from './table-actions'
 import { TableEmpty } from './table-empty'
@@ -5,7 +7,7 @@ import { TableEmpty } from './table-empty'
 export const StaticTableBody = <TableValues extends Record<string, any>>(
   props: StaticTableBodyProps<TableValues>
 ) => {
-  const { columns, data, actions, customActions, actionBasePath } = props
+  const { columns, data, actions, customActions, actionBasePath, queryParams } = props
   const hasActions = !!actions?.length || !!customActions?.length
 
   if (!columns?.length) return null
@@ -40,6 +42,7 @@ export const StaticTableBody = <TableValues extends Record<string, any>>(
                   customActions={customActions}
                   actionBasePath={actionBasePath}
                   dataId={row.id}
+                  queryParams={processQueryParams(row, queryParams)}
                 />
               </tr>
             ))}

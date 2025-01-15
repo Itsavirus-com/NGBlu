@@ -34,6 +34,7 @@ export default function usePricePlanForm(planId?: number) {
 
   const handleChange = (value: 'productId' | 'serviceId') => {
     setInputType(value)
+    methods.setValue('inputType', value)
     methods.setValue('productId', 0)
     methods.setValue('serviceId', 0)
   }

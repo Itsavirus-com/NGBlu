@@ -24,8 +24,11 @@ export default function Payments() {
     },
     {
       id: 'bankName',
-      title: t('bankName'),
-      render: row => safeRender(row, 'bankname'),
+      title: t('bankCreditCardName'),
+      render: row =>
+        row?.paymentType?.paymentType === 'Bank'
+          ? safeRender(row, 'bankname')
+          : safeRender(row, 'creditCardBrand.brandname'),
     },
     {
       id: 'paymentType',
@@ -50,6 +53,9 @@ export default function Payments() {
       apiPath="payments/details"
       actionBasePath="payments"
       actions={['view', 'edit', 'delete']}
+      queryParams={{
+        selectedPayment: 'paymentType.paymentType',
+      }}
     />
   )
 }

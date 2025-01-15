@@ -1,7 +1,6 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { useEffect, useState } from 'react'
 import { Card, CardBody } from 'react-bootstrap'
 
 import { ControlledSwitch } from '@/components/forms/checkbox'
@@ -18,20 +17,7 @@ import useProductForm from '../../_hooks/product-form.hook'
 export default function UpdateProduct({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.products')
 
-  const { methods, onSubmit, isLoading } = useProductForm(Number(params.id))
-
-  const [inputType, setInputType] = useState<'corporateProductOnly' | 'consumerProductOnly' | null>(
-    null
-  )
-  const handleChange = (value: 'corporateProductOnly' | 'consumerProductOnly') => {
-    setInputType(value)
-  }
-
-  useEffect(() => {
-    if (inputType === null) {
-      setInputType(methods.getValues('inputType') as 'corporateProductOnly' | 'consumerProductOnly')
-    }
-  }, [methods.watch()])
+  const { methods, onSubmit, isLoading, handleChange } = useProductForm(Number(params.id))
 
   return (
     <>

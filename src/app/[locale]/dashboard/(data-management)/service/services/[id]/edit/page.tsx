@@ -1,7 +1,6 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { useEffect, useState } from 'react'
 import { Card, CardBody } from 'react-bootstrap'
 
 import { ControlledSwitch } from '@/components/forms/checkbox'
@@ -18,20 +17,7 @@ import useServiceForm from '../../_hooks/service-form.hook'
 export default function UpdateService({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.services')
 
-  const { methods, onSubmit, isLoading } = useServiceForm(Number(params.id))
-
-  const [inputType, setInputType] = useState<'corporateOnlyService' | 'consumerOnlyService' | null>(
-    null
-  )
-  const handleChange = (value: 'corporateOnlyService' | 'consumerOnlyService') => {
-    setInputType(value)
-  }
-
-  useEffect(() => {
-    if (inputType === null) {
-      setInputType(methods.getValues('inputType') as 'corporateOnlyService' | 'consumerOnlyService')
-    }
-  }, [methods.watch()])
+  const { methods, onSubmit, isLoading, handleChange } = useServiceForm(Number(params.id))
 
   return (
     <>
