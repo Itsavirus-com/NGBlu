@@ -33,7 +33,7 @@ export const ControlledDatetime = (props: DatetimeProps) => {
     dateFormat = enableTime ? 'Y-m-d H:i' : 'Y-m-d',
   } = props
 
-  const { register, control, setValue } = useFormContext()
+  const { control, setValue } = useFormContext()
   const {
     field,
     fieldState: { error, invalid },
