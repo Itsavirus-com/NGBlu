@@ -1160,6 +1160,11 @@
         "customers": "Customers",
         "info": "Info"
       },
+      "businessPartnerCustomers": {
+        "title": "Business Partner",
+        "id": "ID",
+        "businessPartnerId": "Business Partner ID"
+      },
       "projects": {
         "title": "Business Partner Projects",
         "newProject": "New Project",
