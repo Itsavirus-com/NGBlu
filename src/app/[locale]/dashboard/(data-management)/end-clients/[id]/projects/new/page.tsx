@@ -54,6 +54,7 @@ export default function NewEndClientProject({ params }: { params: { id: string }
                 filter={{
                   endclientId: params.id,
                 }}
+                isHidden
               />
 
               <FormButtons />
