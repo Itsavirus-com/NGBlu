@@ -36,7 +36,7 @@ export const schema = yup.object().shape({
     .string()
     .nullable()
     .when('selectedPayment', {
-      is: 'creditCard',
+      is: 2,
       then: schema =>
         schema
           .required('Credit card number is required')
@@ -47,7 +47,7 @@ export const schema = yup.object().shape({
     .string()
     .nullable()
     .when('selectedPayment', {
-      is: 'creditCard',
+      is: 2,
       then: schema => schema.required('Valid to date is required'),
       otherwise: schema => schema.nullable(),
     }),
@@ -55,7 +55,7 @@ export const schema = yup.object().shape({
     .string()
     .nullable()
     .when('selectedPayment', {
-      is: 'creditCard',
+      is: 2,
       then: schema =>
         schema.required('CCV is required').max(3, 'CCV must be less than 3 characters'),
       otherwise: schema => schema.nullable(),
@@ -65,7 +65,7 @@ export const schema = yup.object().shape({
     .number()
     .nullable()
     .when('selectedPayment', {
-      is: 'creditCard',
+      is: 2,
       then: schema => schema.required('Credit card type is required'),
       otherwise: schema => schema.nullable().typeError('Credit card type must be a number'),
     }),
@@ -73,7 +73,7 @@ export const schema = yup.object().shape({
     .number()
     .nullable()
     .when('selectedPayment', {
-      is: 'creditCard',
+      is: 2,
       then: schema => schema.required('Credit card brand is required'),
       otherwise: schema => schema.nullable().typeError('Credit card brand must be a number'),
     }),

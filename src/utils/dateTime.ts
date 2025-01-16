@@ -24,3 +24,12 @@ export function combineDateTime(date: string, time: string) {
   const timezoneOffset = parsedDate.getTimezoneOffset() * 60000
   return new Date(parsedDate.getTime() - timezoneOffset).toISOString()
 }
+
+/**
+ * Get the first day of the current month
+ * @returns A Date object representing the first day of the current month
+ */
+export function getFirstDayOfCurrentMonth() {
+  const today = new Date()
+  return new Date(today.getFullYear(), today.getMonth(), 1)
+}

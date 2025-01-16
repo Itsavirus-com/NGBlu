@@ -17,6 +17,7 @@ type DatetimeProps = FormControlProps & {
   isRequired?: boolean
   enableTime?: boolean
   dateFormat?: string
+  customSubmitDateFormat?: string
   onChange?: ([value]: any) => void
 }
 
@@ -31,6 +32,7 @@ export const ControlledDatetime = (props: DatetimeProps) => {
     isRequired,
     enableTime,
     dateFormat = enableTime ? 'Y-m-d H:i' : 'Y-m-d',
+    customSubmitDateFormat,
   } = props
 
   const { control, setValue } = useFormContext()
@@ -43,15 +45,20 @@ export const ControlledDatetime = (props: DatetimeProps) => {
   useEffect(() => {
     if (field.value) {
       try {
-        // Handle different date formats
         let date: Date
 
         if (typeof field.value === 'string') {
-          // If the value is ISO string
-          if (field.value.includes('T')) {
+          // Handle MM/yyyy format
+          if (field.value.match(/^\d{2}\/\d{4}$/)) {
+            const [month, year] = field.value.split('/')
+            date = new Date(parseInt(year), parseInt(month) - 1, 1)
+          }
+          // Handle ISO string
+          else if (field.value.includes('T')) {
             date = parseISO(field.value)
-          } else {
-            // If the value is date string without time
+          }
+          // Handle other date strings
+          else {
             date = new Date(field.value)
           }
         } else if (field.value instanceof Date) {
@@ -88,7 +95,12 @@ export const ControlledDatetime = (props: DatetimeProps) => {
         value={datetime || undefined}
         onChange={([date]: any) => {
           setDatetime(date)
-          setValue(name, format(date, 'yyyy-MM-dd HH:mm:ss'))
+          setValue(
+            name,
+            customSubmitDateFormat
+              ? format(date, customSubmitDateFormat)
+              : format(date, 'yyyy-MM-dd HH:mm:ss')
+          )
 
           if (props.onChange) props.onChange([date])
         }}

@@ -1,5 +1,7 @@
 'use client'
 
+import 'flatpickr/dist/plugins/monthSelect/style.css'
+import monthSelectPlugin from 'flatpickr/dist/plugins/monthSelect/index'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -15,13 +17,14 @@ import { CreditCardBrand } from '@/services/swr/models/credit-card-brand.type'
 import { CreditCardType } from '@/services/swr/models/credit-card-type.type'
 import { EndClient } from '@/services/swr/models/end-client.type'
 import { Person } from '@/services/swr/models/person.type'
+import { getFirstDayOfCurrentMonth } from '@/utils/dateTime'
 
 import usePaymentForm from '../_hooks/payment-form.hook'
 
 export default function NewPayment() {
   const t = useTranslations('dataManagement.payments')
 
-  const { methods, onSubmit, handleChange, selectedPayment, setSelectedPayment } = usePaymentForm()
+  const { methods, onSubmit, handleChange, selectedPayment } = usePaymentForm()
 
   return (
     <>
@@ -40,7 +43,6 @@ export default function NewPayment() {
                   value={1}
                   onChange={() => {
                     handleChange(1)
-                    setSelectedPayment(1)
                     methods.setValue('paymentTypeId', 1)
                   }}
                 />
@@ -52,7 +54,6 @@ export default function NewPayment() {
                   value={2}
                   onChange={() => {
                     handleChange(2)
-                    setSelectedPayment(2)
                     methods.setValue('paymentTypeId', 2)
                   }}
                 />
@@ -117,6 +118,20 @@ export default function NewPayment() {
                     containerClass="mb-3"
                     className="form-control-solid"
                     isRequired
+                    options={{
+                      minDate: getFirstDayOfCurrentMonth(),
+                      enableTime: false,
+                      plugins: [
+                        monthSelectPlugin({
+                          shorthand: false,
+                          dateFormat: 'm/Y',
+                          altFormat: 'F Y',
+                          theme: 'dark',
+                        }),
+                      ],
+                    }}
+                    dateFormat="m/Y"
+                    customSubmitDateFormat="MM/yyyy"
                   />
                   <ControlledInput
                     label={t('ccv')}
