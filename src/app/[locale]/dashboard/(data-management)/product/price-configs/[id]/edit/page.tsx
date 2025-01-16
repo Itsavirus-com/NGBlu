@@ -56,6 +56,7 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                       noCalendar: true,
                       enableTime: true,
                       dateFormat: 'H:i',
+                      time_24hr: true,
                     }}
                     className="form-control-solid"
                   />
@@ -78,6 +79,7 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                       noCalendar: true,
                       enableTime: true,
                       dateFormat: 'H:i',
+                      time_24hr: true,
                     }}
                     className="form-control-solid"
                   />

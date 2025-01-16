@@ -56,6 +56,7 @@ export default function UpdateServicePriceConfig({ params }: { params: { id: str
                       noCalendar: true,
                       enableTime: true,
                       dateFormat: 'H:i',
+                      time_24hr: true,
                     }}
                   />
                 </div>
@@ -75,6 +76,7 @@ export default function UpdateServicePriceConfig({ params }: { params: { id: str
                       noCalendar: true,
                       enableTime: true,
                       dateFormat: 'H:i',
+                      time_24hr: true,
                     }}
                   />
                 </div>

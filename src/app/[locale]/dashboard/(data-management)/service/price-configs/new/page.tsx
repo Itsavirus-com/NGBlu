@@ -51,6 +51,7 @@ export default function NewServicePriceConfig() {
                     noCalendar: true,
                     enableTime: true,
                     dateFormat: 'H:i',
+                    time_24hr: true,
                   }}
                 />
               </div>
@@ -70,6 +71,7 @@ export default function NewServicePriceConfig() {
                     noCalendar: true,
                     enableTime: true,
                     dateFormat: 'H:i',
+                    time_24hr: true,
                   }}
                 />
               </div>
