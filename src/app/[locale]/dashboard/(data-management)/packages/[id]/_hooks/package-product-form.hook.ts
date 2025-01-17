@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
@@ -8,17 +7,13 @@ import { packageProductApi } from '@/services/api/package-product-api'
 import { usePackageProduct } from '@/services/swr/use-package-product'
 import { InferType } from '@/utils/typescript'
 
+import { schema } from '../_schemas/package-product-form.schema'
+
 export default function usePackageProductForm(id: number, packageProductId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: productType, isLoading } = usePackageProduct(Number(id), packageProductId)
-
-  const schema = yup.object().shape({
-    packageId: yup.string().ensure().required(),
-    productId: yup.string().ensure().required(),
-    productPricingConfigId: yup.string().ensure().required(),
-  })
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
