@@ -49,7 +49,7 @@ export default function EndClientPaymentDetails({
 
   const creditCardFields = [
     { label: t('creditCardNumber'), value: safeRender(data, 'paymentInfo.creditcardNumber') },
-    { label: t('ccv'), value: safeRender(data, 'paymentInfo.ccv') },
+    { label: t('cvv'), value: safeRender(data, 'paymentInfo.cvv') },
     {
       label: t('validTo'),
       value: data?.paymentInfo.validTo

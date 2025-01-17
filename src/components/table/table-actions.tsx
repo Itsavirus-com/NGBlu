@@ -55,7 +55,7 @@ export const TableActions = (props: TableActionsProps) => {
 
         {actions?.includes('view') && (
           <Button
-            href={`${actionBasePath}/${dataId}${
+            href={`${actionBasePath ? `${actionBasePath}/${dataId}` : dataId}${
               queryParams ? `?${new URLSearchParams(queryParams).toString()}` : ''
             }`}
             icon="book"

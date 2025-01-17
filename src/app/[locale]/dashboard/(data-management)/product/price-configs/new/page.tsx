@@ -51,6 +51,7 @@ export default function NewProductPriceConfig() {
                     noCalendar: true,
                     enableTime: true,
                     dateFormat: 'H:i',
+                    time_24hr: true,
                   }}
                   className="form-control-solid"
                 />
@@ -73,6 +74,7 @@ export default function NewProductPriceConfig() {
                     noCalendar: true,
                     enableTime: true,
                     dateFormat: 'H:i',
+                    time_24hr: true,
                   }}
                   className="form-control-solid"
                 />

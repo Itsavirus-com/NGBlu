@@ -615,7 +615,7 @@
         "creditCardInfo": "Credit Card Info",
         "creditCardNumber": "Credit Card Number",
         "validTo": "Valid To",
-        "ccv": "CCV",
+        "cvv": "CVV",
         "creditCardType": "Credit Card Type",
         "creditCardBrand": "Credit Card Brand",
         "bankAddress": "Bank Address",
@@ -984,7 +984,7 @@
       "creditCardInfo": "Credit Card Info",
       "creditCardNumber": "Credit Card Number",
       "validTo": "Valid To",
-      "ccv": "CCV",
+      "cvv": "CVV",
       "creditCardType": "Credit Card Type",
       "creditCardBrand": "Credit Card Brand",
       "bankAddress": "Bank Address",
@@ -1163,6 +1163,11 @@
         "customerInfo": "Customer Info",
         "customers": "Customers",
         "info": "Info"
+      },
+      "businessPartnerCustomers": {
+        "title": "Business Partner",
+        "id": "ID",
+        "businessPartnerId": "Business Partner ID"
       },
       "projects": {
         "title": "Business Partner Projects",

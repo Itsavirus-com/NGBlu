@@ -15,7 +15,7 @@ export type Payment = {
   bankAddress: Address
   creditcardNumber: string
   validTo: string
-  ccv: string
+  cvv: string
   creditcardTypeId: number
   creditCardType: CreditCardType
   creditcardBrandId: number

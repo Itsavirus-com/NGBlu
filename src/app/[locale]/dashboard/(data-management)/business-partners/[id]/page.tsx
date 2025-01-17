@@ -73,6 +73,19 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
     },
   ]
 
+  const businessPartnerCustomerColumns: TableColumn<BusinessPartnerCustomer>[] = [
+    {
+      id: 'id',
+      title: t('businessPartnerCustomers.id'),
+      render: row => safeRender(row, 'id'),
+    },
+    {
+      id: 'businessPartner',
+      title: t('businessPartnerCustomers.title'),
+      render: row => `${safeRender(row, 'id')} | ${safeRender(row, 'name')}`,
+    },
+  ]
+
   const projectColumns: TableColumn<BusinessPartnerProject>[] = [
     {
       id: 'id',
@@ -188,6 +201,19 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
           apiPath={`business-partners/${params.id}/customers`}
           actionBasePath={`${params.id}/customers`}
           actions={['view', 'edit', 'delete']}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'businessPartnerCustomer',
+      title: t('businessPartnerCustomers.title'),
+      content: (
+        <Table<BusinessPartnerCustomer>
+          className="mt-4"
+          columns={businessPartnerCustomerColumns}
+          apiPath={`business-partners/${params.id}/business-customers`}
+          actions={['view']}
         />
       ),
       condition: Boolean(data),

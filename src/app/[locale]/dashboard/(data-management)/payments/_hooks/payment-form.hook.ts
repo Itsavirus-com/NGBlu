@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
@@ -24,8 +23,6 @@ export default function usePaymentForm(paymentId?: number) {
     queryParams.selectedpayment === 'bank' ? 'bank' : 'credit-card'
   )
 
-  const [selectedPayment, setSelectedPayment] = useState<number | null>(paymentId ? null : 1)
-
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -37,6 +34,8 @@ export default function usePaymentForm(paymentId?: number) {
     },
   })
 
+  const selectedPayment = methods.watch('selectedPayment')
+
   const handleChange = (value: 1 | 2) => {
     methods.reset({
       selectedPayment: value,
@@ -45,7 +44,7 @@ export default function usePaymentForm(paymentId?: number) {
       bankBic: null,
       creditcardNumber: null,
       validTo: null,
-      ccv: null,
+      cvv: null,
       paymentTypeId: 0,
       creditcardTypeId: null,
       creditcardBrandId: null,
@@ -54,7 +53,6 @@ export default function usePaymentForm(paymentId?: number) {
       endclientId: null,
     })
     methods.setValue('selectedPayment', value)
-    setSelectedPayment(value)
   }
   const addNewPayment = async (data: InferType<typeof schema>) => {
     try {
@@ -93,7 +91,7 @@ export default function usePaymentForm(paymentId?: number) {
     const creditCardData = {
       creditcardNumber: data.creditcardNumber,
       validTo: data.validTo,
-      ccv: data.ccv,
+      cvv: data.cvv,
       paymentTypeId: data.paymentTypeId,
       creditcardTypeId: data.creditcardTypeId,
       creditcardBrandId: data.creditcardBrandId,
@@ -130,11 +128,5 @@ export default function usePaymentForm(paymentId?: number) {
     return addNewPayment(submitData)
   }
 
-  useEffect(() => {
-    if (paymentId && payment && !isLoading) {
-      setSelectedPayment(payment.paymentTypeId)
-    }
-  }, [paymentId, payment, isLoading])
-
-  return { methods, onSubmit, isLoading, selectedPayment, setSelectedPayment, handleChange }
+  return { methods, onSubmit, isLoading, selectedPayment, handleChange }
 }

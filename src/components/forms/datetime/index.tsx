@@ -5,6 +5,8 @@ import { Form, FormControlProps } from 'react-bootstrap'
 import Flatpickr from 'react-flatpickr'
 import { useController, useFormContext } from 'react-hook-form'
 
+import { MONTH_YEAR_REGEX } from '@/constants/regex'
+
 type DatetimeProps = FormControlProps & {
   label?: string
   name: string
@@ -17,6 +19,7 @@ type DatetimeProps = FormControlProps & {
   isRequired?: boolean
   enableTime?: boolean
   dateFormat?: string
+  customSubmitDateFormat?: string
   onChange?: ([value]: any) => void
 }
 
@@ -31,44 +34,61 @@ export const ControlledDatetime = (props: DatetimeProps) => {
     isRequired,
     enableTime,
     dateFormat = enableTime ? 'Y-m-d H:i' : 'Y-m-d',
+    customSubmitDateFormat,
   } = props
 
-  const { register, control, setValue } = useFormContext()
+  const { control, setValue } = useFormContext()
   const {
     field,
     fieldState: { error, invalid },
   } = useController({ control, name })
   const [datetime, setDatetime] = useState<Date | null>(null)
 
+  const parseSetDateValue = () => {
+    try {
+      let date: Date
+
+      switch (true) {
+        case typeof field.value === 'string': {
+          switch (true) {
+            case MONTH_YEAR_REGEX.test(field.value): {
+              const [month, year] = field.value.split('/')
+              date = new Date(parseInt(year), parseInt(month) - 1, 1)
+              break
+            }
+            case field.value.includes('T'): {
+              date = parseISO(field.value)
+              break
+            }
+            default: {
+              date = new Date(field.value)
+            }
+          }
+          break
+        }
+        case field.value instanceof Date: {
+          date = field.value
+          break
+        }
+        default: {
+          return
+        }
+      }
+
+      // Check if the date is valid
+      if (isNaN(date.getTime())) {
+        return
+      }
+
+      setDatetime(date)
+    } catch (error) {
+      console.error('Error parsing date:', error)
+    }
+  }
+
   useEffect(() => {
     if (field.value) {
-      try {
-        // Handle different date formats
-        let date: Date
-
-        if (typeof field.value === 'string') {
-          // If the value is ISO string
-          if (field.value.includes('T')) {
-            date = parseISO(field.value)
-          } else {
-            // If the value is date string without time
-            date = new Date(field.value)
-          }
-        } else if (field.value instanceof Date) {
-          date = field.value
-        } else {
-          return
-        }
-
-        // Check if the date is valid
-        if (isNaN(date.getTime())) {
-          return
-        }
-
-        setDatetime(date)
-      } catch (error) {
-        console.error('Error parsing date:', error)
-      }
+      parseSetDateValue()
     } else {
       setDatetime(null)
     }
@@ -88,7 +108,12 @@ export const ControlledDatetime = (props: DatetimeProps) => {
         value={datetime || undefined}
         onChange={([date]: any) => {
           setDatetime(date)
-          setValue(name, format(date, 'yyyy-MM-dd HH:mm:ss'))
+          setValue(
+            name,
+            customSubmitDateFormat
+              ? format(date, customSubmitDateFormat)
+              : format(date, 'yyyy-MM-dd HH:mm:ss')
+          )
 
           if (props.onChange) props.onChange([date])
         }}
