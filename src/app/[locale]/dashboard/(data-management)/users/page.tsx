@@ -37,7 +37,7 @@ export default function Users() {
     {
       id: 'blocked',
       title: t('blocked'),
-      render: row => <BinaryView value={!!safeRender(row, 'blockedAt')} disableColumn />,
+      render: row => <BinaryView value={!!row?.blockedAt} disableColumn />,
     },
   ]
 

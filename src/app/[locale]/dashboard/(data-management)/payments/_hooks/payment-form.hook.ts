@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
+import { DASH_REGEX } from '@/constants/regex'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { paymentDetailApi } from '@/services/api/payment-api'
@@ -29,8 +30,9 @@ export default function usePaymentForm(paymentId?: number) {
       selectedPayment: paymentId ? undefined : 1,
     },
     values: payment && {
-      selectedPayment: payment?.paymentTypeId,
       ...payment,
+      selectedPayment: payment?.paymentTypeId,
+      validTo: payment?.validTo ? payment.validTo.replace(DASH_REGEX, '/') : null,
     },
   })
 

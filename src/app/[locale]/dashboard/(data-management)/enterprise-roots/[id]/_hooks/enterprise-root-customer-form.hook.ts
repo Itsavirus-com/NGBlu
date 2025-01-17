@@ -36,19 +36,14 @@ import { enterpriseRootCustomerApi } from '@/services/api/enterprise-root-custom
 import { useEnterpriseRootCustomer } from '@/services/swr/use-enterprise-root-customer'
 import { InferType } from '@/utils/typescript'
 
+import { schema } from '../_schemas/enterprise-root-customer-form.schema'
+
 export default function useEnterpriseRootCustomerForm(customerId?: number) {
   const { id } = useParams()
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: customer } = useEnterpriseRootCustomer(Number(id), customerId)
-
-  const schema = yup.object().shape({
-    endclientId: yup.number().required(),
-    enterpriseRootAddressesId: yup.number().required(),
-    ouUnitId: yup.number(),
-    parentId: yup.number(),
-  })
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),

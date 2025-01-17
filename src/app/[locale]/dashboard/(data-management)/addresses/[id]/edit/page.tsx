@@ -33,7 +33,6 @@ export default function UpdateAddress({ params }: { params: { id: number } }) {
                   name="addressName"
                   containerClass="mb-3"
                   className="form-control-solid"
-                  isRequired
                 />
                 <ControlledInput
                   label={t('streetName')}
@@ -47,7 +46,6 @@ export default function UpdateAddress({ params }: { params: { id: number } }) {
                   name="housenumber"
                   containerClass="mb-3"
                   className="form-control-solid"
-                  isRequired
                 />
                 <ControlledInput
                   label={t('houseNumberSuffix')}

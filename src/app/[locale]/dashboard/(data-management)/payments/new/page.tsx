@@ -1,7 +1,7 @@
 'use client'
 
-import 'flatpickr/dist/plugins/monthSelect/style.css'
 import monthSelectPlugin from 'flatpickr/dist/plugins/monthSelect/index'
+import 'flatpickr/dist/plugins/monthSelect/style.css'
 import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 
@@ -126,12 +126,11 @@ export default function NewPayment() {
                           shorthand: false,
                           dateFormat: 'm/Y',
                           altFormat: 'F Y',
-                          theme: 'dark',
                         }),
                       ],
                     }}
                     dateFormat="m/Y"
-                    customSubmitDateFormat="MM/yyyy"
+                    customSubmitDateFormat="MM-yyyy"
                   />
                   <ControlledInput
                     label={t('cvv')}
