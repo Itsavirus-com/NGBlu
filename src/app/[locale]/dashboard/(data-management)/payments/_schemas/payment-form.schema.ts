@@ -51,13 +51,13 @@ export const schema = yup.object().shape({
       then: schema => schema.required('Valid to date is required'),
       otherwise: schema => schema.nullable(),
     }),
-  ccv: yup
+  cvv: yup
     .string()
     .nullable()
     .when('selectedPayment', {
       is: 2,
       then: schema =>
-        schema.required('CCV is required').max(3, 'CCV must be less than 3 characters'),
+        schema.required('CVV is required').max(3, 'CVV must be less than 3 characters'),
       otherwise: schema => schema.nullable(),
     }),
   paymentTypeId: yup.number().required('Payment type is required'),

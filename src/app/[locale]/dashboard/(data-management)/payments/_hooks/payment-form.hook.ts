@@ -44,7 +44,7 @@ export default function usePaymentForm(paymentId?: number) {
       bankBic: null,
       creditcardNumber: null,
       validTo: null,
-      ccv: null,
+      cvv: null,
       paymentTypeId: 0,
       creditcardTypeId: null,
       creditcardBrandId: null,
@@ -91,7 +91,7 @@ export default function usePaymentForm(paymentId?: number) {
     const creditCardData = {
       creditcardNumber: data.creditcardNumber,
       validTo: data.validTo,
-      ccv: data.ccv,
+      cvv: data.cvv,
       paymentTypeId: data.paymentTypeId,
       creditcardTypeId: data.creditcardTypeId,
       creditcardBrandId: data.creditcardBrandId,

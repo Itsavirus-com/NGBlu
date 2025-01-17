@@ -139,8 +139,8 @@ export default function UpdatePayment({ params }: { params: { id: number } }) {
                       customSubmitDateFormat="MM/yyyy"
                     />
                     <ControlledInput
-                      label={t('ccv')}
-                      name="ccv"
+                      label={t('cvv')}
+                      name="cvv"
                       containerClass="mb-3"
                       className="form-control-solid"
                       isRequired
