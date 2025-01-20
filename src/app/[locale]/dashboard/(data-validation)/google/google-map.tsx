@@ -29,7 +29,20 @@ const render = (status: Status): ReactElement => {
   return <div />
 }
 
+console.log(
+  'debug google map API key, NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:',
+  process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+)
+
 export const GoogleMap = ({ lat, lng }: MapProps['center']) => {
+  useEffect(() => {
+    console.log('Google Maps API Key:', {
+      exists: !!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+      value: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+      nodeEnv: process.env.NODE_ENV,
+    })
+  }, [])
+
   return (
     <Wrapper
       apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}
