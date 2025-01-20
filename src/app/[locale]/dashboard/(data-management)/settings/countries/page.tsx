@@ -59,7 +59,7 @@ export default function Countries() {
       columns={columns}
       apiPath="countries"
       actionBasePath="countries"
-      actions={['edit', 'delete']}
+      actions={['edit']}
     />
   )
 }
