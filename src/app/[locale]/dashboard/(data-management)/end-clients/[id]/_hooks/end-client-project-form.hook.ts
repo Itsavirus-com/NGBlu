@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { endClientProjectApi } from '@/services/api/end-client-project-api'
 import { useEndClientProject } from '@/services/swr/use-end-client-project'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/end-client-project-form.schema'
@@ -58,11 +59,12 @@ export default function useEndClientProjectForm(endCliendId: number, projectId?:
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
     if (projectId) {
-      return updateEndClientProject(data)
+      return updateEndClientProject(submitData)
     }
 
-    return addNewEndClientProject(data)
+    return addNewEndClientProject(submitData)
   }
 
   return { methods, onSubmit, isLoading }
