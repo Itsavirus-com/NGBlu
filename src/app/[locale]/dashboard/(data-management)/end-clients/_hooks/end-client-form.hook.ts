@@ -45,10 +45,6 @@ export default function useEndClientForm(id?: number) {
       typeId: endClient?.typeId!,
       statusId: endClient?.statusId!,
       locationAddressId: endClient?.locationAddressId!,
-      contactPersonId: endClient?.contactPersonId,
-      accountNumber: endClient?.accountNumber!,
-      personId: endClient?.personId,
-      afasId: endClient?.afasId!,
       companyInfoId: endClient?.companyInfoId,
     },
   })

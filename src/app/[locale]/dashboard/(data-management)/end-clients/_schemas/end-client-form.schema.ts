@@ -5,9 +5,5 @@ export const schema = yup.object().shape({
   typeId: yup.number().required('Type is required'),
   statusId: yup.number().required('Status is required'),
   locationAddressId: yup.number().required('Location Address is required'),
-  contactPersonId: yup.number(),
-  accountNumber: yup.string().ensure().max(45),
-  personId: yup.number(),
-  afasId: yup.string().ensure().max(45),
-  companyInfoId: yup.number(),
+  companyInfoId: yup.number().nullable(),
 })

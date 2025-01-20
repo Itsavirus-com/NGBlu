@@ -12,7 +12,6 @@ import { Address } from '@/services/swr/models/address.type'
 import { Company } from '@/services/swr/models/company.type'
 import { EndClientStatus } from '@/services/swr/models/end-client-status.type'
 import { EndClientType } from '@/services/swr/models/end-client-type.type'
-import { Person } from '@/services/swr/models/person.type'
 
 import useEndClientForm from '../_hooks/end-client-form.hook'
 
@@ -35,18 +34,6 @@ export default function NewEndClient() {
                 containerClass="mb-3"
                 className="form-control-solid"
                 isRequired
-              />
-              <ControlledInput
-                label={t('accountNumber')}
-                name="accountNumber"
-                containerClass="mb-3"
-                className="form-control-solid"
-              />
-              <ControlledInput
-                label={t('afasId')}
-                name="afasId"
-                containerClass="mb-3"
-                className="form-control-solid"
               />
               <ControlledSelect<EndClientType>
                 label={t('type')}
@@ -75,23 +62,6 @@ export default function NewEndClient() {
                 option={{ label: row => row.addressName, value: row => row.id }}
                 isRequired
               />
-              <ControlledSelect<Person>
-                label={t('person')}
-                name="personId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="persons"
-                option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
-              />
-              <ControlledSelect<Person>
-                label={t('contactPerson')}
-                name="contactPersonId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                apiPath="persons"
-                option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
-              />
-
               <ControlledSelect<Company>
                 label={t('company')}
                 name="companyInfoId"

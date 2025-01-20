@@ -107,14 +107,13 @@ export const ControlledDatetime = (props: DatetimeProps) => {
         disabled={props.disabled}
         value={datetime || undefined}
         onChange={([date]: any) => {
+          const formattedDate = customSubmitDateFormat
+            ? format(date, customSubmitDateFormat)
+            : format(date, 'yyyy-MM-dd HH:mm:ss')
+
           setDatetime(date)
-          setValue(
-            name,
-            customSubmitDateFormat
-              ? format(date, customSubmitDateFormat)
-              : format(date, 'yyyy-MM-dd HH:mm:ss')
-          )
-          field.onChange(date)
+          setValue(name, formattedDate)
+          field.onChange(formattedDate)
 
           if (props.onChange) props.onChange([date])
         }}
