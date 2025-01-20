@@ -29,7 +29,18 @@ const render = (status: Status): ReactElement => {
   return <div />
 }
 
+console.log(
+  'debug google map API key, NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:',
+  process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+)
+
 export const GoogleMap = ({ lat, lng }: MapProps['center']) => {
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+
+  if (!apiKey) {
+    console.error('Google Maps API key is missing')
+  }
+
   return (
     <Wrapper
       apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}
