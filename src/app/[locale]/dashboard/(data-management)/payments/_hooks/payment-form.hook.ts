@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
-import { DASH_REGEX } from '@/constants/regex'
+import { DASH_REGEX, SLASH_REGEX } from '@/constants/regex'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { paymentDetailApi } from '@/services/api/payment-api'
@@ -122,7 +122,10 @@ export default function usePaymentForm(paymentId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
-    const submitData = omitNullAndUndefined(data)
+    const submitData = omitNullAndUndefined({
+      ...data,
+      validTo: data.validTo?.replace(SLASH_REGEX, '-'),
+    })
 
     if (paymentId) {
       return updatePayment(submitData)
