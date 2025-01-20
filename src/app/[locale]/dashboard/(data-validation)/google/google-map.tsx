@@ -35,11 +35,13 @@ console.log(
 )
 
 export const GoogleMap = ({ lat, lng }: MapProps['center']) => {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-
-  if (!apiKey) {
-    console.error('Google Maps API key is missing')
-  }
+  useEffect(() => {
+    console.log('Google Maps API Key:', {
+      exists: !!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+      value: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+      nodeEnv: process.env.NODE_ENV,
+    })
+  }, [])
 
   return (
     <Wrapper
