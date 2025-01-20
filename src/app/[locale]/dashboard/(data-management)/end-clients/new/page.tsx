@@ -12,7 +12,6 @@ import { Address } from '@/services/swr/models/address.type'
 import { Company } from '@/services/swr/models/company.type'
 import { EndClientStatus } from '@/services/swr/models/end-client-status.type'
 import { EndClientType } from '@/services/swr/models/end-client-type.type'
-import { Person } from '@/services/swr/models/person.type'
 
 import useEndClientForm from '../_hooks/end-client-form.hook'
 
