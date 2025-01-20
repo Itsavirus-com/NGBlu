@@ -103,7 +103,7 @@ export const ControlledDatetime = (props: DatetimeProps) => {
       <Flatpickr
         id={name}
         step={step}
-        className={clsx('form-control', className)}
+        className={clsx('form-control', { 'is-invalid': invalid })}
         disabled={props.disabled}
         value={datetime || undefined}
         onChange={([date]: any) => {
@@ -114,6 +114,7 @@ export const ControlledDatetime = (props: DatetimeProps) => {
               ? format(date, customSubmitDateFormat)
               : format(date, 'yyyy-MM-dd HH:mm:ss')
           )
+          field.onChange(date)
 
           if (props.onChange) props.onChange([date])
         }}
@@ -127,7 +128,9 @@ export const ControlledDatetime = (props: DatetimeProps) => {
       >
         {children}
       </Flatpickr>
-      {error && <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>}
+      {invalid && error && (
+        <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>
+      )}
     </Form.Group>
   )
 }
