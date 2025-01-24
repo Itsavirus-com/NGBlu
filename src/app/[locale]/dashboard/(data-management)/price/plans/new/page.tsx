@@ -59,7 +59,6 @@ export default function NewPriceConfig() {
                   label={t('product')}
                   name="productId"
                   containerClass="mb-3"
-                  className="form-select"
                   apiPath="products"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired
@@ -70,7 +69,6 @@ export default function NewPriceConfig() {
                   label={t('service')}
                   name="serviceId"
                   containerClass="mb-3"
-                  className="form-select"
                   apiPath="services"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired
@@ -80,7 +78,6 @@ export default function NewPriceConfig() {
                 label={t('priceConfig')}
                 name="priceConfigId"
                 containerClass="mb-3"
-                className="form-select"
                 apiPath="prices/configs"
                 option={{
                   label: row => `${row.priceCurrency.currency} ${row.priceValue}`,
@@ -92,7 +89,6 @@ export default function NewPriceConfig() {
                 label={t('fallbackPriceConfig')}
                 name="fallbackPriceConfigId"
                 containerClass="mb-3"
-                className="form-select"
                 apiPath="prices/configs"
                 option={{
                   label: row => `${row.priceCurrency.currency} ${row.priceValue}`,

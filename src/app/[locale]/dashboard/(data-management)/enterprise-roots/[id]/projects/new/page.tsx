@@ -30,7 +30,6 @@ export default function NewEnterpriseRootProject({ params }: { params: { id: num
                 label={t('project')}
                 name="projectId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath={'projects'}
                 option={{ label: row => row.projectName, value: row => row.id }}
                 isRequired
@@ -39,7 +38,6 @@ export default function NewEnterpriseRootProject({ params }: { params: { id: num
                 label={t('enterpriseRootAddress')}
                 name="enterpriseRootAddressesId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath={`addresses`}
                 option={{ label: row => row.addressName, value: row => row.id }}
                 isRequired
@@ -48,7 +46,6 @@ export default function NewEnterpriseRootProject({ params }: { params: { id: num
                 label={t('organisationalUnit')}
                 name="ouUnitId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath={'organisational-units'}
                 option={{ label: row => row.name, value: row => row.id }}
                 filter={{ enterpriseRootId: params.id }}

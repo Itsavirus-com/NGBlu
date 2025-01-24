@@ -62,7 +62,6 @@ export default function NewPayment() {
                 label={t('personName')}
                 name="personId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="persons"
                 option={{
                   label: row => `${row.firstname} ${row.lastname}`,
@@ -97,7 +96,6 @@ export default function NewPayment() {
                     label={t('bankAddress')}
                     name="bankAddressId"
                     containerClass="mb-3"
-                    className="form-control-solid"
                     apiPath="addresses"
                     option={{ label: row => row.addressName, value: row => row.id }}
                   />
@@ -143,7 +141,6 @@ export default function NewPayment() {
                     label={t('creditCardType')}
                     name="creditcardTypeId"
                     containerClass="mb-3"
-                    className="form-control-solid"
                     apiPath="credit-cards/types"
                     option={{ label: row => row.creditcardType, value: row => row.id }}
                     isRequired
@@ -152,7 +149,6 @@ export default function NewPayment() {
                     label={t('creditCardBrand')}
                     name="creditcardBrandId"
                     containerClass="mb-3"
-                    className="form-control-solid"
                     apiPath="credit-cards/brands"
                     option={{ label: row => row.brandname, value: row => row.id }}
                     isRequired
@@ -163,7 +159,6 @@ export default function NewPayment() {
                 label={t('enterpriseRoot')}
                 name="enterpriseRootId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="enterprise-roots"
                 option={{ label: row => row.name, value: row => row.id }}
                 isRequired
@@ -172,7 +167,6 @@ export default function NewPayment() {
                 label={t('businessPartner')}
                 name="businesspartnerId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="business-partners"
                 option={{ label: row => row.name, value: row => row.id }}
               />
@@ -180,7 +174,6 @@ export default function NewPayment() {
                 label={t('endClient')}
                 name="endclientId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="end-clients"
                 option={{ label: row => row.name, value: row => row.id }}
               />

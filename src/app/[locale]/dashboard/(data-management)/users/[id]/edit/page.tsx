@@ -48,7 +48,6 @@ export default function UpdateUser({ params }: { params: { id: string } }) {
                 label={t('person')}
                 name="personId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="persons"
                 option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
               />

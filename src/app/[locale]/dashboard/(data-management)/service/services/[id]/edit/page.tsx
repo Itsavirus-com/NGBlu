@@ -47,7 +47,6 @@ export default function UpdateService({ params }: { params: { id: string } }) {
                   label={t('type')}
                   name="serviceTypeId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="services/types"
                   option={{ label: row => row.serviceType, value: row => row.id }}
                   isRequired

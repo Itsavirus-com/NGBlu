@@ -40,7 +40,6 @@ export default function UpdateBusinessPartnerContact({
                   label={t('person')}
                   name="personId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath={'persons'}
                   option={{
                     label: row => `${row.firstname} ${row.lastname}`,
@@ -52,7 +51,6 @@ export default function UpdateBusinessPartnerContact({
                   label={t('contactInfo')}
                   name="contactInfoId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath={'contacts/infos'}
                   option={{ label: row => row.contactInfo, value: row => row.id }}
                   isRequired
@@ -61,7 +59,6 @@ export default function UpdateBusinessPartnerContact({
                   label={t('responsibility')}
                   name="responsibilityId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath={'persons/responsibilities'}
                   option={{ label: row => row.responsibility, value: row => row.id }}
                   isRequired

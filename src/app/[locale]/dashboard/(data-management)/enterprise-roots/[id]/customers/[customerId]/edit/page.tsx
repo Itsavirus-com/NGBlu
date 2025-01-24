@@ -35,7 +35,6 @@ export default function UpdateEnterpriseRootCustomer({
                 label={t('endClient')}
                 name="endclientId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath={'end-clients'}
                 option={{ label: row => row.name, value: row => row.id }}
                 isRequired
@@ -44,7 +43,6 @@ export default function UpdateEnterpriseRootCustomer({
                 label={t('enterpriseRootAddress')}
                 name="enterpriseRootAddressesId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath={`addresses`}
                 option={{ label: row => row.addressName, value: row => row.id }}
                 isRequired
@@ -53,7 +51,6 @@ export default function UpdateEnterpriseRootCustomer({
                 label={t('organisationalUnit')}
                 name="ouUnitId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath={'organisational-units'}
                 option={{ label: row => row.name, value: row => row.id }}
                 filter={{ enterpriseRootId: params.id }}
@@ -62,7 +59,6 @@ export default function UpdateEnterpriseRootCustomer({
                 label={t('parent')}
                 name="parentId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath={`enterprise-roots/${params.id}/customers`}
                 option={{
                   label: row => `${row.endclientId} | ${row.endclient.name}`,

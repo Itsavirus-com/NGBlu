@@ -39,7 +39,6 @@ export default function NewEndClient() {
                 label={t('type')}
                 name="typeId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="end-clients/types"
                 option={{ label: row => row.type, value: row => row.id }}
                 isRequired
@@ -48,7 +47,6 @@ export default function NewEndClient() {
                 label={t('status')}
                 name="statusId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="end-clients/statuses"
                 option={{ label: row => row.status, value: row => row.id }}
                 isRequired
@@ -57,7 +55,6 @@ export default function NewEndClient() {
                 label={t('locationAddress')}
                 name="locationAddressId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
                 isRequired
@@ -66,7 +63,6 @@ export default function NewEndClient() {
                 label={t('company')}
                 name="companyInfoId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="companies/infos"
                 option={{ label: row => row.companyname, value: row => row.id }}
               />

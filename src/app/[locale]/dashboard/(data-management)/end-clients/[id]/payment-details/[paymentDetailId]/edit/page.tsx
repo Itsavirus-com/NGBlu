@@ -38,7 +38,6 @@ export default function UpdateEndClientPaymentDetail({
                   label={t('paymentInfo')}
                   name="paymentInfoId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath={'payments/details'}
                   option={{ label: row => row.paymentType.paymentType, value: row => row.id }}
                   isRequired

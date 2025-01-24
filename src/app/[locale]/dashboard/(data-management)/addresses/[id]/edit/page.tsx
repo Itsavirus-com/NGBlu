@@ -89,7 +89,6 @@ export default function UpdateAddress({ params }: { params: { id: number } }) {
                   label={t('country')}
                   name="countryId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="countries"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired

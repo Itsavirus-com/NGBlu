@@ -44,7 +44,6 @@ export default function UpdatePriceTax({ params }: { params: { taxId: number } }
                 label={t('priceUnit')}
                 name="priceUnitId"
                 containerClass="mb-3"
-                className="form-select"
                 apiPath="prices/units"
                 option={{ label: row => row.unit, value: row => row.id }}
                 isRequired
@@ -53,7 +52,6 @@ export default function UpdatePriceTax({ params }: { params: { taxId: number } }
                 label={t('country')}
                 name="countryId"
                 containerClass="mb-3"
-                className="form-select"
                 apiPath="countries"
                 option={{ label: row => row.name, value: row => row.id }}
                 isRequired

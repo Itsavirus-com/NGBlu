@@ -37,7 +37,6 @@ export default function NewPackage() {
                 label={t('types.name')}
                 name="packageTypeId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="packages/types"
                 option={{ label: row => row.name, value: row => row.id }}
                 isRequired
@@ -46,7 +45,6 @@ export default function NewPackage() {
                 label={t('priceConfig')}
                 name="priceConfigId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="prices/configs"
                 option={{ label: row => row.priceType.type, value: row => row.id }}
                 isRequired

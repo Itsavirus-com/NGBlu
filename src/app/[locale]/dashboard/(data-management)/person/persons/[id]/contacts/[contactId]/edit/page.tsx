@@ -42,7 +42,6 @@ export default function UpdatePersonContact({ params }: { params: { contactId: n
                   label={t('contactType')}
                   name="contactTypeId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="contacts/types"
                   option={{ label: row => row.contactType, value: row => row.id }}
                   isRequired
@@ -80,7 +79,6 @@ export default function UpdatePersonContact({ params }: { params: { contactId: n
                     label={t('businesspartner')}
                     name="businesspartnerId"
                     containerClass="mb-3"
-                    className="form-control-solid"
                     apiPath="business-partners"
                     option={{ label: row => row.name, value: row => row.id }}
                     isRequired
@@ -91,7 +89,6 @@ export default function UpdatePersonContact({ params }: { params: { contactId: n
                     label={t('endclient')}
                     name="endclientId"
                     containerClass="mb-3"
-                    className="form-control-solid"
                     apiPath="end-clients"
                     option={{ label: row => row.name, value: row => row.id }}
                     isRequired
@@ -102,7 +99,6 @@ export default function UpdatePersonContact({ params }: { params: { contactId: n
                     label={t('enterpriseRoot')}
                     name="enterpriseRootId"
                     containerClass="mb-3"
-                    className="form-control-solid"
                     apiPath="enterprise-roots"
                     option={{ label: row => row.name, value: row => row.id }}
                     isRequired

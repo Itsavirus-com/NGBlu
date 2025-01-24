@@ -61,7 +61,6 @@ export default function UpdatePerson({ params }: { params: { id: number } }) {
                 label={t('gender')}
                 name="genderId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="genders"
                 option={{ label: row => row.gender, value: row => row.id }}
               />
@@ -69,7 +68,6 @@ export default function UpdatePerson({ params }: { params: { id: number } }) {
                 label={t('personType')}
                 name="personTypeId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="persons/types"
                 option={{ label: row => row.type, value: row => row.id }}
                 isRequired

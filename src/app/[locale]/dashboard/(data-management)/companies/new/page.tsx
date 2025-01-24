@@ -38,7 +38,6 @@ export default function NewCompany() {
                 label={t('status')}
                 name="companyStatusId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="companies/statuses"
                 option={{ label: row => row.status, value: row => row.id }}
                 isRequired
@@ -47,7 +46,6 @@ export default function NewCompany() {
                 label={t('visitAddress')}
                 name="visitAddressId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
                 isRequired
@@ -56,7 +54,6 @@ export default function NewCompany() {
                 label={t('postalAddress')}
                 name="postalAddressId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
               />
@@ -64,7 +61,6 @@ export default function NewCompany() {
                 label={t('invoiceAddress')}
                 name="invoiceAddressId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
                 isRequired
@@ -73,7 +69,6 @@ export default function NewCompany() {
                 label={t('legalAddress')}
                 name="legalAddressId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
                 isRequired
@@ -95,7 +90,6 @@ export default function NewCompany() {
                 label={t('origin')}
                 name="originId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="/companies/infos"
                 option={{ label: row => row.companyname, value: row => row.id }}
               />
