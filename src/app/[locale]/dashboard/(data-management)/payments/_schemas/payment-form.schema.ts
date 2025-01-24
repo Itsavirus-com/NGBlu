@@ -60,7 +60,10 @@ export const schema = yup.object().shape({
         schema.required('CVV is required').max(3, 'CVV must be less than 3 characters'),
       otherwise: schema => schema.nullable(),
     }),
-  paymentTypeId: yup.number().required('Payment type is required'),
+  paymentTypeId: yup
+    .number()
+    .required('Payment type is required')
+    .notOneOf([0], 'Payment type is required'),
   creditcardTypeId: yup
     .number()
     .nullable()
@@ -82,9 +85,16 @@ export const schema = yup.object().shape({
     .number()
     .nullable()
     .required('Person is required')
-    .test('not-zero', 'Person is required', value => value !== 0),
+    .test('not-zero', 'Person is required', value => value !== 0)
+    .notOneOf([0], 'Person is required'),
   endclientId: yup.number().nullable(),
   businesspartnerId: yup.number().nullable(),
-  enterpriseRootId: yup.number().required('Enterprise root is required'),
-  selectedPayment: yup.number().required('Payment type is required'),
+  enterpriseRootId: yup
+    .number()
+    .required('Enterprise root is required')
+    .notOneOf([0], 'Enterprise root is required'),
+  selectedPayment: yup
+    .number()
+    .required('Payment type is required')
+    .notOneOf([0], 'Payment type is required'),
 })

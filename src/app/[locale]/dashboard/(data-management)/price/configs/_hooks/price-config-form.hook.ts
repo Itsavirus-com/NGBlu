@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { priceConfigApi } from '@/services/api/price-config-api'
 import { usePriceConfig } from '@/services/swr/use-price-config'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/price-config-form.schema'
@@ -49,11 +50,13 @@ export default function usePriceConfigForm(configId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (configId) {
-      return updateConfig(data)
+      return updateConfig(submitData)
     }
 
-    return addNewConfig(data)
+    return addNewConfig(submitData)
   }
 
   return { methods, onSubmit, isLoading }

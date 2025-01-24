@@ -6,6 +6,9 @@ export const schema = yup.object().shape({
     .ensure()
     .required('Name is required')
     .max(255, 'Name cannot exceed 255 characters'),
-  enterpriseRootAddressesId: yup.number().required('Enterprise root address is required'),
+  enterpriseRootAddressesId: yup
+    .number()
+    .required('Enterprise root address is required')
+    .notOneOf([0], 'Enterprise root address is required'),
   ouUnitId: yup.number().nullable(),
 })

@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { genderApi } from '@/services/api/gender-api'
 import { useGender } from '@/services/swr/use-gender'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 export default function useGenderForm(genderId?: number) {
@@ -56,11 +57,13 @@ export default function useGenderForm(genderId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (genderId) {
-      return updateGender(data)
+      return updateGender(submitData)
     }
 
-    return addNewGender(data)
+    return addNewGender(submitData)
   }
 
   return { methods, onSubmit }

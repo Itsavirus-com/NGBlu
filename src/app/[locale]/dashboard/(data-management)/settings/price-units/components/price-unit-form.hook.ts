@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { priceUnitApi } from '@/services/api/price-unit-api'
 import { usePriceUnit } from '@/services/swr/use-price-unit'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 export default function usePriceUnitForm(priceUnitId?: number) {
@@ -56,11 +57,12 @@ export default function usePriceUnitForm(priceUnitId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
     if (priceUnitId) {
-      return updateCompanyStatus(data)
+      return updateCompanyStatus(submitData)
     }
 
-    return addNewCompanyStatus(data)
+    return addNewCompanyStatus(submitData)
   }
 
   return { methods, onSubmit }

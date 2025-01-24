@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { businessPartnerTypeApi } from '@/services/api/business-partner-type-api'
 import { useBusinessPartnerType } from '@/services/swr/use-business-partner-type'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 export default function useBusinessPartnerTypeForm(businessPartnerTypeId?: number) {
@@ -56,11 +57,13 @@ export default function useBusinessPartnerTypeForm(businessPartnerTypeId?: numbe
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (businessPartnerTypeId) {
-      return updateBusinessPartnerType(data)
+      return updateBusinessPartnerType(submitData)
     }
 
-    return addNewBusinessPartnerType(data)
+    return addNewBusinessPartnerType(submitData)
   }
 
   return { methods, onSubmit }

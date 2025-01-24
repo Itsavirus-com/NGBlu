@@ -2,7 +2,10 @@ import * as yup from 'yup'
 
 export const schema = yup.object().shape({
   contactInfo: yup.string().ensure().required('Contact Info is required'),
-  contactTypeId: yup.number().required('Contact Type is required'),
+  contactTypeId: yup
+    .number()
+    .required('Contact Type is required')
+    .notOneOf([0], 'Contact Type is required'),
   endclientId: yup
     .number()
     .nullable()

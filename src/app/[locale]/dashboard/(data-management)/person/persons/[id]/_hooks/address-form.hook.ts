@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { personAddressApi } from '@/services/api/person-address-api'
 import { usePersonAddress } from '@/services/swr/use-person-address'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/address-form.schema'
@@ -60,11 +61,13 @@ export default function usePersonAddressForm(personAddressId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (personAddressId) {
-      return updatePersonAddress(data)
+      return updatePersonAddress(submitData)
     }
 
-    return addPersonAddress(data)
+    return addPersonAddress(submitData)
   }
 
   return { methods, onSubmit, isLoading }

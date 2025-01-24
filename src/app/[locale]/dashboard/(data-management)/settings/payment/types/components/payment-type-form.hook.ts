@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { paymentTypeApi } from '@/services/api/payment-type-api'
 import { usePaymentType } from '@/services/swr/use-payment-type'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 export default function usePaymentTypeForm(paymentTypeId?: number) {
@@ -52,11 +53,13 @@ export default function usePaymentTypeForm(paymentTypeId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (paymentTypeId) {
-      return updateCompanyStatus(data)
+      return updateCompanyStatus(submitData)
     }
 
-    return addNewCompanyStatus(data)
+    return addNewCompanyStatus(submitData)
   }
 
   return { methods, onSubmit }

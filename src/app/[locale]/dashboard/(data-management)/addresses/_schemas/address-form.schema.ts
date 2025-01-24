@@ -28,7 +28,7 @@ export const schema = yup.object().shape({
     .ensure()
     .required('Postal code is required')
     .max(45, 'Postal code must be less than 45 characters'),
-  countryId: yup.number().required('Country is required'),
+  countryId: yup.number().notOneOf([0], 'Country is required'),
   lat: yup
     .string()
     .ensure()

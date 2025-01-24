@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { endClientContactApi } from '@/services/api/end-client-contact-api'
 import { useEndClientContact } from '@/services/swr/use-end-client-contact'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/end-client-contact-form.schema'
@@ -55,11 +56,13 @@ export default function useEndClientContactForm(endCliendId: number, contactId?:
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (contactId) {
-      return updateEndClientContact(data)
+      return updateEndClientContact(submitData)
     }
 
-    return addNewEndClientContact(data)
+    return addNewEndClientContact(submitData)
   }
 
   return { methods, onSubmit, isLoading }

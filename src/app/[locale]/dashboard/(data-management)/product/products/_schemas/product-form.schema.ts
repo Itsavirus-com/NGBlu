@@ -11,6 +11,9 @@ export const schema = yup.object().shape({
     .ensure()
     .required('Description is required')
     .max(255, 'Description must be at most 255 characters'),
-  productTypeId: yup.number().required('Product type is required'),
+  productTypeId: yup
+    .number()
+    .required('Product type is required')
+    .notOneOf([0], 'Product type is required'),
   inputType: yup.string().ensure().required(),
 })

@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { productTypeApi } from '@/services/api/product-type-api'
 import { useProductType } from '@/services/swr/use-product-type'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 export default function useProductTypeForm(typeId?: number) {
@@ -56,8 +57,9 @@ export default function useProductTypeForm(typeId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
     if (typeId) {
-      return updateProductType(data)
+      return updateProductType(submitData)
     }
 
     return addNewProductType(data)

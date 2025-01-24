@@ -1,7 +1,10 @@
 import * as yup from 'yup'
 
 export const schema = yup.object().shape({
-  projectId: yup.number().required('Project is required'),
-  endclientAddressesId: yup.number().required('End client address is required'),
+  projectId: yup.number().required('Project is required').notOneOf([0], 'Project is required'),
+  endclientAddressesId: yup
+    .number()
+    .required('End client address is required')
+    .notOneOf([0], 'End client address is required'),
   ouUnitId: yup.number().nullable(),
 })

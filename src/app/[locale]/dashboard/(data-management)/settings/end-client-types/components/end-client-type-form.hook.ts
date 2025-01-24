@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { endClientTypeApi } from '@/services/api/end-client-type-api'
 import { useEndClientType } from '@/services/swr/use-end-client-type'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 export default function useEndClientTypeForm(endClientTypeId?: number) {
@@ -56,11 +57,13 @@ export default function useEndClientTypeForm(endClientTypeId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (endClientTypeId) {
-      return updateEndClientType(data)
+      return updateEndClientType(submitData)
     }
 
-    return addNewEndClientType(data)
+    return addNewEndClientType(submitData)
   }
 
   return { methods, onSubmit }

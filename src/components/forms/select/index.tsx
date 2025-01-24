@@ -79,11 +79,14 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     return null
   }
 
-  const options = allData.map(item => ({
-    value: String(option.value(item)),
-    label: option.label(item),
-    data: item,
-  }))
+  const options = [
+    { value: 0, label: 'Select one', data: null },
+    ...allData.map(item => ({
+      value: String(option.value(item)),
+      label: option.label(item),
+      data: item,
+    })),
+  ]
 
   const selectedOption = detailData
     ? { value: String(option.value(detailData)), label: option.label(detailData), data: detailData }

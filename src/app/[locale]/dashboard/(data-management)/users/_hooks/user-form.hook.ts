@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { userApi } from '@/services/api/user-api'
 import { useUser } from '@/services/swr/use-user'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/user-form.schema'
@@ -84,11 +85,12 @@ export default function useUserForm(userId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
     if (userId) {
-      return updateUser(data)
+      return updateUser(submitData)
     }
 
-    return addNewUser(data)
+    return addNewUser(submitData)
   }
 
   return { methods, onSubmit, blockUser }

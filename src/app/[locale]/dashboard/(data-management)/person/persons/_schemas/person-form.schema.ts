@@ -7,7 +7,10 @@ export const schema = yup.object().shape({
   namePrefix: yup.string().ensure().max(45, 'Name prefix must be less than 45 characters'),
   nameSuffix: yup.string().ensure().max(45, 'Name suffix must be less than 45 characters'),
   genderId: yup.number().nullable().typeError('Gender must be a number'),
-  personTypeId: yup.number().required('Person type is required'),
+  personTypeId: yup
+    .number()
+    .required('Person type is required')
+    .notOneOf([0], 'Person type is required'),
   titles: yup.string().ensure().max(45, 'Titles must be less than 45 characters'),
   salutation: yup.string().ensure().max(45, 'Salutation must be less than 45 characters'),
   department: yup.string().ensure().max(45, 'Department must be less than 45 characters'),

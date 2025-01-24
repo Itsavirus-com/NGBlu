@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { endClientPaymentDetailApi } from '@/services/api/end-client-payment-detail-api'
 import { useEndClientPaymentDetail } from '@/services/swr/use-end-client-payment-detail'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/end-client-payment-detail-form.schema'
@@ -61,11 +62,13 @@ export default function useEndClientPaymentDetailForm(
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (paymentDetailId) {
-      return updateEndClientPaymentDetail(data)
+      return updateEndClientPaymentDetail(submitData)
     }
 
-    return addNewEndClientPaymentDetail(data)
+    return addNewEndClientPaymentDetail(submitData)
   }
 
   return { methods, onSubmit, isLoading }

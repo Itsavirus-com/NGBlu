@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { businessPartnerContactApi } from '@/services/api/business-partner-contact-api'
 import { useBusinessPartnerContact } from '@/services/swr/use-business-partner-contact'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/business-partner-contact-form.schema'
@@ -62,11 +63,13 @@ export const useBusinessPartnerContactForm = (businessPartnerId: number, contact
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (contactId) {
-      return updateBusinessPartnerContact(data)
+      return updateBusinessPartnerContact(submitData)
     }
 
-    return addNewBusinessPartnerContact(data)
+    return addNewBusinessPartnerContact(submitData)
   }
 
   return { methods, onSubmit, isLoading }

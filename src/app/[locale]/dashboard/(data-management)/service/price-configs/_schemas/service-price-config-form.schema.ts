@@ -5,8 +5,11 @@ export const schema = yup.object().shape({
   activeFromTime: yup.string().ensure(),
   activeToDate: yup.string().ensure(),
   activeToTime: yup.string().ensure(),
-  serviceId: yup.number().required('Service is required'),
-  priceplanId: yup.number().required('Price Plan is required'),
+  serviceId: yup.number().required('Service is required').notOneOf([0], 'Service is required'),
+  priceplanId: yup
+    .number()
+    .required('Price Plan is required')
+    .notOneOf([0], 'Price Plan is required'),
   businesspartnerId: yup
     .number()
     .nullable()

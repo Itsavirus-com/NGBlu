@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { productApi } from '@/services/api/product-api'
 import { useProduct } from '@/services/swr/use-product'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/product-form.schema'
@@ -75,11 +76,13 @@ export default function useProductForm(productId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (productId) {
-      return updateProduct(data)
+      return updateProduct(submitData)
     }
 
-    return addNewProduct(data)
+    return addNewProduct(submitData)
   }
 
   useEffect(() => {

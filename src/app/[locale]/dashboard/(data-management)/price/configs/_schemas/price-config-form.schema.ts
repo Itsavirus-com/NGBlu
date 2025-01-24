@@ -8,21 +8,26 @@ export const schema = yup.object().shape({
   priceUnitId: yup
     .number()
     .typeError('Price unit must be a number')
-    .required('Price unit is required'),
+    .required('Price unit is required')
+    .notOneOf([0], 'Price unit is required'),
   priceCurrencyId: yup
     .number()
     .typeError('Price currency must be a number')
-    .required('Price currency is required'),
+    .required('Price currency is required')
+    .notOneOf([0], 'Price currency is required'),
   priceTypeId: yup
     .number()
     .typeError('Price type must be a number')
-    .required('Price type is required'),
+    .required('Price type is required')
+    .notOneOf([0], 'Price type is required'),
   priceIntervalId: yup
     .number()
     .typeError('Price interval must be a number')
-    .required('Price interval is required'),
+    .required('Price interval is required')
+    .notOneOf([0], 'Price interval is required'),
   priceTaxId: yup
     .number()
     .typeError('Price tax must be a number')
-    .required('Price tax is required'),
+    .required('Price tax is required')
+    .notOneOf([0], 'Price tax is required'),
 })

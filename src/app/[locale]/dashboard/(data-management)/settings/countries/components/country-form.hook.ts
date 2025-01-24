@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { countryApi } from '@/services/api/country-api'
 import { useCountry } from '@/services/swr/use-country'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 export default function useCountryForm(countryId?: number) {
@@ -72,11 +73,13 @@ export default function useCountryForm(countryId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (countryId) {
-      return updateCountry(data)
+      return updateCountry(submitData)
     }
 
-    return addNewCountry(data)
+    return addNewCountry(submitData)
   }
 
   return { methods, onSubmit }

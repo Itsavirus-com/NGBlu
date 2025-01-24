@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { addressTypeApi } from '@/services/api/address-type-api'
 import { useAddressType } from '@/services/swr/use-address-type'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 export default function useAddressTypeForm(addressTypeId?: number) {
@@ -56,11 +57,13 @@ export default function useAddressTypeForm(addressTypeId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (addressTypeId) {
-      return updateCompanyStatus(data)
+      return updateCompanyStatus(submitData)
     }
 
-    return addNewCompanyStatus(data)
+    return addNewCompanyStatus(submitData)
   }
 
   return { methods, onSubmit }

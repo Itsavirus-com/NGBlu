@@ -26,6 +26,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { contactTypeApi } from '@/services/api/contact-type-api'
 import { useContactType } from '@/services/swr/use-contact-type'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 export default function useContactTypeForm(contactTypeId?: number) {
@@ -90,11 +91,13 @@ export default function useContactTypeForm(contactTypeId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (contactTypeId) {
-      return updateContactType(data)
+      return updateContactType(submitData)
     }
 
-    return addNewContactType(data)
+    return addNewContactType(submitData)
   }
 
   return { methods, onSubmit }
