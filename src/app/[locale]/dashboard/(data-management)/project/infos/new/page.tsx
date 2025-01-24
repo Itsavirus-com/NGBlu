@@ -29,6 +29,7 @@ export default function NewProjectInfo() {
                 containerClass="mb-3"
                 className="form-control-solid"
                 isRequired
+                inputType="textarea"
               />
 
               <FormButtons />

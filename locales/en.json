@@ -42,7 +42,7 @@
       "contactTypes": "Contact Types",
       "projects": "Projects",
       "projectsTypes": "Project Types",
-      "projectsInfos": "Project Infos",
+      "projectsInfos": "Project Info",
       "endClients": "End Clients",
       "endClientTypes": "End Client Types",
       "endClientStatuses": "End Client Statuses",
@@ -524,7 +524,7 @@
       },
       "infos": {
         "id": "ID",
-        "title": "Project Infos",
+        "title": "Project Info",
         "newProjectInfo": "New Project Info",
         "updateProjectInfo": "Update Project Info",
         "projectInfo": "Project Info"
