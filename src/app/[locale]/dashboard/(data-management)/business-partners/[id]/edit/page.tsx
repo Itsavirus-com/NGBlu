@@ -44,7 +44,6 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
                   label={t('businessPartnerType')}
                   name="businesspartnerTypeId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="business-partners/types"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired
@@ -53,7 +52,6 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
                   label={t('businessPartnersAddresses')}
                   name="businesspartnersAddressesId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="addresses"
                   option={{ label: row => row.addressName, value: row => row.id }}
                   isRequired
@@ -62,7 +60,6 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
                   label={t('company')}
                   name="companyInfoId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="companies/infos"
                   option={{ label: row => row.companyname, value: row => row.id }}
                   isRequired
@@ -71,7 +68,6 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
                   label={t('enterpriseRoot')}
                   name="enterpriseRootId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="enterprise-roots"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired
@@ -80,7 +76,6 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
                   label={t('organisationalUnit')}
                   name="ouUnitId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="organisational-units"
                   option={{ label: row => row.name, value: row => row.id }}
                 />
@@ -88,7 +83,6 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
                   label={t('parent')}
                   name="parentId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="business-partners"
                   option={{ label: row => row.name, value: row => row.id }}
                 />

@@ -37,7 +37,6 @@ export default function UpdateContactType({ params }: { params: { id: number } }
                 label={t('parent')}
                 name="parentId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="contacts/types"
                 option={{ label: row => row.contactType, value: row => row.id }}
               />

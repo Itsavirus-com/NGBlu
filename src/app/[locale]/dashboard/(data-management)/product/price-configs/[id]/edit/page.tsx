@@ -89,7 +89,6 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                   label={t('product')}
                   name="productId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="products"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired
@@ -98,7 +97,6 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                   label={t('pricePlan')}
                   name="priceplanId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="prices/plans"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired
@@ -126,7 +124,6 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                     label={t('businessPartner')}
                     name="businesspartnerId"
                     containerClass="mb-3"
-                    className="form-control-solid"
                     apiPath="business-partners"
                     option={{ label: row => row.name, value: row => row.id }}
                     isRequired
@@ -140,7 +137,6 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                     label={t('enterpriseRoot')}
                     name="enterpriseRootId"
                     containerClass="mb-3"
-                    className="form-control-solid"
                     apiPath="enterprise-roots"
                     option={{ label: row => row.name, value: row => row.id }}
                     isRequired
@@ -154,7 +150,6 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                     label={t('orgUnit')}
                     name="orgUnitId"
                     containerClass="mb-3"
-                    className="form-control-solid"
                     apiPath="organisational-units"
                     option={{ label: row => row.name, value: row => row.id }}
                     filter={

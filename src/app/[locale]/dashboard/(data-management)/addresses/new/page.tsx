@@ -86,7 +86,6 @@ export default function NewAddress() {
                 label={t('country')}
                 name="countryId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="countries"
                 option={{ label: row => row.name, value: row => row.id }}
                 isRequired

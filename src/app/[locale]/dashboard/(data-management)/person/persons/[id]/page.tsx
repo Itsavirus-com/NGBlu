@@ -134,7 +134,9 @@ export default function PersonDetails({ params }: { params: { id: number } }) {
   ]
   return (
     <>
-      <PageTitle title={`${t('title')}: ${data?.firstname || ''} ${data?.lastname || ''}`} />
+      <PageTitle
+        title={`${t('title')}: ${data?.salutation || ''} ${data?.namePrefix || ''} ${data?.firstname || ''} ${data?.lastname || ''} ${data?.nameSuffix || ''}`}
+      />
       <DynamicTabs tabs={tabs} defaultActiveKey="generalInfo" />
     </>
   )

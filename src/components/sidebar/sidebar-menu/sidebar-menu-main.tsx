@@ -21,7 +21,7 @@ const SidebarMenuMain = () => {
 
       {/* Data Management */}
       <SidebarMenuSeparator title={t('dataManagement')} />
-      <SidebarMenuItem to="/dashboard/addresses" title={t('address')} icon="map" />
+      <SidebarMenuItem to="/dashboard/enterprise-roots" title={t('enterpriseRoots')} icon="shop" />
       <SidebarMenuItem
         to="/dashboard/business-partners"
         title={t('businessPartners')}
@@ -29,7 +29,7 @@ const SidebarMenuMain = () => {
       />
       <SidebarMenuItem to="/dashboard/companies" title={t('company')} icon="home-3" />
       <SidebarMenuItem to="/dashboard/end-clients" title={t('endClients')} icon="profile-user" />
-      <SidebarMenuItem to="/dashboard/enterprise-roots" title={t('enterpriseRoots')} icon="shop" />
+      <SidebarMenuItem to="/dashboard/addresses" title={t('address')} icon="map" />
       <SidebarMenuItem
         to="/dashboard/organization-units"
         title={t('organizationUnits')}

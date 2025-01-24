@@ -40,7 +40,6 @@ export default function UpdatePackageService({
                   name="packageId"
                   filterName="id"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="packages"
                   option={{ label: row => row.name, value: row => row.id }}
                   disabled
@@ -51,7 +50,6 @@ export default function UpdatePackageService({
                   name="serviceId"
                   filterName="id"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="services"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired
@@ -61,7 +59,6 @@ export default function UpdatePackageService({
                   name="servicePricingConfigId"
                   filterName="id"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="services/price-configs"
                   option={{ label: row => row.pricePlan.name, value: row => row.id }}
                   isRequired

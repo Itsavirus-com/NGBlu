@@ -30,7 +30,6 @@ export default function NewBusinessPartnerCustomer({ params }: { params: { id: s
                 label={t('endClient')}
                 name="endclientId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath={'end-clients'}
                 option={{ label: row => row.name, value: row => row.id }}
                 isRequired
@@ -39,7 +38,6 @@ export default function NewBusinessPartnerCustomer({ params }: { params: { id: s
                 label={t('businessPartnerAddress')}
                 name="businesspartnersAddressesId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath={`addresses`}
                 option={{ label: row => row.addressName, value: row => row.id }}
                 isRequired
@@ -48,7 +46,6 @@ export default function NewBusinessPartnerCustomer({ params }: { params: { id: s
                 label={t('organisationalUnit')}
                 name="ouUnitId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath={'organisational-units'}
                 option={{ label: row => row.name, value: row => row.id }}
                 filter={{

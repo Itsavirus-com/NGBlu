@@ -41,7 +41,6 @@ export default function UpdateEndClientContact({
                   label={t('person')}
                   name="personId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath={'persons'}
                   option={{
                     label: row => `${row.firstname} ${row.lastname}`,
@@ -53,7 +52,6 @@ export default function UpdateEndClientContact({
                   label={t('contactInfo')}
                   name="contactInfoId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath={'contacts/infos'}
                   option={{ label: row => row.contactInfo, value: row => row.id }}
                   isRequired
@@ -62,7 +60,6 @@ export default function UpdateEndClientContact({
                   label={t('responsibility')}
                   name="responsibilityId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath={'persons/responsibilities'}
                   option={{ label: row => row.responsibility, value: row => row.id }}
                   isRequired
@@ -71,7 +68,6 @@ export default function UpdateEndClientContact({
                   label={t('enterpriseRoot')}
                   name="enterpriseRootId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath={'enterprise-roots'}
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired

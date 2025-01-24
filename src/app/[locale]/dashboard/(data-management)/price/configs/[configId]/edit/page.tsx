@@ -43,7 +43,6 @@ export default function UpdatePriceConfig({ params }: { params: { configId: numb
                   label={t('unit')}
                   name="priceUnitId"
                   containerClass="mb-3"
-                  className="form-select"
                   apiPath="prices/units"
                   option={{ label: row => row.unit, value: row => row.id }}
                   isRequired
@@ -52,7 +51,6 @@ export default function UpdatePriceConfig({ params }: { params: { configId: numb
                   label={t('currency')}
                   name="priceCurrencyId"
                   containerClass="mb-3"
-                  className="form-select"
                   apiPath="prices/currencies"
                   option={{ label: row => row.currency, value: row => row.id }}
                   isRequired
@@ -61,7 +59,6 @@ export default function UpdatePriceConfig({ params }: { params: { configId: numb
                   label={t('type')}
                   name="priceTypeId"
                   containerClass="mb-3"
-                  className="form-select"
                   apiPath="prices/types"
                   option={{ label: row => row.type, value: row => row.id }}
                   isRequired
@@ -70,7 +67,6 @@ export default function UpdatePriceConfig({ params }: { params: { configId: numb
                   label={t('interval')}
                   name="priceIntervalId"
                   containerClass="mb-3"
-                  className="form-select"
                   apiPath="prices/intervals"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired
@@ -79,7 +75,6 @@ export default function UpdatePriceConfig({ params }: { params: { configId: numb
                   label={t('tax')}
                   name="priceTaxId"
                   containerClass="mb-3"
-                  className="form-select"
                   apiPath="prices/taxes"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired

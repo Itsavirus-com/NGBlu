@@ -40,7 +40,6 @@ export default function UpdatePackageProduct({
                   name="packageId"
                   filterName="id"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="packages"
                   option={{ label: row => row.name, value: row => row.id }}
                   disabled
@@ -51,7 +50,6 @@ export default function UpdatePackageProduct({
                   name="productId"
                   filterName="id"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="products"
                   option={{ label: row => row.name, value: row => row.id }}
                   isRequired
@@ -61,7 +59,6 @@ export default function UpdatePackageProduct({
                   name="productPricingConfigId"
                   filterName="id"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="products/price-configs"
                   option={{ label: row => row.pricePlan.name, value: row => row.id }}
                   isRequired

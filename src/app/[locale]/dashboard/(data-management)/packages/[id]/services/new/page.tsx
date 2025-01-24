@@ -29,7 +29,6 @@ export default function NewPackageService({ params }: { params: { id: number } }
                 label={t('package')}
                 name="packageId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="packages"
                 option={{ label: row => row.name, value: row => row.id }}
                 disabled
@@ -39,7 +38,6 @@ export default function NewPackageService({ params }: { params: { id: number } }
                 label={t('service')}
                 name="serviceId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="services"
                 option={{ label: row => row.name, value: row => row.id }}
                 isRequired
@@ -48,7 +46,6 @@ export default function NewPackageService({ params }: { params: { id: number } }
                 label={t('servicePricingConfig')}
                 name="servicePricingConfigId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="services/price-configs"
                 option={{ label: row => row.pricePlan.name, value: row => row.id }}
                 isRequired

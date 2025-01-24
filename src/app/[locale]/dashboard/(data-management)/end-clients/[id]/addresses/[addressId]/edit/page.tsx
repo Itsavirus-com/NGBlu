@@ -39,7 +39,6 @@ export default function UpdateEndClientAddress({
                   label={t('address')}
                   name="addressId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath={'addresses'}
                   option={{ label: row => row.addressName, value: row => row.id }}
                   isRequired

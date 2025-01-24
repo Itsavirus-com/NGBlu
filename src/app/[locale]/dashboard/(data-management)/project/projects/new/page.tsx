@@ -41,7 +41,6 @@ export default function NewProjectType() {
                 label={t('projectType')}
                 name="projectTypeId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="projects/types"
                 option={{ label: row => row.projectType, value: row => row.id }}
                 isRequired
@@ -50,7 +49,6 @@ export default function NewProjectType() {
                 label={t('projectInfo')}
                 name="projectInfoId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="projects/infos"
                 option={{ label: row => row.projectInfo, value: row => row.id }}
                 isRequired
@@ -59,7 +57,6 @@ export default function NewProjectType() {
                 label={t('address')}
                 name="addressId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
               />
@@ -94,7 +91,6 @@ export default function NewProjectType() {
                   label={t('endClient')}
                   name="endclientId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="end-clients"
                   option={{ label: row => row.name, value: row => row.id }}
                   onChange={value => {
@@ -109,7 +105,6 @@ export default function NewProjectType() {
                   label={t('businessPartner')}
                   name="businesspartnersId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="business-partners"
                   option={{ label: row => row.name, value: row => row.id }}
                   onChange={value => {
@@ -124,7 +119,6 @@ export default function NewProjectType() {
                   label={t('enterpriseRoot')}
                   name="enterpriseRootId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="enterprise-roots"
                   option={{ label: row => row.name, value: row => row.id }}
                   onChange={value => {
@@ -140,7 +134,6 @@ export default function NewProjectType() {
                   label={t('organizationUnit')}
                   name="ouUnitId"
                   containerClass="mb-3"
-                  className="form-control-solid"
                   apiPath="organisational-units"
                   filter={
                     inputType && inputValue

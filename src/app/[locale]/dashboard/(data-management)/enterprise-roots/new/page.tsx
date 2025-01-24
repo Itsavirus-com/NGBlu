@@ -37,7 +37,6 @@ export default function NewEnterpriseRoot() {
                 label={t('enterpriseRootAddress')}
                 name="enterpriseRootAddressesId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="addresses"
                 option={{ label: row => row.addressName, value: row => row.id }}
                 isRequired
@@ -46,7 +45,6 @@ export default function NewEnterpriseRoot() {
                 label={t('organisationUnit')}
                 name="ouUnitId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath={'organisational-units'}
                 option={{ label: row => row.name, value: row => row.id }}
               />

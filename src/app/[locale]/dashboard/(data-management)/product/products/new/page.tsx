@@ -44,7 +44,6 @@ export default function NewProduct() {
                 label={t('type')}
                 name="productTypeId"
                 containerClass="mb-3"
-                className="form-control-solid"
                 apiPath="products/types"
                 option={{ label: row => row.productType, value: row => row.id }}
                 isRequired
