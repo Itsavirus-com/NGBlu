@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { priceTaxApi } from '@/services/api/price-tax-api'
 import { usePriceTax } from '@/services/swr/use-price-tax'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 export default function usePriceTaxForm(taxId?: number) {
@@ -24,8 +25,11 @@ export default function usePriceTaxForm(taxId?: number) {
       .number()
       .typeError('Tax value must be a number')
       .required('Tax value is required'),
-    priceUnitId: yup.number().required('Price unit is required'),
-    countryId: yup.number().required('Country is required'),
+    priceUnitId: yup
+      .number()
+      .required('Price unit is required')
+      .notOneOf([0], 'Price unit is required'),
+    countryId: yup.number().required('Country is required').notOneOf([0], 'Country is required'),
   })
 
   const methods = useForm<InferType<typeof schema>>({
@@ -62,11 +66,13 @@ export default function usePriceTaxForm(taxId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (taxId) {
-      return updateTax(data)
+      return updateTax(submitData)
     }
 
-    return addNewTax(data)
+    return addNewTax(submitData)
   }
 
   return { methods, onSubmit }

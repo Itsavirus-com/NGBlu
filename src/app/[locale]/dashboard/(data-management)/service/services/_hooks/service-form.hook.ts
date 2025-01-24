@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { serviceApi } from '@/services/api/service-api'
 import { useService } from '@/services/swr/use-service'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/service-form.schema'
@@ -75,11 +76,13 @@ export default function useServiceForm(serviceId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (serviceId) {
-      return updateService(data)
+      return updateService(submitData)
     }
 
-    return addNewService(data)
+    return addNewService(submitData)
   }
 
   useEffect(() => {

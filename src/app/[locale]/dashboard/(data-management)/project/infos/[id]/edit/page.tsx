@@ -32,6 +32,7 @@ export default function UpdateProjectInfo({ params }: { params: { id: number } }
                   containerClass="mb-3"
                   className="form-control-solid"
                   isRequired
+                  inputType="textarea"
                 />
 
                 <FormButtons />

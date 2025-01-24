@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { priceTypeApi } from '@/services/api/price-type-api'
 import { usePriceType } from '@/services/swr/use-price-type'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 export default function usePriceTypeForm(priceTypeId?: number) {
@@ -56,11 +57,12 @@ export default function usePriceTypeForm(priceTypeId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
     if (priceTypeId) {
-      return updateCompanyStatus(data)
+      return updateCompanyStatus(submitData)
     }
 
-    return addNewCompanyStatus(data)
+    return addNewCompanyStatus(submitData)
   }
 
   return { methods, onSubmit }

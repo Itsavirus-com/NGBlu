@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { businessPartnerProjectApi } from '@/services/api/business-partner-project-api'
 import { useBusinessPartnerProject } from '@/services/swr/use-business-partner-project'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/business-partner-project-form.schema'
@@ -61,10 +62,12 @@ export default function useBusinessPartnerProjectForm(
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (projectId) {
-      return updateBusinessPartnerProject(data)
+      return updateBusinessPartnerProject(submitData)
     }
-    return addNewBusinessPartnerProject(data)
+    return addNewBusinessPartnerProject(submitData)
   }
 
   return { methods, onSubmit, isLoading }

@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { creditCardBrandApi } from '@/services/api/credit-card-brand-api'
 import { useCreditCardBrand } from '@/services/swr/use-credit-card-brand'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 export default function useCreditCardBrandForm(creditCardBrandId?: number) {
@@ -56,11 +57,13 @@ export default function useCreditCardBrandForm(creditCardBrandId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (creditCardBrandId) {
-      return updateCompanyStatus(data)
+      return updateCompanyStatus(submitData)
     }
 
-    return addNewCompanyStatus(data)
+    return addNewCompanyStatus(submitData)
   }
 
   return { methods, onSubmit }

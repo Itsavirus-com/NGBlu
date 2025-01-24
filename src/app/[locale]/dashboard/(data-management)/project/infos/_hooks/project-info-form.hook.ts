@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { projectInfoApi } from '@/services/api/project-info-api'
 import { useProjectInfo } from '@/services/swr/use-project-info'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/project-info-form.schema'
@@ -49,11 +50,13 @@ export default function useProjectInfoForm(id?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (id) {
-      return updateProjectInfo(data)
+      return updateProjectInfo(submitData)
     }
 
-    return addNewProjectInfo(data)
+    return addNewProjectInfo(submitData)
   }
 
   return { methods, onSubmit, isLoading }

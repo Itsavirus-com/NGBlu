@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { projectTypeApi } from '@/services/api/project-type-api'
 import { useProjectType } from '@/services/swr/use-project-type'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 export default function useProjectTypeForm(typeId?: number) {
@@ -56,11 +57,12 @@ export default function useProjectTypeForm(typeId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
     if (typeId) {
-      return updateProjectType(data)
+      return updateProjectType(submitData)
     }
 
-    return addNewProjectType(data)
+    return addNewProjectType(submitData)
   }
 
   return { methods, onSubmit }

@@ -32,6 +32,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { companyApi } from '@/services/api/company-api'
 import { useCompany } from '@/services/swr/use-company'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/company-form.schema'
@@ -98,11 +99,13 @@ export default function useCompanyForm(companyId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (companyId) {
-      return updateCompany(data)
+      return updateCompany(submitData)
     }
 
-    return addNewCompany(data)
+    return addNewCompany(submitData)
   }
 
   return { methods, onSubmit, isLoading }

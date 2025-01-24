@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { packageApi } from '@/services/api/package-api'
 import { usePackage } from '@/services/swr/use-package'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/package-form.schema'
@@ -49,11 +50,13 @@ export default function usePackageForm(packageId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (packageId) {
-      return updatePackage(data)
+      return updatePackage(submitData)
     }
 
-    return addNewPackage(data)
+    return addNewPackage(submitData)
   }
 
   return { methods, onSubmit, isLoading }

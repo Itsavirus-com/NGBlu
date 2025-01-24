@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { endClientAddressApi } from '@/services/api/end-client-address-api'
 import { useEndClientAddress } from '@/services/swr/use-end-client-address'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/end-client-address-form.schema'
@@ -63,11 +64,13 @@ export default function useEndClientAddressForm(endCliendId: number, addressId?:
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (addressId) {
-      return updateEndClientAddress(data)
+      return updateEndClientAddress(submitData)
     }
 
-    return addNewEndClientAddress(data)
+    return addNewEndClientAddress(submitData)
   }
 
   return { methods, onSubmit, isLoading }

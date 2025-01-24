@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { personResponsibilityApi } from '@/services/api/person-responsibility-api'
 import { usePersonResponsibility } from '@/services/swr/use-person-responsibility'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/responsibility-form.schema'
@@ -49,11 +50,13 @@ export default function useResponsibilityForm(responsibilityId?: number) {
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (responsibilityId) {
-      return updateResponsibility(data)
+      return updateResponsibility(submitData)
     }
 
-    return addNewResponsibility(data)
+    return addNewResponsibility(submitData)
   }
 
   return { methods, onSubmit, isLoading }
