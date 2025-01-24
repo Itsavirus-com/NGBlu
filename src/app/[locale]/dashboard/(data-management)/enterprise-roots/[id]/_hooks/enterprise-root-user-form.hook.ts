@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
@@ -9,18 +8,14 @@ import { enterpriseRootUserApi } from '@/services/api/enterprise-root-user-api'
 import { useEnterpriseRootUser } from '@/services/swr/use-enterprise-root-user'
 import { InferType } from '@/utils/typescript'
 
+import { schema } from '../_schemas/enterprise-root-user-form.schema'
+
 export default function useEnterpriseRootUserForm(userId?: number) {
   const { id } = useParams()
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: user } = useEnterpriseRootUser(Number(id), userId)
-
-  const schema = yup.object().shape({
-    userId: yup.number().required(),
-    personId: yup.number().required(),
-    ouUnitId: yup.number(),
-  })
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
