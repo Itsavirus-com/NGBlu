@@ -19,7 +19,8 @@ import useOrganizationUnitForm from '../_hooks/organization-unit-form.hook'
 export default function NewOrganizationUnit() {
   const t = useTranslations('dataManagement.organizationUnits')
 
-  const { methods, inputType, handleChange, onSubmit } = useOrganizationUnitForm()
+  const { methods, inputType, handleChange, onSubmit, errorMessageInputType } =
+    useOrganizationUnitForm()
 
   return (
     <>
@@ -69,6 +70,10 @@ export default function NewOrganizationUnit() {
                   onChange={() => handleChange('enterpriseRootId')}
                 />
               </div>
+              {errorMessageInputType && (
+                <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
+              )}
+
               {inputType === 'endclientId' && (
                 <ControlledSelect<EndClient>
                   label={t('endClient')}

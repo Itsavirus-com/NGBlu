@@ -29,6 +29,7 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
     setFormDateValue,
     onSubmit,
     isLoading,
+    errorMessageInputType,
   } = useProductPriceConfigForm(Number(params.id))
 
   return (
@@ -132,6 +133,10 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
                     }}
                   />
                 )}
+                {errorMessageInputType && (
+                  <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
+                )}
+
                 {inputType === 'enterpriseRootId' && (
                   <ControlledSelect
                     label={t('enterpriseRoot')}

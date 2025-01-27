@@ -26,6 +26,7 @@ export default function NewProductPriceConfig() {
     handleChange,
     setFormDateValue,
     onSubmit,
+    errorMessageInputType,
   } = useProductPriceConfigForm()
 
   return (
@@ -114,6 +115,10 @@ export default function NewProductPriceConfig() {
                   onChange={() => handleChange('enterpriseRootId')}
                 />
               </div>
+              {errorMessageInputType && (
+                <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
+              )}
+
               {inputType === 'businesspartnerId' && (
                 <ControlledSelect
                   label={t('businessPartner')}

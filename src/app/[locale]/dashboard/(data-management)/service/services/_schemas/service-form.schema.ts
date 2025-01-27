@@ -11,5 +11,5 @@ export const schema = yup.object().shape({
     .number()
     .required('Service type is required')
     .notOneOf([0], 'Service type is required'),
-  inputType: yup.string().ensure().required(),
+  inputType: yup.string().ensure().required('Please select a valid option'),
 })

@@ -22,12 +22,13 @@ export const ControlledSwitch = (props: SwitchProps) => {
     step,
     type = 'switch',
     value,
+    onChange,
     ...otherProps
   } = props
 
   const { register, control } = useFormContext()
   const {
-    field: { value: selectedValue, onChange },
+    field: { value: selectedValue, onChange: onChangeField },
     fieldState: { invalid, error },
   } = useController({ control, name })
 
@@ -39,7 +40,7 @@ export const ControlledSwitch = (props: SwitchProps) => {
 
   return (
     <Form.Group className={containerClass}>
-      <div className="d-flex my-4">
+      <div className="d-flex mt-4">
         <Form.Check
           type={type}
           id={name}
@@ -48,8 +49,9 @@ export const ControlledSwitch = (props: SwitchProps) => {
           {...register(name)}
           checked={isChecked}
           onChange={e => {
-            setIsChecked(e.target.checked)
-            onChange(value || e.target.checked)
+            setIsChecked(value)
+            onChangeField(value)
+            onChange?.(value)
           }}
           {...otherProps}
           autoComplete={name}

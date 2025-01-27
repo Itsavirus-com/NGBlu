@@ -20,7 +20,15 @@ import useProjectForm from '../_hooks/project-form.hook'
 export default function NewProjectType() {
   const t = useTranslations('dataManagement.projects')
 
-  const { methods, inputType, inputValue, setInputValue, handleChange, onSubmit } = useProjectForm()
+  const {
+    methods,
+    inputType,
+    inputValue,
+    setInputValue,
+    handleChange,
+    onSubmit,
+    errorMessageInputType,
+  } = useProjectForm()
 
   return (
     <>
@@ -86,6 +94,10 @@ export default function NewProjectType() {
                   onChange={() => handleChange('enterpriseRootId')}
                 />
               </div>
+              {errorMessageInputType && (
+                <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
+              )}
+
               {inputType === 'endclientId' && (
                 <ControlledSelect<EndClient>
                   label={t('endClient')}

@@ -54,5 +54,5 @@ export const schema = yup.object().shape({
         return true
       },
     }),
-  inputType: yup.string().ensure().required('Input Type is required'),
+  inputType: yup.string().required('Please select a valid option'),
 })

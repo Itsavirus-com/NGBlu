@@ -17,7 +17,9 @@ import useProductForm from '../../_hooks/product-form.hook'
 export default function UpdateProduct({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.products')
 
-  const { methods, onSubmit, isLoading, handleChange } = useProductForm(Number(params.id))
+  const { methods, onSubmit, isLoading, handleChange, errorMessageInputType } = useProductForm(
+    Number(params.id)
+  )
 
   return (
     <>
@@ -69,6 +71,9 @@ export default function UpdateProduct({ params }: { params: { id: string } }) {
                     onChange={() => handleChange('consumerProductOnly')}
                   />
                 </div>
+                {errorMessageInputType && (
+                  <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
+                )}
 
                 <FormButtons />
               </CardBody>
