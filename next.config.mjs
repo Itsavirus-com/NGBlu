@@ -26,12 +26,7 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     formats: ['image/webp'], // Optioneel als je WebP wilt ondersteunen
   },
-  webpack: (config, { buildId, dev, isServer }) => {
-    console.log('Build Environment Variables:', {
-      MAPS_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-      NODE_ENV: process.env.NODE_ENV,
-      isServer,
-    })
+  webpack: config => {
     return config
   },
 }
