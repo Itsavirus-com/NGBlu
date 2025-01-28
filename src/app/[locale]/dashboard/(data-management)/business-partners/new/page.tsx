@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Card, CardBody } from 'react-bootstrap'
+import { Card, CardBody, Col, Row } from 'react-bootstrap'
 
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
@@ -30,59 +30,68 @@ export default function NewBusinessPartner() {
         <div className="app-container container-fluid">
           <Card>
             <CardBody>
-              <ControlledInput
-                label={t('name')}
-                name="name"
-                containerClass="mb-3"
-                className="form-control-solid"
-                isRequired
-              />
-              <ControlledSelect<BusinessPartnerType>
-                label={t('businessPartnerType')}
-                name="businesspartnerTypeId"
-                containerClass="mb-3"
-                apiPath="business-partners/types"
-                option={{ label: row => row.name, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<Address>
-                label={t('businessPartnersAddresses')}
-                name="businesspartnersAddressesId"
-                containerClass="mb-3"
-                apiPath="addresses"
-                option={{ label: row => row.addressName, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<Company>
-                label={t('company')}
-                name="companyInfoId"
-                containerClass="mb-3"
-                apiPath="companies/infos"
-                option={{ label: row => row.companyname, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<EnterpriseRoot>
-                label={t('enterpriseRoot')}
-                name="enterpriseRootId"
-                containerClass="mb-3"
-                apiPath="enterprise-roots"
-                option={{ label: row => row.name, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<OrganizationUnit>
-                label={t('organisationalUnit')}
-                name="ouUnitId"
-                containerClass="mb-3"
-                apiPath="organisational-units"
-                option={{ label: row => row.name, value: row => row.id }}
-              />
-              <ControlledSelect<BusinessPartner>
-                label={t('parent')}
-                name="parentId"
-                containerClass="mb-3"
-                apiPath="business-partners"
-                option={{ label: row => row.name, value: row => row.id }}
-              />
+              <Row>
+                <Col>
+                  <ControlledSelect<EnterpriseRoot>
+                    label={t('enterpriseRoot')}
+                    name="enterpriseRootId"
+                    containerClass="mb-3"
+                    apiPath="enterprise-roots"
+                    option={{ label: row => row.name, value: row => row.id }}
+                    isRequired
+                  />
+                  <ControlledInput
+                    label={t('name')}
+                    name="name"
+                    containerClass="mb-3"
+                    className="form-control-solid"
+                    isRequired
+                  />
+                  <ControlledSelect<Company>
+                    label={t('companyInfo')}
+                    name="companyInfoId"
+                    containerClass="mb-3"
+                    apiPath="companies/infos"
+                    option={{ label: row => row.companyname, value: row => row.id }}
+                    isRequired
+                  />
+
+                  <ControlledSelect<OrganizationUnit>
+                    label={t('organisationalUnit')}
+                    name="ouUnitId"
+                    containerClass="mb-3"
+                    apiPath="organisational-units"
+                    option={{ label: row => row.name, value: row => row.id }}
+                  />
+                </Col>
+
+                <Col>
+                  <ControlledSelect<BusinessPartner>
+                    label={t('parent')}
+                    name="parentId"
+                    containerClass="mb-3"
+                    apiPath="business-partners"
+                    option={{ label: row => row.name, value: row => row.id }}
+                  />
+                  <ControlledSelect<BusinessPartnerType>
+                    label={t('businessPartnerType')}
+                    name="businesspartnerTypeId"
+                    containerClass="mb-3"
+                    apiPath="business-partners/types"
+                    option={{ label: row => row.name, value: row => row.id }}
+                    isRequired
+                  />
+                  <ControlledSelect<Address>
+                    label={t('businessPartnersAddresses')}
+                    name="businesspartnersAddressesId"
+                    containerClass="mb-3"
+                    apiPath="addresses"
+                    option={{ label: row => row.addressName, value: row => row.id }}
+                    isRequired
+                  />
+                </Col>
+              </Row>
+
               <FormButtons />
             </CardBody>
           </Card>

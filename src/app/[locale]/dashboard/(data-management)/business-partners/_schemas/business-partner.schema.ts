@@ -4,13 +4,16 @@ export const schema = yup.object().shape({
   name: yup
     .string()
     .ensure()
-    .required('Name is required')
-    .max(255, 'Name must be at most 255 characters'),
+    .required('Company name is required')
+    .max(255, 'Company name must be at most 255 characters'),
   businesspartnerTypeId: yup
     .number()
     .required('Business partner type is required')
     .notOneOf([0], 'Business partner type is required'),
-  companyInfoId: yup.number().required('Company is required').notOneOf([0], 'Company is required'),
+  companyInfoId: yup
+    .number()
+    .required('Company Info is required')
+    .notOneOf([0], 'Company Info is required'),
   enterpriseRootId: yup
     .number()
     .required('Enterprise root is required')
