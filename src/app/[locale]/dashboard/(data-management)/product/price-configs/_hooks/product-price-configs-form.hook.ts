@@ -40,6 +40,7 @@ export default function useProductPriceConfigForm(configId?: number) {
     },
   })
 
+  const errorMessageInputType = methods.formState.errors.inputType?.message
   // Watch values for enterpriseRootId and businessPartnerId
   const enterpriseRootId = methods.watch('enterpriseRootId')
   const businessPartnerId = methods.watch('businesspartnerId')
@@ -135,5 +136,6 @@ export default function useProductPriceConfigForm(configId?: number) {
     setFormDateValue,
     onSubmit,
     isLoading,
+    errorMessageInputType,
   }
 }

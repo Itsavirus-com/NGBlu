@@ -43,6 +43,8 @@ export default function useProjectForm(projectId?: number) {
     },
   })
 
+  const errorMessageInputType = methods.formState.errors.inputType?.message
+
   const handleChange = (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => {
     setInputType(value)
     setInputValue(0)
@@ -129,5 +131,14 @@ export default function useProjectForm(projectId?: number) {
     }
   }, [methods.watch(), projectId, isLoading])
 
-  return { methods, inputType, inputValue, handleChange, onSubmit, setInputValue, isLoading }
+  return {
+    methods,
+    inputType,
+    inputValue,
+    handleChange,
+    onSubmit,
+    setInputValue,
+    isLoading,
+    errorMessageInputType,
+  }
 }

@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 
 export const schema = yup.object().shape({
-  name: yup.string().ensure().required('Name is required'),
+  name: yup.string().ensure().required('Company Name is required'),
   primaryAddressId: yup.number().nullable(),
   endclientId: yup
     .number()
@@ -54,5 +54,5 @@ export const schema = yup.object().shape({
         return true
       },
     }),
-  inputType: yup.string().ensure().required('Input Type is required'),
+  inputType: yup.string().required('Please select a valid option'),
 })

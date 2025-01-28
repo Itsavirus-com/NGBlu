@@ -131,6 +131,7 @@ export default function EndClientDetails({ params }: { params: { id: number } })
       content: (
         <Table<EndClientContact>
           className="mt-4"
+          columns={contactColumns}
           toolbars={[
             {
               icon: 'plus',
@@ -140,7 +141,6 @@ export default function EndClientDetails({ params }: { params: { id: number } })
             },
           ]}
           filters={<EndClientContactFilter />}
-          columns={contactColumns}
           apiPath={`end-clients/${params.id}/contacts`}
           actionBasePath={`${params.id}/contacts`}
           actions={['view', 'edit', 'delete']}

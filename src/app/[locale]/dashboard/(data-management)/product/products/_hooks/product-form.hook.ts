@@ -32,6 +32,8 @@ export default function useProductForm(productId?: number) {
     },
   })
 
+  const errorMessageInputType = methods.formState.errors.inputType?.message
+
   const handleChange = (value: 'corporateProductOnly' | 'consumerProductOnly') => {
     setInputType(value)
     methods.setValue('inputType', value)
@@ -91,5 +93,5 @@ export default function useProductForm(productId?: number) {
     }
   }, [productId, inputType, isLoading])
 
-  return { methods, onSubmit, isLoading, handleChange }
+  return { methods, onSubmit, isLoading, handleChange, errorMessageInputType }
 }

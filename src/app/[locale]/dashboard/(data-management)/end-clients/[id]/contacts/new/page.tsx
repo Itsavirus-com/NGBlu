@@ -8,7 +8,6 @@ import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
 import { Contact } from '@/services/swr/models/contact.type'
-import { EnterpriseRoot } from '@/services/swr/models/enterprise-root-type'
 import { PersonResponsibility } from '@/services/swr/models/person-responsibility.type'
 import { Person } from '@/services/swr/models/person.type'
 
@@ -49,14 +48,6 @@ export default function NewEndClientContact({ params }: { params: { id: string }
                 containerClass="mb-3"
                 apiPath={'persons/responsibilities'}
                 option={{ label: row => row.responsibility, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<EnterpriseRoot>
-                label={t('enterpriseRoot')}
-                name="enterpriseRootId"
-                containerClass="mb-3"
-                apiPath={'enterprise-roots'}
-                option={{ label: row => row.name, value: row => row.id }}
                 isRequired
               />
 

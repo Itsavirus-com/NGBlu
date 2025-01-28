@@ -16,7 +16,7 @@ import useProductForm from '../_hooks/product-form.hook'
 export default function NewProduct() {
   const t = useTranslations('dataManagement.products')
 
-  const { methods, onSubmit, handleChange } = useProductForm()
+  const { methods, onSubmit, handleChange, errorMessageInputType } = useProductForm()
 
   return (
     <>
@@ -66,6 +66,9 @@ export default function NewProduct() {
                   onChange={() => handleChange('consumerProductOnly')}
                 />
               </div>
+              {errorMessageInputType && (
+                <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
+              )}
 
               <FormButtons />
             </CardBody>

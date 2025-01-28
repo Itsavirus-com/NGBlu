@@ -39,6 +39,8 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
     },
   })
 
+  const errorMessageInputType = methods.formState.errors.inputType?.message
+
   const handleChange = (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => {
     setInputType(value)
     methods.setValue('inputType', value)
@@ -138,5 +140,13 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
     }
   }, [methods.watch(), isLoading, organizationUnitId])
 
-  return { methods, inputType, setInputType, handleChange, onSubmit, isLoading }
+  return {
+    methods,
+    inputType,
+    setInputType,
+    handleChange,
+    onSubmit,
+    isLoading,
+    errorMessageInputType,
+  }
 }

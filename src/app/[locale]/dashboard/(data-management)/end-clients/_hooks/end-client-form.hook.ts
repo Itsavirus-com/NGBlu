@@ -21,6 +21,7 @@
  */
 
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
@@ -35,6 +36,7 @@ import { schema } from '../_schemas/end-client-form.schema'
 export default function useEndClientForm(id?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const [isDisplayCompanyInfo, setIsDisplayCompanyInfo] = useState(false)
 
   const { data: endClient, isLoading } = useEndClient(id)
 
@@ -87,5 +89,11 @@ export default function useEndClientForm(id?: number) {
     return addNewEndClient(submitData)
   }
 
-  return { methods, onSubmit, isLoading }
+  useEffect(() => {
+    if (endClient?.type.type === 'Corporate') {
+      setIsDisplayCompanyInfo(true)
+    }
+  }, [endClient?.type])
+
+  return { methods, onSubmit, isLoading, isDisplayCompanyInfo, setIsDisplayCompanyInfo }
 }

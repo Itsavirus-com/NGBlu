@@ -50,6 +50,7 @@
  */
 
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
@@ -77,6 +78,9 @@ export default function useBusinessPartnerForm(id?: number) {
       ouUnitId: businessPartner?.ouUnitId,
     },
   })
+
+  console.log('methods', methods.getValues())
+  const enterpriseRootIdValue = methods.watch('enterpriseRootId')
 
   const addNewBusinessPartner = async (data: InferType<typeof schema>) => {
     const payload = {
@@ -144,5 +148,11 @@ export default function useBusinessPartnerForm(id?: number) {
     return addNewBusinessPartner(submitData)
   }
 
-  return { methods, onSubmit, isLoading }
+  useEffect(() => {
+    if (businessPartner && !isLoading) {
+      methods.setValue('ouUnitId', businessPartner.ouUnitId)
+    }
+  }, [businessPartner, isLoading])
+
+  return { methods, onSubmit, isLoading, enterpriseRootIdValue }
 }

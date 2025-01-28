@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Card, CardBody } from 'react-bootstrap'
+import { Card, CardBody, Col, Row } from 'react-bootstrap'
 
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
@@ -18,7 +18,7 @@ import useEndClientForm from '../_hooks/end-client-form.hook'
 export default function NewEndClient() {
   const t = useTranslations('dataManagement.endClients')
 
-  const { methods, onSubmit } = useEndClientForm()
+  const { methods, onSubmit, isDisplayCompanyInfo, setIsDisplayCompanyInfo } = useEndClientForm()
 
   return (
     <>
@@ -28,44 +28,55 @@ export default function NewEndClient() {
         <div className="app-container container-fluid">
           <Card>
             <CardBody>
-              <ControlledInput
-                label={t('name')}
-                name="name"
-                containerClass="mb-3"
-                className="form-control-solid"
-                isRequired
-              />
-              <ControlledSelect<EndClientType>
-                label={t('type')}
-                name="typeId"
-                containerClass="mb-3"
-                apiPath="end-clients/types"
-                option={{ label: row => row.type, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<EndClientStatus>
-                label={t('status')}
-                name="statusId"
-                containerClass="mb-3"
-                apiPath="end-clients/statuses"
-                option={{ label: row => row.status, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<Address>
-                label={t('locationAddress')}
-                name="locationAddressId"
-                containerClass="mb-3"
-                apiPath="addresses"
-                option={{ label: row => row.addressName, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<Company>
-                label={t('company')}
-                name="companyInfoId"
-                containerClass="mb-3"
-                apiPath="companies/infos"
-                option={{ label: row => row.companyname, value: row => row.id }}
-              />
+              <Row>
+                <Col>
+                  <ControlledInput
+                    label={t('name')}
+                    name="name"
+                    containerClass="mb-3"
+                    className="form-control-solid"
+                    isRequired
+                  />
+                  <ControlledSelect<Address>
+                    label={t('address')}
+                    name="locationAddressId"
+                    containerClass="mb-3"
+                    apiPath="addresses"
+                    option={{ label: row => row.addressName, value: row => row.id }}
+                    isRequired
+                  />
+                  {isDisplayCompanyInfo && (
+                    <ControlledSelect<Company>
+                      label={t('companyInfo')}
+                      name="companyInfoId"
+                      containerClass="mb-3"
+                      apiPath="companies/infos"
+                      option={{ label: row => row.companyname, value: row => row.id }}
+                    />
+                  )}
+                </Col>
+                <Col>
+                  <ControlledSelect<EndClientType>
+                    label={t('type')}
+                    name="typeId"
+                    containerClass="mb-3"
+                    apiPath="end-clients/types"
+                    option={{ label: row => row.type, value: row => row.id }}
+                    onChange={(_value, optionData) => {
+                      setIsDisplayCompanyInfo(optionData?.type === 'Corporate')
+                    }}
+                    isRequired
+                  />
+                  <ControlledSelect<EndClientStatus>
+                    label={t('status')}
+                    name="statusId"
+                    containerClass="mb-3"
+                    apiPath="end-clients/statuses"
+                    option={{ label: row => row.status, value: row => row.id }}
+                    isRequired
+                  />
+                </Col>
+              </Row>
 
               <FormButtons />
             </CardBody>

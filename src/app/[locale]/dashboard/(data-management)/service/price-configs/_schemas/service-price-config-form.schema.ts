@@ -45,5 +45,8 @@ export const schema = yup.object().shape({
       },
     }),
   orgUnitId: yup.number().nullable(),
-  inputType: yup.string().oneOf(['businesspartnerId', 'enterpriseRootId']),
+  inputType: yup
+    .string()
+    .oneOf(['businesspartnerId', 'enterpriseRootId'])
+    .required('Please select a valid option'),
 })
