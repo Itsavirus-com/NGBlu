@@ -52,7 +52,6 @@ export default function UpdateEnterpriseRoot({
               apiPath="organisational-units"
               option={{ label: row => row.name, value: row => row.id }}
               filter={{ enterpriseRootId: params.id }}
-              isRequired
             />
 
             <FormButtons />
