@@ -75,10 +75,6 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     }
   }, [isHidden, allData.length])
 
-  if (isHidden && allData.length === 0) {
-    return null
-  }
-
   const options = [
     { value: 0, label: 'Select one', data: null },
     ...allData.map(item => ({
@@ -103,6 +99,10 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
       setIsLoading(true)
       setPage(prev => prev + 1)
     }
+  }
+
+  if (isHidden && allData.length === 0) {
+    return null
   }
 
   return (

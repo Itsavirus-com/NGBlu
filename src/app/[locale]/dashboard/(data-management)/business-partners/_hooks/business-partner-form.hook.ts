@@ -78,6 +78,8 @@ export default function useBusinessPartnerForm(id?: number) {
     },
   })
 
+  const enterpriseRootIdValue = methods.watch('enterpriseRootId')
+
   const addNewBusinessPartner = async (data: InferType<typeof schema>) => {
     const payload = {
       name: data.name,
@@ -144,5 +146,5 @@ export default function useBusinessPartnerForm(id?: number) {
     return addNewBusinessPartner(submitData)
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, enterpriseRootIdValue }
 }

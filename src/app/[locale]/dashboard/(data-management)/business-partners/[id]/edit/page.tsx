@@ -21,7 +21,9 @@ import useBusinessPartnerForm from '../../_hooks/business-partner-form.hook'
 export default function UpdateBusinessPartner({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners')
 
-  const { methods, onSubmit, isLoading } = useBusinessPartnerForm(Number(params.id))
+  const { methods, onSubmit, isLoading, enterpriseRootIdValue } = useBusinessPartnerForm(
+    Number(params.id)
+  )
 
   return (
     <>
@@ -65,6 +67,9 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
                       containerClass="mb-3"
                       apiPath="organisational-units"
                       option={{ label: row => row.name, value: row => row.id }}
+                      filter={{ enterpriseRootId: enterpriseRootIdValue }}
+                      isHidden
+                      disabled={!enterpriseRootIdValue}
                     />
                   </Col>
 
