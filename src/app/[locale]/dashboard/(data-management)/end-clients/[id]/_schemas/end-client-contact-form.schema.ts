@@ -10,8 +10,4 @@ export const schema = yup.object().shape({
     .number()
     .required('Contact info is required')
     .notOneOf([0], 'Contact info is required'),
-  enterpriseRootId: yup
-    .number()
-    .required('Enterprise root is required')
-    .notOneOf([0], 'Enterprise root is required'),
 })
