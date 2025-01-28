@@ -14,7 +14,6 @@ import { useEndClient } from '@/services/swr/use-end-client'
 import { safeRender } from '@/utils/safeRender'
 
 import { EndClientAddressFilter } from './_components/end-client-address-filter'
-import { EndClientContactFilter } from './_components/end-client-contact-filter'
 import EndClientInfo from './_components/end-client-info'
 import { EndClientPaymentDetailFilter } from './_components/end-client-payment-detail-filter'
 import { EndClientProjectFilter } from './_components/end-client-project-filter'
@@ -131,15 +130,6 @@ export default function EndClientDetails({ params }: { params: { id: number } })
       content: (
         <Table<EndClientContact>
           className="mt-4"
-          toolbars={[
-            {
-              icon: 'plus',
-              label: t('contacts.newContact'),
-              colorClass: 'light-primary',
-              href: `${params.id}/contacts/new`,
-            },
-          ]}
-          filters={<EndClientContactFilter />}
           columns={contactColumns}
           apiPath={`end-clients/${params.id}/contacts`}
           actionBasePath={`${params.id}/contacts`}

@@ -6,9 +6,14 @@ import { Breadcrumbs } from '@/components/breadcrumbs/breadcrumbs'
 import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
+import { Table } from '@/components/table/table'
+import { TableColumn } from '@/components/table/table.type'
 import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
+import { EndClientContact } from '@/services/swr/models/end-client-contact.type'
 import { useEnterpriseRootCustomer } from '@/services/swr/use-enterprise-root-customer'
 import { safeRender } from '@/utils/safeRender'
+
+import { EndClientContactFilter } from '../../../../end-clients/[id]/_components/end-client-contact-filter'
 
 export default function EnterpriseRootCustomerDetails({
   params,
@@ -53,6 +58,26 @@ export default function EnterpriseRootCustomerDetails({
     },
   ]
 
+  const contactColumns: TableColumn<EndClientContact>[] = [
+    {
+      id: 'id',
+      title: t('id'),
+      render: row => safeRender(row, 'id'),
+    },
+    {
+      id: 'contact',
+      title: t('contactInfo'),
+      render: row =>
+        `${safeRender(row, 'contactInfoId')} | ${safeRender(row, 'contactInfo.contactInfo')}`,
+    },
+    {
+      id: 'responsibility',
+      title: t('responsibility'),
+      render: row =>
+        `${safeRender(row, 'responsibilityId')} | ${safeRender(row, 'responsibility.responsibility')}`,
+    },
+  ]
+
   const tabs = [
     {
       eventKey: 'customerInfo',
@@ -74,6 +99,29 @@ export default function EnterpriseRootCustomerDetails({
           fields={addressFields}
           isLoading={isLoading}
           translation="dataManagement.enterpriseRoots.customers"
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'contacts',
+      title: t('contacts'),
+      content: (
+        <Table<EndClientContact>
+          className="mt-4"
+          toolbars={[
+            {
+              icon: 'plus',
+              label: t('newContact'),
+              colorClass: 'light-primary',
+              href: `${params.customerId}/contacts/new`,
+            },
+          ]}
+          filters={<EndClientContactFilter />}
+          columns={contactColumns}
+          apiPath={`end-clients/${params.customerId}/contacts`}
+          actionBasePath={`${params.customerId}/contacts`}
+          actions={['view', 'edit', 'delete']}
         />
       ),
       condition: Boolean(data),

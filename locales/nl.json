@@ -796,7 +796,14 @@
         "endClientInfo": "End Client Info",
         "endClients": "End Clients",
         "info": "Info",
-        "address": "Address"
+        "address": "Address",
+        "contacts": "Contacts",
+        "newContact": "New Contact",
+        "updateContact": "Update Contact",
+        "contactInfo": "Contact Info",
+        "contactInfoId": "Contact Info ID",
+        "responsibility": "Responsibility",
+        "responsibilityId": "Responsibility ID"
       },
       "users": {
         "title": "Enterprise Root Users",
