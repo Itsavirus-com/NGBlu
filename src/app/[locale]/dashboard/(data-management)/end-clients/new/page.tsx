@@ -18,7 +18,7 @@ import useEndClientForm from '../_hooks/end-client-form.hook'
 export default function NewEndClient() {
   const t = useTranslations('dataManagement.endClients')
 
-  const { methods, onSubmit } = useEndClientForm()
+  const { methods, onSubmit, isDisplayCompanyInfo, setIsDisplayCompanyInfo } = useEndClientForm()
 
   return (
     <>
@@ -45,13 +45,15 @@ export default function NewEndClient() {
                     option={{ label: row => row.addressName, value: row => row.id }}
                     isRequired
                   />
-                  <ControlledSelect<Company>
-                    label={t('companyInfo')}
-                    name="companyInfoId"
-                    containerClass="mb-3"
-                    apiPath="companies/infos"
-                    option={{ label: row => row.companyname, value: row => row.id }}
-                  />
+                  {isDisplayCompanyInfo && (
+                    <ControlledSelect<Company>
+                      label={t('companyInfo')}
+                      name="companyInfoId"
+                      containerClass="mb-3"
+                      apiPath="companies/infos"
+                      option={{ label: row => row.companyname, value: row => row.id }}
+                    />
+                  )}
                 </Col>
                 <Col>
                   <ControlledSelect<EndClientType>
@@ -60,6 +62,9 @@ export default function NewEndClient() {
                     containerClass="mb-3"
                     apiPath="end-clients/types"
                     option={{ label: row => row.type, value: row => row.id }}
+                    onChange={(_value, optionData) => {
+                      setIsDisplayCompanyInfo(optionData?.type === 'Corporate')
+                    }}
                     isRequired
                   />
                   <ControlledSelect<EndClientStatus>

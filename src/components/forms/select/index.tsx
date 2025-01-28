@@ -19,7 +19,7 @@ type SelectProps<OptionValue> = {
     value: (value: OptionValue) => string | number
   }
   filter?: Record<string, any>
-  onChange?: (value: string | number | null) => void
+  onChange?: (value: string | number | null, optionData?: OptionValue | null) => void
   isHidden?: boolean
   isRequired?: boolean
   disabled?: boolean
@@ -89,7 +89,11 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
   ]
 
   const selectedOption = detailData
-    ? { value: String(option.value(detailData)), label: option.label(detailData), data: detailData }
+    ? {
+        value: String(option.value(detailData)),
+        label: `${detailData.id} | ${option.label(detailData)}`,
+        data: detailData,
+      }
     : field.value
       ? options.find(opt => opt.value === field.value)
       : null
@@ -113,7 +117,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
           onChange={option => {
             const value = option?.value ?? ''
             field.onChange(value as string)
-            onChange?.(value)
+            onChange?.(value, option?.data ?? null)
           }}
           onMenuScrollToBottom={handleScrollBottom}
           isLoading={isLoading}
