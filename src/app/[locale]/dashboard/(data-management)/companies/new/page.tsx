@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Card, CardBody } from 'react-bootstrap'
+import { Card, CardBody, Col, Row } from 'react-bootstrap'
 
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
@@ -27,72 +27,79 @@ export default function NewCompany() {
         <div className="app-container container-fluid">
           <Card>
             <CardBody>
-              <ControlledInput
-                label={t('name')}
-                name="companyname"
-                containerClass="mb-3"
-                className="form-control-solid"
-                isRequired
-              />
-              <ControlledSelect<CompanyStatus>
-                label={t('status')}
-                name="companyStatusId"
-                containerClass="mb-3"
-                apiPath="companies/statuses"
-                option={{ label: row => row.status, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<Address>
-                label={t('visitAddress')}
-                name="visitAddressId"
-                containerClass="mb-3"
-                apiPath="addresses"
-                option={{ label: row => row.addressName, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<Address>
-                label={t('postalAddress')}
-                name="postalAddressId"
-                containerClass="mb-3"
-                apiPath="addresses"
-                option={{ label: row => row.addressName, value: row => row.id }}
-              />
-              <ControlledSelect<Address>
-                label={t('invoiceAddress')}
-                name="invoiceAddressId"
-                containerClass="mb-3"
-                apiPath="addresses"
-                option={{ label: row => row.addressName, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<Address>
-                label={t('legalAddress')}
-                name="legalAddressId"
-                containerClass="mb-3"
-                apiPath="addresses"
-                option={{ label: row => row.addressName, value: row => row.id }}
-                isRequired
-              />
-              <ControlledInput
-                label={t('kvkNumber')}
-                name="chamberOfCommerceId"
-                containerClass="mb-3"
-                className="form-control-solid"
-                isRequired
-              />
-              <ControlledInput
-                label={t('vatNumber')}
-                name="vatNumber"
-                containerClass="mb-3"
-                className="form-control-solid"
-              />
-              <ControlledSelect<Company>
-                label={t('origin')}
-                name="originId"
-                containerClass="mb-3"
-                apiPath="/companies/infos"
-                option={{ label: row => row.companyname, value: row => row.id }}
-              />
+              <Row>
+                <Col>
+                  <ControlledInput
+                    label={t('name')}
+                    name="companyname"
+                    containerClass="mb-3"
+                    className="form-control-solid"
+                    isRequired
+                  />
+                  <ControlledSelect<Address>
+                    label={t('legalAddress')}
+                    name="legalAddressId"
+                    containerClass="mb-3"
+                    apiPath="addresses"
+                    option={{ label: row => row.addressName, value: row => row.id }}
+                    isRequired
+                  />
+                  <ControlledSelect<Address>
+                    label={t('postalAddress')}
+                    name="postalAddressId"
+                    containerClass="mb-3"
+                    apiPath="addresses"
+                    option={{ label: row => row.addressName, value: row => row.id }}
+                  />
+                  <ControlledInput
+                    label={t('kvkNumber')}
+                    name="chamberOfCommerceId"
+                    containerClass="mb-3"
+                    className="form-control-solid"
+                    isRequired
+                  />
+                  <ControlledSelect<Company>
+                    label={t('origin')}
+                    name="originId"
+                    containerClass="mb-3"
+                    apiPath="/companies/infos"
+                    option={{ label: row => row.companyname, value: row => row.id }}
+                  />
+                </Col>
+                <Col>
+                  <ControlledSelect<CompanyStatus>
+                    label={t('status')}
+                    name="companyStatusId"
+                    containerClass="mb-3"
+                    apiPath="companies/statuses"
+                    option={{ label: row => row.status, value: row => row.id }}
+                    isRequired
+                  />
+                  <ControlledSelect<Address>
+                    label={t('visitAddress')}
+                    name="visitAddressId"
+                    containerClass="mb-3"
+                    apiPath="addresses"
+                    option={{ label: row => row.addressName, value: row => row.id }}
+                    isRequired
+                  />
+                  <ControlledSelect<Address>
+                    label={t('invoiceAddress')}
+                    name="invoiceAddressId"
+                    containerClass="mb-3"
+                    apiPath="addresses"
+                    option={{ label: row => row.addressName, value: row => row.id }}
+                    isRequired
+                  />
+                  <ControlledInput
+                    label={t('vatNumber')}
+                    name="vatNumber"
+                    containerClass="mb-3"
+                    className="form-control-solid"
+                  />
+                </Col>
+              </Row>
+
               <FormButtons />
             </CardBody>
           </Card>
