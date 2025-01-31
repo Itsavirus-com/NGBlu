@@ -27,7 +27,7 @@ export default function UpdatePackageProduct({
 
   return (
     <>
-      <PageTitle title={t('newPackageProduct')} />
+      <PageTitle title={t('updatePackageProduct')} />
       {isLoading ? (
         <Loading />
       ) : (

@@ -6,12 +6,15 @@ import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
+import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { EndClientAddress } from '@/services/swr/models/end-client-address.type'
 import { EndClientContact } from '@/services/swr/models/end-client-contact.type'
 import { EndClientPaymentDetail } from '@/services/swr/models/end-client-payment-detail.type'
 import { EndClientProject } from '@/services/swr/models/end-client-project.type'
 import { useEndClient } from '@/services/swr/use-end-client'
 import { safeRender } from '@/utils/safeRender'
+
 
 import { EndClientAddressFilter } from './_components/end-client-address-filter'
 import { EndClientContactFilter } from './_components/end-client-contact-filter'
@@ -20,7 +23,9 @@ import { EndClientPaymentDetailFilter } from './_components/end-client-payment-d
 import { EndClientProjectFilter } from './_components/end-client-project-filter'
 
 export default function EndClientDetails({ params }: { params: { id: number } }) {
+  const router = useRouter()
   const t = useTranslations('dataManagement.endClients')
+  const { showToast } = useToast()
 
   const { data, isLoading } = useEndClient(params.id)
 
@@ -137,7 +142,16 @@ export default function EndClientDetails({ params }: { params: { id: number } })
               icon: 'plus',
               label: t('contacts.newContact'),
               colorClass: 'light-primary',
-              href: `${params.id}/contacts/new`,
+              onClick: () => {
+                if (data?.enterpriseRootsCount === 0 && data?.businessPartnersCount === 0) {
+                  showToast({
+                    variant: 'danger',
+                    body: 'Cannot create a new contact. This end client has no relationships with Enterprise Roots or Business Partners.',
+                  })
+                  return
+                }
+                router.push(`${params.id}/contacts/new`)
+              },
             },
           ]}
           filters={<EndClientContactFilter />}

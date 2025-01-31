@@ -21,4 +21,6 @@ export type EndClient = {
   locationAddress: Address
   createdAt: string
   updatedAt: string
+  enterpriseRootsCount: number
+  businessPartnersCount: number
 }

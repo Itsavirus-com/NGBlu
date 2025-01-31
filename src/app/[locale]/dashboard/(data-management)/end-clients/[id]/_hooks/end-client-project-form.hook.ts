@@ -10,11 +10,11 @@ import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/end-client-project-form.schema'
 
-export default function useEndClientProjectForm(endCliendId: number, projectId?: number) {
+export default function useEndClientProjectForm(endClientId: number, projectId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: endClientProject, isLoading } = useEndClientProject(endCliendId, projectId)
+  const { data: endClientProject, isLoading } = useEndClientProject(endClientId, projectId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -26,9 +26,9 @@ export default function useEndClientProjectForm(endCliendId: number, projectId?:
 
   const addNewEndClientProject = async (data: InferType<typeof schema>) => {
     try {
-      const res = await endClientProjectApi.new(endCliendId, {
+      const res = await endClientProjectApi.new(endClientId, {
         ...data,
-        endclientId: endCliendId,
+        endclientId: endClientId,
       })
 
       if (res.ok) {
@@ -44,9 +44,9 @@ export default function useEndClientProjectForm(endCliendId: number, projectId?:
     if (!projectId) return
 
     try {
-      const res = await endClientProjectApi.update(endCliendId, projectId, {
+      const res = await endClientProjectApi.update(endClientId, projectId, {
         ...data,
-        endclientId: endCliendId,
+        endclientId: endClientId,
       })
 
       if (res.ok) {
