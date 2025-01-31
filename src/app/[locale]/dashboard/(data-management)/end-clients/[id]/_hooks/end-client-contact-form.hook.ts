@@ -32,8 +32,12 @@ export default function useEndClientContactForm(endClientId: number, contactId?:
         showToast({ variant: 'success', body: 'End client contact created successfully' })
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if ('contactInfoId' in error?.errors?.detail) {
+        showToast({ variant: 'danger', body: error?.errors?.detail?.contactInfoId })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
@@ -50,8 +54,12 @@ export default function useEndClientContactForm(endClientId: number, contactId?:
         showToast({ variant: 'success', body: 'End client contact updated successfully' })
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if ('contactInfoId' in error?.errors?.detail) {
+        showToast({ variant: 'danger', body: error?.errors?.detail?.contactInfoId })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
