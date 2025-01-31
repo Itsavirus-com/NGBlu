@@ -26,6 +26,50 @@ export default function useAddressForm(addressId?: number) {
     },
   })
 
+  // Watch all relevant address fields
+  const streetName = methods.watch('streetname')
+  const houseNumber = methods.watch('housenumber')
+  const houseNumberSuffix = methods.watch('housenumberSuffix')
+  const apartmentNumber = methods.watch('appartmentNumber')
+  const postalCode = methods.watch('postalcode')
+  const city = methods.watch('city')
+  const area = methods.watch('area')
+  const country = methods.watch('countryId')
+
+  // Combine address fields into a single string
+  const getFormattedAddress = () => {
+    const houseNumberPart =
+      houseNumber && houseNumberSuffix ? `${houseNumber}${houseNumberSuffix}` : houseNumber
+
+    const addressParts = [
+      streetName,
+      houseNumberPart,
+      apartmentNumber ? `Apt ${apartmentNumber}` : null,
+      area,
+      city,
+      country,
+      postalCode,
+    ].filter(Boolean) // Remove empty values
+
+    return addressParts.join(', ')
+  }
+
+  // Handle location selection from map
+  const handleLocationSelect = ({
+    lat,
+    lng,
+    placeId,
+  }: {
+    address: string
+    lat: number
+    lng: number
+    placeId: string
+  }) => {
+    methods.setValue('lat', lat.toString())
+    methods.setValue('lng', lng.toString())
+    methods.setValue('googleAddressId', placeId)
+  }
+
   const addNewAddress = async (data: InferType<typeof schema>) => {
     try {
       const res = await addressApi.new(data)
@@ -35,10 +79,10 @@ export default function useAddressForm(addressId?: number) {
         back()
       }
     } catch (error: any) {
-      if ('lat' in error.errors.detail) {
+      if ('lat' in error?.errors?.detail) {
         return showToast({ variant: 'danger', body: 'Invalid latitude' })
       }
-      if ('lng' in error.errors.detail) {
+      if ('lng' in error?.errors?.detail) {
         return showToast({ variant: 'danger', body: 'Invalid longitude' })
       }
       showUnexpectedToast()
@@ -56,10 +100,10 @@ export default function useAddressForm(addressId?: number) {
         back()
       }
     } catch (error: any) {
-      if ('lat' in error.errors.detail) {
+      if ('lat' in error?.errors?.detail) {
         return showToast({ variant: 'danger', body: 'Invalid latitude' })
       }
-      if ('lng' in error.errors.detail) {
+      if ('lng' in error?.errors?.detail) {
         return showToast({ variant: 'danger', body: 'Invalid longitude' })
       }
       showUnexpectedToast()
@@ -76,5 +120,5 @@ export default function useAddressForm(addressId?: number) {
     return addNewAddress(submitData)
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, getFormattedAddress, handleLocationSelect }
 }
