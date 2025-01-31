@@ -38,17 +38,16 @@ export default function UpdateAddress({ params }: { params: { id: number } }) {
                       containerClass="mb-3"
                       className="form-control-solid"
                     />
-                    <Row></Row>
+                    <Col>
+                      <ControlledInput
+                        label={t('streetName')}
+                        name="streetname"
+                        containerClass="mb-3"
+                        className="form-control-solid"
+                        isRequired
+                      />
+                    </Col>
                     <Row>
-                      <Col>
-                        <ControlledInput
-                          label={t('streetName')}
-                          name="streetname"
-                          containerClass="mb-3"
-                          className="form-control-solid"
-                          isRequired
-                        />
-                      </Col>
                       <Col>
                         <ControlledInput
                           label={t('houseNumber')}
@@ -75,6 +74,13 @@ export default function UpdateAddress({ params }: { params: { id: number } }) {
                       </Col>
                     </Row>
                     <ControlledInput
+                      label={t('postalCode')}
+                      name="postalcode"
+                      containerClass="mb-3"
+                      className="form-control-solid"
+                      isRequired
+                    />
+                    <ControlledInput
                       label={t('city')}
                       name="city"
                       containerClass="mb-3"
@@ -100,13 +106,6 @@ export default function UpdateAddress({ params }: { params: { id: number } }) {
                       name="county"
                       containerClass="mb-3"
                       className="form-control-solid"
-                    />
-                    <ControlledInput
-                      label={t('postalCode')}
-                      name="postalcode"
-                      containerClass="mb-3"
-                      className="form-control-solid"
-                      isRequired
                     />
                   </Col>
 

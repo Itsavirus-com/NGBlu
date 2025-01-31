@@ -49,9 +49,10 @@ export const ControlledSwitch = (props: SwitchProps) => {
           {...register(name)}
           checked={isChecked}
           onChange={e => {
-            setIsChecked(value)
-            onChangeField(value)
-            onChange?.(value)
+            const newValue = value ? value : e.target.checked
+            setIsChecked(newValue)
+            onChangeField(newValue)
+            onChange?.(newValue)
           }}
           {...otherProps}
           autoComplete={name}

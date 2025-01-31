@@ -18,5 +18,4 @@ export const schema = yup.object().shape({
   titles: yup.string().ensure().max(45, 'Titles must be less than 45 characters'),
   salutation: yup.string().ensure().max(45, 'Salutation must be less than 45 characters'),
   department: yup.string().ensure().max(45, 'Department must be less than 45 characters'),
-  role: yup.string().ensure().max(45, 'Role must be less than 45 characters'),
 })
