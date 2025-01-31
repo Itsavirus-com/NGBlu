@@ -10,11 +10,11 @@ import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/end-client-contact-form.schema'
 
-export default function useEndClientContactForm(endCliendId: number, contactId?: number) {
+export default function useEndClientContactForm(endClientId: number, contactId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: endClientContact, isLoading } = useEndClientContact(endCliendId, contactId)
+  const { data: endClientContact, isLoading } = useEndClientContact(endClientId, contactId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -23,17 +23,21 @@ export default function useEndClientContactForm(endCliendId: number, contactId?:
 
   const addNewEndClientContact = async (data: InferType<typeof schema>) => {
     try {
-      const res = await endClientContactApi.new(endCliendId, {
+      const res = await endClientContactApi.new(endClientId, {
         ...data,
-        endclientId: endCliendId,
+        endclientId: endClientId,
       })
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client contact created successfully' })
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if ('contactInfoId' in error?.errors?.detail) {
+        showToast({ variant: 'danger', body: error?.errors?.detail?.contactInfoId })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
@@ -41,17 +45,21 @@ export default function useEndClientContactForm(endCliendId: number, contactId?:
     if (!contactId) return
 
     try {
-      const res = await endClientContactApi.update(endCliendId, contactId, {
+      const res = await endClientContactApi.update(endClientId, contactId, {
         ...data,
-        endclientId: endCliendId,
+        endclientId: endClientId,
       })
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client contact updated successfully' })
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if ('contactInfoId' in error?.errors?.detail) {
+        showToast({ variant: 'danger', body: error?.errors?.detail?.contactInfoId })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 

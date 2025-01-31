@@ -39,8 +39,12 @@ export const useBusinessPartnerContactForm = (businessPartnerId: number, contact
         showToast({ variant: 'success', body: 'Business partner contact created successfully' })
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if ('contactInfoId' in error?.errors?.detail) {
+        showToast({ variant: 'danger', body: error?.errors?.detail?.contactInfoId })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
@@ -57,8 +61,12 @@ export const useBusinessPartnerContactForm = (businessPartnerId: number, contact
         showToast({ variant: 'success', body: 'Business partner contact updated successfully' })
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if ('contactInfoId' in error?.errors?.detail) {
+        showToast({ variant: 'danger', body: error?.errors?.detail?.contactInfoId })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 

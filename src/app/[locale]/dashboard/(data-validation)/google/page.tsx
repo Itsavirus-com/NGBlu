@@ -8,7 +8,7 @@ import { KTIcon } from '@/components/kt-icon/kt-icon'
 import { PageTitle } from '@/components/page-title'
 
 import useGoogleForm from './google-form.hook'
-import { GoogleMap } from './google-map'
+import { GoogleMap } from '../../../../../components/google-map/GoogleMap'
 import './style.scss'
 
 export default function Google() {
@@ -182,11 +182,13 @@ export default function Google() {
                     name="lat"
                     containerClass="mb-3"
                     className="form-control-solid"
+                    disabled
                   />
                   <ControlledInput
                     label={t('google.lon')}
                     name="lon"
                     className="form-control-solid"
+                    disabled
                   />
                 </Col>
 

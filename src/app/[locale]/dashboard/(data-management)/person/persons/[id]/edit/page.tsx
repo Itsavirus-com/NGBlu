@@ -58,8 +58,8 @@ export default function UpdatePerson({ params }: { params: { id: number } }) {
                     className="form-control-solid"
                   />
                   <ControlledInput
-                    label={t('role')}
-                    name="role"
+                    label={t('salutation')}
+                    name="salutation"
                     containerClass="mb-3"
                     className="form-control-solid"
                   />
@@ -94,12 +94,6 @@ export default function UpdatePerson({ params }: { params: { id: number } }) {
                   <ControlledInput
                     label={t('titles')}
                     name="titles"
-                    containerClass="mb-3"
-                    className="form-control-solid"
-                  />
-                  <ControlledInput
-                    label={t('salutation')}
-                    name="salutation"
                     containerClass="mb-3"
                     className="form-control-solid"
                   />

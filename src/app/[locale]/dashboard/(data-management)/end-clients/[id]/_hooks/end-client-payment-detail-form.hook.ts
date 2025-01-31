@@ -11,14 +11,14 @@ import { InferType } from '@/utils/typescript'
 import { schema } from '../_schemas/end-client-payment-detail-form.schema'
 
 export default function useEndClientPaymentDetailForm(
-  endCliendId: number,
+  endClientId: number,
   paymentDetailId?: number
 ) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: endClientPaymentDetail, isLoading } = useEndClientPaymentDetail(
-    endCliendId,
+    endClientId,
     paymentDetailId
   )
 
@@ -29,9 +29,9 @@ export default function useEndClientPaymentDetailForm(
 
   const addNewEndClientPaymentDetail = async (data: InferType<typeof schema>) => {
     try {
-      const res = await endClientPaymentDetailApi.new(endCliendId, {
+      const res = await endClientPaymentDetailApi.new(endClientId, {
         ...data,
-        endclientId: endCliendId,
+        endclientId: endClientId,
       })
 
       if (res.ok) {
@@ -47,9 +47,9 @@ export default function useEndClientPaymentDetailForm(
     if (!paymentDetailId) return
 
     try {
-      const res = await endClientPaymentDetailApi.update(endCliendId, paymentDetailId, {
+      const res = await endClientPaymentDetailApi.update(endClientId, paymentDetailId, {
         ...data,
-        endclientId: endCliendId,
+        endclientId: endClientId,
       })
 
       if (res.ok) {

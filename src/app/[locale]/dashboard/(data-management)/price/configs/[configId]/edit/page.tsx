@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Card, CardBody } from 'react-bootstrap'
+import { Card, CardBody, Col, Row } from 'react-bootstrap'
 
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
@@ -32,53 +32,63 @@ export default function UpdatePriceConfig({ params }: { params: { configId: numb
           <div className="app-container container-fluid">
             <Card>
               <CardBody>
-                <ControlledInput
-                  label={t('price')}
-                  name="priceValue"
-                  containerClass="mb-3"
-                  className="form-control-solid"
-                  isRequired
-                />
-                <ControlledSelect<PriceUnit>
-                  label={t('unit')}
-                  name="priceUnitId"
-                  containerClass="mb-3"
-                  apiPath="prices/units"
-                  option={{ label: row => row.unit, value: row => row.id }}
-                  isRequired
-                />
-                <ControlledSelect<PriceCurrency>
-                  label={t('currency')}
-                  name="priceCurrencyId"
-                  containerClass="mb-3"
-                  apiPath="prices/currencies"
-                  option={{ label: row => row.currency, value: row => row.id }}
-                  isRequired
-                />
-                <ControlledSelect<PriceType>
-                  label={t('type')}
-                  name="priceTypeId"
-                  containerClass="mb-3"
-                  apiPath="prices/types"
-                  option={{ label: row => row.type, value: row => row.id }}
-                  isRequired
-                />
-                <ControlledSelect<PriceInterval>
-                  label={t('interval')}
-                  name="priceIntervalId"
-                  containerClass="mb-3"
-                  apiPath="prices/intervals"
-                  option={{ label: row => row.name, value: row => row.id }}
-                  isRequired
-                />
-                <ControlledSelect<PriceTax>
-                  label={t('tax')}
-                  name="priceTaxId"
-                  containerClass="mb-3"
-                  apiPath="prices/taxes"
-                  option={{ label: row => row.name, value: row => row.id }}
-                  isRequired
-                />
+                <Row>
+                  <Col>
+                    <ControlledInput
+                      label={t('decimalValue')}
+                      name="priceValue"
+                      containerClass="mb-3"
+                      className="form-control-solid"
+                      type="number"
+                      step={0.01}
+                      isRequired
+                    />
+                    <ControlledSelect<PriceInterval>
+                      label={t('interval')}
+                      name="priceIntervalId"
+                      containerClass="mb-3"
+                      apiPath="prices/intervals"
+                      option={{ label: row => row.name, value: row => row.id }}
+                      isRequired
+                    />
+                  </Col>
+                  <Col>
+                    <ControlledSelect<PriceCurrency>
+                      label={t('currency')}
+                      name="priceCurrencyId"
+                      containerClass="mb-3"
+                      apiPath="prices/currencies"
+                      option={{ label: row => row.currency, value: row => row.id }}
+                      isRequired
+                    />
+                    <ControlledSelect<PriceTax>
+                      label={t('tax')}
+                      name="priceTaxId"
+                      containerClass="mb-3"
+                      apiPath="prices/taxes"
+                      option={{ label: row => row.name, value: row => row.id }}
+                      isRequired
+                    />
+                  </Col>
+                  <Col>
+                    <ControlledSelect<PriceType>
+                      label={t('type')}
+                      name="priceTypeId"
+                      containerClass="mb-3"
+                      apiPath="prices/types"
+                      option={{ label: row => row.type, value: row => row.id }}
+                      isRequired
+                    />
+                    <ControlledSelect<PriceUnit>
+                      label={t('unit')}
+                      name="priceUnitId"
+                      containerClass="mb-3"
+                      apiPath="prices/units"
+                      option={{ label: row => row.unit, value: row => row.id }}
+                      isRequired
+                    />
+                  </Col>
+                </Row>
 
                 <FormButtons />
               </CardBody>

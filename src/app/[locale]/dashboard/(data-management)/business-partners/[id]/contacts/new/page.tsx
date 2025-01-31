@@ -33,6 +33,9 @@ export default function NewBusinessPartnerContact({ params }: { params: { id: st
                 apiPath={'persons'}
                 option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
                 isRequired
+                onChange={() => {
+                  methods.setValue('contactInfoId', 0)
+                }}
               />
               <ControlledSelect<Contact>
                 label={t('contactInfo')}
@@ -40,6 +43,7 @@ export default function NewBusinessPartnerContact({ params }: { params: { id: st
                 containerClass="mb-3"
                 apiPath={'contacts/infos'}
                 option={{ label: row => row.contactInfo, value: row => row.id }}
+                filter={{ personId: Number(methods.watch('personId')) }}
                 isRequired
               />
               <ControlledSelect<PersonResponsibility>

@@ -10,11 +10,11 @@ import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/end-client-address-form.schema'
 
-export default function useEndClientAddressForm(endCliendId: number, addressId?: number) {
+export default function useEndClientAddressForm(endClientId: number, addressId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: endClientAddress, isLoading } = useEndClientAddress(endCliendId, addressId)
+  const { data: endClientAddress, isLoading } = useEndClientAddress(endClientId, addressId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -29,9 +29,9 @@ export default function useEndClientAddressForm(endCliendId: number, addressId?:
 
   const addNewEndClientAddress = async (data: InferType<typeof schema>) => {
     try {
-      const res = await endClientAddressApi.new(endCliendId, {
+      const res = await endClientAddressApi.new(endClientId, {
         ...data,
-        endclientId: endCliendId,
+        endclientId: endClientId,
         isPrimaryLocation: data.isPrimaryLocation ? '1' : '0',
       })
 
@@ -48,9 +48,9 @@ export default function useEndClientAddressForm(endCliendId: number, addressId?:
     if (!addressId) return
 
     try {
-      const res = await endClientAddressApi.update(endCliendId, addressId, {
+      const res = await endClientAddressApi.update(endClientId, addressId, {
         ...data,
-        endclientId: endCliendId,
+        endclientId: endClientId,
         isPrimaryLocation: data.isPrimaryLocation ? '1' : '0',
       })
 

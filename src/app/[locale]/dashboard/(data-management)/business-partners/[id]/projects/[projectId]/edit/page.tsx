@@ -28,7 +28,7 @@ export default function UpdateBusinessPartnerProject({
 
   return (
     <>
-      <PageTitle title={t('newProject')} />
+      <PageTitle title={t('updateProject')} />
       {isLoading ? (
         <Loading />
       ) : (

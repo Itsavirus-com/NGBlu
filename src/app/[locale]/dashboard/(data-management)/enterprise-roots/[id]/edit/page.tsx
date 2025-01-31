@@ -21,7 +21,7 @@ export default function UpdateEnterpriseRoot({ params }: { params: { id: number 
 
   return (
     <>
-      <PageTitle title={t('newEnterpriseRoot')} />
+      <PageTitle title={t('updateEnterpriseRoot')} />
       {isLoading ? (
         <Loading />
       ) : (

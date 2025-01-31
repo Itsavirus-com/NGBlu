@@ -33,6 +33,9 @@ export default function NewEnterpriseRootContact({ params }: { params: { id: str
                 containerClass="mb-3"
                 apiPath={'persons'}
                 option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
+                onChange={() => {
+                  methods.setValue('contactInfoId', 0)
+                }}
                 isRequired
               />
               <ControlledSelect<Contact>
@@ -41,6 +44,7 @@ export default function NewEnterpriseRootContact({ params }: { params: { id: str
                 containerClass="mb-3"
                 apiPath={'contacts/infos'}
                 option={{ label: row => row.contactInfo, value: row => row.id }}
+                filter={{ personId: Number(methods.watch('personId')) }}
                 isRequired
               />
               <ControlledSelect<PersonResponsibility>
