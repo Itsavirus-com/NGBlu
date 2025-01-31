@@ -20,7 +20,24 @@ export default function useAddressForm(addressId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: address,
+    defaultValues: {
+      countryId: 1,
+    },
+    values: address && {
+      addressName: address.addressName,
+      streetname: address.streetname,
+      housenumber: address.housenumber,
+      housenumberSuffix: address.housenumberSuffix,
+      appartmentNumber: address.appartmentNumber,
+      area: address.area,
+      county: address.county,
+      city: address.city,
+      postalcode: address.postalcode,
+      countryId: address.countryId,
+      lat: address.lat,
+      lng: address.lng,
+      googleAddressId: address.googleAddressId,
+    },
     context: {
       t,
     },
