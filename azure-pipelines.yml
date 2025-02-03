@@ -12,27 +12,13 @@ trigger:
 jobs:
   - job: build_and_deploy_job
     displayName: Build and Deploy Job
-    condition: |
-      or(
-        eq(variables['Build.Reason'], 'Manual'),
-        or(
-          eq(variables['Build.Reason'], 'PullRequest'),
-          eq(variables['Build.Reason'], 'IndividualCI')
-        )
-      )
-    pool:
-      vmImage: 'ubuntu-latest'
+    condition: or(eq(variables['Build.Reason'], 'Manual'),or(eq(variables['Build.Reason'], 'PullRequest'),eq(variables['Build.Reason'], 'IndividualCI')))
+    pool: linux-agent
     variables:
       - group: io2-frontend-variable-group
     steps:
       - checkout: self
         submodules: true
-
-      - script: |
-          npm install
-          npm run build
-        displayName: 'Install dependencies and build'
-
       - task: AzureStaticWebApp@0
         inputs:
           azure_static_web_apps_api_token: $(AZURE_STATIC_WEB_APPS_API_TOKEN)
@@ -40,8 +26,5 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: '/' # App source code path
           api_location: '' # Api source code path - optional
-          output_location: '.next/static'
-          app_build_command: 'npm run build'
-          skip_app_build: false
-          verbose: true
+          output_location: '' # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
