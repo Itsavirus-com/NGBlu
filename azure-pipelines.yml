@@ -19,23 +19,12 @@ jobs:
     steps:
       - checkout: self
         submodules: true
-
-      - task: Npm@1
-        displayName: 'npm install'
-        inputs:
-          command: 'install'
-          workingDir: '$(System.DefaultWorkingDirectory)'
-
-      - task: Npm@1
-        displayName: 'npm build'
-        inputs:
-          command: 'custom'
-          customCommand: 'run build'
-          workingDir: '$(System.DefaultWorkingDirectory)'
-
       - task: AzureStaticWebApp@0
-        displayName: 'Deploy to Azure Static Web App'
         inputs:
           azure_static_web_apps_api_token: $(AZURE_STATIC_WEB_APPS_API_TOKEN)
-          app_location: '$(System.DefaultWorkingDirectory)'
-          output_location: '.next'
+          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: '/' # App source code path
+          api_location: '' # Api source code path - optional
+          output_location: '' # Built app content directory - optional
+          ###### End of Repository/Build Configurations ######
