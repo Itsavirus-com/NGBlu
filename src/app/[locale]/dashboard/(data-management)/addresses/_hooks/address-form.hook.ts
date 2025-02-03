@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { addressApi } from '@/services/api/address-api'
 import { useAddress } from '@/services/swr/use-address'
+import { useOptionData } from '@/services/swr/use-option-data'
 import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
@@ -17,6 +18,7 @@ export default function useAddressForm(addressId?: number) {
   const t = useTranslations('dataManagement.addresses')
 
   const { data: address, isLoading } = useAddress(addressId)
+  const { data: countryList } = useOptionData('countries')
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -51,7 +53,8 @@ export default function useAddressForm(addressId?: number) {
   const postalCode = methods.watch('postalcode')
   const city = methods.watch('city')
   const area = methods.watch('area')
-  const country = methods.watch('countryId')
+  const countryId = methods.watch('countryId')
+  const selectedCountry = countryList?.find(country => country.id === countryId)
 
   // Combine address fields into a single string
   const getFormattedAddress = () => {
@@ -64,7 +67,7 @@ export default function useAddressForm(addressId?: number) {
       apartmentNumber ? `Apt ${apartmentNumber}` : null,
       area,
       city,
-      country,
+      selectedCountry?.name,
       postalCode,
     ].filter(Boolean) // Remove empty values
 
