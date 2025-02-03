@@ -38,6 +38,8 @@ export default function UpdatePriceTax({ params }: { params: { taxId: number } }
                 name="taxValue"
                 containerClass="mb-3"
                 className="form-control-solid"
+                type="number"
+                step={0.0001}
                 isRequired
               />
               <ControlledSelect<PriceUnit>

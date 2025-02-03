@@ -40,7 +40,7 @@ export default function UpdatePriceConfig({ params }: { params: { configId: numb
                       containerClass="mb-3"
                       className="form-control-solid"
                       type="number"
-                      step={0.01}
+                      step={0.0001}
                       isRequired
                     />
                     <ControlledSelect<PriceInterval>
