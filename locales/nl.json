@@ -798,6 +798,12 @@
         "endClients": "End Clients",
         "info": "Info"
       },
+      "businessPartners": {
+        "title": "Business Partners",
+        "id": "ID",
+        "businessPartner": "Business Partner",
+        "businessPartnerId": "Business Partner ID"
+      },
       "users": {
         "title": "Enterprise Root Users",
         "newUser": "New User",

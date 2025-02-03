@@ -9,6 +9,7 @@ import { PageTitle } from '@/components/page-title'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
+import { BusinessPartnerCustomer } from '@/services/swr/models/business-partner-customer.type'
 import { EnterpriseRootAddress } from '@/services/swr/models/enterprise-root-address.type'
 import { EnterpriseRootContact } from '@/services/swr/models/enterprise-root-contact.type'
 import { EnterpriseRootCustomer } from '@/services/swr/models/enterprise-root-customer.type'
@@ -101,6 +102,19 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       title: t('customers.enterpriseRootAddress'),
       render: row =>
         `${safeRender(row, 'enterpriseRootAddressesId')} | ${safeRender(row, 'enterpriseRootAddresses.addressName')}`,
+    },
+  ]
+
+  const businessPartnerColumns: TableColumn<BusinessPartnerCustomer>[] = [
+    {
+      id: 'id',
+      title: t('businessPartners.id'),
+      render: row => safeRender(row, 'id'),
+    },
+    {
+      id: 'businessPartner',
+      title: t('businessPartners.title'),
+      render: row => `${safeRender(row, 'id')} | ${safeRender(row, 'name')}`,
     },
   ]
 
@@ -239,6 +253,20 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
           apiPath={`enterprise-roots/${params.id}/customers`}
           actionBasePath={`${params.id}/customers`}
           actions={['view', 'edit', 'delete']}
+        />
+      ),
+      condition: Boolean(data),
+    },
+    {
+      eventKey: 'businessPartner',
+      title: t('businessPartners.title'),
+      content: (
+        <Table<BusinessPartnerCustomer>
+          className="mt-4"
+          columns={businessPartnerColumns}
+          apiPath={`business-partners?filter[enterprise_root_id]=${params.id}`}
+          actionBasePath={`/dashboard/business-partners`}
+          actions={['view']}
         />
       ),
       condition: Boolean(data),
