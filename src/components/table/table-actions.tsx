@@ -54,6 +54,12 @@ export const TableActions = (props: TableActionsProps) => {
         {customActions?.map((customAction, index) => <Button key={index} {...customAction} />)}
 
         {actions?.includes('view') && (
+          /**
+           * Renders a view button that navigates to the detailed view of a data entry
+           * @param actionBasePath - Base URL path for the view action (optional)
+           * @param dataId - Unique identifier for the data record
+           * @param queryParams - Additional query parameters to append to the URL
+           */
           <Button
             href={`${actionBasePath ? `${actionBasePath}/${dataId}` : dataId}${
               queryParams ? `?${new URLSearchParams(queryParams).toString()}` : ''

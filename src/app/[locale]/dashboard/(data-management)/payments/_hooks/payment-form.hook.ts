@@ -28,14 +28,41 @@ export default function usePaymentForm(paymentId?: number) {
     resolver: yupResolver(schema),
     defaultValues: {
       selectedPayment: paymentId ? undefined : 1,
+      bankname: payment?.bankname ?? null,
+      bankIban: payment?.bankIban ?? null,
+      bankBic: payment?.bankBic ?? null,
+      creditcardNumber: payment?.creditcardNumber ?? null,
+      validTo: payment?.validTo ? payment.validTo.replace(DASH_REGEX, '/') : null,
+      cvv: payment?.cvv ?? null,
+      paymentTypeId: payment?.paymentTypeId ?? 1,
+      creditcardTypeId: payment?.creditcardTypeId ?? null,
+      creditcardBrandId: payment?.creditcardBrandId ?? null,
+      bankAddressId: payment?.bankAddressId ?? null,
+      personId: payment?.personId ?? undefined,
+      endclientId: payment?.endclientId ?? null,
+      businesspartnerId: payment?.businesspartnerId ?? null,
+      enterpriseRootId: payment?.enterpriseRootId ?? undefined,
     },
     values: payment && {
-      ...payment,
-      selectedPayment: payment?.paymentTypeId,
+      bankname: payment?.bankname ?? null,
+      bankIban: payment?.bankIban ?? null,
+      bankBic: payment?.bankBic ?? null,
+      creditcardNumber: payment?.creditcardNumber ?? null,
       validTo: payment?.validTo ? payment.validTo.replace(DASH_REGEX, '/') : null,
+      cvv: payment?.cvv ?? null,
+      paymentTypeId: payment?.paymentTypeId ?? 0,
+      creditcardTypeId: payment?.creditcardTypeId ?? null,
+      creditcardBrandId: payment?.creditcardBrandId ?? null,
+      bankAddressId: payment?.bankAddressId ?? null,
+      personId: payment?.personId ?? 0,
+      endclientId: payment?.endclientId ?? null,
+      businesspartnerId: payment?.businesspartnerId ?? null,
+      enterpriseRootId: payment?.enterpriseRootId ?? 0,
+      selectedPayment: payment?.paymentTypeId,
     },
   })
 
+  console.log('payment', methods.getValues())
   const selectedPayment = methods.watch('selectedPayment')
 
   const handleChange = (value: 1 | 2) => {

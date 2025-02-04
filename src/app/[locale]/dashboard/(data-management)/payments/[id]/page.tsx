@@ -39,7 +39,7 @@ export default function PaymentDetails({ params }: { params: { id: number } }) {
       value: safeRender(data, 'creditcardNumber'),
     },
     {
-      label: t('cvv'),
+      label: t('cvc/cvv'),
       value: safeRender(data, 'cvv'),
     },
     {

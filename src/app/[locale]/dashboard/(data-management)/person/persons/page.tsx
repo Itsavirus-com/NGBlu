@@ -37,11 +37,6 @@ export default function Persons() {
       title: t('department'),
       render: row => safeRender(row, 'department'),
     },
-    {
-      id: 'role',
-      title: t('role'),
-      render: row => safeRender(row, 'role'),
-    },
   ]
 
   return (

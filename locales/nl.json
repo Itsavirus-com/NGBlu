@@ -612,7 +612,7 @@
         "creditCardInfo": "Credit Card Info",
         "creditCardNumber": "Credit Card Number",
         "validTo": "Valid To",
-        "cvv": "CVV",
+        "cvc/cvv": "CVC/CVV",
         "creditCardType": "Credit Card Type",
         "creditCardBrand": "Credit Card Brand",
         "bankAddress": "Bank Address",
@@ -798,6 +798,12 @@
         "endClients": "End Clients",
         "info": "Info"
       },
+      "businessPartners": {
+        "title": "Business Partners",
+        "id": "ID",
+        "businessPartner": "Business Partner",
+        "businessPartnerId": "Business Partner ID"
+      },
       "users": {
         "title": "Enterprise Root Users",
         "newUser": "New User",
@@ -979,7 +985,7 @@
       "creditCardInfo": "Credit Card Info",
       "creditCardNumber": "Credit Card Number",
       "validTo": "Valid To",
-      "cvv": "CVV",
+      "cvc/cvv": "CVC/CVV",
       "creditCardType": "Credit Card Type",
       "creditCardBrand": "Credit Card Brand",
       "bankAddress": "Bank Address",
