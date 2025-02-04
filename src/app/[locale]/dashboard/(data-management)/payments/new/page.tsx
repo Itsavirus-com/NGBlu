@@ -131,7 +131,7 @@ export default function NewPayment() {
                     customSubmitDateFormat="MM-yyyy"
                   />
                   <ControlledInput
-                    label={t('cvv')}
+                    label={t('cvc/cvv')}
                     name="cvv"
                     containerClass="mb-3"
                     className="form-control-solid"
