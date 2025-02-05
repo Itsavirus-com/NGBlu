@@ -58,7 +58,14 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                       apiPath="addresses"
                       option={{ label: row => row.addressName, value: row => row.id }}
                     />
-
+                    <ControlledSelect<ProjectInfo>
+                      label={t('projectInfo')}
+                      name="projectInfoId"
+                      containerClass="mb-3"
+                      apiPath="projects/infos"
+                      option={{ label: row => row.projectInfo, value: row => row.id }}
+                      isRequired
+                    />
                     <div className="d-flex gap-3">
                       <ControlledSwitch
                         type="radio"
@@ -159,14 +166,6 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                       containerClass="mb-3"
                       apiPath="projects/types"
                       option={{ label: row => row.projectType, value: row => row.id }}
-                      isRequired
-                    />
-                    <ControlledSelect<ProjectInfo>
-                      label={t('projectInfo')}
-                      name="projectInfoId"
-                      containerClass="mb-3"
-                      apiPath="projects/infos"
-                      option={{ label: row => row.projectInfo, value: row => row.id }}
                       isRequired
                     />
                   </Col>
