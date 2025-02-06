@@ -3,6 +3,7 @@ import { format } from 'date-fns'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { DEFAULT_DATE_TIME_END , DEFAULT_DATE_TIME_START } from '@/constants/dateTime'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { productPriceConfigApi } from '@/services/api/product-price-config-api'
@@ -22,15 +23,26 @@ export default function useProductPriceConfigForm(configId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      activeFromDate: '',
+      activeFromTime: DEFAULT_DATE_TIME_START,
+      activeToDate: '',
+      activeToTime: DEFAULT_DATE_TIME_END,
+      productId: 0,
+      priceplanId: 0,
+      enterpriseRootId: 0,
+      businesspartnerId: 0,
+      orgUnitId: 0,
+    },
     values: productPriceConfig && {
       activeFromDate: productPriceConfig?.activeFrom
         ? format(new Date(productPriceConfig.activeFrom.replace(' ', 'T')), 'yyyy-MM-dd')
         : '',
-      activeFromTime: productPriceConfig?.activeFrom,
+      activeFromTime: productPriceConfig?.activeFrom ?? DEFAULT_DATE_TIME_START,
       activeToDate: productPriceConfig?.activeTo
         ? format(new Date(productPriceConfig.activeTo.replace(' ', 'T')), 'yyyy-MM-dd')
         : '',
-      activeToTime: productPriceConfig?.activeTo,
+      activeToTime: productPriceConfig?.activeTo ?? DEFAULT_DATE_TIME_END,
       productId: productPriceConfig?.productId!,
       priceplanId: productPriceConfig?.enterpriseRootId!,
       enterpriseRootId: productPriceConfig?.enterpriseRootId!,

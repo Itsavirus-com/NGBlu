@@ -28,6 +28,7 @@ export default function UpdateServicePriceConfig({ params }: { params: { id: str
     setFormDateValue,
     onSubmit,
     isLoading,
+    errorMessageInputType,
   } = useServicePriceConfigForm(Number(params.id))
 
   return (
@@ -114,6 +115,10 @@ export default function UpdateServicePriceConfig({ params }: { params: { id: str
                     onChange={() => handleChange('enterpriseRootId')}
                   />
                 </div>
+                {errorMessageInputType && (
+                  <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
+                )}
+
                 {methods.watch('inputType') === 'businesspartnerId' && (
                   <ControlledSelect
                     label={t('businessPartner')}

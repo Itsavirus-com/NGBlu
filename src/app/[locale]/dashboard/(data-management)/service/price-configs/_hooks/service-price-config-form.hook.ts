@@ -3,6 +3,7 @@ import { format } from 'date-fns'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { DEFAULT_DATE_TIME_END , DEFAULT_DATE_TIME_START } from '@/constants/dateTime'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { servicePriceConfigApi } from '@/services/api/service-price-config-api'
@@ -22,15 +23,27 @@ export default function useServicePriceConfigForm(configId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      activeFromDate: '',
+      activeFromTime: DEFAULT_DATE_TIME_START,
+      activeToDate: '',
+      activeToTime: DEFAULT_DATE_TIME_END,
+      serviceId: 0,
+      priceplanId: 0,
+      businesspartnerId: 0,
+      enterpriseRootId: 0,
+      orgUnitId: 0,
+    },
+
     values: servicePriceConfig && {
       activeFromDate: servicePriceConfig?.activeFrom
         ? format(new Date(servicePriceConfig.activeFrom.replace(' ', 'T')), 'yyyy-MM-dd')
         : '',
-      activeFromTime: servicePriceConfig?.activeFrom,
+      activeFromTime: servicePriceConfig?.activeFrom ?? DEFAULT_DATE_TIME_START,
       activeToDate: servicePriceConfig?.activeTo
         ? format(new Date(servicePriceConfig.activeTo.replace(' ', 'T')), 'yyyy-MM-dd')
         : '',
-      activeToTime: servicePriceConfig?.activeTo,
+      activeToTime: servicePriceConfig?.activeTo ?? DEFAULT_DATE_TIME_END,
       serviceId: servicePriceConfig?.service?.id!,
       priceplanId: servicePriceConfig?.pricePlan?.id!,
       businesspartnerId: servicePriceConfig?.businesspartnerId,
@@ -43,6 +56,7 @@ export default function useServicePriceConfigForm(configId?: number) {
   // Watch values for enterpriseRootId and businessPartnerId
   const enterpriseRootId = methods.watch('enterpriseRootId')
   const businessPartnerId = methods.watch('businesspartnerId')
+  const errorMessageInputType = methods.formState.errors.inputType?.message
 
   const handleChange = (value: 'businesspartnerId' | 'enterpriseRootId') => {
     // setInputType(value)
@@ -99,6 +113,8 @@ export default function useServicePriceConfigForm(configId?: number) {
       orgUnitId: data.orgUnitId,
     }) as any
 
+    console.log('submitData', submitData)
+
     if (configId) {
       return updateConfig(submitData)
     }
@@ -115,5 +131,6 @@ export default function useServicePriceConfigForm(configId?: number) {
     onSubmit,
     setFormDateValue,
     isLoading,
+    errorMessageInputType,
   }
 }
