@@ -26,6 +26,7 @@ export default function NewServicePriceConfig() {
     handleChange,
     setFormDateValue,
     onSubmit,
+    errorMessageInputType,
   } = useServicePriceConfigForm()
 
   return (
@@ -109,6 +110,10 @@ export default function NewServicePriceConfig() {
                   onChange={() => handleChange('enterpriseRootId')}
                 />
               </div>
+              {errorMessageInputType && (
+                <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
+              )}
+
               {methods.watch('inputType') === 'businesspartnerId' && (
                 <ControlledSelect
                   label={t('businessPartner')}

@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
+import { GoogleMap } from '@/components/google-map/GoogleMap'
 import { PageTitle } from '@/components/page-title'
 import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useAddress } from '@/services/swr/use-address'
@@ -33,14 +34,21 @@ export default function AddressDetails({ params }: { params: { id: number } }) {
     {
       eventKey: 'addressInfo',
       title: t('info'),
+      condition: Boolean(data),
       content: (
         <FieldTextView
           fields={addressInfoFields}
           isLoading={isLoading}
           translation="dataManagement.addresses"
-        />
+        >
+          <label className="fw-bold form-label my-3">Google Map</label>
+          <GoogleMap
+            lat={parseFloat(data?.lat ?? '0')}
+            lng={parseFloat(data?.lng ?? '0')}
+            address={`${safeRender(data, 'streetname')} ${safeRender(data, 'housenumber')}, ${safeRender(data, 'city')}, ${safeRender(data, 'country.name')}`}
+          />
+        </FieldTextView>
       ),
-      condition: Boolean(data),
     },
   ]
 

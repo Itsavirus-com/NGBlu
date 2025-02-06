@@ -6,7 +6,13 @@ import { TextView } from '@/components/view/text-view/text-view'
 
 import { FieldTextViewProps } from './field-text-view.type'
 
-export const FieldTextView = ({ isLoading, title, fields, translation }: FieldTextViewProps) => {
+export const FieldTextView = ({
+  isLoading,
+  title,
+  fields,
+  translation,
+  children,
+}: FieldTextViewProps) => {
   const t = useTranslations(translation)
 
   return (
@@ -22,6 +28,7 @@ export const FieldTextView = ({ isLoading, title, fields, translation }: FieldTe
             {...props}
           />
         ))}
+        {children}
       </Row>
     </Page>
   )
