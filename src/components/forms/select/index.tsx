@@ -8,6 +8,8 @@ import Select from 'react-select'
 
 import { useOptionData, useOptionDataById } from '@/services/swr/use-option-data'
 
+import { SelectLoading } from './select-loading'
+
 type SelectProps<OptionValue> = {
   label?: string
   name: string
@@ -49,9 +51,13 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
 
   const [page, setPage] = useState<number>(1)
   const [allData, setAllData] = useState<OptionValue[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoadingInfinity, setIsLoadingInfinity] = useState<boolean>(false)
 
-  const { data, pagination } = useOptionData<OptionValue>(apiPath, {
+  const {
+    data,
+    pagination,
+    isLoading: isLoadingOptions,
+  } = useOptionData<OptionValue>(apiPath, {
     page,
     limit: 10,
     filter: {
@@ -59,21 +65,18 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     },
   })
 
-  const { data: detailData } = useOptionDataById<OptionValue>(apiPath, field.value)
+  const { data: detailData, isLoading: isLoadingOptionsById } = useOptionDataById<OptionValue>(
+    apiPath,
+    field.value
+  )
 
   useEffect(() => {
     if (data && pagination) {
       if (page === 1) setAllData(data)
       else setAllData(prevData => [...prevData, ...data])
-      setIsLoading(false)
+      setIsLoadingInfinity(false)
     }
   }, [data, pagination])
-
-  useEffect(() => {
-    if (isHidden && allData.length === 0) {
-      field.onChange(null)
-    }
-  }, [isHidden, allData.length])
 
   const options = [
     { value: 0, label: 'Select one', data: null },
@@ -95,8 +98,8 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
       : null
 
   const handleScrollBottom = () => {
-    if (pagination && page < pagination.lastPage && !isLoading) {
-      setIsLoading(true)
+    if (pagination && page < pagination.lastPage && !isLoadingInfinity) {
+      setIsLoadingInfinity(true)
       setPage(prev => prev + 1)
     }
   }
@@ -108,8 +111,9 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
   return (
     <Form.Group className={containerClass}>
       <Form.Label className={clsx('fw-bold', { required: isRequired })}>{label}</Form.Label>
-      {allData.length === 0 ? (
-        <Form.Control disabled placeholder="Loading..." />
+
+      {isLoadingOptions && !isLoadingInfinity ? (
+        <SelectLoading />
       ) : (
         <Select
           value={selectedOption}
@@ -120,7 +124,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
             onChange?.(value, option?.data ?? null)
           }}
           onMenuScrollToBottom={handleScrollBottom}
-          isLoading={isLoading}
+          isLoading={isLoadingInfinity}
           className="react-select-container"
           styles={{
             control: baseStyles => ({

@@ -74,7 +74,7 @@ export default function NewOrganizationUnit() {
                 <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
               )}
 
-              {inputType === 'endclientId' && (
+              {methods.watch('inputType') === 'endclientId' && (
                 <ControlledSelect<EndClient>
                   label={t('endClient')}
                   name="endclientId"
@@ -84,7 +84,7 @@ export default function NewOrganizationUnit() {
                   isRequired
                 />
               )}
-              {inputType === 'businesspartnerId' && (
+              {methods.watch('inputType') === 'businesspartnerId' && (
                 <ControlledSelect<BusinessPartner>
                   label={t('businessPartner')}
                   name="businesspartnerId"
@@ -94,14 +94,14 @@ export default function NewOrganizationUnit() {
                   isRequired
                 />
               )}
-              {(inputType === 'enterpriseRootId' || inputType === 'endclientId') && (
+              {(methods.watch('inputType') === 'enterpriseRootId' ||
+                methods.watch('inputType') === 'endclientId') && (
                 <ControlledSelect<EnterpriseRoot>
                   label={t('enterpriseRoot')}
                   name="enterpriseRootId"
                   containerClass="mb-3"
                   apiPath="enterprise-roots"
                   option={{ label: row => row.name, value: row => row.id }}
-                  isHidden
                   isRequired
                 />
               )}
