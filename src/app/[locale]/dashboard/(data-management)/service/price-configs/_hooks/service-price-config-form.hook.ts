@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { format } from 'date-fns'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
@@ -17,7 +17,6 @@ export default function useServicePriceConfigForm(configId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
   const [formDateValue, setFormDateValue] = useState<Date | null>(null)
-  const [inputType, setInputType] = useState<'businesspartnerId' | 'enterpriseRootId' | null>(null)
 
   const { data: servicePriceConfig, isLoading } = useServicePriceConfig(configId)
 
@@ -46,7 +45,7 @@ export default function useServicePriceConfigForm(configId?: number) {
   const businessPartnerId = methods.watch('businesspartnerId')
 
   const handleChange = (value: 'businesspartnerId' | 'enterpriseRootId') => {
-    setInputType(value)
+    // setInputType(value)
     methods.setValue('inputType', value)
     methods.setValue('businesspartnerId', 0)
     methods.setValue('enterpriseRootId', 0)
@@ -107,31 +106,11 @@ export default function useServicePriceConfigForm(configId?: number) {
     return addNewConfig(submitData)
   }
 
-  useEffect(() => {
-    if (configId && inputType === null && !isLoading) {
-      const businessPartnerId = methods.getValues('businesspartnerId')
-      const enterpriseRootId = methods.getValues('enterpriseRootId')
-
-      if (businessPartnerId) {
-        setInputType('businesspartnerId')
-      } else if (enterpriseRootId && (!businessPartnerId || businessPartnerId === 0)) {
-        setInputType('enterpriseRootId')
-      }
-
-      setTimeout(() => {
-        methods.setValue('enterpriseRootId', servicePriceConfig?.enterpriseRootId)
-        methods.setValue('businesspartnerId', servicePriceConfig?.businesspartnerId)
-        methods.setValue('orgUnitId', servicePriceConfig?.orgUnitId)
-      }, 1000)
-    }
-  }, [methods.watch(), isLoading, configId])
-
   return {
     methods,
     formDateValue,
     enterpriseRootId,
     businessPartnerId,
-    inputType,
     handleChange,
     onSubmit,
     setFormDateValue,

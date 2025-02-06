@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
@@ -16,11 +15,6 @@ export default function useProjectForm(projectId?: number) {
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: projectData, isLoading } = useProject(projectId)
-
-  const [inputType, setInputType] = useState<
-    'endclientId' | 'businesspartnerId' | 'enterpriseRootId' | null
-  >(null)
-  const [inputValue, setInputValue] = useState<number>(0)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -46,8 +40,6 @@ export default function useProjectForm(projectId?: number) {
   const errorMessageInputType = methods.formState.errors.inputType?.message
 
   const handleChange = (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => {
-    setInputType(value)
-    setInputValue(0)
     methods.setValue('inputType', value)
     methods.setValue('ouUnitId', null)
     methods.setValue('endclientId', null)
@@ -55,25 +47,17 @@ export default function useProjectForm(projectId?: number) {
     methods.setValue('enterpriseRootId', null)
   }
 
-  const setInputValueBasedOnInputType = () => {
-    const inputTypeValue = methods.getValues('inputType') as
-      | 'endclientId'
-      | 'businesspartnerId'
-      | 'enterpriseRootId'
-    setInputType(inputTypeValue)
+  const handleFilterOrganizationUnit = () => {
+    const endclientId = methods.watch('endclientId')
+    const businesspartnerId = methods.watch('businesspartnersId')
+    const enterpriseRootId = methods.watch('enterpriseRootId')
 
-    switch (inputTypeValue) {
-      case 'endclientId':
-        setInputValue(methods.getValues('endclientId') as number)
-        break
-      case 'businesspartnerId':
-        setInputValue(methods.getValues('businesspartnersId') as number)
-        break
-      case 'enterpriseRootId':
-        setInputValue(methods.getValues('enterpriseRootId') as number)
-        break
-      default:
-        break
+    if (endclientId && enterpriseRootId) {
+      return { endclientId: endclientId, enterpriseRootId: enterpriseRootId }
+    } else if (businesspartnerId) {
+      return { businesspartnerId: businesspartnerId }
+    } else if (enterpriseRootId) {
+      return { enterpriseRootId: enterpriseRootId }
     }
   }
 
@@ -119,26 +103,13 @@ export default function useProjectForm(projectId?: number) {
     return addNewProject(submitData)
   }
 
-  useEffect(() => {
-    if (projectId && inputType === null && !isLoading) {
-      setInputValueBasedOnInputType()
-      setTimeout(() => {
-        methods.setValue('enterpriseRootId', projectData?.enterpriseRootId)
-        methods.setValue('endclientId', projectData?.endclientId)
-        methods.setValue('businesspartnersId', projectData?.businesspartnersId)
-        methods.setValue('ouUnitId', projectData?.ouUnitId)
-      }, 1000)
-    }
-  }, [methods.watch(), projectId, isLoading])
-
   return {
     methods,
-    inputType,
-    inputValue,
+
     handleChange,
     onSubmit,
-    setInputValue,
     isLoading,
     errorMessageInputType,
+    handleFilterOrganizationUnit,
   }
 }

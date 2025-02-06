@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
@@ -14,8 +14,8 @@ import { schema } from '../_schemas/organization-unit-form.schema'
 export default function useOrganizationUnitForm(organizationUnitId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
-
-  const { data: organizationUnit, isLoading } = useOrganizationUnit(organizationUnitId)
+  const { data: organizationUnit, isLoading: isLoadingOrganizationUnit } =
+    useOrganizationUnit(organizationUnitId)
 
   const [inputType, setInputType] = useState<
     'endclientId' | 'businesspartnerId' | 'enterpriseRootId' | null
@@ -42,7 +42,6 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
   const errorMessageInputType = methods.formState.errors.inputType?.message
 
   const handleChange = (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => {
-    setInputType(value)
     methods.setValue('inputType', value)
     methods.setValue('endclientId', 0)
     methods.setValue('businesspartnerId', 0)
@@ -127,26 +126,13 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
     return addNewOrganizationUnit(submitData)
   }
 
-  useEffect(() => {
-    if (organizationUnitId && inputType === null && !isLoading) {
-      setInputType(
-        methods.getValues('inputType') as 'endclientId' | 'businesspartnerId' | 'enterpriseRootId'
-      )
-      setTimeout(() => {
-        methods.setValue('enterpriseRootId', organizationUnit?.enterpriseRootId)
-        methods.setValue('endclientId', organizationUnit?.endclientId)
-        methods.setValue('businesspartnerId', organizationUnit?.businesspartnerId)
-      }, 1000)
-    }
-  }, [methods.watch(), isLoading, organizationUnitId])
-
   return {
     methods,
     inputType,
     setInputType,
     handleChange,
     onSubmit,
-    isLoading,
+    isLoading: isLoadingOrganizationUnit,
     errorMessageInputType,
   }
 }

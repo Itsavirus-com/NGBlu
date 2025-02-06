@@ -23,11 +23,9 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
 
   const {
     methods,
-    inputType,
-    inputValue,
     handleChange,
     onSubmit,
-    setInputValue,
+    handleFilterOrganizationUnit,
     isLoading,
     errorMessageInputType,
   } = useProjectForm(Number(params.id))
@@ -96,7 +94,7 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                       <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
                     )}
 
-                    {inputType === 'endclientId' && (
+                    {methods.watch('inputType') === 'endclientId' && (
                       <ControlledSelect<EndClient>
                         label={t('endClient')}
                         name="endclientId"
@@ -104,13 +102,12 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                         apiPath="end-clients"
                         option={{ label: row => row.name, value: row => row.id }}
                         onChange={value => {
-                          setInputValue(Number(value))
                           methods.setValue('ouUnitId', 0)
                         }}
                         isRequired
                       />
                     )}
-                    {inputType === 'businesspartnerId' && (
+                    {methods.watch('inputType') === 'businesspartnerId' && (
                       <ControlledSelect
                         label={t('businessPartner')}
                         name="businesspartnersId"
@@ -118,13 +115,13 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                         apiPath="business-partners"
                         option={{ label: row => row.name, value: row => row.id }}
                         onChange={value => {
-                          setInputValue(Number(value))
                           methods.setValue('ouUnitId', 0)
                         }}
                         isRequired
                       />
                     )}
-                    {(inputType === 'enterpriseRootId' || inputType === 'endclientId') && (
+                    {(methods.watch('inputType') === 'enterpriseRootId' ||
+                      methods.watch('inputType') === 'endclientId') && (
                       <ControlledSelect
                         label={t('enterpriseRoot')}
                         name="enterpriseRootId"
@@ -132,28 +129,21 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
                         apiPath="enterprise-roots"
                         option={{ label: row => row.name, value: row => row.id }}
                         onChange={value => {
-                          setInputValue(Number(value))
                           methods.setValue('ouUnitId', 0)
                         }}
                         isRequired
                       />
                     )}
 
-                    {!!inputType && (
+                    {!!methods.watch('inputType') && (
                       <ControlledSelect<OrganizationUnit>
                         label={t('organizationUnit')}
                         name="ouUnitId"
                         containerClass="mb-3"
                         apiPath="organisational-units"
-                        filter={
-                          inputType && inputValue
-                            ? {
-                                [inputType]: inputValue,
-                              }
-                            : {}
-                        }
+                        filter={handleFilterOrganizationUnit()}
                         option={{ label: row => row.name, value: row => row.id }}
-                        disabled={!inputType || inputValue === 0}
+                        disabled={!handleFilterOrganizationUnit()}
                         isHidden
                       />
                     )}

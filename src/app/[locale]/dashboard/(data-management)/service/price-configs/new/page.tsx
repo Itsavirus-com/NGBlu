@@ -23,7 +23,6 @@ export default function NewServicePriceConfig() {
     formDateValue,
     businessPartnerId,
     enterpriseRootId,
-    inputType,
     handleChange,
     setFormDateValue,
     onSubmit,
@@ -110,7 +109,7 @@ export default function NewServicePriceConfig() {
                   onChange={() => handleChange('enterpriseRootId')}
                 />
               </div>
-              {inputType === 'businesspartnerId' && (
+              {methods.watch('inputType') === 'businesspartnerId' && (
                 <ControlledSelect
                   label={t('businessPartner')}
                   name="businesspartnerId"
@@ -123,7 +122,7 @@ export default function NewServicePriceConfig() {
                   }}
                 />
               )}
-              {inputType === 'enterpriseRootId' && (
+              {methods.watch('inputType') === 'enterpriseRootId' && (
                 <ControlledSelect
                   label={t('enterpriseRoot')}
                   name="enterpriseRootId"
@@ -136,7 +135,7 @@ export default function NewServicePriceConfig() {
                   }}
                 />
               )}
-              {!!inputType && (
+              {!!methods.watch('inputType') && (
                 <ControlledSelect<OrganizationUnit>
                   label={t('orgUnit')}
                   name="orgUnitId"
@@ -144,11 +143,16 @@ export default function NewServicePriceConfig() {
                   apiPath="organisational-units"
                   option={{ label: row => row.name, value: row => row.id }}
                   filter={
-                    inputType === 'enterpriseRootId'
+                    methods.watch('inputType') === 'enterpriseRootId'
                       ? {
-                          [inputType]: enterpriseRootId,
+                          [methods.watch('inputType')]: enterpriseRootId,
                         }
-                      : { [inputType]: businessPartnerId }
+                      : { [methods.watch('inputType')]: businessPartnerId }
+                  }
+                  disabled={
+                    methods.watch('inputType') === 'enterpriseRootId'
+                      ? !methods.watch('enterpriseRootId')
+                      : !methods.watch('businesspartnerId')
                   }
                   isHidden
                 />
