@@ -5,4 +5,5 @@ export type FieldTextViewProps = {
   title?: string
   fields: TextViewProps[]
   translation: string
+  children?: React.ReactNode
 }
