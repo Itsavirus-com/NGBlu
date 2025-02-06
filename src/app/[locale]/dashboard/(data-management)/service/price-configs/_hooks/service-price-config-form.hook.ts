@@ -3,7 +3,7 @@ import { format } from 'date-fns'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { DEFAULT_DATE_TIME_END , DEFAULT_DATE_TIME_START } from '@/constants/dateTime'
+import { DEFAULT_DATE_TIME_END, DEFAULT_DATE_TIME_START } from '@/constants/dateTime'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { servicePriceConfigApi } from '@/services/api/service-price-config-api'
@@ -101,7 +101,7 @@ export default function useServicePriceConfigForm(configId?: number) {
 
   const onSubmit = async (data: InferType<typeof schema>) => {
     const activeFrom = combineDateTime(data?.activeFromDate ?? '', data?.activeFromTime ?? '')
-    const activeTo = combineDateTime(data?.activeToDate ?? '', data?.activeToTime ?? '')
+    const activeTo = combineDateTime(data?.activeToDate ?? '', data?.activeToTime ?? '', 59)
 
     const submitData = omitNullAndUndefined({
       activeFrom,
@@ -112,8 +112,6 @@ export default function useServicePriceConfigForm(configId?: number) {
       enterpriseRootId: data.enterpriseRootId,
       orgUnitId: data.orgUnitId,
     }) as any
-
-    console.log('submitData', submitData)
 
     if (configId) {
       return updateConfig(submitData)

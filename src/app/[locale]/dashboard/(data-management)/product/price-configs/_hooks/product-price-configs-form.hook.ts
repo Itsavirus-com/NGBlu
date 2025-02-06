@@ -3,7 +3,7 @@ import { format } from 'date-fns'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { DEFAULT_DATE_TIME_END , DEFAULT_DATE_TIME_START } from '@/constants/dateTime'
+import { DEFAULT_DATE_TIME_END, DEFAULT_DATE_TIME_START } from '@/constants/dateTime'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { productPriceConfigApi } from '@/services/api/product-price-config-api'
@@ -96,7 +96,7 @@ export default function useProductPriceConfigForm(configId?: number) {
 
   const onSubmit = (data: InferType<typeof schema>) => {
     const activeFrom = combineDateTime(data?.activeFromDate ?? '', data?.activeFromTime ?? '')
-    const activeTo = combineDateTime(data?.activeToDate ?? '', data?.activeToTime ?? '')
+    const activeTo = combineDateTime(data?.activeToDate ?? '', data?.activeToTime ?? '', 59)
 
     const submitData = omitNullAndUndefined({
       activeFrom,
