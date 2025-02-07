@@ -43,6 +43,9 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
                       containerClass="mb-3"
                       apiPath="enterprise-roots"
                       option={{ label: row => row.name, value: row => row.id }}
+                      onChange={() => {
+                        methods.setValue('ouUnitId', 0)
+                      }}
                       isRequired
                     />
                     <ControlledInput

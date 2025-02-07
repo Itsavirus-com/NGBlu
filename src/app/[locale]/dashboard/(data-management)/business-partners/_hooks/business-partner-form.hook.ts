@@ -50,7 +50,6 @@
  */
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
@@ -71,30 +70,21 @@ export default function useBusinessPartnerForm(id?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: businessPartner && {
-      ...businessPartner,
+      name: businessPartner.name,
       businesspartnerTypeId: businessPartner.businessPartnerType.id,
       companyInfoId: businessPartner.companyInfo.id,
-      parentId: businessPartner?.parent?.id,
+      enterpriseRootId: businessPartner.enterpriseRootId,
+      businesspartnersAddressesId: businessPartner.businesspartnersAddressesId,
       ouUnitId: businessPartner?.ouUnitId,
+      parentId: businessPartner?.parent?.id,
     },
   })
 
-  console.log('methods', methods.getValues())
   const enterpriseRootIdValue = methods.watch('enterpriseRootId')
 
   const addNewBusinessPartner = async (data: InferType<typeof schema>) => {
-    const payload = {
-      name: data.name,
-      businesspartnerTypeId: data.businesspartnerTypeId,
-      businesspartnersAddressesId: data.businesspartnersAddressesId,
-      companyInfoId: data.companyInfoId,
-      ouUnitId: data.ouUnitId,
-      enterpriseRootId: data.enterpriseRootId,
-      parentId: data.parentId,
-    }
-
     try {
-      const res = await businessPartnerApi.new(payload)
+      const res = await businessPartnerApi.new(data)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner created successfully' })
@@ -112,18 +102,8 @@ export default function useBusinessPartnerForm(id?: number) {
   const updateBusinessPartner = async (data: InferType<typeof schema>) => {
     if (!id) return
 
-    const payload = {
-      name: data.name,
-      businesspartnerTypeId: data.businesspartnerTypeId,
-      businesspartnersAddressesId: data.businesspartnersAddressesId,
-      companyInfoId: data.companyInfoId,
-      ouUnitId: data.ouUnitId,
-      enterpriseRootId: data.enterpriseRootId,
-      parentId: data.parentId,
-    }
-
     try {
-      const res = await businessPartnerApi.update(id, payload)
+      const res = await businessPartnerApi.update(id, data)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner updated successfully' })
@@ -140,6 +120,7 @@ export default function useBusinessPartnerForm(id?: number) {
 
   const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
+    console.log('submitData', submitData)
 
     if (id) {
       return updateBusinessPartner(submitData)
@@ -147,12 +128,6 @@ export default function useBusinessPartnerForm(id?: number) {
 
     return addNewBusinessPartner(submitData)
   }
-
-  useEffect(() => {
-    if (businessPartner && !isLoading) {
-      methods.setValue('ouUnitId', businessPartner.ouUnitId)
-    }
-  }, [businessPartner, isLoading])
 
   return { methods, onSubmit, isLoading, enterpriseRootIdValue }
 }
