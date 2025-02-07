@@ -13,7 +13,7 @@ export default function useCompanyStatusForm(companyStatusId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: companyStatus } = useCompanyStatus(companyStatusId)
+  const { data: companyStatus, mutate } = useCompanyStatus(companyStatusId)
 
   const schema = yup.object().shape({
     status: yup
@@ -34,6 +34,7 @@ export default function useCompanyStatusForm(companyStatusId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Company status created successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -49,6 +50,7 @@ export default function useCompanyStatusForm(companyStatusId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Company status updated successfully' })
+        mutate()
         back()
       }
     } catch (error) {

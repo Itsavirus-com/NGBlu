@@ -15,7 +15,7 @@ export default function useProductForm(productId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: product, isLoading } = useProduct(productId)
+  const { data: product, isLoading, mutate } = useProduct(productId)
   const [inputType, setInputType] = useState<'corporateProductOnly' | 'consumerProductOnly' | null>(
     null
   )
@@ -50,6 +50,7 @@ export default function useProductForm(productId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Product created successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -70,6 +71,7 @@ export default function useProductForm(productId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Product updated successfully' })
+        mutate()
         back()
       }
     } catch (error) {

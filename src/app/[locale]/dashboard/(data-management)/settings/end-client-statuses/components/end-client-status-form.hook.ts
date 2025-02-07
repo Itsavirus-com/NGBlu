@@ -13,7 +13,7 @@ export default function useEndClientStatusForm(endClientStatusId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: ccType } = useEndClientStatus(endClientStatusId)
+  const { data: ccType, mutate } = useEndClientStatus(endClientStatusId)
 
   const schema = yup.object().shape({
     status: yup
@@ -34,6 +34,7 @@ export default function useEndClientStatusForm(endClientStatusId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client status created successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -49,6 +50,7 @@ export default function useEndClientStatusForm(endClientStatusId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client status updated successfully' })
+        mutate()
         back()
       }
     } catch (error) {

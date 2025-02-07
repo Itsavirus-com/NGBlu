@@ -15,7 +15,7 @@ export default function useServiceForm(serviceId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: service, isLoading } = useService(serviceId)
+  const { data: service, isLoading, mutate } = useService(serviceId)
   const [inputType, setInputType] = useState<'corporateOnlyService' | 'consumerOnlyService' | null>(
     null
   )
@@ -48,6 +48,7 @@ export default function useServiceForm(serviceId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Service created successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -68,6 +69,7 @@ export default function useServiceForm(serviceId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Service updated successfully' })
+        mutate()
         back()
       }
     } catch (error) {

@@ -13,7 +13,7 @@ export default function useGenderForm(genderId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: gender } = useGender(genderId)
+  const { data: gender, mutate } = useGender(genderId)
 
   const schema = yup.object().shape({
     gender: yup
@@ -34,6 +34,7 @@ export default function useGenderForm(genderId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Gender created successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -49,6 +50,7 @@ export default function useGenderForm(genderId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Gender updated successfully' })
+        mutate()
         back()
       }
     } catch (error) {

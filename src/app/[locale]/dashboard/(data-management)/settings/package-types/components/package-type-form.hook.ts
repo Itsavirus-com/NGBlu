@@ -13,7 +13,7 @@ export default function usePackageTypeForm(typeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: packageType } = usePackageType(typeId)
+  const { data: packageType, mutate } = usePackageType(typeId)
 
   const schema = yup.object().shape({
     name: yup
@@ -34,6 +34,7 @@ export default function usePackageTypeForm(typeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Package type created successfully' })
+        mutate()
         back()
       }
     } catch (error: any) {
@@ -54,6 +55,7 @@ export default function usePackageTypeForm(typeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Package type updated successfully' })
+        mutate()
         back()
       }
     } catch (error: any) {

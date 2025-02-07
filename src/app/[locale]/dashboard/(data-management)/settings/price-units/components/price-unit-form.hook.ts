@@ -13,7 +13,7 @@ export default function usePriceUnitForm(priceUnitId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: ccType } = usePriceUnit(priceUnitId)
+  const { data: priceUnit, mutate } = usePriceUnit(priceUnitId)
 
   const schema = yup.object().shape({
     unit: yup
@@ -25,15 +25,16 @@ export default function usePriceUnitForm(priceUnitId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: ccType,
+    values: priceUnit,
   })
 
-  const addNewCompanyStatus = async (data: InferType<typeof schema>) => {
+  const addNewPriceUnit = async (data: InferType<typeof schema>) => {
     try {
       const res = await priceUnitApi.new(data)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price unit created successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -41,7 +42,7 @@ export default function usePriceUnitForm(priceUnitId?: number) {
     }
   }
 
-  const updateCompanyStatus = async (data: InferType<typeof schema>) => {
+  const updatePriceUnit = async (data: InferType<typeof schema>) => {
     if (!priceUnitId) return
 
     try {
@@ -49,6 +50,7 @@ export default function usePriceUnitForm(priceUnitId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price unit updated successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -58,11 +60,12 @@ export default function usePriceUnitForm(priceUnitId?: number) {
 
   const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
+
     if (priceUnitId) {
-      return updateCompanyStatus(submitData)
+      return updatePriceUnit(submitData)
     }
 
-    return addNewCompanyStatus(submitData)
+    return addNewPriceUnit(submitData)
   }
 
   return { methods, onSubmit }

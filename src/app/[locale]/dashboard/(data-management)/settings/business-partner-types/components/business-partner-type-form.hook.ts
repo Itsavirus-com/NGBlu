@@ -13,7 +13,7 @@ export default function useBusinessPartnerTypeForm(businessPartnerTypeId?: numbe
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: businessPartnerType } = useBusinessPartnerType(businessPartnerTypeId)
+  const { data: businessPartnerType, mutate } = useBusinessPartnerType(businessPartnerTypeId)
 
   const schema = yup.object().shape({
     name: yup
@@ -34,6 +34,7 @@ export default function useBusinessPartnerTypeForm(businessPartnerTypeId?: numbe
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner type created successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -49,6 +50,7 @@ export default function useBusinessPartnerTypeForm(businessPartnerTypeId?: numbe
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner type updated successfully' })
+        mutate()
         back()
       }
     } catch (error) {

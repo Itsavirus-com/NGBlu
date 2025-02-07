@@ -9,11 +9,11 @@ import { usePriceTax } from '@/services/swr/use-price-tax'
 import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
-export default function usePriceTaxForm(taxId?: number) {
+export default function usePriceTaxForm(priceTaxId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: priceTax } = usePriceTax(taxId)
+  const { data: priceTax, mutate } = usePriceTax(priceTaxId)
 
   const schema = yup.object().shape({
     name: yup
@@ -37,12 +37,13 @@ export default function usePriceTaxForm(taxId?: number) {
     values: priceTax,
   })
 
-  const addNewTax = async (data: InferType<typeof schema>) => {
+  const addNewPriceTax = async (data: InferType<typeof schema>) => {
     try {
       const res = await priceTaxApi.new(data)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price tax created successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -50,14 +51,15 @@ export default function usePriceTaxForm(taxId?: number) {
     }
   }
 
-  const updateTax = async (data: InferType<typeof schema>) => {
-    if (!taxId) return
+  const updatePriceTax = async (data: InferType<typeof schema>) => {
+    if (!priceTaxId) return
 
     try {
-      const res = await priceTaxApi.update(taxId, data)
+      const res = await priceTaxApi.update(priceTaxId, data)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price tax updated successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -68,11 +70,11 @@ export default function usePriceTaxForm(taxId?: number) {
   const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
 
-    if (taxId) {
-      return updateTax(submitData)
+    if (priceTaxId) {
+      return updatePriceTax(submitData)
     }
 
-    return addNewTax(submitData)
+    return addNewPriceTax(submitData)
   }
 
   return { methods, onSubmit }

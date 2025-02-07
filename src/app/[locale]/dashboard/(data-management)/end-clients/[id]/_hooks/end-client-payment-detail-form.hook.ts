@@ -17,10 +17,11 @@ export default function useEndClientPaymentDetailForm(
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: endClientPaymentDetail, isLoading } = useEndClientPaymentDetail(
-    endClientId,
-    paymentDetailId
-  )
+  const {
+    data: endClientPaymentDetail,
+    isLoading,
+    mutate,
+  } = useEndClientPaymentDetail(endClientId, paymentDetailId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -35,7 +36,8 @@ export default function useEndClientPaymentDetailForm(
       })
 
       if (res.ok) {
-        showToast({ variant: 'success', body: 'End client contact created successfully' })
+        showToast({ variant: 'success', body: 'End client payment detail created successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -53,7 +55,8 @@ export default function useEndClientPaymentDetailForm(
       })
 
       if (res.ok) {
-        showToast({ variant: 'success', body: 'End client contact updated successfully' })
+        showToast({ variant: 'success', body: 'End client payment detail updated successfully' })
+        mutate()
         back()
       }
     } catch (error) {

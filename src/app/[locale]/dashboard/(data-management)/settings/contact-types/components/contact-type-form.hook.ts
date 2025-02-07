@@ -33,7 +33,7 @@ export default function useContactTypeForm(contactTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: contactType } = useContactType(contactTypeId)
+  const { data: contactType, mutate } = useContactType(contactTypeId)
 
   const schema = yup.object().shape({
     contactType: yup
@@ -63,6 +63,7 @@ export default function useContactTypeForm(contactTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Contact type created successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -83,6 +84,7 @@ export default function useContactTypeForm(contactTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Contact type updated successfully' })
+        mutate()
         back()
       }
     } catch (error) {

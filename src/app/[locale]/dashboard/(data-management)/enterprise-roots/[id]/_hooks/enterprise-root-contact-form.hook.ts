@@ -15,7 +15,7 @@ export default function useEnterpriseRootContactForm(contactId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: contact } = useEnterpriseRootContact(Number(id), contactId)
+  const { data: contact, mutate } = useEnterpriseRootContact(Number(id), contactId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -31,6 +31,7 @@ export default function useEnterpriseRootContactForm(contactId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Enterprise root contact created successfully' })
+        mutate()
         back()
       }
     } catch (error: any) {
@@ -53,6 +54,7 @@ export default function useEnterpriseRootContactForm(contactId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Enterprise root contact updated successfully' })
+        mutate()
         back()
       }
     } catch (error: any) {

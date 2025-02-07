@@ -17,7 +17,7 @@ export default function useAddressForm(addressId?: number) {
   const { showToast, showUnexpectedToast } = useToast()
   const t = useTranslations('dataManagement.addresses')
 
-  const { data: address, isLoading } = useAddress(addressId)
+  const { data: address, isLoading, mutate } = useAddress(addressId)
   const { data: countryList } = useOptionData('countries')
 
   const methods = useForm<InferType<typeof schema>>({
@@ -96,6 +96,7 @@ export default function useAddressForm(addressId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Address created successfully' })
+        mutate()
         back()
       }
     } catch (error: any) {
@@ -117,6 +118,7 @@ export default function useAddressForm(addressId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Address updated successfully' })
+        mutate()
         back()
       }
     } catch (error: any) {

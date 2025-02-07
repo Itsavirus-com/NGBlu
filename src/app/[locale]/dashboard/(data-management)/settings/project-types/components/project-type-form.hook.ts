@@ -13,7 +13,7 @@ export default function useProjectTypeForm(typeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: projectType } = useProjectType(typeId)
+  const { data: projectType, mutate } = useProjectType(typeId)
 
   const schema = yup.object().shape({
     projectType: yup
@@ -34,6 +34,7 @@ export default function useProjectTypeForm(typeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Project type created successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -49,6 +50,7 @@ export default function useProjectTypeForm(typeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Project type updated successfully' })
+        mutate()
         back()
       }
     } catch (error) {

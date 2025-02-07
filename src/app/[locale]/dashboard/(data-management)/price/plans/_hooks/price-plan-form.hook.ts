@@ -15,7 +15,7 @@ export default function usePricePlanForm(planId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: pricePlan, isLoading } = usePricePlan(planId)
+  const { data: pricePlan, isLoading, mutate } = usePricePlan(planId)
 
   const [inputType, setInputType] = useState<'productId' | 'serviceId' | null>(null)
 
@@ -45,6 +45,7 @@ export default function usePricePlanForm(planId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price plan created successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -60,6 +61,7 @@ export default function usePricePlanForm(planId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price plan updated successfully' })
+        mutate()
         back()
       }
     } catch (error) {

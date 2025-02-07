@@ -13,7 +13,7 @@ export default function useCreditCardBrandForm(creditCardBrandId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: ccType } = useCreditCardBrand(creditCardBrandId)
+  const { data: ccType, mutate } = useCreditCardBrand(creditCardBrandId)
 
   const schema = yup.object().shape({
     brandname: yup
@@ -28,12 +28,13 @@ export default function useCreditCardBrandForm(creditCardBrandId?: number) {
     values: ccType,
   })
 
-  const addNewCompanyStatus = async (data: InferType<typeof schema>) => {
+  const addNewCreditCardBrand = async (data: InferType<typeof schema>) => {
     try {
       const res = await creditCardBrandApi.new(data)
 
       if (res.ok) {
-        showToast({ variant: 'success', body: 'Credit card type created successfully' })
+        showToast({ variant: 'success', body: 'Credit card brand created successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -41,14 +42,15 @@ export default function useCreditCardBrandForm(creditCardBrandId?: number) {
     }
   }
 
-  const updateCompanyStatus = async (data: InferType<typeof schema>) => {
+  const updateCreditCardBrand = async (data: InferType<typeof schema>) => {
     if (!creditCardBrandId) return
 
     try {
       const res = await creditCardBrandApi.update(creditCardBrandId, data)
 
       if (res.ok) {
-        showToast({ variant: 'success', body: 'Credit card type updated successfully' })
+        showToast({ variant: 'success', body: 'Credit card brand updated successfully' })
+        mutate()
         back()
       }
     } catch (error) {
@@ -60,10 +62,10 @@ export default function useCreditCardBrandForm(creditCardBrandId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (creditCardBrandId) {
-      return updateCompanyStatus(submitData)
+      return updateCreditCardBrand(submitData)
     }
 
-    return addNewCompanyStatus(submitData)
+    return addNewCreditCardBrand(submitData)
   }
 
   return { methods, onSubmit }
