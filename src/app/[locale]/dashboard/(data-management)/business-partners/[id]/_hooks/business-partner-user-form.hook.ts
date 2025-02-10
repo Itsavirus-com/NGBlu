@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
@@ -14,7 +13,11 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: user, isLoading } = useBusinessPartnerUser(businessPartnerId, userId)
+  const {
+    data: user,
+    isLoading,
+    mutate: invalidateCache,
+  } = useBusinessPartnerUser(businessPartnerId, userId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -34,6 +37,7 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner user created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -52,6 +56,7 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner user updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

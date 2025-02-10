@@ -14,8 +14,11 @@ import { schema } from '../_schemas/organization-unit-form.schema'
 export default function useOrganizationUnitForm(organizationUnitId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
-  const { data: organizationUnit, isLoading: isLoadingOrganizationUnit } =
-    useOrganizationUnit(organizationUnitId)
+  const {
+    data: organizationUnit,
+    isLoading: isLoadingOrganizationUnit,
+    mutate: invalidateCache,
+  } = useOrganizationUnit(organizationUnitId)
 
   const [inputType, setInputType] = useState<
     'endclientId' | 'businesspartnerId' | 'enterpriseRootId' | null
@@ -74,6 +77,7 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Organization unit created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -109,6 +113,7 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Organization unit updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

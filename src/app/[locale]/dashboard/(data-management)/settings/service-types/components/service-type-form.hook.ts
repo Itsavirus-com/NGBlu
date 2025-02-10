@@ -13,7 +13,7 @@ export default function useServiceTypeForm(typeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: serviceType } = useServiceType(typeId)
+  const { data: serviceType, mutate: invalidateCache } = useServiceType(typeId)
 
   const schema = yup.object().shape({
     serviceType: yup
@@ -34,6 +34,7 @@ export default function useServiceTypeForm(typeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Service type created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -49,6 +50,7 @@ export default function useServiceTypeForm(typeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Service type updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

@@ -19,7 +19,11 @@ export default function useServicePriceConfigForm(configId?: number) {
   const { showToast, showUnexpectedToast } = useToast()
   const [formDateValue, setFormDateValue] = useState<Date | null>(null)
 
-  const { data: servicePriceConfig, isLoading } = useServicePriceConfig(configId)
+  const {
+    data: servicePriceConfig,
+    isLoading,
+    mutate: invalidateCache,
+  } = useServicePriceConfig(configId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -74,6 +78,7 @@ export default function useServicePriceConfigForm(configId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Service price config created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -92,6 +97,7 @@ export default function useServicePriceConfigForm(configId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Service price config updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

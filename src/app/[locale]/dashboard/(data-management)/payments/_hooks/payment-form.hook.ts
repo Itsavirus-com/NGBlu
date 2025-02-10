@@ -19,10 +19,11 @@ export default function usePaymentForm(paymentId?: number) {
   const searchParams = useSearchParams()
   const queryParams = getSearchQueryParams(searchParams.toString().toLowerCase())
 
-  const { data: payment, isLoading } = usePayment(
-    paymentId,
-    queryParams.selectedpayment === 'bank' ? 'bank' : 'credit-card'
-  )
+  const {
+    data: payment,
+    isLoading,
+    mutate: invalidateCache,
+  } = usePayment(paymentId, queryParams.selectedpayment === 'bank' ? 'bank' : 'credit-card')
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -96,6 +97,7 @@ export default function usePaymentForm(paymentId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Payment created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -141,6 +143,7 @@ export default function usePaymentForm(paymentId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Payment updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

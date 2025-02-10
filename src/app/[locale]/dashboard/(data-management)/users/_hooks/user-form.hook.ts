@@ -14,7 +14,7 @@ export default function useUserForm(userId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: user } = useUser(userId)
+  const { data: user, mutate: invalidateCache } = useUser(userId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -30,6 +30,7 @@ export default function useUserForm(userId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'User created successfully' })
+        invalidateCache()
         back()
       } else {
         showUnexpectedToast()
@@ -47,6 +48,7 @@ export default function useUserForm(userId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'User updated successfully' })
+        invalidateCache()
         back()
       } else {
         showUnexpectedToast()

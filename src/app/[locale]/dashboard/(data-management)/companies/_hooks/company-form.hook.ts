@@ -41,7 +41,7 @@ export default function useCompanyForm(companyId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: company, isLoading } = useCompany(companyId)
+  const { data: company, isLoading, mutate: invalidateCache } = useCompany(companyId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -76,6 +76,7 @@ export default function useCompanyForm(companyId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Company created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -91,6 +92,7 @@ export default function useCompanyForm(companyId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Company updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

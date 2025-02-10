@@ -14,7 +14,7 @@ export default function useProjectForm(projectId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: projectData, isLoading } = useProject(projectId)
+  const { data: projectData, isLoading, mutate: invalidateCache } = useProject(projectId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -69,6 +69,7 @@ export default function useProjectForm(projectId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Project created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -86,6 +87,7 @@ export default function useProjectForm(projectId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Project updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

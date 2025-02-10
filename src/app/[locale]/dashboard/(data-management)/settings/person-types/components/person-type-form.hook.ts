@@ -13,7 +13,7 @@ export default function usePersonTypeForm(personTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: personType } = usePersonType(personTypeId)
+  const { data: personType, mutate: invalidateCache } = usePersonType(personTypeId)
 
   const schema = yup.object().shape({
     type: yup
@@ -34,6 +34,7 @@ export default function usePersonTypeForm(personTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Person type created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -49,6 +50,7 @@ export default function usePersonTypeForm(personTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Person type updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

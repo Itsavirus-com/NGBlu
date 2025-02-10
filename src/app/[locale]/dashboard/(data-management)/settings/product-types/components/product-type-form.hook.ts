@@ -9,11 +9,11 @@ import { useProductType } from '@/services/swr/use-product-type'
 import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
-export default function useProductTypeForm(typeId?: number) {
+export default function useProductTypeForm(productTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: productType } = useProductType(typeId)
+  const { data: productType, mutate: invalidateCache } = useProductType(productTypeId)
 
   const schema = yup.object().shape({
     productType: yup
@@ -34,6 +34,7 @@ export default function useProductTypeForm(typeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Product type created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -42,13 +43,14 @@ export default function useProductTypeForm(typeId?: number) {
   }
 
   const updateProductType = async (data: InferType<typeof schema>) => {
-    if (!typeId) return
+    if (!productTypeId) return
 
     try {
-      const res = await productTypeApi.update(typeId, data)
+      const res = await productTypeApi.update(productTypeId, data)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Product type updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -58,11 +60,12 @@ export default function useProductTypeForm(typeId?: number) {
 
   const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
-    if (typeId) {
+
+    if (productTypeId) {
       return updateProductType(submitData)
     }
 
-    return addNewProductType(data)
+    return addNewProductType(submitData)
   }
 
   return { methods, onSubmit }

@@ -13,7 +13,7 @@ export default function useCurrencyForm(currencyId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: ccType } = useCurrency(currencyId)
+  const { data: currency, mutate: invalidateCache } = useCurrency(currencyId)
 
   const schema = yup.object().shape({
     currency: yup
@@ -25,15 +25,16 @@ export default function useCurrencyForm(currencyId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: ccType,
+    values: currency,
   })
 
-  const addNewCompanyStatus = async (data: InferType<typeof schema>) => {
+  const addNewCurrency = async (data: InferType<typeof schema>) => {
     try {
       const res = await currencyApi.new(data)
 
       if (res.ok) {
-        showToast({ variant: 'success', body: 'Credit card type created successfully' })
+        showToast({ variant: 'success', body: 'Currency created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -41,14 +42,15 @@ export default function useCurrencyForm(currencyId?: number) {
     }
   }
 
-  const updateCompanyStatus = async (data: InferType<typeof schema>) => {
+  const updateCurrency = async (data: InferType<typeof schema>) => {
     if (!currencyId) return
 
     try {
       const res = await currencyApi.update(currencyId, data)
 
       if (res.ok) {
-        showToast({ variant: 'success', body: 'Credit card type updated successfully' })
+        showToast({ variant: 'success', body: 'Currency updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -60,10 +62,10 @@ export default function useCurrencyForm(currencyId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (currencyId) {
-      return updateCompanyStatus(submitData)
+      return updateCurrency(submitData)
     }
 
-    return addNewCompanyStatus(submitData)
+    return addNewCurrency(submitData)
   }
 
   return { methods, onSubmit }

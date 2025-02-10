@@ -13,7 +13,7 @@ export default function usePriceIntervalForm(priceIntervalId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: ccType } = usePriceInterval(priceIntervalId)
+  const { data: priceInterval, mutate: invalidateCache } = usePriceInterval(priceIntervalId)
 
   const schema = yup.object().shape({
     name: yup
@@ -25,15 +25,16 @@ export default function usePriceIntervalForm(priceIntervalId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: ccType,
+    values: priceInterval,
   })
 
-  const addNewCompanyStatus = async (data: InferType<typeof schema>) => {
+  const addNewPriceInterval = async (data: InferType<typeof schema>) => {
     try {
       const res = await priceIntervalApi.new(data)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price interval created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -41,7 +42,7 @@ export default function usePriceIntervalForm(priceIntervalId?: number) {
     }
   }
 
-  const updateCompanyStatus = async (data: InferType<typeof schema>) => {
+  const updatePriceInterval = async (data: InferType<typeof schema>) => {
     if (!priceIntervalId) return
 
     try {
@@ -49,6 +50,7 @@ export default function usePriceIntervalForm(priceIntervalId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price interval updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -60,10 +62,10 @@ export default function usePriceIntervalForm(priceIntervalId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (priceIntervalId) {
-      return updateCompanyStatus(submitData)
+      return updatePriceInterval(submitData)
     }
 
-    return addNewCompanyStatus(submitData)
+    return addNewPriceInterval(submitData)
   }
 
   return { methods, onSubmit }

@@ -14,7 +14,11 @@ export default function useResponsibilityForm(responsibilityId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: responsibility, isLoading } = usePersonResponsibility(responsibilityId)
+  const {
+    data: responsibility,
+    isLoading,
+    mutate: invalidateCache,
+  } = usePersonResponsibility(responsibilityId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -27,6 +31,7 @@ export default function useResponsibilityForm(responsibilityId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Responsibility created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -42,6 +47,7 @@ export default function useResponsibilityForm(responsibilityId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Responsibility updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

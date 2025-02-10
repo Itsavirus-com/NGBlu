@@ -14,7 +14,11 @@ export default function useEndClientProjectForm(endClientId: number, projectId?:
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: endClientProject, isLoading } = useEndClientProject(endClientId, projectId)
+  const {
+    data: endClientProject,
+    isLoading,
+    mutate: invalidateCache,
+  } = useEndClientProject(endClientId, projectId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -33,6 +37,7 @@ export default function useEndClientProjectForm(endClientId: number, projectId?:
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client project created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -51,6 +56,7 @@ export default function useEndClientProjectForm(endClientId: number, projectId?:
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client project updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

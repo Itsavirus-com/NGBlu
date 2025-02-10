@@ -5,7 +5,7 @@ import { modelAdaptor } from './middleware/model-adaptor'
 import { ServicePriceConfig } from './models/service.type'
 
 export const useServicePriceConfig = (serviceId?: number) => {
-  const { data, isLoading } = useSWR<ServicePriceConfig>(
+  const { data, isLoading, mutate } = useSWR<ServicePriceConfig>(
     () =>
       serviceId && {
         path: `services/price-configs/${serviceId}`,
@@ -15,5 +15,5 @@ export const useServicePriceConfig = (serviceId?: number) => {
     }
   )
 
-  return { data, isLoading }
+  return { data, isLoading, mutate }
 }

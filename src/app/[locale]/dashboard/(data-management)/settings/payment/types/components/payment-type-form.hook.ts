@@ -13,7 +13,7 @@ export default function usePaymentTypeForm(paymentTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: ccType } = usePaymentType(paymentTypeId)
+  const { data: paymentType, mutate: invalidateCache } = usePaymentType(paymentTypeId)
 
   const schema = yup.object().shape({
     paymentType: yup.string().ensure().required().max(150),
@@ -21,15 +21,16 @@ export default function usePaymentTypeForm(paymentTypeId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: ccType,
+    values: paymentType,
   })
 
-  const addNewCompanyStatus = async (data: InferType<typeof schema>) => {
+  const addNewPaymentType = async (data: InferType<typeof schema>) => {
     try {
       const res = await paymentTypeApi.new(data)
 
       if (res.ok) {
-        showToast({ variant: 'success', body: 'Credit card type created successfully' })
+        showToast({ variant: 'success', body: 'Payment type created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -37,14 +38,15 @@ export default function usePaymentTypeForm(paymentTypeId?: number) {
     }
   }
 
-  const updateCompanyStatus = async (data: InferType<typeof schema>) => {
+  const updatePaymentType = async (data: InferType<typeof schema>) => {
     if (!paymentTypeId) return
 
     try {
       const res = await paymentTypeApi.update(paymentTypeId, data)
 
       if (res.ok) {
-        showToast({ variant: 'success', body: 'Credit card type updated successfully' })
+        showToast({ variant: 'success', body: 'Payment type updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -56,10 +58,10 @@ export default function usePaymentTypeForm(paymentTypeId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (paymentTypeId) {
-      return updateCompanyStatus(submitData)
+      return updatePaymentType(submitData)
     }
 
-    return addNewCompanyStatus(submitData)
+    return addNewPaymentType(submitData)
   }
 
   return { methods, onSubmit }

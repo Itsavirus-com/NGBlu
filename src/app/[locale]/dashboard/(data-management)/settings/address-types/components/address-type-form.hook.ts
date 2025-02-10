@@ -13,7 +13,7 @@ export default function useAddressTypeForm(addressTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: companyStatus } = useAddressType(addressTypeId)
+  const { data: addressType, mutate: invalidateCache } = useAddressType(addressTypeId)
 
   const schema = yup.object().shape({
     addressType: yup
@@ -25,15 +25,16 @@ export default function useAddressTypeForm(addressTypeId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: companyStatus,
+    values: addressType,
   })
 
-  const addNewCompanyStatus = async (data: InferType<typeof schema>) => {
+  const addNewAddressType = async (data: InferType<typeof schema>) => {
     try {
       const res = await addressTypeApi.new(data)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Address type created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -41,7 +42,7 @@ export default function useAddressTypeForm(addressTypeId?: number) {
     }
   }
 
-  const updateCompanyStatus = async (data: InferType<typeof schema>) => {
+  const updateAddressType = async (data: InferType<typeof schema>) => {
     if (!addressTypeId) return
 
     try {
@@ -49,6 +50,7 @@ export default function useAddressTypeForm(addressTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Address type updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -60,10 +62,10 @@ export default function useAddressTypeForm(addressTypeId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (addressTypeId) {
-      return updateCompanyStatus(submitData)
+      return updateAddressType(submitData)
     }
 
-    return addNewCompanyStatus(submitData)
+    return addNewAddressType(submitData)
   }
 
   return { methods, onSubmit }

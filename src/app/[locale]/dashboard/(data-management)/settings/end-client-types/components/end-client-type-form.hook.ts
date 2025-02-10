@@ -13,7 +13,7 @@ export default function useEndClientTypeForm(endClientTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: endClientType } = useEndClientType(endClientTypeId)
+  const { data: endClientType, mutate: invalidateCache } = useEndClientType(endClientTypeId)
 
   const schema = yup.object().shape({
     type: yup
@@ -34,6 +34,7 @@ export default function useEndClientTypeForm(endClientTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client type created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -49,6 +50,7 @@ export default function useEndClientTypeForm(endClientTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client type updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

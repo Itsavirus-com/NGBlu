@@ -13,7 +13,7 @@ export default function useCreditCardTypeForm(creditCardTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: ccType } = useCreditCardType(creditCardTypeId)
+  const { data: ccType, mutate: invalidateCache } = useCreditCardType(creditCardTypeId)
 
   const schema = yup.object().shape({
     creditcardType: yup
@@ -28,12 +28,13 @@ export default function useCreditCardTypeForm(creditCardTypeId?: number) {
     values: ccType,
   })
 
-  const addNewCompanyStatus = async (data: InferType<typeof schema>) => {
+  const addNewCreditCardType = async (data: InferType<typeof schema>) => {
     try {
       const res = await creditCardTypeApi.new(data)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Credit card type created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -41,7 +42,7 @@ export default function useCreditCardTypeForm(creditCardTypeId?: number) {
     }
   }
 
-  const updateCompanyStatus = async (data: InferType<typeof schema>) => {
+  const updateCreditCardType = async (data: InferType<typeof schema>) => {
     if (!creditCardTypeId) return
 
     try {
@@ -49,6 +50,7 @@ export default function useCreditCardTypeForm(creditCardTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Credit card type updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -60,10 +62,10 @@ export default function useCreditCardTypeForm(creditCardTypeId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (creditCardTypeId) {
-      return updateCompanyStatus(submitData)
+      return updateCreditCardType(submitData)
     }
 
-    return addNewCompanyStatus(data)
+    return addNewCreditCardType(submitData)
   }
 
   return { methods, onSubmit }
