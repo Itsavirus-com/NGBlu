@@ -14,7 +14,11 @@ export default function usePackageServiceForm(id: number, packageServiceId?: num
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: serviceType, isLoading, mutate } = usePackageService(Number(id), packageServiceId)
+  const {
+    data: serviceType,
+    isLoading,
+    mutate: invalidateCache,
+  } = usePackageService(Number(id), packageServiceId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -30,7 +34,7 @@ export default function usePackageServiceForm(id: number, packageServiceId?: num
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Package Service created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -46,7 +50,7 @@ export default function usePackageServiceForm(id: number, packageServiceId?: num
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Package Service updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

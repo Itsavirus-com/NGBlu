@@ -42,7 +42,10 @@ export default function useEnterpriseRootCustomerForm(customerId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: customer, mutate } = useEnterpriseRootCustomer(Number(id), customerId)
+  const { data: customer, mutate: invalidateCache } = useEnterpriseRootCustomer(
+    Number(id),
+    customerId
+  )
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -65,7 +68,7 @@ export default function useEnterpriseRootCustomerForm(customerId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Enterprise root customer created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -91,7 +94,7 @@ export default function useEnterpriseRootCustomerForm(customerId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Enterprise root customer updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

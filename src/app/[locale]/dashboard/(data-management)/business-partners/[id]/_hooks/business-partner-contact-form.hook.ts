@@ -17,7 +17,7 @@ export const useBusinessPartnerContactForm = (businessPartnerId: number, contact
   const {
     data: businessPartnerContact,
     isLoading,
-    mutate,
+    mutate: invalidateCache,
   } = useBusinessPartnerContact(businessPartnerId, contactId)
 
   const methods = useForm<InferType<typeof schema>>({
@@ -38,7 +38,7 @@ export const useBusinessPartnerContactForm = (businessPartnerId: number, contact
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner contact created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error: any) {
@@ -61,7 +61,7 @@ export const useBusinessPartnerContactForm = (businessPartnerId: number, contact
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner contact updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error: any) {

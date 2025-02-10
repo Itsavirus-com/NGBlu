@@ -13,7 +13,7 @@ export default function usePriceTaxForm(priceTaxId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: priceTax, mutate } = usePriceTax(priceTaxId)
+  const { data: priceTax, mutate: invalidateCache } = usePriceTax(priceTaxId)
 
   const schema = yup.object().shape({
     name: yup
@@ -43,7 +43,7 @@ export default function usePriceTaxForm(priceTaxId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price tax created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -59,7 +59,7 @@ export default function usePriceTaxForm(priceTaxId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price tax updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

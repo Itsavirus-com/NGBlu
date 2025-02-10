@@ -13,7 +13,7 @@ export default function useProductTypeForm(productTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: productType, mutate } = useProductType(productTypeId)
+  const { data: productType, mutate: invalidateCache } = useProductType(productTypeId)
 
   const schema = yup.object().shape({
     productType: yup
@@ -34,7 +34,7 @@ export default function useProductTypeForm(productTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Product type created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -50,7 +50,7 @@ export default function useProductTypeForm(productTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Product type updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

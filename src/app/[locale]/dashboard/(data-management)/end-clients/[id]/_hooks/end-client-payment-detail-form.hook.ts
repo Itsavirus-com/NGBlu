@@ -20,7 +20,7 @@ export default function useEndClientPaymentDetailForm(
   const {
     data: endClientPaymentDetail,
     isLoading,
-    mutate,
+    mutate: invalidateCache,
   } = useEndClientPaymentDetail(endClientId, paymentDetailId)
 
   const methods = useForm<InferType<typeof schema>>({
@@ -37,7 +37,7 @@ export default function useEndClientPaymentDetailForm(
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client payment detail created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -56,7 +56,7 @@ export default function useEndClientPaymentDetailForm(
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client payment detail updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

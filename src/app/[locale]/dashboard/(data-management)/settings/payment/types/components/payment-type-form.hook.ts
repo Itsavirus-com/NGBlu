@@ -13,7 +13,7 @@ export default function usePaymentTypeForm(paymentTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: paymentType, mutate } = usePaymentType(paymentTypeId)
+  const { data: paymentType, mutate: invalidateCache } = usePaymentType(paymentTypeId)
 
   const schema = yup.object().shape({
     paymentType: yup.string().ensure().required().max(150),
@@ -30,7 +30,7 @@ export default function usePaymentTypeForm(paymentTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Payment type created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -46,7 +46,7 @@ export default function usePaymentTypeForm(paymentTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Payment type updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

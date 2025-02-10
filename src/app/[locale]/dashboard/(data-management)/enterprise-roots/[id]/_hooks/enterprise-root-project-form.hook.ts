@@ -15,7 +15,7 @@ export default function useEnterpriseRootProjectForm(projectId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: project, mutate } = useEnterpriseRootProject(Number(id), projectId)
+  const { data: project, mutate: invalidateCache } = useEnterpriseRootProject(Number(id), projectId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -31,7 +31,7 @@ export default function useEnterpriseRootProjectForm(projectId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Enterprise root project created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -50,7 +50,7 @@ export default function useEnterpriseRootProjectForm(projectId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Enterprise root project updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

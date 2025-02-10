@@ -20,7 +20,7 @@ export default function useBusinessPartnerAddressForm(
   const {
     data: businessPartnerAddress,
     isLoading,
-    mutate,
+    mutate: invalidateCache,
   } = useBusinessPartnerAddress(businessPartnerId, addressId)
 
   const methods = useForm<InferType<typeof schema>>({
@@ -41,7 +41,7 @@ export default function useBusinessPartnerAddressForm(
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner address created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -60,7 +60,7 @@ export default function useBusinessPartnerAddressForm(
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner address updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

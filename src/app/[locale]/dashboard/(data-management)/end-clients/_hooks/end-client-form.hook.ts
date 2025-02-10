@@ -38,7 +38,7 @@ export default function useEndClientForm(id?: number) {
   const { showToast, showUnexpectedToast } = useToast()
   const [isDisplayCompanyInfo, setIsDisplayCompanyInfo] = useState(false)
 
-  const { data: endClient, isLoading, mutate } = useEndClient(id)
+  const { data: endClient, isLoading, mutate: invalidateCache } = useEndClient(id)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -57,7 +57,7 @@ export default function useEndClientForm(id?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -73,7 +73,7 @@ export default function useEndClientForm(id?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

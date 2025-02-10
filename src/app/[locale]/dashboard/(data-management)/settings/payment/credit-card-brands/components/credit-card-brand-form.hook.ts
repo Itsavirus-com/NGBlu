@@ -13,7 +13,7 @@ export default function useCreditCardBrandForm(creditCardBrandId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: ccType, mutate } = useCreditCardBrand(creditCardBrandId)
+  const { data: ccType, mutate: invalidateCache } = useCreditCardBrand(creditCardBrandId)
 
   const schema = yup.object().shape({
     brandname: yup
@@ -34,7 +34,7 @@ export default function useCreditCardBrandForm(creditCardBrandId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Credit card brand created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -50,7 +50,7 @@ export default function useCreditCardBrandForm(creditCardBrandId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Credit card brand updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

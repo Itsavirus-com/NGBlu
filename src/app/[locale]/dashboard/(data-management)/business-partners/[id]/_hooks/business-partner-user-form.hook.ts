@@ -13,7 +13,11 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: user, isLoading, mutate } = useBusinessPartnerUser(businessPartnerId, userId)
+  const {
+    data: user,
+    isLoading,
+    mutate: invalidateCache,
+  } = useBusinessPartnerUser(businessPartnerId, userId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -33,7 +37,7 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner user created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -52,7 +56,7 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner user updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

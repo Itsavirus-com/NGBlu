@@ -40,7 +40,11 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: enterpriseRoot, isLoading, mutate } = useEnterpriseRoot(enterpriseRootId)
+  const {
+    data: enterpriseRoot,
+    isLoading,
+    mutate: invalidateCache,
+  } = useEnterpriseRoot(enterpriseRootId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -53,7 +57,7 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Enterprise root created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -69,7 +73,7 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Enterprise root updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

@@ -14,7 +14,7 @@ export default function usePriceConfigForm(configId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: priceConfig, isLoading, mutate } = usePriceConfig(configId)
+  const { data: priceConfig, isLoading, mutate: invalidateCache } = usePriceConfig(configId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -27,7 +27,7 @@ export default function usePriceConfigForm(configId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price config created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -43,7 +43,7 @@ export default function usePriceConfigForm(configId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price config updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

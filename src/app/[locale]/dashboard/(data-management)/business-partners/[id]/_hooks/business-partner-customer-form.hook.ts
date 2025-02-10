@@ -19,7 +19,7 @@ export default function useBusinessPartnerCustomerForm(
   const {
     data: customer,
     isLoading,
-    mutate,
+    mutate: invalidateCache,
   } = useBusinessPartnerCustomer(businessPartnerId, customerId)
 
   const methods = useForm<InferType<typeof schema>>({
@@ -40,7 +40,7 @@ export default function useBusinessPartnerCustomerForm(
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner customer created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -59,7 +59,7 @@ export default function useBusinessPartnerCustomerForm(
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Business partner customer updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

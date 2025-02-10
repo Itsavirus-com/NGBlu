@@ -14,7 +14,11 @@ export default function usePackageProductForm(id: number, packageProductId?: num
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: productType, isLoading, mutate } = usePackageProduct(Number(id), packageProductId)
+  const {
+    data: productType,
+    isLoading,
+    mutate: invalidateCache,
+  } = usePackageProduct(Number(id), packageProductId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -30,7 +34,7 @@ export default function usePackageProductForm(id: number, packageProductId?: num
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Package Product created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -46,7 +50,7 @@ export default function usePackageProductForm(id: number, packageProductId?: num
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Package Product updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

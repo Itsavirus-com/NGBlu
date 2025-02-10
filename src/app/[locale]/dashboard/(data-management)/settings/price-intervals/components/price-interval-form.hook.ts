@@ -13,7 +13,7 @@ export default function usePriceIntervalForm(priceIntervalId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: priceInterval, mutate } = usePriceInterval(priceIntervalId)
+  const { data: priceInterval, mutate: invalidateCache } = usePriceInterval(priceIntervalId)
 
   const schema = yup.object().shape({
     name: yup
@@ -34,7 +34,7 @@ export default function usePriceIntervalForm(priceIntervalId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price interval created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -50,7 +50,7 @@ export default function usePriceIntervalForm(priceIntervalId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price interval updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

@@ -13,7 +13,7 @@ export default function usePriceTypeForm(priceTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: priceType, mutate } = usePriceType(priceTypeId)
+  const { data: priceType, mutate: invalidateCache } = usePriceType(priceTypeId)
 
   const schema = yup.object().shape({
     type: yup
@@ -34,7 +34,7 @@ export default function usePriceTypeForm(priceTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price type created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -50,7 +50,7 @@ export default function usePriceTypeForm(priceTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price type updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

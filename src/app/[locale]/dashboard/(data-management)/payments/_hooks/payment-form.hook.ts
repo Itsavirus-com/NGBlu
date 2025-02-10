@@ -22,7 +22,7 @@ export default function usePaymentForm(paymentId?: number) {
   const {
     data: payment,
     isLoading,
-    mutate,
+    mutate: invalidateCache,
   } = usePayment(paymentId, queryParams.selectedpayment === 'bank' ? 'bank' : 'credit-card')
 
   const methods = useForm<InferType<typeof schema>>({
@@ -97,7 +97,7 @@ export default function usePaymentForm(paymentId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Payment created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -143,7 +143,7 @@ export default function usePaymentForm(paymentId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Payment updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

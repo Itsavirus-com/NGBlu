@@ -13,7 +13,7 @@ export default function useAddressTypeForm(addressTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: addressType, mutate } = useAddressType(addressTypeId)
+  const { data: addressType, mutate: invalidateCache } = useAddressType(addressTypeId)
 
   const schema = yup.object().shape({
     addressType: yup
@@ -34,7 +34,7 @@ export default function useAddressTypeForm(addressTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Address type created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -50,7 +50,7 @@ export default function useAddressTypeForm(addressTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Address type updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

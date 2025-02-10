@@ -13,7 +13,7 @@ export default function useCountryForm(countryId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: country, mutate } = useCountry(countryId)
+  const { data: country, mutate: invalidateCache } = useCountry(countryId)
 
   const schema = yup.object().shape({
     name: yup
@@ -50,7 +50,7 @@ export default function useCountryForm(countryId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Country created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -66,7 +66,7 @@ export default function useCountryForm(countryId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Country updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

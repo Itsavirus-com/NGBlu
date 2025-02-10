@@ -13,7 +13,7 @@ export default function useCreditCardTypeForm(creditCardTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: ccType, mutate } = useCreditCardType(creditCardTypeId)
+  const { data: ccType, mutate: invalidateCache } = useCreditCardType(creditCardTypeId)
 
   const schema = yup.object().shape({
     creditcardType: yup
@@ -34,7 +34,7 @@ export default function useCreditCardTypeForm(creditCardTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Credit card type created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -50,7 +50,7 @@ export default function useCreditCardTypeForm(creditCardTypeId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Credit card type updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

@@ -13,7 +13,7 @@ export default function usePriceUnitForm(priceUnitId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: priceUnit, mutate } = usePriceUnit(priceUnitId)
+  const { data: priceUnit, mutate: invalidateCache } = usePriceUnit(priceUnitId)
 
   const schema = yup.object().shape({
     unit: yup
@@ -34,7 +34,7 @@ export default function usePriceUnitForm(priceUnitId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price unit created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -50,7 +50,7 @@ export default function usePriceUnitForm(priceUnitId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Price unit updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

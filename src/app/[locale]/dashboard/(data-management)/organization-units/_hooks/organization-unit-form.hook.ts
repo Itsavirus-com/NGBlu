@@ -17,7 +17,7 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
   const {
     data: organizationUnit,
     isLoading: isLoadingOrganizationUnit,
-    mutate,
+    mutate: invalidateCache,
   } = useOrganizationUnit(organizationUnitId)
 
   const [inputType, setInputType] = useState<
@@ -77,7 +77,7 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Organization unit created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -113,7 +113,7 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Organization unit updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

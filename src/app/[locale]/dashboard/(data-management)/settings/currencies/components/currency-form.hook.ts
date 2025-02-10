@@ -13,7 +13,7 @@ export default function useCurrencyForm(currencyId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: currency, mutate } = useCurrency(currencyId)
+  const { data: currency, mutate: invalidateCache } = useCurrency(currencyId)
 
   const schema = yup.object().shape({
     currency: yup
@@ -34,7 +34,7 @@ export default function useCurrencyForm(currencyId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Currency created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -50,7 +50,7 @@ export default function useCurrencyForm(currencyId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Currency updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {

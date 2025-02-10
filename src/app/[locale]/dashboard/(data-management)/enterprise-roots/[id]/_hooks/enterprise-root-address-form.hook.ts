@@ -15,7 +15,7 @@ export default function useEnterpriseRootAddressForm(addressId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: address, mutate } = useEnterpriseRootAddress(Number(id), addressId)
+  const { data: address, mutate: invalidateCache } = useEnterpriseRootAddress(Number(id), addressId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -35,7 +35,7 @@ export default function useEnterpriseRootAddressForm(addressId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Enterprise root address created successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -54,7 +54,7 @@ export default function useEnterpriseRootAddressForm(addressId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Enterprise root address updated successfully' })
-        mutate()
+        invalidateCache()
         back()
       }
     } catch (error) {
