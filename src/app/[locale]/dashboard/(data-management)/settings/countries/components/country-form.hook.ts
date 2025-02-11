@@ -41,7 +41,13 @@ export default function useCountryForm(countryId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: country,
+    values: country && {
+      name: country.name,
+      currency: country.currency,
+      locale: country.locale,
+      decimalSymbol: country.decimalSymbol,
+      iso: country.iso,
+    },
   })
 
   const addNewCountry = async (data: InferType<typeof schema>) => {

@@ -25,7 +25,9 @@ export default function useProjectTypeForm(typeId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: projectType,
+    values: projectType && {
+      projectType: projectType.projectType,
+    },
   })
 
   const addNewProjectType = async (data: InferType<typeof schema>) => {

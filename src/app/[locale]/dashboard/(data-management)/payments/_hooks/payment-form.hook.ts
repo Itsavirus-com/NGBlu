@@ -63,7 +63,6 @@ export default function usePaymentForm(paymentId?: number) {
     },
   })
 
-  console.log('payment', methods.getValues())
   const selectedPayment = methods.watch('selectedPayment')
 
   const handleChange = (value: 1 | 2) => {

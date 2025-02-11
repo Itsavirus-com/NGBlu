@@ -17,7 +17,7 @@ import usePersonContactForm from '../../../_hooks/contact-form.hook'
 export default function UpdatePersonContact({ params }: { params: { contactId: number } }) {
   const t = useTranslations('dataManagement.persons.contacts')
 
-  const { methods, inputType, handleChange, onSubmit, isLoading } = usePersonContactForm(
+  const { methods, handleChange, onSubmit, isLoading } = usePersonContactForm(
     Number(params.contactId)
   )
 
@@ -53,7 +53,7 @@ export default function UpdatePersonContact({ params }: { params: { contactId: n
                     label={t('enterpriseRoot')}
                     name="inputType"
                     containerClass="mb-3"
-                    value={'enterpriseRootId'}
+                    value="enterpriseRootId"
                     onChange={() => handleChange('enterpriseRootId')}
                   />
                   <ControlledSwitch
@@ -61,7 +61,7 @@ export default function UpdatePersonContact({ params }: { params: { contactId: n
                     label={t('businesspartner')}
                     name="inputType"
                     containerClass="mb-3"
-                    value={'businesspartnerId'}
+                    value="businesspartnerId"
                     onChange={() => handleChange('businesspartnerId')}
                   />
                   <ControlledSwitch
@@ -69,12 +69,12 @@ export default function UpdatePersonContact({ params }: { params: { contactId: n
                     label={t('endclient')}
                     name="inputType"
                     containerClass="mb-3"
-                    value={'endclientId'}
+                    value="endclientId"
                     onChange={() => handleChange('endclientId')}
                   />
                 </div>
 
-                {inputType === 'businesspartnerId' && (
+                {methods.watch('inputType') === 'businesspartnerId' && (
                   <ControlledSelect
                     label={t('businesspartner')}
                     name="businesspartnerId"
@@ -84,7 +84,7 @@ export default function UpdatePersonContact({ params }: { params: { contactId: n
                     isRequired
                   />
                 )}
-                {inputType === 'endclientId' && (
+                {methods.watch('inputType') === 'endclientId' && (
                   <ControlledSelect
                     label={t('endclient')}
                     name="endclientId"
@@ -94,7 +94,7 @@ export default function UpdatePersonContact({ params }: { params: { contactId: n
                     isRequired
                   />
                 )}
-                {!!inputType && (
+                {!!methods.watch('inputType') && (
                   <ControlledSelect
                     label={t('enterpriseRoot')}
                     name="enterpriseRootId"
@@ -104,7 +104,6 @@ export default function UpdatePersonContact({ params }: { params: { contactId: n
                     isRequired
                   />
                 )}
-
                 <FormButtons />
               </CardBody>
             </Card>

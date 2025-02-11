@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
@@ -17,7 +17,11 @@ export default function usePersonContactForm(personContactId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: personContact, isLoading } = usePersonContact(personContactId)
+  const {
+    data: personContact,
+    isLoading,
+    mutate: invalidateCache,
+  } = usePersonContact(personContactId)
 
   const [inputType, setInputType] = useState<
     'endclientId' | 'businesspartnerId' | 'enterpriseRootId' | null
@@ -55,6 +59,7 @@ export default function usePersonContactForm(personContactId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Contact created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -70,6 +75,7 @@ export default function usePersonContactForm(personContactId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Contact updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -85,19 +91,6 @@ export default function usePersonContactForm(personContactId?: number) {
 
     return addPersonContact(submitData)
   }
-
-  useEffect(() => {
-    if (personContactId && inputType === null && !isLoading) {
-      setInputType(
-        methods.getValues('inputType') as 'endclientId' | 'businesspartnerId' | 'enterpriseRootId'
-      )
-      setTimeout(() => {
-        methods.setValue('enterpriseRootId', personContact?.enterpriseRootId)
-        methods.setValue('endclientId', personContact?.endclientId)
-        methods.setValue('businesspartnerId', personContact?.businesspartnerId)
-      }, 1000)
-    }
-  }, [methods.watch(), isLoading, personContactId])
 
   return { methods, inputType, onSubmit, handleChange, isLoading }
 }

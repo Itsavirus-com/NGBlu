@@ -14,11 +14,13 @@ export default function useProjectInfoForm(id?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: projectInfoData, isLoading } = useProjectInfo(id)
+  const { data: projectInfoData, isLoading, mutate: invalidateCache } = useProjectInfo(id)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: projectInfoData,
+    values: projectInfoData && {
+      projectInfo: projectInfoData.projectInfo,
+    },
   })
 
   const addNewProjectInfo = async (data: InferType<typeof schema>) => {
@@ -27,6 +29,7 @@ export default function useProjectInfoForm(id?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Project info created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -42,6 +45,7 @@ export default function useProjectInfoForm(id?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Project info updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

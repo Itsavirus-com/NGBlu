@@ -20,6 +20,7 @@
  * - `@/services/api/enterprise-root-api`: API service for managing enterprise roots
  * - `@/services/swr/use-enterprise-root`: SWR hook for fetching enterprise root data
  * - `@/utils/typescript`: Utility for inferring TypeScript types
+ * - `@/utils/object`: Utility for omitting null and undefined values
  *
  * @param {number} [enterpriseRootId] - Optional ID of the enterprise root for editing
  * @returns {object} - Form methods and submit handler
@@ -32,6 +33,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { enterpriseRootApi } from '@/services/api/enterprise-root-api'
 import { useEnterpriseRoot } from '@/services/swr/use-enterprise-root'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/enterprise-root-form.schema'
@@ -48,7 +50,11 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: enterpriseRoot,
+    values: enterpriseRoot && {
+      name: enterpriseRoot.name,
+      enterpriseRootAddressesId: enterpriseRoot.enterpriseRootAddressesId,
+      ouUnitId: enterpriseRoot.ouUnitId,
+    },
   })
 
   const addNewEnterpriseRoot = async (data: InferType<typeof schema>) => {
@@ -82,11 +88,13 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
   }
 
   const onSubmit = (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (enterpriseRootId) {
-      return updateEnterpriseRoot(data)
+      return updateEnterpriseRoot(submitData)
     }
 
-    return addNewEnterpriseRoot(data)
+    return addNewEnterpriseRoot(submitData)
   }
 
   return { methods, onSubmit, isLoading }

@@ -22,9 +22,15 @@ export default function usePackageProductForm(id: number, packageProductId?: num
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: productType,
+    values: productType && {
+      packageId: String(id),
+      productId: productType?.productId,
+      productPricingConfigId: productType?.productPricingConfigId,
+    },
     defaultValues: {
       packageId: String(id),
+      productId: '',
+      productPricingConfigId: '',
     },
   })
 

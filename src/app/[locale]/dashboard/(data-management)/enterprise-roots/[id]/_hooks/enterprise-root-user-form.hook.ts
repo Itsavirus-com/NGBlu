@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { enterpriseRootUserApi } from '@/services/api/enterprise-root-user-api'
 import { useEnterpriseRootUser } from '@/services/swr/use-enterprise-root-user'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/enterprise-root-user-form.schema'
@@ -19,7 +20,11 @@ export default function useEnterpriseRootUserForm(userId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: user,
+    values: user && {
+      ouUnitId: user.ouUnitId,
+      personId: user.personId,
+      userId: user.userId,
+    },
   })
 
   const addNewEnterpriseRootUser = async (data: InferType<typeof schema>) => {
@@ -59,11 +64,13 @@ export default function useEnterpriseRootUserForm(userId?: number) {
   }
 
   const onSubmit = (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (userId) {
-      return updateEnterpriseRootUser(data)
+      return updateEnterpriseRootUser(submitData)
     }
 
-    return addNewEnterpriseRootUser(data)
+    return addNewEnterpriseRootUser(submitData)
   }
 
   return { methods, onSubmit }

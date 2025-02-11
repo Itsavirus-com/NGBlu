@@ -25,7 +25,9 @@ export default function useEndClientStatusForm(endClientStatusId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: ccType,
+    values: ccType && {
+      status: ccType.status,
+    },
   })
 
   const addNewCompanyStatus = async (data: InferType<typeof schema>) => {

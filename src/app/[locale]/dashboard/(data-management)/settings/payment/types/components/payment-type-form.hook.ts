@@ -21,7 +21,9 @@ export default function usePaymentTypeForm(paymentTypeId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: paymentType,
+    values: paymentType && {
+      paymentType: paymentType.paymentType,
+    },
   })
 
   const addNewPaymentType = async (data: InferType<typeof schema>) => {

@@ -25,7 +25,9 @@ export default function useCurrencyForm(currencyId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: currency,
+    values: currency && {
+      currency: currency.currency,
+    },
   })
 
   const addNewCurrency = async (data: InferType<typeof schema>) => {

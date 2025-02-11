@@ -19,7 +19,10 @@ export default function useUserForm(userId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: user && {
-      ...user,
+      displayName: user.displayName,
+      email: user.email,
+      password: '',
+      personId: user.personId,
       blocked: Boolean(user.blockedAt),
     },
   })

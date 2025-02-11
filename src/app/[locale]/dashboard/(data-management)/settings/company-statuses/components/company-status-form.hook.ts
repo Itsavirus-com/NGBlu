@@ -25,7 +25,9 @@ export default function useCompanyStatusForm(companyStatusId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: companyStatus,
+    values: companyStatus && {
+      status: companyStatus.status,
+    },
   })
 
   const addNewCompanyStatus = async (data: InferType<typeof schema>) => {

@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { enterpriseRootProjectApi } from '@/services/api/enterprise-root-project-api'
 import { useEnterpriseRootProject } from '@/services/swr/use-enterprise-root-project'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/enterprise-root-project-form.schema'
@@ -19,7 +20,11 @@ export default function useEnterpriseRootProjectForm(projectId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: project,
+    values: project && {
+      projectId: project.projectId,
+      enterpriseRootAddressesId: project.enterpriseRootAddressesId,
+      ouUnitId: project.ouUnitId,
+    },
   })
 
   const addNewEnterpriseRootProject = async (data: InferType<typeof schema>) => {
@@ -59,11 +64,13 @@ export default function useEnterpriseRootProjectForm(projectId?: number) {
   }
 
   const onSubmit = (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (projectId) {
-      return updateEnterpriseRootProject(data)
+      return updateEnterpriseRootProject(submitData)
     }
 
-    return addNewEnterpriseRootProject(data)
+    return addNewEnterpriseRootProject(submitData)
   }
 
   return { methods, onSubmit }

@@ -22,7 +22,9 @@ export default function useResponsibilityForm(responsibilityId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: responsibility,
+    values: responsibility && {
+      responsibility: responsibility.responsibility,
+    },
   })
 
   const addNewResponsibility = async (data: InferType<typeof schema>) => {

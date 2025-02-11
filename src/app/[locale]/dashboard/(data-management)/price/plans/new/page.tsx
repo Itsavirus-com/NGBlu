@@ -18,7 +18,7 @@ import usePricePlanForm from '../_hooks/price-plan-form.hook'
 export default function NewPriceConfig() {
   const t = useTranslations('dataManagement.prices.plans')
 
-  const { methods, inputType, handleChange, onSubmit } = usePricePlanForm()
+  const { methods, handleChange, onSubmit } = usePricePlanForm()
 
   return (
     <>
@@ -54,7 +54,7 @@ export default function NewPriceConfig() {
                   onChange={() => handleChange('serviceId')}
                 />
               </div>
-              {inputType === 'productId' && (
+              {methods.watch('inputType') === 'productId' && (
                 <ControlledSelect<Product>
                   label={t('product')}
                   name="productId"
@@ -64,7 +64,7 @@ export default function NewPriceConfig() {
                   isRequired
                 />
               )}
-              {inputType === 'serviceId' && (
+              {methods.watch('inputType') === 'serviceId' && (
                 <ControlledSelect<Service>
                   label={t('service')}
                   name="serviceId"

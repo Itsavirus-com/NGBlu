@@ -25,7 +25,9 @@ export default function usePriceTypeForm(priceTypeId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: priceType,
+    values: priceType && {
+      type: priceType.type,
+    },
   })
 
   const addNewPriceType = async (data: InferType<typeof schema>) => {

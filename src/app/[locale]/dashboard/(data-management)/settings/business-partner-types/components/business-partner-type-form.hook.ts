@@ -26,7 +26,9 @@ export default function useBusinessPartnerTypeForm(businessPartnerTypeId?: numbe
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: businessPartnerType,
+    values: businessPartnerType && {
+      name: businessPartnerType.name,
+    },
   })
 
   const addNewBusinessPartnerType = async (data: InferType<typeof schema>) => {
