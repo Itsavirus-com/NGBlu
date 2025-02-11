@@ -26,7 +26,7 @@ export default function useAddressTypeForm(addressTypeId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: addressType && {
-      addressType: addressType.addressType,
+      addressType: addressType?.addressType ?? '',
     },
   })
 

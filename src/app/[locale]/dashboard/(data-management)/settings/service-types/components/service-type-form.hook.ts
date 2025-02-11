@@ -26,7 +26,7 @@ export default function useServiceTypeForm(typeId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: serviceType && {
-      serviceType: serviceType.serviceType,
+      serviceType: serviceType?.serviceType ?? '',
     },
   })
 

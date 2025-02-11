@@ -26,7 +26,7 @@ export default function useCreditCardTypeForm(creditCardTypeId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: ccType && {
-      creditcardType: ccType.creditcardType,
+      creditcardType: ccType?.creditcardType ?? '',
     },
   })
 

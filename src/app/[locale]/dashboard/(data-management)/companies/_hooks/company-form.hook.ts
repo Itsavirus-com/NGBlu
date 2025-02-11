@@ -46,15 +46,15 @@ export default function useCompanyForm(companyId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: company && {
-      companyname: company?.companyname ?? null,
-      companyStatusId: company?.companyStatusId ?? null,
-      visitAddressId: company?.visitAddressId ?? null,
-      postalAddressId: company?.postalAddressId ?? null,
-      invoiceAddressId: company?.invoiceAddressId ?? null,
-      legalAddressId: company?.legalAddressId ?? null,
-      chamberOfCommerceId: company?.chamberOfCommerceId ?? null,
-      vatNumber: company?.vatNumber ?? null,
-      originId: company?.origin?.id ?? null,
+      companyname: company?.companyname ?? '',
+      companyStatusId: company?.companyStatusId ?? 0,
+      visitAddressId: company?.visitAddressId ?? 0,
+      postalAddressId: company?.postalAddressId ?? 0,
+      invoiceAddressId: company?.invoiceAddressId ?? 0,
+      legalAddressId: company?.legalAddressId ?? 0,
+      chamberOfCommerceId: company?.chamberOfCommerceId ?? 0,
+      vatNumber: company?.vatNumber ?? '',
+      originId: company?.origin?.id ?? 0,
     },
   })
 

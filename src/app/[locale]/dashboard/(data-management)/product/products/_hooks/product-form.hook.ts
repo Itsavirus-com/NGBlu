@@ -19,12 +19,12 @@ export default function useProductForm(productId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: product && {
-      name: product.name,
-      description: product.description,
-      productTypeId: product.productTypeId,
-      inputType: product.corporateProductOnly
+      name: product?.name ?? '',
+      description: product?.description ?? '',
+      productTypeId: product?.productTypeId ?? 0,
+      inputType: product?.corporateProductOnly
         ? 'corporateProductOnly'
-        : product.consumerProductOnly
+        : product?.consumerProductOnly
           ? 'consumerProductOnly'
           : '',
     },

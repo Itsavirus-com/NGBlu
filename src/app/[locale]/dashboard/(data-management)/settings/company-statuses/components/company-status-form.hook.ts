@@ -26,7 +26,7 @@ export default function useCompanyStatusForm(companyStatusId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: companyStatus && {
-      status: companyStatus.status,
+      status: companyStatus?.status ?? '',
     },
   })
 

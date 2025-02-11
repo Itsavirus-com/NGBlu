@@ -21,9 +21,9 @@ export default function useEnterpriseRootUserForm(userId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: user && {
-      ouUnitId: user.ouUnitId,
-      personId: user.personId,
-      userId: user.userId,
+      ouUnitId: user?.ouUnitId ?? 0,
+      personId: user?.personId ?? 0,
+      userId: user?.userId ?? 0,
     },
   })
 

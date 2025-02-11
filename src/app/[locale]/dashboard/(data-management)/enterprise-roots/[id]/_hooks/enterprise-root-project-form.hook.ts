@@ -21,9 +21,9 @@ export default function useEnterpriseRootProjectForm(projectId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: project && {
-      projectId: project.projectId,
-      enterpriseRootAddressesId: project.enterpriseRootAddressesId,
-      ouUnitId: project.ouUnitId,
+      projectId: project?.projectId,
+      enterpriseRootAddressesId: project?.enterpriseRootAddressesId,
+      ouUnitId: project?.ouUnitId,
     },
   })
 

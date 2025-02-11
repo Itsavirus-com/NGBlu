@@ -24,8 +24,8 @@ export default function usePackageServiceForm(id: number, packageServiceId?: num
     resolver: yupResolver(schema),
     values: serviceType && {
       packageId: String(id),
-      serviceId: serviceType?.serviceId,
-      servicePricingConfigId: serviceType?.servicePricingConfigId,
+      serviceId: serviceType?.serviceId ?? '',
+      servicePricingConfigId: serviceType?.servicePricingConfigId ?? '',
     },
     defaultValues: {
       packageId: String(id),

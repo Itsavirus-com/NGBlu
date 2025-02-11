@@ -26,7 +26,7 @@ export default function usePersonTypeForm(personTypeId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: personType && {
-      type: personType.type,
+      type: personType?.type ?? '',
     },
   })
 

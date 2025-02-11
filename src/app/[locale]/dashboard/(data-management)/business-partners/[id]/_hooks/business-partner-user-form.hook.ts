@@ -23,9 +23,9 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: user && {
-      ouUnitId: user.ouUnitId,
-      userId: user.user.id,
-      personId: user.person.id,
+      ouUnitId: user?.ouUnitId ?? 0,
+      userId: user?.user?.id ?? 0,
+      personId: user?.person?.id ?? 0,
     },
   })
 

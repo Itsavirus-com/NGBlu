@@ -19,16 +19,16 @@ export default function usePersonForm(personId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: person && {
-      firstname: person.firstname ?? '',
-      lastname: person.lastname ?? '',
-      pronounce: person.pronounce ?? '',
-      namePrefix: person.namePrefix ?? '',
-      nameSuffix: person.nameSuffix ?? '',
-      genderId: person.genderId ?? null,
-      personTypeId: person.personTypeId ?? 0,
-      titles: person.titles ?? '',
-      salutation: person.salutation ?? '',
-      department: person.department ?? '',
+      firstname: person?.firstname ?? '',
+      lastname: person?.lastname ?? '',
+      pronounce: person?.pronounce ?? '',
+      namePrefix: person?.namePrefix ?? '',
+      nameSuffix: person?.nameSuffix ?? '',
+      genderId: person?.genderId ?? 0,
+      personTypeId: person?.personTypeId ?? 0,
+      titles: person?.titles ?? '',
+      salutation: person?.salutation ?? '',
+      department: person?.department ?? '',
     },
   })
 

@@ -23,7 +23,7 @@ export default function useResponsibilityForm(responsibilityId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: responsibility && {
-      responsibility: responsibility.responsibility,
+      responsibility: responsibility?.responsibility,
     },
   })
 

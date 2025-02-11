@@ -24,8 +24,8 @@ export default function usePackageProductForm(id: number, packageProductId?: num
     resolver: yupResolver(schema),
     values: productType && {
       packageId: String(id),
-      productId: productType?.productId,
-      productPricingConfigId: productType?.productPricingConfigId,
+      productId: productType?.productId ?? '',
+      productPricingConfigId: productType?.productPricingConfigId ?? '',
     },
     defaultValues: {
       packageId: String(id),

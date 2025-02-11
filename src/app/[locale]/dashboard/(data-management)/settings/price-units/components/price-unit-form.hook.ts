@@ -26,7 +26,7 @@ export default function usePriceUnitForm(priceUnitId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: priceUnit && {
-      unit: priceUnit.unit,
+      unit: priceUnit?.unit ?? '',
     },
   })
 

@@ -21,9 +21,9 @@ export default function useEnterpriseRootAddressForm(addressId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: address && {
-      addressId: address.addressId,
-      addressTypeId: address.addressTypeId,
-      ouUnitId: address.ouUnitId,
+      addressId: address?.addressId ?? 0,
+      addressTypeId: address?.addressTypeId ?? 0,
+      ouUnitId: address?.ouUnitId ?? 0,
     },
   })
 

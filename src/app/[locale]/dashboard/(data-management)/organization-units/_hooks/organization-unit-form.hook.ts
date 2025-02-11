@@ -27,18 +27,16 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: organizationUnit && {
-      name: organizationUnit.name,
-      primaryAddressId: organizationUnit.primaryAddressId,
-      endclientId: organizationUnit.endclientId,
-      businesspartnerId: organizationUnit.businesspartnerId,
-      enterpriseRootId: organizationUnit.enterpriseRootId,
-      inputType: organizationUnit.endclientId
+      name: organizationUnit?.name ?? '',
+      primaryAddressId: organizationUnit?.primaryAddressId ?? 0,
+      endclientId: organizationUnit?.endclientId ?? 0,
+      businesspartnerId: organizationUnit?.businesspartnerId ?? 0,
+      enterpriseRootId: organizationUnit?.enterpriseRootId ?? 0,
+      inputType: organizationUnit?.endclientId
         ? 'endclientId'
-        : organizationUnit.businesspartnerId
+        : organizationUnit?.businesspartnerId
           ? 'businesspartnerId'
-          : organizationUnit.enterpriseRootId
-            ? 'enterpriseRootId'
-            : '',
+          : 'enterpriseRootId',
     },
   })
 

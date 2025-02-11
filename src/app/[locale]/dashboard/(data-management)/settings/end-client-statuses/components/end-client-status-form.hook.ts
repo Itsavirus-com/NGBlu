@@ -26,7 +26,7 @@ export default function useEndClientStatusForm(endClientStatusId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: ccType && {
-      status: ccType.status,
+      status: ccType?.status ?? '',
     },
   })
 

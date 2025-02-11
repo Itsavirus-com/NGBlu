@@ -26,7 +26,7 @@ export default function useEndClientTypeForm(endClientTypeId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: endClientType && {
-      type: endClientType.type,
+      type: endClientType?.type ?? '',
     },
   })
 

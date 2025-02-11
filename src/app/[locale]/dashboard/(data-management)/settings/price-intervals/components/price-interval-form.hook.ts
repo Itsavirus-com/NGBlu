@@ -26,7 +26,7 @@ export default function usePriceIntervalForm(priceIntervalId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: priceInterval && {
-      name: priceInterval.name,
+      name: priceInterval?.name ?? '',
     },
   })
 

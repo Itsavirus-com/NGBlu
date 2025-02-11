@@ -19,12 +19,12 @@ export default function usePriceConfigForm(configId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: priceConfig && {
-      priceValue: priceConfig.priceValue,
-      priceUnitId: priceConfig.priceUnitId,
-      priceCurrencyId: priceConfig.priceCurrencyId,
-      priceTypeId: priceConfig.priceTypeId,
-      priceIntervalId: priceConfig.priceIntervalId,
-      priceTaxId: priceConfig.priceTaxId,
+      priceValue: priceConfig?.priceValue,
+      priceUnitId: priceConfig?.priceUnitId,
+      priceCurrencyId: priceConfig?.priceCurrencyId,
+      priceTypeId: priceConfig?.priceTypeId,
+      priceIntervalId: priceConfig?.priceIntervalId,
+      priceTaxId: priceConfig?.priceTaxId,
     },
   })
 

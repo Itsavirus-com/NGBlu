@@ -21,10 +21,10 @@ export default function useEnterpriseRootContactForm(contactId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: contact && {
-      ouUnitId: contact.ouUnitId,
-      personId: contact.personId,
-      responsibilityId: contact.responsibilityId,
-      contactInfoId: contact.contactInfoId,
+      ouUnitId: contact?.ouUnitId,
+      personId: contact?.personId,
+      responsibilityId: contact?.responsibilityId,
+      contactInfoId: contact?.contactInfoId,
     },
   })
 

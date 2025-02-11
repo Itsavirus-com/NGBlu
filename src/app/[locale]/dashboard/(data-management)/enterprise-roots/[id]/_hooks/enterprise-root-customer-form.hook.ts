@@ -51,10 +51,10 @@ export default function useEnterpriseRootCustomerForm(customerId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: customer && {
-      endclientId: customer.endclientId,
-      enterpriseRootAddressesId: customer.enterpriseRootAddressesId,
-      ouUnitId: customer.ouUnitId,
-      parentId: customer.parentId,
+      endclientId: customer?.endclientId,
+      enterpriseRootAddressesId: customer?.enterpriseRootAddressesId,
+      ouUnitId: customer?.ouUnitId,
+      parentId: customer?.parentId,
     },
   })
 

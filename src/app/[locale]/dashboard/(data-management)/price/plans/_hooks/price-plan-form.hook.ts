@@ -19,13 +19,13 @@ export default function usePricePlanForm(planId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: pricePlan && {
-      name: pricePlan.name,
-      productId: pricePlan.productId,
-      serviceId: pricePlan.serviceId,
-      priceConfigId: pricePlan.priceConfigId,
-      isDefault: pricePlan.isDefault,
-      fallbackPriceConfigId: pricePlan.fallbackPriceConfigId,
-      inputType: pricePlan.productId ? 'productId' : 'serviceId',
+      name: pricePlan?.name ?? '',
+      productId: pricePlan?.productId ?? 0,
+      serviceId: pricePlan?.serviceId ?? 0,
+      priceConfigId: pricePlan?.priceConfigId ?? 0,
+      isDefault: pricePlan?.isDefault ?? false,
+      fallbackPriceConfigId: pricePlan?.fallbackPriceConfigId ?? 0,
+      inputType: pricePlan?.productId ? 'productId' : 'serviceId',
     },
   })
 

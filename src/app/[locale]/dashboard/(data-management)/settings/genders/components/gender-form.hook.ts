@@ -26,7 +26,7 @@ export default function useGenderForm(genderId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: gender && {
-      gender: gender.gender,
+      gender: gender?.gender ?? '',
     },
   })
 

@@ -23,9 +23,9 @@ export default function useEndClientContactForm(endClientId: number, contactId?:
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: endClientContact && {
-      personId: endClientContact.personId ?? null,
-      responsibilityId: endClientContact.responsibilityId ?? null,
-      contactInfoId: endClientContact.contactInfoId ?? null,
+      personId: endClientContact?.personId ?? null,
+      responsibilityId: endClientContact?.responsibilityId ?? null,
+      contactInfoId: endClientContact?.contactInfoId ?? null,
     },
   })
 

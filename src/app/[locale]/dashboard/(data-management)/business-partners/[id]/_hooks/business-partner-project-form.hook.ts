@@ -27,9 +27,9 @@ export default function useBusinessPartnerProjectForm(
     resolver: yupResolver(schema),
 
     values: project && {
-      projectId: project.id,
-      ouUnitId: project.ouUnitId,
-      businesspartnersAddressesId: project.businesspartnerAddressId,
+      projectId: project?.id ?? 0,
+      ouUnitId: project?.ouUnitId ?? 0,
+      businesspartnersAddressesId: project?.businesspartnerAddressId ?? 0,
     },
   })
 

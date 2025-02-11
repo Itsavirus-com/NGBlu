@@ -70,13 +70,13 @@ export default function useBusinessPartnerForm(id?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: businessPartner && {
-      name: businessPartner.name,
-      businesspartnerTypeId: businessPartner.businessPartnerType.id,
-      companyInfoId: businessPartner.companyInfo.id,
-      enterpriseRootId: businessPartner.enterpriseRootId,
-      businesspartnersAddressesId: businessPartner.businesspartnersAddressesId,
-      ouUnitId: businessPartner?.ouUnitId,
-      parentId: businessPartner?.parent?.id,
+      name: businessPartner?.name ?? '',
+      businesspartnerTypeId: businessPartner?.businessPartnerType?.id ?? 0,
+      companyInfoId: businessPartner?.companyInfo?.id ?? 0,
+      enterpriseRootId: businessPartner?.enterpriseRootId ?? 0,
+      businesspartnersAddressesId: businessPartner?.businesspartnersAddressesId ?? 0,
+      ouUnitId: businessPartner?.ouUnitId ?? 0,
+      parentId: businessPartner?.parent?.id ?? null,
     },
   })
 

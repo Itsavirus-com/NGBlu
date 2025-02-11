@@ -26,7 +26,7 @@ export default function useEndClientPaymentDetailForm(
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: endClientPaymentDetail && {
-      paymentInfoId: endClientPaymentDetail.paymentInfoId ?? null,
+      paymentInfoId: endClientPaymentDetail?.paymentInfoId ?? null,
     },
   })
 

@@ -35,10 +35,10 @@ export default function usePriceTaxForm(priceTaxId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: priceTax && {
-      name: priceTax.name,
-      taxValue: priceTax.taxValue,
-      priceUnitId: priceTax.priceUnitId,
-      countryId: priceTax.countryId,
+      name: priceTax?.name ?? '',
+      taxValue: priceTax?.taxValue ?? 0,
+      priceUnitId: priceTax?.priceUnitId ?? 0,
+      countryId: priceTax?.countryId ?? 0,
     },
   })
 
