@@ -22,15 +22,21 @@ export default function useEndClientContactForm(endClientId: number, contactId?:
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: endClientContact,
+    values: endClientContact && {
+      personId: endClientContact?.personId ?? null,
+      responsibilityId: endClientContact?.responsibilityId ?? null,
+      contactInfoId: endClientContact?.contactInfoId ?? null,
+    },
   })
 
   const addNewEndClientContact = async (data: InferType<typeof schema>) => {
     try {
-      const res = await endClientContactApi.new(endClientId, {
+      const submitData = {
         ...data,
         endclientId: endClientId,
-      })
+      }
+
+      const res = await endClientContactApi.new(endClientId, submitData)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client contact created successfully' })
@@ -50,10 +56,12 @@ export default function useEndClientContactForm(endClientId: number, contactId?:
     if (!contactId) return
 
     try {
-      const res = await endClientContactApi.update(endClientId, contactId, {
+      const submitData = {
         ...data,
         endclientId: endClientId,
-      })
+      }
+
+      const res = await endClientContactApi.update(endClientId, contactId, submitData)
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client contact updated successfully' })

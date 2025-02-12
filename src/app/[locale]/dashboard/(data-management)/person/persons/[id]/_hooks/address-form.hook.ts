@@ -16,12 +16,16 @@ export default function usePersonAddressForm(personAddressId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: personAddress, isLoading } = usePersonAddress(Number(id), personAddressId)
+  const {
+    data: personAddress,
+    isLoading,
+    mutate: invalidateCache,
+  } = usePersonAddress(Number(id), personAddressId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: personAddress && {
-      ...personAddress,
+      addressId: personAddress.addressId,
       isPrimaryLocation: Boolean(personAddress.isPrimaryAddress),
     },
   })
@@ -35,6 +39,7 @@ export default function usePersonAddressForm(personAddressId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Address created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -53,6 +58,7 @@ export default function usePersonAddressForm(personAddressId?: number) {
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'Address updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

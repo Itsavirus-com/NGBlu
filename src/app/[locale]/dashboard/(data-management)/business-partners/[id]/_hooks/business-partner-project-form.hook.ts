@@ -25,9 +25,11 @@ export default function useBusinessPartnerProjectForm(
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
+
     values: project && {
-      ...project,
-      businesspartnersAddressesId: project.businesspartnerAddressId,
+      projectId: project?.id ?? 0,
+      ouUnitId: project?.ouUnitId ?? 0,
+      businesspartnersAddressesId: project?.businesspartnerAddressId ?? 0,
     },
   })
 

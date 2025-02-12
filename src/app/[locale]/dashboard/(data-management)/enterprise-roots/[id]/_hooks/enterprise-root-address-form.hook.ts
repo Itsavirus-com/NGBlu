@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { enterpriseRootAddressApi } from '@/services/api/enterprise-root-address-api'
 import { useEnterpriseRootAddress } from '@/services/swr/use-enterprise-root-address'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/enterprise-root-address-form.schema'
@@ -20,9 +21,9 @@ export default function useEnterpriseRootAddressForm(addressId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: address && {
-      addressId: address.addressId,
-      addressTypeId: address.addressTypeId,
-      ouUnitId: address.ouUnitId,
+      addressId: address?.addressId ?? 0,
+      addressTypeId: address?.addressTypeId ?? 0,
+      ouUnitId: address?.ouUnitId ?? 0,
     },
   })
 
@@ -63,11 +64,13 @@ export default function useEnterpriseRootAddressForm(addressId?: number) {
   }
 
   const onSubmit = (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (addressId) {
-      return updateEnterpriseRootAddress(data)
+      return updateEnterpriseRootAddress(submitData)
     }
 
-    return addNewEnterpriseRootAddress(data)
+    return addNewEnterpriseRootAddress(submitData)
   }
 
   return { methods, onSubmit }

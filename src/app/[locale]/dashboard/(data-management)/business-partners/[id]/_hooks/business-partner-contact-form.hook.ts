@@ -23,9 +23,9 @@ export const useBusinessPartnerContactForm = (businessPartnerId: number, contact
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: businessPartnerContact && {
-      personId: businessPartnerContact.person.id,
-      contactInfoId: businessPartnerContact.contactInfoId,
-      responsibilityId: businessPartnerContact.responsibilityId,
+      personId: businessPartnerContact?.person?.id ?? 0,
+      contactInfoId: businessPartnerContact?.contactInfoId ?? 0,
+      responsibilityId: businessPartnerContact?.responsibilityId ?? 0,
     },
   })
 

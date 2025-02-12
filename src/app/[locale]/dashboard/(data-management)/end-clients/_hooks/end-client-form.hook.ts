@@ -42,12 +42,12 @@ export default function useEndClientForm(id?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: {
-      name: endClient?.name!,
-      typeId: endClient?.typeId!,
-      statusId: endClient?.statusId!,
-      locationAddressId: endClient?.locationAddressId!,
-      companyInfoId: endClient?.companyInfoId,
+    values: endClient && {
+      name: endClient?.name ?? '',
+      typeId: endClient?.typeId ?? 0,
+      statusId: endClient?.statusId ?? 0,
+      locationAddressId: endClient?.locationAddressId ?? 0,
+      companyInfoId: endClient?.companyInfoId ?? 0,
     },
   })
 

@@ -25,7 +25,9 @@ export default function useGenderForm(genderId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: gender,
+    values: gender && {
+      gender: gender?.gender ?? '',
+    },
   })
 
   const addNewGender = async (data: InferType<typeof schema>) => {

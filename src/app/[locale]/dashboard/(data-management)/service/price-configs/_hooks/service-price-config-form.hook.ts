@@ -48,11 +48,11 @@ export default function useServicePriceConfigForm(configId?: number) {
         ? format(new Date(servicePriceConfig.activeTo.replace(' ', 'T')), 'yyyy-MM-dd')
         : '',
       activeToTime: servicePriceConfig?.activeTo ?? DEFAULT_DATE_TIME_END,
-      serviceId: servicePriceConfig?.service?.id!,
-      priceplanId: servicePriceConfig?.pricePlan?.id!,
-      businesspartnerId: servicePriceConfig?.businesspartnerId,
-      enterpriseRootId: servicePriceConfig?.enterpriseRootId!,
-      orgUnitId: servicePriceConfig?.orgUnitId,
+      serviceId: servicePriceConfig?.service?.id ?? 0,
+      priceplanId: servicePriceConfig?.pricePlan?.id ?? 0,
+      businesspartnerId: servicePriceConfig?.businesspartnerId ?? 0,
+      enterpriseRootId: servicePriceConfig?.enterpriseRootId ?? 0,
+      orgUnitId: servicePriceConfig?.orgUnitId ?? 0,
       inputType: servicePriceConfig?.businesspartnerId ? 'businesspartnerId' : 'enterpriseRootId',
     },
   })

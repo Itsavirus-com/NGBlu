@@ -25,7 +25,9 @@ export default function useCreditCardBrandForm(creditCardBrandId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: ccType,
+    values: ccType && {
+      brandname: ccType?.brandname ?? '',
+    },
   })
 
   const addNewCreditCardBrand = async (data: InferType<typeof schema>) => {

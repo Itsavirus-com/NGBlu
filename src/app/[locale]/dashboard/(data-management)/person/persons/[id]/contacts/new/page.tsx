@@ -16,7 +16,7 @@ import usePersonContactForm from '../../_hooks/contact-form.hook'
 export default function NewPersonContact() {
   const t = useTranslations('dataManagement.persons.contacts')
 
-  const { methods, inputType, handleChange, onSubmit } = usePersonContactForm()
+  const { methods, handleChange, onSubmit } = usePersonContactForm()
 
   return (
     <>
@@ -69,7 +69,7 @@ export default function NewPersonContact() {
                 />
               </div>
 
-              {inputType === 'businesspartnerId' && (
+              {methods.watch('inputType') === 'businesspartnerId' && (
                 <ControlledSelect
                   label={t('businesspartner')}
                   name="businesspartnerId"
@@ -79,7 +79,7 @@ export default function NewPersonContact() {
                   isRequired
                 />
               )}
-              {inputType === 'endclientId' && (
+              {methods.watch('inputType') === 'endclientId' && (
                 <ControlledSelect
                   label={t('endclient')}
                   name="endclientId"
@@ -89,7 +89,7 @@ export default function NewPersonContact() {
                   isRequired
                 />
               )}
-              {!!inputType && (
+              {!!methods.watch('inputType') && (
                 <ControlledSelect
                   label={t('enterpriseRoot')}
                   name="enterpriseRootId"

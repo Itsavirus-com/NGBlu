@@ -25,7 +25,9 @@ export default function useProductTypeForm(productTypeId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: productType,
+    values: productType && {
+      productType: productType?.productType ?? '',
+    },
   })
 
   const addNewProductType = async (data: InferType<typeof schema>) => {

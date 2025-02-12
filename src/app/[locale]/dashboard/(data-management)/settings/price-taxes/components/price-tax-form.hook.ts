@@ -34,7 +34,12 @@ export default function usePriceTaxForm(priceTaxId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: priceTax,
+    values: priceTax && {
+      name: priceTax?.name ?? '',
+      taxValue: priceTax?.taxValue ?? 0,
+      priceUnitId: priceTax?.priceUnitId ?? 0,
+      countryId: priceTax?.countryId ?? 0,
+    },
   })
 
   const addNewPriceTax = async (data: InferType<typeof schema>) => {

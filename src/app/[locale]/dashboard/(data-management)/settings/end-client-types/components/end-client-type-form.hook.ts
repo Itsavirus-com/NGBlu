@@ -25,7 +25,9 @@ export default function useEndClientTypeForm(endClientTypeId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: endClientType,
+    values: endClientType && {
+      type: endClientType?.type ?? '',
+    },
   })
 
   const addNewEndClientType = async (data: InferType<typeof schema>) => {

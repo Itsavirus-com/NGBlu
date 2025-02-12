@@ -19,19 +19,19 @@ export default function useProjectForm(projectId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: projectData && {
-      projectName: projectData.projectName,
-      projectTypeId: projectData.projectTypeId,
-      projectInfoId: projectData.projectInfoId,
-      addressId: projectData.addressId,
-      endclientId: projectData.endclientId,
-      businesspartnersId: projectData.businesspartnersId,
-      enterpriseRootId: projectData.enterpriseRootId,
-      ouUnitId: projectData.ouUnitId,
-      inputType: projectData.endclientId
+      projectName: projectData?.projectName ?? '',
+      projectTypeId: projectData?.projectTypeId ?? 0,
+      projectInfoId: projectData?.projectInfoId ?? 0,
+      addressId: projectData?.addressId ?? 0,
+      endclientId: projectData?.endclientId ?? null,
+      businesspartnersId: projectData?.businesspartnersId ?? null,
+      enterpriseRootId: projectData?.enterpriseRootId ?? null,
+      ouUnitId: projectData?.ouUnitId ?? null,
+      inputType: projectData?.endclientId
         ? 'endclientId'
-        : projectData.businesspartnersId
+        : projectData?.businesspartnersId
           ? 'businesspartnerId'
-          : projectData.enterpriseRootId
+          : projectData?.enterpriseRootId
             ? 'enterpriseRootId'
             : '',
     },
@@ -107,7 +107,6 @@ export default function useProjectForm(projectId?: number) {
 
   return {
     methods,
-
     handleChange,
     onSubmit,
     isLoading,

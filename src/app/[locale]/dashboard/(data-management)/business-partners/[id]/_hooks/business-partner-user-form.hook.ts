@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { businessPartnerUserApi } from '@/services/api/business-partner-user-api'
 import { useBusinessPartnerUser } from '@/services/swr/use-business-partner-user'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/business-partner-user-form.schema'
@@ -22,9 +23,9 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: user && {
-      ...user,
-      userId: user.user.id,
-      personId: user.person.id,
+      ouUnitId: user?.ouUnitId ?? 0,
+      userId: user?.user?.id ?? 0,
+      personId: user?.person?.id ?? 0,
     },
   })
 
@@ -65,11 +66,13 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
   }
 
   const onSubmit = (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (userId) {
-      return updateBusinessPartnerUser(data)
+      return updateBusinessPartnerUser(submitData)
     }
 
-    return addNewBusinessPartnerUser(data)
+    return addNewBusinessPartnerUser(submitData)
   }
 
   return { methods, onSubmit, isLoading }

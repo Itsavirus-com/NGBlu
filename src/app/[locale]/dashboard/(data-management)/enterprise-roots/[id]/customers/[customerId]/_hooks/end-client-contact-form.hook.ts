@@ -24,7 +24,11 @@ export default function useEndClientContactForm({
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
 
-  const { data: endClientContact, isLoading } = useEndClientContact(endClientId, contactId)
+  const {
+    data: endClientContact,
+    isLoading,
+    mutate: invalidateCache,
+  } = useEndClientContact(endClientId, contactId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -41,6 +45,7 @@ export default function useEndClientContactForm({
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client contact created successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {
@@ -60,6 +65,7 @@ export default function useEndClientContactForm({
 
       if (res.ok) {
         showToast({ variant: 'success', body: 'End client contact updated successfully' })
+        invalidateCache()
         back()
       }
     } catch (error) {

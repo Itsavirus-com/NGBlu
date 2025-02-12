@@ -25,7 +25,9 @@ export default function usePackageTypeForm(typeId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: packageType,
+    values: packageType && {
+      name: packageType?.name ?? '',
+    },
   })
 
   const addNewPackageType = async (data: InferType<typeof schema>) => {

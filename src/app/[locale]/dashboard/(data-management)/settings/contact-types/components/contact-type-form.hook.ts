@@ -46,9 +46,9 @@ export default function useContactTypeForm(contactTypeId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: {
+    values: contactType && {
       contactType: contactType?.contactType ?? '',
-      parentId: contactType?.parent.id,
+      parentId: contactType?.parent?.id ?? null,
     },
   })
 

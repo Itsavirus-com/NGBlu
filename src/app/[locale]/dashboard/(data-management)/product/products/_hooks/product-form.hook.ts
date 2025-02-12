@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
@@ -16,17 +15,16 @@ export default function useProductForm(productId?: number) {
   const { showToast, showUnexpectedToast } = useToast()
 
   const { data: product, isLoading, mutate: invalidateCache } = useProduct(productId)
-  const [inputType, setInputType] = useState<'corporateProductOnly' | 'consumerProductOnly' | null>(
-    null
-  )
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: product && {
-      ...product,
-      inputType: product.corporateProductOnly
+      name: product?.name ?? '',
+      description: product?.description ?? '',
+      productTypeId: product?.productTypeId ?? 0,
+      inputType: product?.corporateProductOnly
         ? 'corporateProductOnly'
-        : product.consumerProductOnly
+        : product?.consumerProductOnly
           ? 'consumerProductOnly'
           : '',
     },
@@ -35,7 +33,6 @@ export default function useProductForm(productId?: number) {
   const errorMessageInputType = methods.formState.errors.inputType?.message
 
   const handleChange = (value: 'corporateProductOnly' | 'consumerProductOnly') => {
-    setInputType(value)
     methods.setValue('inputType', value)
   }
 
@@ -88,12 +85,6 @@ export default function useProductForm(productId?: number) {
 
     return addNewProduct(submitData)
   }
-
-  useEffect(() => {
-    if (productId && inputType === null && !isLoading) {
-      setInputType(methods.getValues('inputType') as 'corporateProductOnly' | 'consumerProductOnly')
-    }
-  }, [productId, inputType, isLoading])
 
   return { methods, onSubmit, isLoading, handleChange, errorMessageInputType }
 }

@@ -22,9 +22,15 @@ export default function usePackageServiceForm(id: number, packageServiceId?: num
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: serviceType,
+    values: serviceType && {
+      packageId: String(id),
+      serviceId: serviceType?.serviceId ?? '',
+      servicePricingConfigId: serviceType?.servicePricingConfigId ?? '',
+    },
     defaultValues: {
       packageId: String(id),
+      serviceId: '',
+      servicePricingConfigId: '',
     },
   })
 

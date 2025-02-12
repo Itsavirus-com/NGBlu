@@ -25,7 +25,9 @@ export default function useEndClientPaymentDetailForm(
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: endClientPaymentDetail,
+    values: endClientPaymentDetail && {
+      paymentInfoId: endClientPaymentDetail?.paymentInfoId ?? null,
+    },
   })
 
   const addNewEndClientPaymentDetail = async (data: InferType<typeof schema>) => {

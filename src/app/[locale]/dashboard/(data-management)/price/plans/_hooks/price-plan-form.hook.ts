@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
@@ -17,23 +16,20 @@ export default function usePricePlanForm(planId?: number) {
 
   const { data: pricePlan, isLoading, mutate: invalidateCache } = usePricePlan(planId)
 
-  const [inputType, setInputType] = useState<'productId' | 'serviceId' | null>(null)
-
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: pricePlan && {
-      name: pricePlan.name,
-      productId: pricePlan.productId,
-      serviceId: pricePlan.serviceId,
-      priceConfigId: pricePlan.priceConfigId,
-      isDefault: pricePlan.isDefault,
-      fallbackPriceConfigId: pricePlan.fallbackPriceConfigId,
-      inputType: pricePlan.productId ? 'productId' : 'serviceId',
+      name: pricePlan?.name ?? '',
+      productId: pricePlan?.productId ?? 0,
+      serviceId: pricePlan?.serviceId ?? 0,
+      priceConfigId: pricePlan?.priceConfigId ?? 0,
+      isDefault: pricePlan?.isDefault ?? false,
+      fallbackPriceConfigId: pricePlan?.fallbackPriceConfigId ?? 0,
+      inputType: pricePlan?.productId ? 'productId' : 'serviceId',
     },
   })
 
   const handleChange = (value: 'productId' | 'serviceId') => {
-    setInputType(value)
     methods.setValue('inputType', value)
     methods.setValue('productId', 0)
     methods.setValue('serviceId', 0)
@@ -79,15 +75,5 @@ export default function usePricePlanForm(planId?: number) {
     return addNewPlan(submitData)
   }
 
-  useEffect(() => {
-    if (planId && inputType === null && !isLoading) {
-      setInputType(methods.getValues('inputType') as 'productId' | 'serviceId')
-      setTimeout(() => {
-        methods.setValue('productId', pricePlan?.productId)
-        methods.setValue('serviceId', pricePlan?.serviceId)
-      }, 1000)
-    }
-  }, [methods.watch(), isLoading, planId])
-
-  return { methods, inputType, handleChange, onSubmit, isLoading }
+  return { methods, handleChange, onSubmit, isLoading }
 }

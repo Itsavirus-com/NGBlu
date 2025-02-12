@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { enterpriseRootContactApi } from '@/services/api/enterprise-root-contact-api'
 import { useEnterpriseRootContact } from '@/services/swr/use-enterprise-root-contact'
+import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/enterprise-root-contact-form.schema'
@@ -19,7 +20,12 @@ export default function useEnterpriseRootContactForm(contactId?: number) {
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
-    values: contact,
+    values: contact && {
+      ouUnitId: contact?.ouUnitId,
+      personId: contact?.personId,
+      responsibilityId: contact?.responsibilityId,
+      contactInfoId: contact?.contactInfoId,
+    },
   })
 
   const addNewEnterpriseRootContact = async (data: InferType<typeof schema>) => {
@@ -67,11 +73,13 @@ export default function useEnterpriseRootContactForm(contactId?: number) {
   }
 
   const onSubmit = (data: InferType<typeof schema>) => {
+    const submitData = omitNullAndUndefined(data)
+
     if (contactId) {
-      return updateEnterpriseRootContact(data)
+      return updateEnterpriseRootContact(submitData)
     }
 
-    return addNewEnterpriseRootContact(data)
+    return addNewEnterpriseRootContact(submitData)
   }
 
   return { methods, onSubmit }
