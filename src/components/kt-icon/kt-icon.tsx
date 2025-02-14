@@ -10,7 +10,7 @@ type Props = {
   onClick?: () => void
 }
 
-const KTIcon: FC<Props> = ({ className = '', iconType = 'duotone', iconName, role, onClick }) => {
+const KTIcon: FC<Props> = ({ className = '', iconType = 'outline', iconName, role, onClick }) => {
   return (
     <i
       className={`ki-${iconType} ki-${iconName}${className && ' ' + className}`}

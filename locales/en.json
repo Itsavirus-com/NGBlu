@@ -66,6 +66,7 @@
       "settings": "Settings"
     },
     "table": {
+      "filter": "Filter",
       "filterOptions": "Filter Options",
       "apply": "Apply",
       "reset": "Reset",
@@ -764,6 +765,7 @@
         "projectInfo": "Project Info",
         "projects": "Projects",
         "address": "Address",
+        "addressId": "Address ID",
         "info": "Info"
       },
       "customers": {
@@ -799,12 +801,15 @@
         "parent": "Parent",
         "endClientInfo": "End Client Info",
         "endClients": "End Clients",
-        "info": "Info"
+        "info": "Info",
+        "address": "Address",
+        "addressId": "Address ID"
       },
       "businessPartners": {
         "title": "Business Partners",
         "id": "ID",
         "businessPartner": "Business Partner",
+        "businessPartnerName": "Business Partner Name",
         "businessPartnerId": "Business Partner ID"
       },
       "users": {
@@ -1172,6 +1177,7 @@
       },
       "businessPartnerCustomers": {
         "title": "Business Partner",
+        "businessPartnerName": "Business Partner Name",
         "id": "ID",
         "businessPartnerId": "Business Partner ID"
       },

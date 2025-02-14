@@ -1,4 +1,5 @@
 import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/button/button'
@@ -7,8 +8,8 @@ import { FilterProps } from './filter.type'
 
 export const Filter = ({ children, onFilter }: FilterProps) => {
   const t = useTranslations('common.table')
-
   const methods = useForm({ defaultValues: {} })
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <FormProvider {...methods}>
@@ -18,16 +19,22 @@ export const Filter = ({ children, onFilter }: FilterProps) => {
         onReset={() => onFilter && onFilter({})}
       >
         <Button
-          icon="category"
+          icon="filter"
           className="ms-2"
-          extraProps={{
-            'data-kt-menu-trigger': 'click',
-            'data-kt-menu-placement': 'bottom-end',
-            'data-kt-menu-flip': 'top-end',
-          }}
+          onClick={() => setIsOpen(!isOpen)}
+          label={t('filter')}
+          colorClass="light-primary"
         />
 
-        <div className="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true">
+        <div
+          className={`menu menu-sub menu-sub-dropdown w-250px w-md-300px ${isOpen ? 'show' : ''}`}
+          style={{
+            display: isOpen ? 'block' : 'none',
+            position: 'absolute',
+            right: 0,
+            zIndex: 105,
+          }}
+        >
           <div className="px-7 py-5">
             <div className="fs-5 text-gray-900 fw-bolder">{t('filterOptions')}</div>
           </div>
@@ -37,7 +44,7 @@ export const Filter = ({ children, onFilter }: FilterProps) => {
           <div className="px-7 py-5">
             {children}
 
-            <div className="d-flex justify-content-end">
+            <div className="d-flex justify-content-end mt-5">
               <Button
                 type="reset"
                 icon="cross-square"
@@ -45,9 +52,7 @@ export const Filter = ({ children, onFilter }: FilterProps) => {
                 className="me-2"
                 colorClass="light"
                 activeColorClass="light-primary"
-                extraProps={{
-                  'data-kt-menu-dismiss': 'true',
-                }}
+                onClick={() => setIsOpen(false)}
                 label={t('reset')}
               />
 
@@ -57,9 +62,7 @@ export const Filter = ({ children, onFilter }: FilterProps) => {
                 iconSize="fs-3"
                 className="me-2"
                 colorClass="primary"
-                extraProps={{
-                  'data-kt-menu-dismiss': 'true',
-                }}
+                onClick={() => setIsOpen(false)}
                 label={t('apply')}
               />
             </div>

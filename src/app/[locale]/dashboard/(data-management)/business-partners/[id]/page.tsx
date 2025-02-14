@@ -22,6 +22,7 @@ import { BusinessPartnerContactFilter } from './_components/business-partner-con
 import { BusinessPartnerCustomerFilter } from './_components/business-partner-customer-filter'
 import { BusinessPartnerProjectFilter } from './_components/business-partner-project-filter'
 import { BusinessPartnerUserFilter } from './_components/business-partner-user-filter'
+import { BusinessPartnerFilter } from './_components/BusinessPartnerFilter'
 
 export default function BusinessPartnerDetails({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners')
@@ -211,6 +212,7 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
       content: (
         <Table<BusinessPartnerCustomer>
           className="mt-4"
+          filters={<BusinessPartnerFilter />}
           columns={businessPartnerCustomerColumns}
           apiPath={`business-partners/${params.id}/business-customers`}
           actions={['view']}

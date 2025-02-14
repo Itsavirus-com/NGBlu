@@ -23,6 +23,7 @@ import { EnterpriseRootContactFilter } from './_components/enterprise-root-conta
 import { EnterpriseRootCustomerFilter } from './_components/enterprise-root-customer-filter'
 import { EnterpriseRootProjectFilter } from './_components/enterprise-root-project-filter'
 import { EnterpriseRootUserFilter } from './_components/enterprise-root-user-filter'
+import { EnterpriseRootBusinessPartnerFilter } from './_components/EnterpriseRootBusinessPartnerFilter'
 
 export default function EnterpriseRootDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.enterpriseRoots')
@@ -263,6 +264,7 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       content: (
         <Table<BusinessPartnerCustomer>
           className="mt-4"
+          filters={<EnterpriseRootBusinessPartnerFilter />}
           columns={businessPartnerColumns}
           apiPath={`business-partners?filter[enterprise_root_id]=${params.id}`}
           actionBasePath={`/dashboard/business-partners`}
