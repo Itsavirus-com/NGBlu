@@ -12,8 +12,11 @@ type Props = {
 
 const ThemeModeSwitcher = ({ toggleBtnClass = '', toggleBtnIconClass = 'fs-1' }: Props) => {
   const [mode, setMode] = useState<string>(() => {
-    // Initialize from localStorage or default to 'light'
-    return localStorage.getItem('theme-mode') || 'light'
+    // Check if window is defined (client-side)
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme-mode') || 'light'
+    }
+    return 'light' // Default value for server-side rendering
   })
   const [isOpen, setIsOpen] = useState(false)
 
