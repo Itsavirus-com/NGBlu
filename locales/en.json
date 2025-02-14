@@ -799,7 +799,8 @@
         "parent": "Parent",
         "endClientInfo": "End Client Info",
         "endClients": "End Clients",
-        "info": "Info"
+        "info": "Info",
+        "address": "Address"
       },
       "businessPartners": {
         "title": "Business Partners",

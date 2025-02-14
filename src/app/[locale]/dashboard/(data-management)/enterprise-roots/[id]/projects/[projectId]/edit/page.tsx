@@ -1,65 +1,29 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Card, CardBody } from 'react-bootstrap'
 
-import { FormButtons } from '@/components/forms/form-buttons'
-import { FormProvider } from '@/components/forms/form-provider'
-import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
-import { Address } from '@/services/swr/models/address.type'
-import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
-import { Project } from '@/services/swr/models/project.type'
 
+import { EnterpriseRootProjectForm } from '../../../_components/EnterpriseRootProjectForm'
 import useEnterpriseRootProjectForm from '../../../_hooks/enterprise-root-project-form.hook'
 
 export default function UpdateEnterpriseRootProject({
   params,
 }: {
-  params: { id: string; projectId: string }
+  params: { id: number; projectId: number }
 }) {
   const t = useTranslations('dataManagement.enterpriseRoots.projects')
 
-  const { methods, onSubmit } = useEnterpriseRootProjectForm(Number(params.projectId))
+  const { methods, onSubmit } = useEnterpriseRootProjectForm(params.projectId)
 
   return (
     <>
       <PageTitle title={t('updateProject')} />
-
-      <FormProvider methods={methods} onSubmit={onSubmit}>
-        <div className="app-container container-fluid">
-          <Card>
-            <CardBody>
-              <ControlledSelect<Project>
-                label={t('project')}
-                name="projectId"
-                containerClass="mb-3"
-                apiPath={'projects'}
-                option={{ label: row => row.projectName, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<Address>
-                label={t('enterpriseRootAddress')}
-                name="enterpriseRootAddressesId"
-                containerClass="mb-3"
-                apiPath={`addresses`}
-                option={{ label: row => row.addressName, value: row => row.id }}
-                isRequired
-              />
-              <ControlledSelect<OrganizationUnit>
-                label={t('organisationalUnit')}
-                name="ouUnitId"
-                containerClass="mb-3"
-                apiPath={'organisational-units'}
-                option={{ label: row => row.name, value: row => row.id }}
-                filter={{ enterpriseRootId: params.id }}
-              />
-
-              <FormButtons />
-            </CardBody>
-          </Card>
-        </div>
-      </FormProvider>
+      <EnterpriseRootProjectForm
+        enterpriseRootId={params.id}
+        methods={methods}
+        onSubmit={onSubmit}
+      />
     </>
   )
 }

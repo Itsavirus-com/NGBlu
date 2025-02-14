@@ -1,41 +1,20 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Card, CardBody } from 'react-bootstrap'
 
-import { FormButtons } from '@/components/forms/form-buttons'
-import { FormProvider } from '@/components/forms/form-provider'
-import { ControlledInput } from '@/components/forms/input'
 import { PageTitle } from '@/components/page-title'
 
 import useCreditCardBrandForm from '../../components/credit-card-brand-form.hook'
+import CreditCardBrandForm from '../../components/CreditCardBrandForm'
 
 export default function UpdateCreditCardBrand({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.creditCardBrands')
-
   const { methods, onSubmit } = useCreditCardBrandForm(params?.id)
 
   return (
     <>
       <PageTitle title={t('updateCreditCardBrand')} />
-
-      <FormProvider methods={methods} onSubmit={onSubmit}>
-        <div className="app-container container-fluid">
-          <Card>
-            <CardBody>
-              <ControlledInput
-                label={t('brand')}
-                name="brandname"
-                containerClass="mb-3"
-                className="form-control-solid"
-                isRequired
-              />
-
-              <FormButtons />
-            </CardBody>
-          </Card>
-        </div>
-      </FormProvider>
+      <CreditCardBrandForm methods={methods} onSubmit={onSubmit} />
     </>
   )
 }

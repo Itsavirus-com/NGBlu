@@ -1,16 +1,11 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Card, CardBody } from 'react-bootstrap'
 
-import { ControlledSwitch } from '@/components/forms/checkbox'
-import { FormButtons } from '@/components/forms/form-buttons'
-import { FormProvider } from '@/components/forms/form-provider'
-import { ControlledSelect } from '@/components/forms/select'
 import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
-import { Address } from '@/services/swr/models/address.type'
 
+import { PersonAddressForm } from '../../../_components/PersonAddressForm'
 import usePersonAddressForm from '../../../_hooks/address-form.hook'
 
 export default function UpdatePersonAddress({ params }: { params: { addressId: number } }) {
@@ -21,34 +16,7 @@ export default function UpdatePersonAddress({ params }: { params: { addressId: n
   return (
     <>
       <PageTitle title={t('updatePersonAddress')} />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <FormProvider methods={methods} onSubmit={onSubmit}>
-          <div className="app-container container-fluid">
-            <Card>
-              <CardBody>
-                <ControlledSelect<Address>
-                  label={t('address')}
-                  name="addressId"
-                  containerClass="mb-3"
-                  apiPath="addresses"
-                  option={{ label: row => row.addressName, value: row => row.id }}
-                  isRequired
-                />
-                <ControlledSwitch
-                  label={t('primaryAddress')}
-                  name="isPrimaryLocation"
-                  containerClass="mb-3"
-                  className="form-control-solid"
-                />
-
-                <FormButtons />
-              </CardBody>
-            </Card>
-          </div>
-        </FormProvider>
-      )}
+      {isLoading ? <Loading /> : <PersonAddressForm methods={methods} onSubmit={onSubmit} />}
     </>
   )
 }
