@@ -129,12 +129,54 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
           styles={{
             control: baseStyles => ({
               ...baseStyles,
-              borderColor: invalid ? 'var(--bs-form-invalid-border-color)' : baseStyles.borderColor,
+              backgroundColor: 'var(--bs-body-bg)',
+              borderColor: invalid
+                ? 'var(--bs-form-invalid-border-color)'
+                : 'var(--bs-border-color)',
+              color: 'var(--bs-body-color)',
               '&:hover': {
                 borderColor: invalid
                   ? 'var(--bs-form-invalid-border-color)'
-                  : baseStyles.borderColor,
+                  : 'var(--bs-border-color)',
               },
+            }),
+            menu: baseStyles => ({
+              ...baseStyles,
+              backgroundColor: 'var(--bs-body-bg)',
+              color: 'var(--bs-body-color)',
+            }),
+            option: (baseStyles, state) => ({
+              ...baseStyles,
+              backgroundColor: state.isFocused
+                ? 'var(--bs-primary)'
+                : state.isSelected
+                  ? 'var(--bs-primary-rgb)'
+                  : 'var(--bs-body-bg)',
+              color: state.isFocused ? 'white' : 'var(--bs-body-color)',
+              ':active': {
+                backgroundColor: 'var(--bs-primary)',
+                color: 'white',
+              },
+            }),
+            singleValue: baseStyles => ({
+              ...baseStyles,
+              color: 'var(--bs-body-color)',
+            }),
+            input: baseStyles => ({
+              ...baseStyles,
+              color: 'var(--bs-body-color)',
+            }),
+            placeholder: baseStyles => ({
+              ...baseStyles,
+              color: 'var(--bs-gray-600)',
+            }),
+            loadingMessage: baseStyles => ({
+              ...baseStyles,
+              color: 'var(--bs-body-color)',
+            }),
+            noOptionsMessage: baseStyles => ({
+              ...baseStyles,
+              color: 'var(--bs-body-color)',
             }),
           }}
           classNamePrefix="react-select"

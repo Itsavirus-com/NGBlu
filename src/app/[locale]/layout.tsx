@@ -30,7 +30,7 @@ export default function LocaleLayout({
     <html lang={locale} data-bs-theme="light">
       <body
         className={`${inter.className} app-default`}
-        data-kt-app-layout="dark-sidebar"
+        data-kt-app-layout="light-sidebar"
         data-kt-app-header-fixed="true"
         data-kt-app-header-fixed-mobile="true"
         data-kt-app-sidebar-hoverable="true"
