@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import usePriceTaxForm from '../components/price-tax-form.hook'
-import PriceTaxForm from '../components/PriceTaxForm'
+import PriceTaxForm from '../_components/PriceTaxForm'
+import usePriceTaxForm from '../_hooks/price-tax-form.hook'
 
 export default function NewPriceTax() {
   const t = useTranslations('dataManagement.prices.taxes')

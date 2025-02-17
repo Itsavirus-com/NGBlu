@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import useProductTypeForm from '../../components/product-type-form.hook'
-import ProductTypeForm from '../../components/ProductTypeForm'
+import ProductTypeForm from '../../_components/ProductTypeForm'
+import useProductTypeForm from '../../_hooks/product-type-form.hook'
 
 export default function UpdateProductType({ params }: { params: { typeId: string } }) {
   const t = useTranslations('dataManagement.products.types')

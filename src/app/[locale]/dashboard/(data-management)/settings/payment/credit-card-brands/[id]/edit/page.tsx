@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import useCreditCardBrandForm from '../../components/credit-card-brand-form.hook'
-import CreditCardBrandForm from '../../components/CreditCardBrandForm'
+import CreditCardBrandForm from '../../_components/CreditCardBrandForm'
+import useCreditCardBrandForm from '../../_hooks/credit-card-brand-form.hook'
 
 export default function UpdateCreditCardBrand({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.creditCardBrands')

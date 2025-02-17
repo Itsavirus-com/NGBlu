@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import useEndClientTypeForm from '../../components/end-client-type-form.hook'
-import EndClientTypeForm from '../../components/EndClientTypeForm'
+import EndClientTypeForm from '../../_components/EndClientTypeForm'
+import useEndClientTypeForm from '../../_hooks/end-client-type-form.hook'
 
 export default function UpdateEndClientType({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.endClientTypes')

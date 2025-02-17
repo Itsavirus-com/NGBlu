@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { PriceUnit } from '@/services/swr/models/price-unit.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { PriceUnitsFilter } from './components/price-unit-filter'
+import { PriceUnitsFilter } from './_components/PriceUnitFilter'
 
 export default function PriceCurrencies() {
   const t = useTranslations('dataManagement.prices.units')

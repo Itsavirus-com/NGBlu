@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import useAddressTypeForm from '../components/address-type-form.hook'
-import AddressTypeForm from '../components/AddressTypeForm'
+import AddressTypeForm from '../_components/AddressTypeForm'
+import useAddressTypeForm from '../_hooks/address-type-form.hook'
 
 export default function NewAddressType() {
   const t = useTranslations('dataManagement.addressTypes')

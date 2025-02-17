@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { ContactType } from '@/services/swr/models/contact-type.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { ContactTypeFilter } from './components/contact-type-filter'
+import { ContactTypeFilter } from './_components/ContactTypeFilter'
 
 export default function ContactTypes() {
   const t = useTranslations('dataManagement.contactTypes')

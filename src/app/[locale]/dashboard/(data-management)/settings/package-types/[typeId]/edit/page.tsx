@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import usePackageTypeForm from '../../components/package-type-form.hook'
-import PackageTypeForm from '../../components/PackageTypeForm'
+import PackageTypeForm from '../../_components/PackageTypeForm'
+import usePackageTypeForm from '../../_hooks/package-type-form.hook'
 
 export default function UpdatePackageType({ params }: { params: { typeId: number } }) {
   const t = useTranslations('dataManagement.packages.types')

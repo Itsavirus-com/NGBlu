@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { CompanyStatus } from '@/services/swr/models/company-status.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { CompanyStatusFilter } from './components/company-status-filter'
+import { CompanyStatusFilter } from './_components/CompanyStatusFilter'
 
 export default function CompanyStatuses() {
   const t = useTranslations('dataManagement.companyStatuses')

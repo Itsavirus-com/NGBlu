@@ -6,7 +6,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { EndClientType } from '@/services/swr/models/end-client-type.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { EndClientTypeFilter } from './components/end-client-type-filter'
+import { EndClientTypeFilter } from './_components/EndClientTypeFilter'
 
 export default function EndClientTypes() {
   const t = useTranslations('dataManagement.endClientTypes')

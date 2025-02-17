@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { PriceInterval } from '@/services/swr/models/price-interval.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { PriceIntervalsFilter } from './components/price-interval-filter'
+import { PriceIntervalsFilter } from './_components/PriceIntervalFilter'
 
 export default function PriceCurrencies() {
   const t = useTranslations('dataManagement.prices.intervals')

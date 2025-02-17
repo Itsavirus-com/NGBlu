@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { PriceTax } from '@/services/swr/models/price-tax.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { PriceTaxesFilter } from './components/price-tax-filter'
+import { PriceTaxesFilter } from './_components/PriceTaxFilter'
 
 export default function PriceCurrencies() {
   const t = useTranslations('dataManagement.prices.taxes')

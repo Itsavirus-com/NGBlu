@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import useGenderForm from '../components/gender-form.hook'
-import GenderForm from '../components/GenderForm'
+import GenderForm from '../_components/GenderForm'
+import useGenderForm from '../_hooks/gender-form.hook'
 
 export default function NewGender() {
   const t = useTranslations('dataManagement.genders')

@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import useCurrencyForm from '../components/currency-form.hook'
-import CurrencyForm from '../components/CurrencyForm'
+import CurrencyForm from '../_components/CurrencyForm'
+import useCurrencyForm from '../_hooks/currency-form.hook'
 
 export default function NewCurrency() {
   const t = useTranslations('dataManagement.prices.currencies')

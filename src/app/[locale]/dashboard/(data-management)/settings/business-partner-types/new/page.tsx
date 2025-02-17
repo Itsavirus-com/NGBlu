@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import useBusinessPartnerTypeForm from '../components/business-partner-type-form.hook'
-import BusinessPartnerTypeForm from '../components/BusinessPartnerTypeForm'
+import BusinessPartnerTypeForm from '../_components/BusinessPartnerTypeForm'
+import useBusinessPartnerTypeForm from '../_hooks/business-partner-type-form.hook'
 
 export default function NewBusinessPartnerType() {
   const t = useTranslations('dataManagement.businessPartnerTypes')
