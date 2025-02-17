@@ -65,7 +65,7 @@ export default function usePaymentForm(paymentId?: number) {
 
   const selectedPayment = methods.watch('selectedPayment')
 
-  const handleChange = (value: 1 | 2) => {
+  const handleChange = (value: number) => {
     methods.reset({
       selectedPayment: value,
       bankname: null,

@@ -85,8 +85,8 @@ export default function useAddressForm(addressId?: number) {
     lng: number
     placeId: string
   }) => {
-    methods.setValue('lat', lat.toString())
-    methods.setValue('lng', lng.toString())
+    methods.setValue('lat', lat.toFixed(9))
+    methods.setValue('lng', lng.toFixed(9))
     methods.setValue('googleAddressId', placeId)
   }
 

@@ -1,14 +1,10 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Card, CardBody } from 'react-bootstrap'
 
-import { FormButtons } from '@/components/forms/form-buttons'
-import { FormProvider } from '@/components/forms/form-provider'
-import { ControlledSelect } from '@/components/forms/select'
 import { PageTitle } from '@/components/page-title'
-import { Payment } from '@/services/swr/models/payment.type'
 
+import EndClientPaymentDetailForm from '../../_components/EndClientPaymentDetailForm'
 import useEndClientPaymentDetailForm from '../../_hooks/end-client-payment-detail-form.hook'
 
 export default function NewEndClientPaymentDetail({ params }: { params: { id: string } }) {
@@ -19,25 +15,7 @@ export default function NewEndClientPaymentDetail({ params }: { params: { id: st
   return (
     <>
       <PageTitle title={t('newPaymentDetail')} />
-
-      <FormProvider methods={methods} onSubmit={onSubmit}>
-        <div className="app-container container-fluid">
-          <Card>
-            <CardBody>
-              <ControlledSelect<Payment>
-                label={t('paymentInfo')}
-                name="paymentInfoId"
-                containerClass="mb-3"
-                apiPath={'payments/details'}
-                option={{ label: row => row.paymentType.paymentType, value: row => row.id }}
-                isRequired
-              />
-
-              <FormButtons />
-            </CardBody>
-          </Card>
-        </div>
-      </FormProvider>
+      <EndClientPaymentDetailForm methods={methods} onSubmit={onSubmit} />
     </>
   )
 }
