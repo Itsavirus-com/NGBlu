@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { AddressType } from '@/services/swr/models/address-type.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { AddressTypeFilter } from './components/address-type-filter'
+import { AddressTypeFilter } from './_components/AddressTypeFilter'
 
 export default function AddressTypes() {
   const t = useTranslations('dataManagement.addressTypes')

@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import useEndClientStatusForm from '../../components/end-client-status-form.hook'
-import EndClientStatusForm from '../../components/EndClientStatusForm'
+import EndClientStatusForm from '../../_components/EndClientStatusForm'
+import useEndClientStatusForm from '../../_hooks/end-client-status-form.hook'
 
 export default function UpdateEndClientStatus({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.endClientStatuses')

@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { PackageType } from '@/services/swr/models/package-type.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { PackageTypesFilter } from './components/package-type-filter'
+import { PackageTypesFilter } from './_components/PackageTypeFilter'
 
 export default function PackageTypes() {
   const t = useTranslations('dataManagement.packages.types')

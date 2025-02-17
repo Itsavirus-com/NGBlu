@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import usePriceUnitForm from '../components/price-unit-form.hook'
-import PriceUnitForm from '../components/PriceUnitForm'
+import PriceUnitForm from '../_components/PriceUnitForm'
+import usePriceUnitForm from '../_hooks/price-unit-form.hook'
 
 export default function NewPriceUnit() {
   const t = useTranslations('dataManagement.prices.units')

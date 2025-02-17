@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { ProductType } from '@/services/swr/models/product-type.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { ProductTypesFilter } from './components/product-type-filter'
+import { ProductTypesFilter } from './_components/ProductTypeFilter'
 
 export default function ProductTypes() {
   const t = useTranslations('dataManagement.products.types')

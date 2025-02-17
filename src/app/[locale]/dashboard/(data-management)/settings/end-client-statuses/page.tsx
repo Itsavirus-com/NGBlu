@@ -6,7 +6,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { EndClientStatus } from '@/services/swr/models/end-client-status.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { EndClientStatusFilter } from './components/end-client-status-filter'
+import { EndClientStatusFilter } from './_components/EndClientStatusFilter'
 
 export default function EndClientStatuses() {
   const t = useTranslations('dataManagement.endClientStatuses')

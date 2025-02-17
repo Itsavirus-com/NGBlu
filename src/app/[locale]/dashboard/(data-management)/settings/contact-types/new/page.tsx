@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import useContactTypeForm from '../components/contact-type-form.hook'
-import ContactTypeForm from '../components/ContactTypeForm'
+import ContactTypeForm from '../_components/ContactTypeForm'
+import useContactTypeForm from '../_hooks/contact-type-form.hook'
 
 export default function NewContactType() {
   const t = useTranslations('dataManagement.contactTypes')

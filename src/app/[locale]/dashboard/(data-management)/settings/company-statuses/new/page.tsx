@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import useCompanyStatusForm from '../components/company-status-form.hook'
-import CompanyStatusForm from '../components/CompanyStatusForm'
+import CompanyStatusForm from '../_components/CompanyStatusForm'
+import useCompanyStatusForm from '../_hooks/company-status-form.hook'
 
 export default function NewCompanyStatus() {
   const t = useTranslations('dataManagement.companyStatuses')

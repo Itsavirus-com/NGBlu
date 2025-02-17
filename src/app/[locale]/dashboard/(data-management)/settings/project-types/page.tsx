@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { ProjectType } from '@/services/swr/models/project-type'
 import { safeRender } from '@/utils/safeRender'
 
-import { ProjectTypesFilter } from './components/project-type-filter'
+import { ProjectTypesFilter } from './_components/ProjectTypeFilter'
 
 export default function PackageTypes() {
   const t = useTranslations('dataManagement.projects.types')

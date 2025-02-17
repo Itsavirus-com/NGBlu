@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import useCountryForm from '../components/country-form.hook'
-import CountryForm from '../components/CountryForm'
+import CountryForm from '../_components/CountryForm'
+import useCountryForm from '../_hooks/country-form.hook'
 
 export default function NewCountry() {
   const t = useTranslations('dataManagement.countries')

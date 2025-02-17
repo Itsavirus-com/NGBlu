@@ -6,7 +6,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { Country } from '@/services/swr/models/country.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { CountryFilter } from './components/country-filter'
+import { CountryFilter } from './_components/CountryFilter'
 
 export default function Countries() {
   const t = useTranslations('dataManagement.countries')

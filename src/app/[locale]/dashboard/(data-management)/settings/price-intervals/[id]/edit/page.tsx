@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import usePriceIntervalForm from '../../components/price-interval-form.hook'
-import PriceIntervalForm from '../../components/PriceIntervalForm'
+import PriceIntervalForm from '../../_components/PriceIntervalForm'
+import usePriceIntervalForm from '../../_hooks/price-interval-form.hook'
 
 export default function UpdatePriceInterval({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.prices.intervals')

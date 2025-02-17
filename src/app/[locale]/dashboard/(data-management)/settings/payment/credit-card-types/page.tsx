@@ -6,7 +6,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { CreditCardType } from '@/services/swr/models/credit-card-type.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { CreditCardTypeFilter } from './components/credit-card-type-filter'
+import { CreditCardTypeFilter } from './_components/CreditCardTypeFilter'
 
 export default function CreditCardTypes() {
   const t = useTranslations('dataManagement.creditCardTypes')

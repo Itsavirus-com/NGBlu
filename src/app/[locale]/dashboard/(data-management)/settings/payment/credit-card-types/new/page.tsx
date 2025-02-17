@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
-import useCreditCardTypeForm from '../components/credit-card-type-form.hook'
-import CreditCardTypeForm from '../components/CreditCardTypeForm'
+import CreditCardTypeForm from '../_components/CreditCardTypeForm'
+import useCreditCardTypeForm from '../_hooks/credit-card-type-form.hook'
 
 export default function NewCreditCardType() {
   const t = useTranslations('dataManagement.creditCardTypes')

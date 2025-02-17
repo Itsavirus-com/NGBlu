@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { ServiceType } from '@/services/swr/models/service-type.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { ServiceTypesFilter } from './components/service-type-filter'
+import { ServiceTypesFilter } from './_components/ServiceTypeFilter'
 
 export default function ServiceTypes() {
   const t = useTranslations('dataManagement.services.types')
