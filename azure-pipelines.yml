@@ -18,7 +18,34 @@ jobs:
       - group: io2-frontend-variable-group
     steps:
       - checkout: self
-        submodules: true
+        fetchDepth: '0'
+        submodules: recursive
+        persistCredentials: 'true'
+
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '20.x'
+        displayName: 'Install Node.js'
+
+      - script: |
+          npm ci
+        displayName: 'Install dependencies'
+
+      - script: |
+          git config user.email "azure-pipeline@noreply.azure.com"
+          git config user.name "Azure Pipeline"
+        displayName: 'Configure git user'
+
+      - script: |
+          npm run release
+        displayName: 'Generate CHANGELOG and bump version'
+        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+      - script: |
+          git push --follow-tags origin HEAD:$(Build.SourceBranchName)
+        displayName: 'Push changes'
+        condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
       - task: AzureStaticWebApp@0
         inputs:
           azure_static_web_apps_api_token: $(AZURE_STATIC_WEB_APPS_API_TOKEN)
