@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## 2.1.0 (2025-02-18)
+## 2.2.0 (2025-02-18)
 
 ### Features
 
@@ -330,11 +330,3 @@ All notable changes to this project will be documented in this file. See [standa
 - update unused fallback ([659e762](https://bitbucket.org/infraorders2/io2-frontend/commit/659e76220c85e06c428b4b374afcce682e8a60ed))
 - vulnerability next Js ([f2f28e1](https://bitbucket.org/infraorders2/io2-frontend/commit/f2f28e11eb02956595f6999b15f26743cad79aef))
 - wrong id parsed to business partner child tree ([25316c9](https://bitbucket.org/infraorders2/io2-frontend/commit/25316c972b5bdc55850fff032f6e0f954d725623))
-
-## [0.1.0] - 2024-01-28
-
-### Added
-
-- Initial release
-- Basic project structure
-- Core functionality implementation
