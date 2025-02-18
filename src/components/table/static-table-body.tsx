@@ -16,7 +16,7 @@ export const StaticTableBody = <TableValues extends Record<string, any>>(
     <div className="table-responsive mt-4">
       <table className="table table-row-dashed table-row-gray-400 align-middle gs-0 gy-4">
         <thead>
-          <tr className="fw-bold text-gray-500">
+          <tr className="fw-bold">
             {columns.map(column => (
               <th key={column.id} className={column.headClassName}>
                 {column.title}
