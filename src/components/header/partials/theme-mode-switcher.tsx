@@ -1,7 +1,8 @@
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { useTheme } from '@/contexts/ThemeContext'
 
 type Props = {
   toggleBtnClass?: string
@@ -11,58 +12,13 @@ type Props = {
 }
 
 const ThemeModeSwitcher = ({ toggleBtnClass = '', toggleBtnIconClass = 'fs-1' }: Props) => {
-  const [mode, setMode] = useState<string>(() => {
-    // Check if window is defined (client-side)
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme-mode') || 'light'
-    }
-    return 'light' // Default value for server-side rendering
-  })
+  const { mode, themeMode, setMode } = useTheme()
   const [isOpen, setIsOpen] = useState(false)
 
-  const calculateMode = () => {
-    if (mode === 'system') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    }
-    return mode
-  }
-
-  const switchMode = (newMode: string) => {
+  const switchMode = (newMode: 'light' | 'dark' | 'system') => {
     setMode(newMode)
-    localStorage.setItem('theme-mode', newMode)
-
-    if (newMode === 'system') {
-      const systemMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light'
-      document.documentElement.setAttribute('data-bs-theme', systemMode)
-    } else {
-      document.documentElement.setAttribute('data-bs-theme', newMode)
-    }
-
     setIsOpen(false)
   }
-
-  // Initialize theme on mount and handle system changes
-  useEffect(() => {
-    // Apply theme immediately on mount
-    const currentMode = calculateMode()
-    document.documentElement.setAttribute('data-bs-theme', currentMode)
-
-    // Handle system theme changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    const handleSystemThemeChange = (e: MediaQueryListEvent) => {
-      if (mode === 'system') {
-        const newTheme = e.matches ? 'dark' : 'light'
-        document.documentElement.setAttribute('data-bs-theme', newTheme)
-      }
-    }
-
-    mediaQuery.addEventListener('change', handleSystemThemeChange)
-    return () => mediaQuery.removeEventListener('change', handleSystemThemeChange)
-  }, [mode]) // Only re-run if mode changes
-
-  const calculatedMode = calculateMode()
 
   return (
     <div className="position-relative">
@@ -71,10 +27,10 @@ const ThemeModeSwitcher = ({ toggleBtnClass = '', toggleBtnIconClass = 'fs-1' }:
         className={clsx('btn btn-icon', toggleBtnClass)}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {calculatedMode === 'dark' && (
+        {themeMode === 'dark' && (
           <KTIcon iconName="moon" className={clsx('theme-light-hide', toggleBtnIconClass)} />
         )}
-        {calculatedMode === 'light' && (
+        {themeMode === 'light' && (
           <KTIcon iconName="night-day" className={clsx('theme-dark-hide', toggleBtnIconClass)} />
         )}
       </button>
@@ -92,7 +48,7 @@ const ThemeModeSwitcher = ({ toggleBtnClass = '', toggleBtnIconClass = 'fs-1' }:
           <button
             type="button"
             className={clsx('btn w-100 text-start mb-2', {
-              'active btn-active-light-primary': calculatedMode === 'light',
+              'active btn-active-light-primary': themeMode === 'light',
             })}
             style={{ color: 'var(--bs-body-color)' }}
             onClick={() => switchMode('light')}
@@ -104,7 +60,7 @@ const ThemeModeSwitcher = ({ toggleBtnClass = '', toggleBtnIconClass = 'fs-1' }:
           <button
             type="button"
             className={clsx('btn w-100 text-start mb-2', {
-              'active btn-active-light-primary': calculatedMode === 'dark',
+              'active btn-active-light-primary': themeMode === 'dark',
             })}
             style={{ color: 'var(--bs-body-color)' }}
             onClick={() => switchMode('dark')}
@@ -115,7 +71,9 @@ const ThemeModeSwitcher = ({ toggleBtnClass = '', toggleBtnIconClass = 'fs-1' }:
 
           <button
             type="button"
-            className={clsx('btn w-100 text-start')}
+            className={clsx('btn w-100 text-start', {
+              'active btn-active-light-primary': mode === 'system',
+            })}
             style={{ color: 'var(--bs-body-color)' }}
             onClick={() => switchMode('system')}
           >

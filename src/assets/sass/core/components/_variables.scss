@@ -1067,7 +1067,7 @@ $figure-caption-color: var(--#{$prefix}gray-600) !default;
 // Breadcrumbs
 $breadcrumb-bg: null !default;
 $breadcrumb-divider-color: var(--#{$prefix}gray-600) !default;
-$breadcrumb-active-color: var(--#{$prefix}primary) !default;
+$breadcrumb-active-color: var(--bs-body-color) !default;
 $breadcrumb-item-padding-x: 0.5rem !default;
 
 // Carousel
