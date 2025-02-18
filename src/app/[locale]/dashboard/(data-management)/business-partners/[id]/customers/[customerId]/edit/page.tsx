@@ -26,7 +26,7 @@ export default function UpdateBusinessPartnerCustomer({
       {isLoading ? (
         <Loading />
       ) : (
-        <BusinessPartnerCustomerForm methods={methods} onSubmit={onSubmit} />
+        <BusinessPartnerCustomerForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
       )}
     </>
   )

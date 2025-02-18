@@ -129,11 +129,13 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
           styles={{
             control: baseStyles => ({
               ...baseStyles,
-              backgroundColor: 'var(--bs-body-bg)',
+              backgroundColor: disabled ? 'var(--bs-secondary-bg)' : 'var(--bs-body-bg)',
               borderColor: invalid
                 ? 'var(--bs-form-invalid-border-color)'
                 : 'var(--bs-border-color)',
               color: 'var(--bs-body-color)',
+              opacity: disabled ? 0.65 : 1,
+              cursor: disabled ? 'not-allowed' : 'default',
               '&:hover': {
                 borderColor: invalid
                   ? 'var(--bs-form-invalid-border-color)'
@@ -160,7 +162,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
             }),
             singleValue: baseStyles => ({
               ...baseStyles,
-              color: 'var(--bs-body-color)',
+              color: disabled ? 'var(--bs-secondary-color)' : 'var(--bs-body-color)',
             }),
             input: baseStyles => ({
               ...baseStyles,

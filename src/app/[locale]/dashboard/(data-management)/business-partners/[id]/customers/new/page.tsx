@@ -15,7 +15,7 @@ export default function NewBusinessPartnerCustomer({ params }: { params: { id: s
   return (
     <>
       <PageTitle title={t('newCustomer')} />
-      <BusinessPartnerCustomerForm methods={methods} onSubmit={onSubmit} />
+      <BusinessPartnerCustomerForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
     </>
   )
 }

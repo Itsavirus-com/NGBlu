@@ -44,8 +44,12 @@ export default function useBusinessPartnerCustomerForm(
         invalidateCache()
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if ('endclientId' in error?.errors?.detail) {
+        showToast({ variant: 'danger', body: error?.errors?.detail?.endclientId })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 

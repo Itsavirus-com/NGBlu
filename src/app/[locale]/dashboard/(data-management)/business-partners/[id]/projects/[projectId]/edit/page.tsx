@@ -26,7 +26,7 @@ export default function UpdateBusinessPartnerProject({
       {isLoading ? (
         <Loading />
       ) : (
-        <BusinessPartnerProjectForm methods={methods} onSubmit={onSubmit} />
+        <BusinessPartnerProjectForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
       )}
     </>
   )

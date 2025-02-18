@@ -16,7 +16,7 @@ export default function NewBusinessPartnerProject({ params }: { params: { id: st
     <>
       <PageTitle title={t('newProject')} />
 
-      <BusinessPartnerProjectForm methods={methods} onSubmit={onSubmit} />
+      <BusinessPartnerProjectForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
     </>
   )
 }
