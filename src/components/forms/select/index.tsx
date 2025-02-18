@@ -9,6 +9,7 @@ import Select from 'react-select'
 import { useOptionData, useOptionDataById } from '@/services/swr/use-option-data'
 
 import { SelectLoading } from './select-loading'
+import './select.scss'
 
 type SelectProps<OptionValue> = {
   label?: string
@@ -71,12 +72,12 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
   )
 
   useEffect(() => {
-    if (data && pagination) {
+    if (data) {
       if (page === 1) setAllData(data)
       else setAllData(prevData => [...prevData, ...data])
       setIsLoadingInfinity(false)
     }
-  }, [data, pagination])
+  }, [data, page])
 
   const options = [
     { value: 0, label: 'Select one', data: null },
@@ -125,62 +126,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
           }}
           onMenuScrollToBottom={handleScrollBottom}
           isLoading={isLoadingInfinity}
-          className="react-select-container"
-          styles={{
-            control: baseStyles => ({
-              ...baseStyles,
-              backgroundColor: disabled ? 'var(--bs-secondary-bg)' : 'var(--bs-body-bg)',
-              borderColor: invalid
-                ? 'var(--bs-form-invalid-border-color)'
-                : 'var(--bs-border-color)',
-              color: 'var(--bs-body-color)',
-              opacity: disabled ? 0.65 : 1,
-              cursor: disabled ? 'not-allowed' : 'default',
-              '&:hover': {
-                borderColor: invalid
-                  ? 'var(--bs-form-invalid-border-color)'
-                  : 'var(--bs-border-color)',
-              },
-            }),
-            menu: baseStyles => ({
-              ...baseStyles,
-              backgroundColor: 'var(--bs-body-bg)',
-              color: 'var(--bs-body-color)',
-            }),
-            option: (baseStyles, state) => ({
-              ...baseStyles,
-              backgroundColor: state.isFocused
-                ? 'var(--bs-primary)'
-                : state.isSelected
-                  ? 'var(--bs-primary-rgb)'
-                  : 'var(--bs-body-bg)',
-              color: state.isFocused ? 'white' : 'var(--bs-body-color)',
-              ':active': {
-                backgroundColor: 'var(--bs-primary)',
-                color: 'white',
-              },
-            }),
-            singleValue: baseStyles => ({
-              ...baseStyles,
-              color: disabled ? 'var(--bs-secondary-color)' : 'var(--bs-body-color)',
-            }),
-            input: baseStyles => ({
-              ...baseStyles,
-              color: 'var(--bs-body-color)',
-            }),
-            placeholder: baseStyles => ({
-              ...baseStyles,
-              color: 'var(--bs-gray-600)',
-            }),
-            loadingMessage: baseStyles => ({
-              ...baseStyles,
-              color: 'var(--bs-body-color)',
-            }),
-            noOptionsMessage: baseStyles => ({
-              ...baseStyles,
-              color: 'var(--bs-body-color)',
-            }),
-          }}
+          className={clsx('react-select-container', { 'is-invalid': invalid })}
           classNamePrefix="react-select"
           placeholder="Select one"
           loadingMessage={() => 'Loading more...'}
