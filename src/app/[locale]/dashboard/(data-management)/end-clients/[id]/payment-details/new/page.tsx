@@ -15,7 +15,7 @@ export default function NewEndClientPaymentDetail({ params }: { params: { id: st
   return (
     <>
       <PageTitle title={t('newPaymentDetail')} />
-      <EndClientPaymentDetailForm methods={methods} onSubmit={onSubmit} />
+      <EndClientPaymentDetailForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
     </>
   )
 }

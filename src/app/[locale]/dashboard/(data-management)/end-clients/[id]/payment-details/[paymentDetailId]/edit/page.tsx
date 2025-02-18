@@ -26,7 +26,7 @@ export default function UpdateEndClientPaymentDetail({
       {isLoading ? (
         <Loading />
       ) : (
-        <EndClientPaymentDetailForm methods={methods} onSubmit={onSubmit} />
+        <EndClientPaymentDetailForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
       )}
     </>
   )
