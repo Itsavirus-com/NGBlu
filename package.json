@@ -1,6 +1,6 @@
 {
   "name": "infraorders",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --ignore-unknown --write .",
-    "clean": "rm -rf node_modules .next && npm install"
+    "clean": "rm -rf node_modules .next && npm install",
+    "commit": "git-cz",
+    "release": "standard-version"
   },
   "engines": {
     "node": ">=20",
@@ -57,11 +59,19 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-flatpickr": "^3.8.11",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.17.0",
     "eslint-config-next": "^15.1.2",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
     "prettier": "3.2.5",
+    "standard-version": "^9.5.0",
     "typescript": "5.3.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
