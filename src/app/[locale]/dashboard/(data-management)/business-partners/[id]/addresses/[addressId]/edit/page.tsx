@@ -26,7 +26,7 @@ export default function UpdateBusinessPartnerAddress({
       {isLoading ? (
         <Loading />
       ) : (
-        <BusinessPartnerAddressForm methods={methods} onSubmit={onSubmit} />
+        <BusinessPartnerAddressForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
       )}
     </>
   )

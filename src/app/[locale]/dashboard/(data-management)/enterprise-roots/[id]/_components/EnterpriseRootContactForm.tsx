@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 import { UseFormReturn } from 'react-hook-form'
 
+import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledSelect } from '@/components/forms/select'
 import { Contact } from '@/services/swr/models/contact.type'
@@ -61,8 +62,10 @@ export function EnterpriseRootContactFormFields({
               containerClass="mb-3"
               apiPath={'organisational-units'}
               option={{ label: row => row.name, value: row => row.id }}
-              filter={{ enterpriseRootId }}
+              filter={{ enterpriseRootId: enterpriseRootId }}
             />
+
+            <FormButtons />
           </CardBody>
         </Card>
       </div>

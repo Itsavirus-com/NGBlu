@@ -15,7 +15,7 @@ export default function NewBusinessPartnerAddress({ params }: { params: { id: st
   return (
     <>
       <PageTitle title={t('newAddress')} />
-      <BusinessPartnerAddressForm methods={methods} onSubmit={onSubmit} />
+      <BusinessPartnerAddressForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
     </>
   )
 }
