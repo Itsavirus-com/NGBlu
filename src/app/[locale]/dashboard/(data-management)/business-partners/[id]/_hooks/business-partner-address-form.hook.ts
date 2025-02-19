@@ -44,8 +44,12 @@ export default function useBusinessPartnerAddressForm(
         invalidateCache()
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if ('addressId' in error?.errors?.detail) {
+        showToast({ variant: 'danger', body: error?.errors?.detail?.addressId })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 

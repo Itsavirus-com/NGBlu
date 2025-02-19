@@ -34,7 +34,7 @@ export function EnterpriseRootUserForm({
               name="userId"
               containerClass="mb-3"
               apiPath={'users'}
-              option={{ label: row => row.displayName, value: row => row.id }}
+              option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
               isRequired
             />
             <ControlledSelect<Person>

@@ -5,8 +5,8 @@ import { useTranslations } from 'next-intl'
 import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 
+import BusinessPartnerUserForm from '../../../_components/BusinessPartnerUserForm'
 import useBusinessPartnerUserForm from '../../../_hooks/business-partner-user-form.hook'
-import BusinessPartnerUserForm from '../../_components/BusinessPartnerUserForm'
 
 export default function UpdateBusinessPartnerUser({
   params,
@@ -23,7 +23,11 @@ export default function UpdateBusinessPartnerUser({
   return (
     <>
       <PageTitle title={t('updateUser')} />
-      {isLoading ? <Loading /> : <BusinessPartnerUserForm methods={methods} onSubmit={onSubmit} />}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <BusinessPartnerUserForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
+      )}
     </>
   )
 }
