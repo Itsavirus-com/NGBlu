@@ -3,6 +3,8 @@
 ## Overview
 
 **IO2 Frontend** is a modern web application built for enterprise data management. This project provides a comprehensive dashboard for managing end clients, business partners, companies, and addresses with a robust user management system. This project is built using:
+
+### Tech stack
 - **Framework:** Next.js 14 with App Router
 - **Language:** TypeScript
 - **Data Fetching:** SWR for API data fetching and caching
@@ -14,7 +16,7 @@
 
 ## Features
 
-- **Data Management Dashboard**
+### 1. Data Management Dashboard
   - Users Management
   - Payments Management
   - Packages Management
@@ -31,7 +33,7 @@
   - Price Management
   - Person Management
   - Settings Management
-- **Data Validation**
+### 2. Data Validation
   - KVK
   - Google
 
@@ -48,7 +50,7 @@ Clone the repository and install dependencies:
 
 ```bash
 # Clone the repo
-git clone [repository-url]
+git clone git@bitbucket.org:infraorders2/io2-frontend.git
 cd io2-frontend
 
 # Install dependencies
