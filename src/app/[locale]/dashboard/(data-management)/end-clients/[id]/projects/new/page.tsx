@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl'
 
 import { PageTitle } from '@/components/page-title'
 
+import EndClientProjectForm from '../../_components/EndClientProjectForm'
 import useEndClientProjectForm from '../../_hooks/end-client-project-form.hook'
-import EndClientProjectForm from '../_components/EndClientProjectForm'
 
 export default function NewEndClientProject({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.endClients.projects')
@@ -15,7 +15,7 @@ export default function NewEndClientProject({ params }: { params: { id: string }
   return (
     <>
       <PageTitle title={t('newProject')} />
-      <EndClientProjectForm methods={methods} onSubmit={onSubmit} />
+      <EndClientProjectForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
     </>
   )
 }
