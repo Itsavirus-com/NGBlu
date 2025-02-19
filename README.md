@@ -57,6 +57,12 @@ cd io2-frontend
 npm install  # or yarn install
 ```
 
+## Environment Variables
+
+Create a `.env.local` file in the root directory and add the following variables from `.env.example` file.
+
+Note: For production, make sure to set appropriate values for each environment variable. Never commit the `.env.local` file to version control.
+
 ## Running the Project
 
 Start the development server:
