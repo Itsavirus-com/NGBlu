@@ -34,15 +34,6 @@
       background-color: var(--bs-primary);
       color: white;
     }
-
-    &--is-selected {
-      background-color: var(--bs-primary-rgb);
-    }
-
-    &:active {
-      background-color: var(--bs-primary);
-      color: white;
-    }
   }
 
   .react-select__single-value {
