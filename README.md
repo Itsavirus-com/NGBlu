@@ -2,10 +2,7 @@
 
 ## Overview
 
-**IO2 Frontend** is a modern web application built for enterprise data management. This project provides a comprehensive dashboard for managing end clients, business partners, companies, and addresses with a robust user management system.
-
-## Tech Stack
-
+**IO2 Frontend** is a modern web application built for enterprise data management. This project provides a comprehensive dashboard for managing end clients, business partners, companies, and addresses with a robust user management system. This project is built using:
 - **Framework:** Next.js 14 with App Router
 - **Language:** TypeScript
 - **Data Fetching:** SWR for API data fetching and caching
