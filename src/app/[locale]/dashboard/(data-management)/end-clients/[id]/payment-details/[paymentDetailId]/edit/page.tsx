@@ -15,10 +15,8 @@ export default function UpdateEndClientPaymentDetail({
 }) {
   const t = useTranslations('dataManagement.endClients.paymentDetails')
 
-  const { methods, onSubmit, isLoading } = useEndClientPaymentDetailForm(
-    Number(params.id),
-    Number(params.paymentDetailId)
-  )
+  const { methods, onSubmit, isLoading, handleChange, errorMessageInputType } =
+    useEndClientPaymentDetailForm(Number(params.id), Number(params.paymentDetailId))
 
   return (
     <>
@@ -26,7 +24,13 @@ export default function UpdateEndClientPaymentDetail({
       {isLoading ? (
         <Loading />
       ) : (
-        <EndClientPaymentDetailForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
+        <EndClientPaymentDetailForm
+          methods={methods}
+          onSubmit={onSubmit}
+          id={Number(params.id)}
+          handleChange={handleChange}
+          errorMessageInputType={errorMessageInputType}
+        />
       )}
     </>
   )

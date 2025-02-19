@@ -1,7 +1,8 @@
 import { useTranslations } from 'next-intl'
-import { Card, CardBody } from 'react-bootstrap'
+import { Card, CardBody, FormLabel } from 'react-bootstrap'
 import { UseFormReturn } from 'react-hook-form'
 
+import { ControlledSwitch } from '@/components/forms/checkbox'
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledSelect } from '@/components/forms/select'
@@ -13,16 +14,24 @@ interface EndClientPaymentDetailFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
   id: number
+  handleChange: (value: 'businesspartnerId' | 'enterpriseRootId') => void
+  errorMessageInputType?: string
 }
 
-const EndClientPaymentDetailForm = ({ methods, onSubmit, id }: EndClientPaymentDetailFormProps) => {
+const EndClientPaymentDetailForm = ({
+  methods,
+  onSubmit,
+  id,
+  handleChange,
+  errorMessageInputType,
+}: EndClientPaymentDetailFormProps) => {
   const t = useTranslations('dataManagement.endClients.paymentDetails')
 
   const paymentInfoLabel = (row: Payment): string => {
-    if (row.paymentType.id === 1) {
-      return `${row.paymentType.paymentType} - ${row.person.firstname} ${row.person.lastname} - ${row.bankname} - ${row.bankIban}`
+    if (row?.paymentType?.id === 1) {
+      return `${row?.paymentType?.paymentType} - ${row?.person?.firstname} ${row?.person?.lastname} - ${row?.bankname} - ${row?.bankIban}`
     }
-    return `${row.paymentType.paymentType} - ${row.person.firstname} ${row.person.lastname} - ${row.creditCardBrand.brandname} - ${row.creditcardNumber}`
+    return `${row?.paymentType?.paymentType} - ${row?.person?.firstname} ${row?.person?.lastname} - ${row?.creditCardBrand?.brandname} - ${row?.creditcardNumber}`
   }
 
   return (
@@ -30,26 +39,54 @@ const EndClientPaymentDetailForm = ({ methods, onSubmit, id }: EndClientPaymentD
       <div className="app-container container-fluid">
         <Card>
           <CardBody>
-            <ControlledSelect<EnterpriseRoot>
-              label={t('enterpriseRoot')}
-              name="enterpriseRootId"
-              containerClass="mb-3"
-              apiPath="enterprise-roots"
-              option={{ label: row => row.name, value: row => row.id }}
-              // filter={{
-              //   endclientId: id,
-              // }}
-              isRequired
-            />
+            <FormLabel className="mb-2 fw-bold">
+              Choose the Option <span className="text-danger">*</span>
+            </FormLabel>
+            <div className="d-flex gap-3">
+              <ControlledSwitch
+                type="radio"
+                label={t('businessPartner')}
+                name="inputType"
+                containerClass="mb-3"
+                value={'businesspartnerId'}
+                onChange={() => handleChange('businesspartnerId')}
+              />
+              <ControlledSwitch
+                type="radio"
+                label={t('enterpriseRoot')}
+                name="inputType"
+                containerClass="mb-3"
+                value={'enterpriseRootId'}
+                onChange={() => handleChange('enterpriseRootId')}
+              />
+            </div>
+            {errorMessageInputType && (
+              <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
+            )}
 
-            <ControlledSelect<BusinessPartner>
-              label={t('businessPartner')}
-              name="businesspartnerId"
-              containerClass="mb-3"
-              apiPath="business-partners"
-              option={{ label: row => row.name, value: row => row.id }}
-              isRequired
-            />
+            {methods.watch('inputType') === 'enterpriseRootId' && (
+              <ControlledSelect<EnterpriseRoot>
+                label={t('enterpriseRoot')}
+                name="enterpriseRootId"
+                containerClass="mb-3"
+                apiPath={`end-clients/${id}/enterprise-roots`}
+                option={{ label: row => row.name, value: row => row.id }}
+                isRequired
+                isSelectedIdWithParams
+              />
+            )}
+
+            {methods.watch('inputType') === 'businesspartnerId' && (
+              <ControlledSelect<BusinessPartner>
+                label={t('businessPartner')}
+                name="businesspartnerId"
+                containerClass="mb-3"
+                apiPath={`end-clients/${id}/business-partners`}
+                option={{ label: row => row.name, value: row => row.id }}
+                isRequired
+                isSelectedIdWithParams
+              />
+            )}
 
             <ControlledSelect<Payment>
               label={t('paymentInfo')}
@@ -60,9 +97,14 @@ const EndClientPaymentDetailForm = ({ methods, onSubmit, id }: EndClientPaymentD
               isRequired
               disabled={!methods.watch('enterpriseRootId') && !methods.watch('businesspartnerId')}
               filter={{
-                enterpriseRootId: methods.watch('enterpriseRootId'),
-                businesspartnerId: methods.watch('businesspartnerId'),
+                ...(methods.watch('inputType') === 'enterpriseRootId' && {
+                  enterpriseRootId: methods.watch('enterpriseRootId'),
+                }),
+                ...(methods.watch('inputType') === 'businesspartnerId' && {
+                  businesspartnerId: methods.watch('businesspartnerId'),
+                }),
               }}
+              isSelectedIdWithParams
             />
 
             <FormButtons />
