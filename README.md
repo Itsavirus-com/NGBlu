@@ -5,6 +5,7 @@
 **IO2 Frontend** is a modern web application built for enterprise data management. This project provides a comprehensive dashboard for managing end clients, business partners, companies, and addresses with a robust user management system. This project is built using:
 
 ### Tech stack
+
 - **Framework:** Next.js 14 with App Router
 - **Language:** TypeScript
 - **Data Fetching:** SWR for API data fetching and caching
@@ -17,25 +18,28 @@
 ## Features
 
 ### 1. Data Management Dashboard
-  - Users Management
-  - Payments Management
-  - Packages Management
-  - Organization Units Management
-  - Enterprise Roots Management
-  - End Clients Management
-  - Companies Management
-  - Business Partners Management
-  - Addresses Management
-  - Settings Management
-  - Service Management
-  - Project Management
-  - Product Management
-  - Price Management
-  - Person Management
-  - Settings Management
+
+- Users Management
+- Payments Management
+- Packages Management
+- Organization Units Management
+- Enterprise Roots Management
+- End Clients Management
+- Companies Management
+- Business Partners Management
+- Addresses Management
+- Settings Management
+- Service Management
+- Project Management
+- Product Management
+- Price Management
+- Person Management
+- Settings Management
+
 ### 2. Data Validation
-  - KVK
-  - Google
+
+- KVK
+- Google
 
 ## Prerequisites
 

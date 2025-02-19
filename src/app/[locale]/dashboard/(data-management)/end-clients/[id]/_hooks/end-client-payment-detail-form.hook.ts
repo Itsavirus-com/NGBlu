@@ -27,6 +27,8 @@ export default function useEndClientPaymentDetailForm(
     resolver: yupResolver(schema),
     values: endClientPaymentDetail && {
       paymentInfoId: endClientPaymentDetail?.paymentInfoId ?? null,
+      enterpriseRootId: endClientPaymentDetail?.enterpriseRootId ?? null,
+      businesspartnerId: endClientPaymentDetail?.businesspartnerId ?? null,
     },
   })
 
