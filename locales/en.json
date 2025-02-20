@@ -634,7 +634,8 @@
         "longitude": "Longitude",
         "googleAddressId": "Google Address ID",
         "businessPartner": "Business Partner",
-        "enterpriseRoot": "Enterprise Root"
+        "enterpriseRoot": "Enterprise Root",
+        "chooseOption": "Choose the Option"
       },
       "projects": {
         "title": "End Client Projects",

@@ -40,7 +40,7 @@ const EndClientPaymentDetailForm = ({
         <Card>
           <CardBody>
             <FormLabel className="mb-2 fw-bold">
-              Choose the Option <span className="text-danger">*</span>
+              {t('chooseOption')} <span className="text-danger">*</span>
             </FormLabel>
             <div className="d-flex gap-3">
               <ControlledSwitch

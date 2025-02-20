@@ -60,11 +60,13 @@ export const useSelect = <OptionValue extends Record<string, any>>({
 
   const options = [
     { value: '0', label: 'Select one', data: null },
-    ...allData.map(item => ({
-      value: String(option.value(item)),
-      label: `${item.id} | ${option.label(item)}`,
-      data: item,
-    })),
+    ...(allData?.length
+      ? allData.map(item => ({
+          value: String(option.value(item)),
+          label: `${item.id} | ${option.label(item)}`,
+          data: item,
+        }))
+      : []),
   ]
 
   const selectedOption = formatSelectedOption(detailData, field.value, option, options)

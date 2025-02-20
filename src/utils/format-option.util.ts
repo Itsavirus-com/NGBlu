@@ -27,11 +27,22 @@ export interface Option {
  * };
  * formatOption(item, option); // { value: "1", label: "1 | John", data: item }
  */
-export const formatOption = (item: any, option: Option) => ({
-  value: String(option.value(item)),
-  label: `${item.id} | ${option.label(item)}`,
-  data: item,
-})
+export const formatOption = (item: any, option: Option) => {
+  // Check if item is valid and has required properties
+  if (!item || typeof item !== 'object' || !('id' in item)) {
+    return null
+  }
+
+  try {
+    return {
+      value: String(option.value(item)),
+      label: `${item.id} | ${option.label(item)}`,
+      data: item,
+    }
+  } catch (error) {
+    return null
+  }
+}
 
 /**
  * Formats a selected option based on detail data and field value
@@ -55,7 +66,8 @@ export const formatSelectedOption = (
   option: Option,
   options: any[]
 ) => {
-  if (!detailData) {
+  // Handle empty or invalid detailData
+  if (!detailData || (Array.isArray(detailData) && detailData.length === 0)) {
     return fieldValue ? options.find(opt => opt.value === String(fieldValue)) : null
   }
 
@@ -66,10 +78,10 @@ export const formatSelectedOption = (
   const hasNumericKeys = Object.keys(detailData).some(key => !isNaN(Number(key)))
   if (hasNumericKeys) {
     const dataArray = Object.values(detailData)
-    const matchingItem =
-      dataArray.find(item => String(option.value(item)) === String(fieldValue)) || dataArray[0]
-    return formatOption(matchingItem, option)
+    const matchingItem = dataArray.find(item => String(option.value(item)) === String(fieldValue))
+    return matchingItem ? formatOption(matchingItem, option) : null
   }
 
-  return formatOption(detailData, option)
+  const formattedOption = formatOption(detailData, option)
+  return formattedOption || null
 }
