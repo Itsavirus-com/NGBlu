@@ -30,7 +30,7 @@ export const useOptionDataById = <OptionValue extends AnyObject>(
       isSelectedIdWithParams
         ? {
             path: `${path}`,
-            params: { id: identifier },
+            params,
           }
         : {
             path: `${path}/${identifier}`,

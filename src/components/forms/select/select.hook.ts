@@ -7,6 +7,7 @@ import { Option, formatSelectedOption } from '@/utils/format-option.util'
 interface UseSelectProps<OptionValue> {
   name: string
   apiPath: string
+  apiPathSelected?: string
   option: Option
   filter?: Record<string, any>
   onChange?: (value: string | number | null, optionData?: OptionValue | null) => void
@@ -16,6 +17,7 @@ interface UseSelectProps<OptionValue> {
 export const useSelect = <OptionValue extends Record<string, any>>({
   name,
   apiPath,
+  apiPathSelected,
   option,
   filter,
   onChange,
@@ -43,8 +45,8 @@ export const useSelect = <OptionValue extends Record<string, any>>({
     },
   })
 
-  const { data: detailData, isLoading: isLoadingOptionsById } = useOptionDataById<OptionValue>(
-    apiPath,
+  const { data: detailData } = useOptionDataById<OptionValue>(
+    apiPathSelected ? apiPathSelected : apiPath,
     field.value,
     isSelectedIdWithParams,
     { ...filter, id: field.value }
@@ -87,7 +89,7 @@ export const useSelect = <OptionValue extends Record<string, any>>({
   return {
     options,
     selectedOption,
-    isLoading: isLoadingOptions || isLoadingOptionsById,
+    isLoading: isLoadingOptions,
     isLoadingInfinity,
     invalid,
     error,

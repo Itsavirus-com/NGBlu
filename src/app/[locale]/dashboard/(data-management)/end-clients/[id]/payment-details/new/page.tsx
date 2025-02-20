@@ -10,9 +10,8 @@ import useEndClientPaymentDetailForm from '../../_hooks/end-client-payment-detai
 export default function NewEndClientPaymentDetail({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.endClients.paymentDetails')
 
-  const { methods, onSubmit, handleChange, errorMessageInputType } = useEndClientPaymentDetailForm(
-    Number(params.id)
-  )
+  const { methods, onSubmit, handleChange, errorMessageInputType, paymentType } =
+    useEndClientPaymentDetailForm(Number(params.id))
 
   return (
     <>
@@ -23,6 +22,7 @@ export default function NewEndClientPaymentDetail({ params }: { params: { id: st
         id={Number(params.id)}
         handleChange={handleChange}
         errorMessageInputType={errorMessageInputType}
+        paymentType={paymentType || ''}
       />
     </>
   )

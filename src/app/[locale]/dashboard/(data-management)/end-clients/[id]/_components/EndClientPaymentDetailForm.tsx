@@ -16,6 +16,7 @@ interface EndClientPaymentDetailFormProps {
   id: number
   handleChange: (value: 'businesspartnerId' | 'enterpriseRootId') => void
   errorMessageInputType?: string
+  paymentType: string
 }
 
 const EndClientPaymentDetailForm = ({
@@ -24,6 +25,7 @@ const EndClientPaymentDetailForm = ({
   id,
   handleChange,
   errorMessageInputType,
+  paymentType,
 }: EndClientPaymentDetailFormProps) => {
   const t = useTranslations('dataManagement.endClients.paymentDetails')
 
@@ -93,6 +95,7 @@ const EndClientPaymentDetailForm = ({
               name="paymentInfoId"
               containerClass="mb-3"
               apiPath={'payments/details'}
+              apiPathSelected={`payments/details/${paymentType.toLowerCase() === 'bank' ? 'bank' : 'credit-card'}`}
               option={{ label: paymentInfoLabel, value: row => row.id }}
               isRequired
               disabled={!methods.watch('enterpriseRootId') && !methods.watch('businesspartnerId')}
@@ -104,7 +107,6 @@ const EndClientPaymentDetailForm = ({
                   businesspartnerId: methods.watch('businesspartnerId'),
                 }),
               }}
-              isSelectedIdWithParams
             />
 
             <FormButtons />

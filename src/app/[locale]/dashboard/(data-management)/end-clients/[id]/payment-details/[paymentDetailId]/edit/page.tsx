@@ -15,7 +15,7 @@ export default function UpdateEndClientPaymentDetail({
 }) {
   const t = useTranslations('dataManagement.endClients.paymentDetails')
 
-  const { methods, onSubmit, isLoading, handleChange, errorMessageInputType } =
+  const { methods, onSubmit, isLoading, handleChange, errorMessageInputType, paymentType } =
     useEndClientPaymentDetailForm(Number(params.id), Number(params.paymentDetailId))
 
   return (
@@ -30,6 +30,7 @@ export default function UpdateEndClientPaymentDetail({
           id={Number(params.id)}
           handleChange={handleChange}
           errorMessageInputType={errorMessageInputType}
+          paymentType={paymentType || ''}
         />
       )}
     </>

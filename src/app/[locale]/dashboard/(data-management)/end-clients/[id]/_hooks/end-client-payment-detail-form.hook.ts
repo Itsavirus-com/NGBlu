@@ -35,6 +35,7 @@ export default function useEndClientPaymentDetailForm(
     },
   })
 
+  const paymentType = endClientPaymentDetail?.paymentInfo?.paymentType?.paymentType
   const errorMessageInputType = methods.formState.errors.inputType?.message
 
   const handleChange = (value: 'businesspartnerId' | 'enterpriseRootId') => {
@@ -94,5 +95,5 @@ export default function useEndClientPaymentDetailForm(
     return addNewEndClientPaymentDetail(submitData)
   }
 
-  return { methods, onSubmit, isLoading, handleChange, errorMessageInputType }
+  return { methods, onSubmit, isLoading, handleChange, errorMessageInputType, paymentType }
 }

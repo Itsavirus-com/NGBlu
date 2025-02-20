@@ -16,6 +16,7 @@ type SelectProps<OptionValue> = {
   filterName?: string
   containerClass?: string
   apiPath: string
+  apiPathSelected?: string
   option: Option
   filter?: Record<string, any>
   onChange?: (value: string | number | null, optionData?: OptionValue | null) => void
@@ -33,6 +34,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     name,
     containerClass,
     apiPath,
+    apiPathSelected,
     option,
     filter,
     isHidden,
@@ -58,6 +60,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     filter,
     onChange,
     isSelectedIdWithParams,
+    apiPathSelected,
   })
 
   if (isHidden && options.length <= 1) {
