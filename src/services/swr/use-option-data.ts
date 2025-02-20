@@ -25,7 +25,6 @@ export const useOptionDataById = <OptionValue extends AnyObject>(
   isSelectedIdWithParams?: boolean,
   params?: OptionDataParams
 ) => {
-  console.log(params, 'params')
   const { data, mutate, isLoading } = useSWR<OptionValue>(
     () =>
       isSelectedIdWithParams

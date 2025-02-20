@@ -35,8 +35,6 @@ export default function useEndClientPaymentDetailForm(
     },
   })
 
-  console.log('object', endClientPaymentDetail?.paymentInfo?.enterpriseRootId)
-  console.log('object2', endClientPaymentDetail?.paymentInfoId)
   const errorMessageInputType = methods.formState.errors.inputType?.message
 
   const handleChange = (value: 'businesspartnerId' | 'enterpriseRootId') => {
