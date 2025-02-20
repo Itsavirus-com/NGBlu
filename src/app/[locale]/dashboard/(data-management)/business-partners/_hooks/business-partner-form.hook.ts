@@ -122,7 +122,6 @@ export default function useBusinessPartnerForm(id?: number) {
 
   const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
-    console.log('submitData', submitData)
 
     if (id) {
       return updateBusinessPartner(submitData)

@@ -27,16 +27,29 @@ export default function useEndClientPaymentDetailForm(
     resolver: yupResolver(schema),
     values: endClientPaymentDetail && {
       paymentInfoId: endClientPaymentDetail?.paymentInfoId ?? null,
-      enterpriseRootId: endClientPaymentDetail?.enterpriseRootId ?? null,
-      businesspartnerId: endClientPaymentDetail?.businesspartnerId ?? null,
+      enterpriseRootId: endClientPaymentDetail?.paymentInfo?.enterpriseRootId ?? null,
+      businesspartnerId: endClientPaymentDetail?.paymentInfo?.businesspartnerId ?? null,
+      inputType: endClientPaymentDetail?.paymentInfo?.enterpriseRootId
+        ? 'enterpriseRootId'
+        : 'businesspartnerId',
     },
   })
+
+  const paymentType = endClientPaymentDetail?.paymentInfo?.paymentType?.paymentType
+  const errorMessageInputType = methods.formState.errors.inputType?.message
+
+  const handleChange = (value: 'businesspartnerId' | 'enterpriseRootId') => {
+    methods.setValue('inputType', value)
+    methods.setValue('businesspartnerId', 0)
+    methods.setValue('enterpriseRootId', 0)
+    methods.setValue('paymentInfoId', 0)
+  }
 
   const addNewEndClientPaymentDetail = async (data: InferType<typeof schema>) => {
     try {
       const res = await endClientPaymentDetailApi.new(endClientId, {
-        ...data,
         endclientId: endClientId,
+        paymentInfoId: data.paymentInfoId,
       })
 
       if (res.ok) {
@@ -44,8 +57,12 @@ export default function useEndClientPaymentDetailForm(
         invalidateCache()
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if ('paymentInfoId' in error?.errors?.detail) {
+        showToast({ variant: 'danger', body: error?.errors?.detail?.paymentInfoId })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
@@ -54,8 +71,8 @@ export default function useEndClientPaymentDetailForm(
 
     try {
       const res = await endClientPaymentDetailApi.update(endClientId, paymentDetailId, {
-        ...data,
         endclientId: endClientId,
+        paymentInfoId: data.paymentInfoId,
       })
 
       if (res.ok) {
@@ -78,5 +95,5 @@ export default function useEndClientPaymentDetailForm(
     return addNewEndClientPaymentDetail(submitData)
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, handleChange, errorMessageInputType, paymentType }
 }

@@ -21,13 +21,20 @@ export const useOptionData = <OptionValue extends AnyObject>(
 
 export const useOptionDataById = <OptionValue extends AnyObject>(
   path: string,
-  identifier: string
+  identifier: string,
+  isSelectedIdWithParams?: boolean,
+  params?: OptionDataParams
 ) => {
   const { data, mutate, isLoading } = useSWR<OptionValue>(
     () =>
-      identifier && {
-        path: `${path}/${identifier}`,
-      },
+      isSelectedIdWithParams
+        ? {
+            path: `${path}`,
+            params,
+          }
+        : {
+            path: `${path}/${identifier}`,
+          },
     {
       use: [modelAdaptor(() => derive({}), 'data')],
     }

@@ -36,7 +36,8 @@
     }
 
     &--is-selected {
-      background-color: var(--bs-primary-rgb);
+      background-color: var(--bs-primary);
+      color: white;
     }
 
     &:active {

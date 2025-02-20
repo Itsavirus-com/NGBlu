@@ -7,10 +7,37 @@ export const schema = yup.object().shape({
     .notOneOf([0], 'Payment info is required'),
   enterpriseRootId: yup
     .number()
-    .required('Enterprise root is required')
-    .notOneOf([0], 'Enterprise root is required'),
+    .nullable()
+    .test({
+      name: 'is-enterpriseRootId-required',
+      test(value, ctx) {
+        if (
+          ctx.parent.inputType === 'enterpriseRootId' &&
+          (value === undefined || value === null || value === 0)
+        ) {
+          return ctx.createError({
+            message: 'Enterprise Root ID is required',
+          })
+        }
+        return true
+      },
+    }),
   businesspartnerId: yup
     .number()
-    .required('Business partner is required')
-    .notOneOf([0], 'Business partner is required'),
+    .nullable()
+    .test({
+      name: 'is-businesspartnerId-required',
+      test(value, ctx) {
+        if (
+          ctx.parent.inputType === 'businesspartnerId' &&
+          (value === undefined || value === null || value === 0)
+        ) {
+          return ctx.createError({
+            message: 'Business Partner ID is required',
+          })
+        }
+        return true
+      },
+    }),
+  inputType: yup.string().required('Please select a valid option'),
 })

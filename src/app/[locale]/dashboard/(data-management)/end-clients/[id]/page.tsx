@@ -15,12 +15,11 @@ import { EndClientProject } from '@/services/swr/models/end-client-project.type'
 import { useEndClient } from '@/services/swr/use-end-client'
 import { safeRender } from '@/utils/safeRender'
 
-
-import { EndClientAddressFilter } from './_components/end-client-address-filter'
-import { EndClientContactFilter } from './_components/end-client-contact-filter'
-import EndClientInfo from './_components/end-client-info'
-import { EndClientPaymentDetailFilter } from './_components/end-client-payment-detail-filter'
-import { EndClientProjectFilter } from './_components/end-client-project-filter'
+import { EndClientAddressFilter } from './_components/EndClientAddressFilter'
+import { EndClientContactFilter } from './_components/EndClientContactFilter'
+import EndClientInfo from './_components/EndClientInfo'
+import { EndClientPaymentDetailFilter } from './_components/EndClientPaymentDetailFilter'
+import { EndClientProjectFilter } from './_components/EndClientProjectFilter'
 
 export default function EndClientDetails({ params }: { params: { id: number } }) {
   const router = useRouter()
