@@ -11,9 +11,10 @@ import { ControlledInput } from '@/components/forms/input'
 interface ProjectTypeFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function ProjectTypeForm({ methods, onSubmit }: ProjectTypeFormProps) {
+export default function ProjectTypeForm({ methods, onSubmit, isSubmitting }: ProjectTypeFormProps) {
   const t = useTranslations('dataManagement.projects.types')
 
   return (
@@ -29,7 +30,7 @@ export default function ProjectTypeForm({ methods, onSubmit }: ProjectTypeFormPr
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

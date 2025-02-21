@@ -9,12 +9,12 @@ import useProductTypeForm from '../_hooks/product-type-form.hook'
 
 export default function NewProductType() {
   const t = useTranslations('dataManagement.products.types')
-  const { methods, onSubmit } = useProductTypeForm()
+  const { methods, onSubmit, isSubmitting } = useProductTypeForm()
 
   return (
     <>
       <PageTitle title={t('newProductType')} />
-      <ProductTypeForm methods={methods} onSubmit={onSubmit} />
+      <ProductTypeForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

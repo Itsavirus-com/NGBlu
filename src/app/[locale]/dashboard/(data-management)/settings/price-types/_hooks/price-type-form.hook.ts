@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { priceTypeApi } from '@/services/api/price-type-api'
@@ -13,8 +14,9 @@ import { schema } from '../_schemas/price-type.schema'
 export default function usePriceTypeForm(priceTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
-  const { data: priceType, mutate: invalidateCache } = usePriceType(priceTypeId)
+  const { data: priceType, mutate: invalidateCache, isLoading } = usePriceType(priceTypeId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -57,11 +59,11 @@ export default function usePriceTypeForm(priceTypeId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (priceTypeId) {
-      return updatePriceType(submitData)
+      return withLoading(() => updatePriceType(submitData))
     }
 
-    return addNewPriceType(submitData)
+    return withLoading(() => addNewPriceType(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

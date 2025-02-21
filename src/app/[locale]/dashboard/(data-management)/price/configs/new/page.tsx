@@ -9,12 +9,12 @@ import usePriceConfigForm from '../_hooks/price-config-form.hook'
 
 export default function NewPriceConfig() {
   const t = useTranslations('dataManagement.prices.configs')
-  const { methods, onSubmit } = usePriceConfigForm()
+  const { methods, onSubmit, isSubmitting } = usePriceConfigForm()
 
   return (
     <>
       <PageTitle title={t('newPriceConfig')} />
-      <PriceConfigForm methods={methods} onSubmit={onSubmit} />
+      <PriceConfigForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

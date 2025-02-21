@@ -14,9 +14,14 @@ import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 interface EnterpriseRootFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function EnterpriseRootForm({ methods, onSubmit }: EnterpriseRootFormProps) {
+export default function EnterpriseRootForm({
+  methods,
+  onSubmit,
+  isSubmitting,
+}: EnterpriseRootFormProps) {
   const t = useTranslations('dataManagement.enterpriseRoots')
 
   return (
@@ -46,7 +51,7 @@ export default function EnterpriseRootForm({ methods, onSubmit }: EnterpriseRoot
               apiPath={'organisational-units'}
               option={{ label: row => row.name, value: row => row.id }}
             />
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

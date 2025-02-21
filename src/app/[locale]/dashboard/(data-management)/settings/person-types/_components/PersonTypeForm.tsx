@@ -11,9 +11,10 @@ import { ControlledInput } from '@/components/forms/input'
 interface PersonTypeFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function PersonTypeForm({ methods, onSubmit }: PersonTypeFormProps) {
+export default function PersonTypeForm({ methods, onSubmit, isSubmitting }: PersonTypeFormProps) {
   const t = useTranslations('dataManagement.personTypes')
 
   return (
@@ -29,7 +30,7 @@ export default function PersonTypeForm({ methods, onSubmit }: PersonTypeFormProp
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

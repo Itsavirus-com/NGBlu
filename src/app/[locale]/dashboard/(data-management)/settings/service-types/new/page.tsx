@@ -9,12 +9,12 @@ import useServiceTypeForm from '../_hooks/service-type-form.hook'
 
 export default function NewServiceType() {
   const t = useTranslations('dataManagement.services.types')
-  const { methods, onSubmit } = useServiceTypeForm()
+  const { methods, onSubmit, isSubmitting } = useServiceTypeForm()
 
   return (
     <>
       <PageTitle title={t('newServiceType')} />
-      <ServiceTypeForm methods={methods} onSubmit={onSubmit} />
+      <ServiceTypeForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

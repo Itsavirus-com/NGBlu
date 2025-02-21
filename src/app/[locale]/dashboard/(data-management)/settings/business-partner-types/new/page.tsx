@@ -9,12 +9,12 @@ import useBusinessPartnerTypeForm from '../_hooks/business-partner-type-form.hoo
 
 export default function NewBusinessPartnerType() {
   const t = useTranslations('dataManagement.businessPartnerTypes')
-  const { methods, onSubmit } = useBusinessPartnerTypeForm()
+  const { methods, onSubmit, isSubmitting } = useBusinessPartnerTypeForm()
 
   return (
     <>
       <PageTitle title={t('newBusinessPartnerType')} />
-      <BusinessPartnerTypeForm methods={methods} onSubmit={onSubmit} />
+      <BusinessPartnerTypeForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

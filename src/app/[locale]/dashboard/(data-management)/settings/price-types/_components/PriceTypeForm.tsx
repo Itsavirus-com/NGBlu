@@ -11,11 +11,11 @@ import { ControlledInput } from '@/components/forms/input'
 interface PriceTypeFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function PriceTypeForm({ methods, onSubmit }: PriceTypeFormProps) {
+export default function PriceTypeForm({ methods, onSubmit, isSubmitting }: PriceTypeFormProps) {
   const t = useTranslations('dataManagement.prices.types')
-
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <div className="app-container container-fluid">
@@ -29,7 +29,7 @@ export default function PriceTypeForm({ methods, onSubmit }: PriceTypeFormProps)
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

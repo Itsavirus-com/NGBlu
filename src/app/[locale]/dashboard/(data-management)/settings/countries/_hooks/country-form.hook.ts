@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { countryApi } from '@/services/api/country-api'
@@ -13,8 +14,9 @@ import { schema } from '../_schemas/country-form.schema'
 export default function useCountryForm(countryId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: country, mutate: invalidateCache } = useCountry(countryId)
+  const { data: country, isLoading, mutate: invalidateCache } = useCountry(countryId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -61,11 +63,11 @@ export default function useCountryForm(countryId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (countryId) {
-      return updateCountry(submitData)
+      return withLoading(() => updateCountry(submitData))
     }
 
-    return addNewCountry(submitData)
+    return withLoading(() => addNewCountry(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }

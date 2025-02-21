@@ -11,9 +11,10 @@ import { ControlledInput } from '@/components/forms/input'
 interface GenderFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function GenderForm({ methods, onSubmit }: GenderFormProps) {
+export default function GenderForm({ methods, onSubmit, isSubmitting }: GenderFormProps) {
   const t = useTranslations('dataManagement.genders')
 
   return (
@@ -29,7 +30,7 @@ export default function GenderForm({ methods, onSubmit }: GenderFormProps) {
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

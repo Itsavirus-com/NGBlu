@@ -11,9 +11,10 @@ import { ControlledInput } from '@/components/forms/input'
 interface ProductTypeFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function ProductTypeForm({ methods, onSubmit }: ProductTypeFormProps) {
+export default function ProductTypeForm({ methods, onSubmit, isSubmitting }: ProductTypeFormProps) {
   const t = useTranslations('dataManagement.products.types')
 
   return (
@@ -29,7 +30,7 @@ export default function ProductTypeForm({ methods, onSubmit }: ProductTypeFormPr
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

@@ -17,9 +17,10 @@ import { PriceUnit } from '@/services/swr/models/price-unit.type'
 interface PriceConfigFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function PriceConfigForm({ methods, onSubmit }: PriceConfigFormProps) {
+export default function PriceConfigForm({ methods, onSubmit, isSubmitting }: PriceConfigFormProps) {
   const t = useTranslations('dataManagement.prices.configs')
 
   return (
@@ -85,7 +86,7 @@ export default function PriceConfigForm({ methods, onSubmit }: PriceConfigFormPr
               </Col>
             </Row>
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

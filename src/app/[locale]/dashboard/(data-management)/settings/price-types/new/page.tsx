@@ -9,12 +9,12 @@ import usePriceTypeForm from '../_hooks/price-type-form.hook'
 
 export default function NewPriceType() {
   const t = useTranslations('dataManagement.prices.types')
-  const { methods, onSubmit } = usePriceTypeForm()
+  const { methods, onSubmit, isSubmitting } = usePriceTypeForm()
 
   return (
     <>
       <PageTitle title={t('newPriceType')} />
-      <PriceTypeForm methods={methods} onSubmit={onSubmit} />
+      <PriceTypeForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

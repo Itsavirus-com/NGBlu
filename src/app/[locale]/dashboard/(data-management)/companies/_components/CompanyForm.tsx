@@ -15,9 +15,10 @@ import { Company } from '@/services/swr/models/company.type'
 interface CompanyFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function CompanyForm({ methods, onSubmit }: CompanyFormProps) {
+export default function CompanyForm({ methods, onSubmit, isSubmitting }: CompanyFormProps) {
   const t = useTranslations('dataManagement.companies')
 
   return (
@@ -98,7 +99,7 @@ export default function CompanyForm({ methods, onSubmit }: CompanyFormProps) {
               </Col>
             </Row>
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

@@ -10,7 +10,9 @@ import usePricePlanForm from '../../_hooks/price-plan-form.hook'
 
 export default function UpdatePricePlan({ params }: { params: { planId: number } }) {
   const t = useTranslations('dataManagement.prices.plans')
-  const { methods, handleChange, onSubmit, isLoading } = usePricePlanForm(Number(params?.planId))
+  const { methods, handleChange, onSubmit, isLoading, isSubmitting } = usePricePlanForm(
+    Number(params?.planId)
+  )
 
   return (
     <>
@@ -18,7 +20,12 @@ export default function UpdatePricePlan({ params }: { params: { planId: number }
       {isLoading ? (
         <Loading />
       ) : (
-        <PricePlanForm methods={methods} onSubmit={onSubmit} handleChange={handleChange} />
+        <PricePlanForm
+          methods={methods}
+          onSubmit={onSubmit}
+          handleChange={handleChange}
+          isSubmitting={isSubmitting}
+        />
       )}
     </>
   )

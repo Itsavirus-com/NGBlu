@@ -10,12 +10,17 @@ import useEnterpriseRootUserForm from '../../_hooks/enterprise-root-user-form.ho
 export default function NewEnterpriseRootUser({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.users')
 
-  const { methods, onSubmit } = useEnterpriseRootUserForm()
+  const { methods, onSubmit, isSubmitting } = useEnterpriseRootUserForm()
 
   return (
     <>
       <PageTitle title={t('newUser')} />
-      <EnterpriseRootUserForm enterpriseRootId={params.id} methods={methods} onSubmit={onSubmit} />
+      <EnterpriseRootUserForm
+        enterpriseRootId={params.id}
+        methods={methods}
+        onSubmit={onSubmit}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }

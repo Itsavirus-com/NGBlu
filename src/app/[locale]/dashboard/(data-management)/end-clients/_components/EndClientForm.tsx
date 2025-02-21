@@ -18,6 +18,7 @@ interface EndClientFormProps {
   onSubmit: (data: any) => void
   isDisplayCompanyInfo: boolean
   setIsDisplayCompanyInfo: (value: boolean) => void
+  isSubmitting: boolean
 }
 
 export default function EndClientForm({
@@ -25,6 +26,7 @@ export default function EndClientForm({
   onSubmit,
   isDisplayCompanyInfo,
   setIsDisplayCompanyInfo,
+  isSubmitting,
 }: EndClientFormProps) {
   const t = useTranslations('dataManagement.endClients')
 
@@ -83,7 +85,7 @@ export default function EndClientForm({
               </Col>
             </Row>
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

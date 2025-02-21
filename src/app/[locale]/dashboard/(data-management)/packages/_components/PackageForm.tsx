@@ -14,9 +14,10 @@ import { PriceConfig } from '@/services/swr/models/price-config.type'
 interface PackageFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function PackageForm({ methods, onSubmit }: PackageFormProps) {
+export default function PackageForm({ methods, onSubmit, isSubmitting }: PackageFormProps) {
   const t = useTranslations('dataManagement.packages')
 
   return (
@@ -48,7 +49,7 @@ export default function PackageForm({ methods, onSubmit }: PackageFormProps) {
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

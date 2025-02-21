@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { productTypeApi } from '@/services/api/product-type-api'
@@ -13,8 +14,9 @@ import { schema } from '../_schemas/product-type.schema'
 export default function useProductTypeForm(productTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
-  const { data: productType, mutate: invalidateCache } = useProductType(productTypeId)
+  const { data: productType, isLoading, mutate: invalidateCache } = useProductType(productTypeId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -57,11 +59,11 @@ export default function useProductTypeForm(productTypeId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (productTypeId) {
-      return updateProductType(submitData)
+      return withLoading(() => updateProductType(submitData))
     }
 
-    return addNewProductType(submitData)
+    return withLoading(() => addNewProductType(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

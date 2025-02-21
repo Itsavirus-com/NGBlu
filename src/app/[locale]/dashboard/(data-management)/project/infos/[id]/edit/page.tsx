@@ -10,12 +10,16 @@ import useProjectInfoForm from '../../_hooks/project-info-form.hook'
 
 export default function UpdateProjectInfo({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.projects.infos')
-  const { methods, onSubmit, isLoading } = useProjectInfoForm(Number(params.id))
+  const { methods, onSubmit, isLoading, isSubmitting } = useProjectInfoForm(Number(params.id))
 
   return (
     <>
       <PageTitle title={t('updateProjectInfo')} />
-      {isLoading ? <Loading /> : <ProjectInfoForm methods={methods} onSubmit={onSubmit} />}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <ProjectInfoForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
+      )}
     </>
   )
 }

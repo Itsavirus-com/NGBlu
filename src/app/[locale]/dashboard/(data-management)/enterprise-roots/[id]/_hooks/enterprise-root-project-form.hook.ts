@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { enterpriseRootProjectApi } from '@/services/api/enterprise-root-project-api'
@@ -15,8 +16,13 @@ export default function useEnterpriseRootProjectForm(projectId?: number) {
   const { id } = useParams()
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
-  const { data: project, mutate: invalidateCache } = useEnterpriseRootProject(Number(id), projectId)
+  const {
+    data: project,
+    isLoading,
+    mutate: invalidateCache,
+  } = useEnterpriseRootProject(Number(id), projectId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -63,15 +69,15 @@ export default function useEnterpriseRootProjectForm(projectId?: number) {
     }
   }
 
-  const onSubmit = (data: InferType<typeof schema>) => {
+  const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
 
     if (projectId) {
-      return updateEnterpriseRootProject(submitData)
+      return withLoading(() => updateEnterpriseRootProject(submitData))
     }
 
-    return addNewEnterpriseRootProject(submitData)
+    return withLoading(() => addNewEnterpriseRootProject(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

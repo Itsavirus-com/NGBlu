@@ -15,9 +15,15 @@ interface PersonContactFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
   handleChange: (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => void
+  isSubmitting: boolean
 }
 
-export function PersonContactForm({ methods, onSubmit, handleChange }: PersonContactFormProps) {
+export function PersonContactForm({
+  methods,
+  onSubmit,
+  handleChange,
+  isSubmitting,
+}: PersonContactFormProps) {
   const t = useTranslations('dataManagement.persons.contacts')
 
   return (
@@ -98,7 +104,7 @@ export function PersonContactForm({ methods, onSubmit, handleChange }: PersonCon
                 isRequired
               />
             )}
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

@@ -29,6 +29,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { enterpriseRootApi } from '@/services/api/enterprise-root-api'
@@ -41,6 +42,7 @@ import { schema } from '../_schemas/enterprise-root-form.schema'
 export default function useEnterpriseRootForm(enterpriseRootId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const {
     data: enterpriseRoot,
@@ -87,15 +89,15 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
     }
   }
 
-  const onSubmit = (data: InferType<typeof schema>) => {
+  const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
 
     if (enterpriseRootId) {
-      return updateEnterpriseRoot(submitData)
+      return withLoading(() => updateEnterpriseRoot(submitData))
     }
 
-    return addNewEnterpriseRoot(submitData)
+    return withLoading(() => addNewEnterpriseRoot(submitData))
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

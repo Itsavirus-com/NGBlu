@@ -8,14 +8,15 @@ import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledSelect } from '@/components/forms/select'
 import { Package } from '@/services/swr/models/package.type'
-import { Service, ServicePriceConfig } from '@/services/swr/models/service.type'
+import { Product, ProductPriceConfig } from '@/services/swr/models/product.type'
 
-interface PackageServiceFormProps {
+interface PackageProductFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export function PackageServiceForm({ methods, onSubmit }: PackageServiceFormProps) {
+export function PackageProductForm({ methods, onSubmit, isSubmitting }: PackageProductFormProps) {
   const t = useTranslations('dataManagement.packages')
 
   return (
@@ -26,29 +27,32 @@ export function PackageServiceForm({ methods, onSubmit }: PackageServiceFormProp
             <ControlledSelect<Package>
               label={t('package')}
               name="packageId"
+              filterName="id"
               containerClass="mb-3"
               apiPath="packages"
               option={{ label: row => row.name, value: row => row.id }}
               disabled
               isRequired
             />
-            <ControlledSelect<Service>
-              label={t('service')}
-              name="serviceId"
+            <ControlledSelect<Product>
+              label={t('product')}
+              name="productId"
+              filterName="id"
               containerClass="mb-3"
-              apiPath="services"
+              apiPath="products"
               option={{ label: row => row.name, value: row => row.id }}
               isRequired
             />
-            <ControlledSelect<ServicePriceConfig>
-              label={t('servicePricingConfig')}
-              name="servicePricingConfigId"
+            <ControlledSelect<ProductPriceConfig>
+              label={t('productPricingConfig')}
+              name="productPricingConfigId"
+              filterName="id"
               containerClass="mb-3"
-              apiPath="services/price-configs"
+              apiPath="products/price-configs"
               option={{ label: row => row.pricePlan.name, value: row => row.id }}
               isRequired
             />
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

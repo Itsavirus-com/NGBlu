@@ -10,12 +10,12 @@ import usePersonAddressForm from '../../_hooks/address-form.hook'
 export default function NewPersonAddress() {
   const t = useTranslations('dataManagement.persons.addresses')
 
-  const { methods, onSubmit } = usePersonAddressForm()
+  const { methods, onSubmit, isSubmitting } = usePersonAddressForm()
 
   return (
     <>
       <PageTitle title={t('newPersonAddress')} />
-      <PersonAddressForm methods={methods} onSubmit={onSubmit} />
+      <PersonAddressForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

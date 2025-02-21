@@ -11,7 +11,7 @@ import useOrganizationUnitForm from '../../_hooks/organization-unit-form.hook'
 export default function UpdateOrganizationUnit({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.organizationUnits')
 
-  const { methods, onSubmit, handleChange, isLoading, errorMessageInputType } =
+  const { methods, onSubmit, handleChange, isLoading, errorMessageInputType, isSubmitting } =
     useOrganizationUnitForm(Number(params.id))
 
   return (
@@ -25,6 +25,7 @@ export default function UpdateOrganizationUnit({ params }: { params: { id: strin
           onSubmit={onSubmit}
           handleChange={handleChange}
           errorMessageInputType={errorMessageInputType}
+          isSubmitting={isSubmitting}
         />
       )}
     </>

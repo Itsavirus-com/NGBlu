@@ -19,12 +19,14 @@ interface BusinessPartnerFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
   enterpriseRootIdValue: number
+  isSubmitting: boolean
 }
 
 export function BusinessPartnerForm({
   methods,
   onSubmit,
   enterpriseRootIdValue,
+  isSubmitting,
 }: BusinessPartnerFormProps) {
   const t = useTranslations('dataManagement.businessPartners')
 
@@ -101,7 +103,7 @@ export function BusinessPartnerForm({
               </Col>
             </Row>
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

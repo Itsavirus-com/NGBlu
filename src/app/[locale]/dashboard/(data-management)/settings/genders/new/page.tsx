@@ -9,12 +9,12 @@ import useGenderForm from '../_hooks/gender-form.hook'
 
 export default function NewGender() {
   const t = useTranslations('dataManagement.genders')
-  const { methods, onSubmit } = useGenderForm()
+  const { methods, onSubmit, isSubmitting } = useGenderForm()
 
   return (
     <>
       <PageTitle title={t('newGender')} />
-      <GenderForm methods={methods} onSubmit={onSubmit} />
+      <GenderForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

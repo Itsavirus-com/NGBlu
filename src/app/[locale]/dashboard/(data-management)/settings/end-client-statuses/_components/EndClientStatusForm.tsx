@@ -11,9 +11,14 @@ import { ControlledInput } from '@/components/forms/input'
 interface EndClientStatusFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function EndClientStatusForm({ methods, onSubmit }: EndClientStatusFormProps) {
+export default function EndClientStatusForm({
+  methods,
+  onSubmit,
+  isSubmitting,
+}: EndClientStatusFormProps) {
   const t = useTranslations('dataManagement.endClientStatuses')
 
   return (
@@ -29,7 +34,7 @@ export default function EndClientStatusForm({ methods, onSubmit }: EndClientStat
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

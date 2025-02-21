@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { businessPartnerUserApi } from '@/services/api/business-partner-user-api'
@@ -13,6 +14,7 @@ import { schema } from '../_schemas/business-partner-user-form.schema'
 export default function useBusinessPartnerUserForm(businessPartnerId: number, userId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const {
     data: user,
@@ -73,11 +75,11 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
     const submitData = omitNullAndUndefined(data)
 
     if (userId) {
-      return updateBusinessPartnerUser(submitData)
+      return withLoading(() => updateBusinessPartnerUser(submitData))
     }
 
-    return addNewBusinessPartnerUser(submitData)
+    return withLoading(() => addNewBusinessPartnerUser(submitData))
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

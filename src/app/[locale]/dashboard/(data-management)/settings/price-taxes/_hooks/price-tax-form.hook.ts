@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { priceTaxApi } from '@/services/api/price-tax-api'
@@ -13,8 +14,9 @@ import { schema } from '../_schemas/price-tax.schema'
 export default function usePriceTaxForm(priceTaxId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
-  const { data: priceTax, mutate: invalidateCache } = usePriceTax(priceTaxId)
+  const { data: priceTax, isLoading, mutate: invalidateCache } = usePriceTax(priceTaxId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -60,11 +62,11 @@ export default function usePriceTaxForm(priceTaxId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (priceTaxId) {
-      return updatePriceTax(submitData)
+      return withLoading(() => updatePriceTax(submitData))
     }
 
-    return addNewPriceTax(submitData)
+    return withLoading(() => addNewPriceTax(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

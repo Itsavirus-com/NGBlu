@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { personTypeApi } from '@/services/api/person-type-api'
@@ -13,8 +14,9 @@ import { schema } from '../_schemas/person-type.schema'
 export default function usePersonTypeForm(personTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: personType, mutate: invalidateCache } = usePersonType(personTypeId)
+  const { data: personType, mutate: invalidateCache, isLoading } = usePersonType(personTypeId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -57,11 +59,11 @@ export default function usePersonTypeForm(personTypeId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (personTypeId) {
-      return updatePersonType(submitData)
+      return withLoading(() => updatePersonType(submitData))
     }
 
-    return addNewPersonType(submitData)
+    return withLoading(() => addNewPersonType(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }

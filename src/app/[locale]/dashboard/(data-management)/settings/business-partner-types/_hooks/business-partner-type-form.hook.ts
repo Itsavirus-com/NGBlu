@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { businessPartnerTypeApi } from '@/services/api/business-partner-type-api'
@@ -13,9 +14,13 @@ import { schema } from '../_schemas/business-partner-type-form.schema'
 export default function useBusinessPartnerTypeForm(businessPartnerTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: businessPartnerType, mutate: invalidateCache } =
-    useBusinessPartnerType(businessPartnerTypeId)
+  const {
+    data: businessPartnerType,
+    isLoading,
+    mutate: invalidateCache,
+  } = useBusinessPartnerType(businessPartnerTypeId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -58,11 +63,11 @@ export default function useBusinessPartnerTypeForm(businessPartnerTypeId?: numbe
     const submitData = omitNullAndUndefined(data)
 
     if (businessPartnerTypeId) {
-      return updateBusinessPartnerType(submitData)
+      return withLoading(() => updateBusinessPartnerType(submitData))
     }
 
-    return addNewBusinessPartnerType(submitData)
+    return withLoading(() => addNewBusinessPartnerType(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }

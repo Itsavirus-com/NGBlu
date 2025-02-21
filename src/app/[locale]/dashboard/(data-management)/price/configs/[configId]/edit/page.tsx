@@ -10,12 +10,16 @@ import usePriceConfigForm from '../../_hooks/price-config-form.hook'
 
 export default function UpdatePriceConfig({ params }: { params: { configId: number } }) {
   const t = useTranslations('dataManagement.prices.configs')
-  const { methods, onSubmit, isLoading } = usePriceConfigForm(Number(params.configId))
+  const { methods, onSubmit, isLoading, isSubmitting } = usePriceConfigForm(Number(params.configId))
 
   return (
     <>
       <PageTitle title={t('updatePriceConfig')} />
-      {isLoading ? <Loading /> : <PriceConfigForm methods={methods} onSubmit={onSubmit} />}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <PriceConfigForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
+      )}
     </>
   )
 }

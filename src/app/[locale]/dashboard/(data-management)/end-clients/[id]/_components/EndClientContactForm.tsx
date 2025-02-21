@@ -14,9 +14,14 @@ import { Person } from '@/services/swr/models/person.type'
 interface EndClientContactFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function EndClientContactForm({ methods, onSubmit }: EndClientContactFormProps) {
+export default function EndClientContactForm({
+  methods,
+  onSubmit,
+  isSubmitting,
+}: EndClientContactFormProps) {
   const t = useTranslations('dataManagement.endClients.contacts')
 
   return (
@@ -53,7 +58,7 @@ export default function EndClientContactForm({ methods, onSubmit }: EndClientCon
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

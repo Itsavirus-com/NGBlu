@@ -15,7 +15,7 @@ export default function UpdateBusinessPartnerContact({
 }) {
   const t = useTranslations('dataManagement.businessPartners.contacts')
 
-  const { methods, onSubmit, isLoading } = useBusinessPartnerContactForm(
+  const { methods, onSubmit, isLoading, isSubmitting } = useBusinessPartnerContactForm(
     Number(params.id),
     Number(params.contactId)
   )
@@ -26,7 +26,11 @@ export default function UpdateBusinessPartnerContact({
       {isLoading ? (
         <Loading />
       ) : (
-        <BusinessPartnerContactForm methods={methods} onSubmit={onSubmit} />
+        <BusinessPartnerContactForm
+          methods={methods}
+          onSubmit={onSubmit}
+          isSubmitting={isSubmitting}
+        />
       )}
     </>
   )

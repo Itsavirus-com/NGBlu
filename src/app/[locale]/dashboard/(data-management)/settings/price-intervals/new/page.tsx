@@ -9,12 +9,12 @@ import usePriceIntervalForm from '../_hooks/price-interval-form.hook'
 
 export default function NewPriceInterval() {
   const t = useTranslations('dataManagement.prices.intervals')
-  const { methods, onSubmit } = usePriceIntervalForm()
+  const { methods, onSubmit, isSubmitting } = usePriceIntervalForm()
 
   return (
     <>
       <PageTitle title={t('newPriceInterval')} />
-      <PriceIntervalForm methods={methods} onSubmit={onSubmit} />
+      <PriceIntervalForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

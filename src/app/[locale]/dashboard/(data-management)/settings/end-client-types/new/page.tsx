@@ -9,12 +9,12 @@ import useEndClientTypeForm from '../_hooks/end-client-type-form.hook'
 
 export default function NewEndClientType() {
   const t = useTranslations('dataManagement.endClientTypes')
-  const { methods, onSubmit } = useEndClientTypeForm()
+  const { methods, onSubmit, isSubmitting } = useEndClientTypeForm()
 
   return (
     <>
       <PageTitle title={t('newEndClientType')} />
-      <EndClientTypeForm methods={methods} onSubmit={onSubmit} />
+      <EndClientTypeForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

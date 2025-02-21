@@ -6,7 +6,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { Person } from '@/services/swr/models/person.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { PersonFilter } from './_components/person-filter'
+import { PersonFilter } from './_components/PersonFilter'
 
 export default function Persons() {
   const t = useTranslations('dataManagement.persons')

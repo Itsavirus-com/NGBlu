@@ -15,12 +15,14 @@ interface EnterpriseRootProjectFormProps {
   enterpriseRootId: number
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
 export function EnterpriseRootProjectForm({
   enterpriseRootId,
   methods,
   onSubmit,
+  isSubmitting,
 }: EnterpriseRootProjectFormProps) {
   const t = useTranslations('dataManagement.enterpriseRoots.projects')
 
@@ -53,7 +55,7 @@ export function EnterpriseRootProjectForm({
               option={{ label: row => row.name, value: row => row.id }}
               filter={{ enterpriseRootId }}
             />
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

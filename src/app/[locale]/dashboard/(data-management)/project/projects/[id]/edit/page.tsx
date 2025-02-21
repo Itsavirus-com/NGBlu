@@ -17,6 +17,7 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
     handleFilterOrganizationUnit,
     isLoading,
     errorMessageInputType,
+    isSubmitting,
   } = useProjectForm(Number(params.id))
 
   return (
@@ -31,6 +32,7 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
           handleChange={handleChange}
           handleFilterOrganizationUnit={handleFilterOrganizationUnit}
           errorMessageInputType={errorMessageInputType}
+          isSubmitting={isSubmitting}
         />
       )}
     </>

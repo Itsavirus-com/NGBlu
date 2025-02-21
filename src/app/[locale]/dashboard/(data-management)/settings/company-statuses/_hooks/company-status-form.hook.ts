@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { companyStatusApi } from '@/services/api/company-status-api'
@@ -13,8 +14,13 @@ import { schema } from '../_schemas/company-status.schema'
 export default function useCompanyStatusForm(companyStatusId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: companyStatus, mutate: invalidateCache } = useCompanyStatus(companyStatusId)
+  const {
+    data: companyStatus,
+    isLoading,
+    mutate: invalidateCache,
+  } = useCompanyStatus(companyStatusId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -57,11 +63,11 @@ export default function useCompanyStatusForm(companyStatusId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (companyStatusId) {
-      return updateCompanyStatus(submitData)
+      return withLoading(() => updateCompanyStatus(submitData))
     }
 
-    return addNewCompanyStatus(submitData)
+    return withLoading(() => addNewCompanyStatus(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }

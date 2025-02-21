@@ -15,12 +15,14 @@ interface EnterpriseRootAddressFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
   enterpriseRootId: string
+  isSubmitting: boolean
 }
 
 export function EnterpriseRootAddressForm({
   methods,
   onSubmit,
   enterpriseRootId,
+  isSubmitting,
 }: EnterpriseRootAddressFormProps) {
   const t = useTranslations('dataManagement.enterpriseRoots.addresses')
 
@@ -54,7 +56,7 @@ export function EnterpriseRootAddressForm({
               filter={{ enterpriseRootId }}
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

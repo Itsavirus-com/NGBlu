@@ -14,12 +14,14 @@ interface EnterpriseRootContactFormFieldsProps {
   methods: UseFormReturn<any>
   enterpriseRootId: string
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
 export function EnterpriseRootContactFormFields({
   methods,
   enterpriseRootId,
   onSubmit,
+  isSubmitting,
 }: EnterpriseRootContactFormFieldsProps) {
   const t = useTranslations('dataManagement.enterpriseRoots.contacts')
 
@@ -65,7 +67,7 @@ export function EnterpriseRootContactFormFields({
               filter={{ enterpriseRootId: enterpriseRootId }}
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

@@ -15,12 +15,14 @@ interface BusinessPartnerProjectFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
   id: number
+  isSubmitting: boolean
 }
 
 export default function BusinessPartnerProjectForm({
   methods,
   onSubmit,
   id,
+  isSubmitting,
 }: BusinessPartnerProjectFormProps) {
   const t = useTranslations('dataManagement.businessPartners.projects')
 
@@ -56,7 +58,7 @@ export default function BusinessPartnerProjectForm({
               }}
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

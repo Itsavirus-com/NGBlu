@@ -19,6 +19,7 @@ interface OrganizationUnitFormProps {
   onSubmit: (data: any) => void
   handleChange: (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => void
   errorMessageInputType?: string
+  isSubmitting: boolean
 }
 
 export default function OrganizationUnitForm({
@@ -26,6 +27,7 @@ export default function OrganizationUnitForm({
   onSubmit,
   handleChange,
   errorMessageInputType,
+  isSubmitting,
 }: OrganizationUnitFormProps) {
   const t = useTranslations('dataManagement.organizationUnits')
 
@@ -109,7 +111,7 @@ export default function OrganizationUnitForm({
                 isRequired
               />
             )}
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

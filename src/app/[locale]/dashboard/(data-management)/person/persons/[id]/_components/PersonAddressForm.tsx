@@ -13,9 +13,10 @@ import { Address } from '@/services/swr/models/address.type'
 interface PersonAddressFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export function PersonAddressForm({ methods, onSubmit }: PersonAddressFormProps) {
+export function PersonAddressForm({ methods, onSubmit, isSubmitting }: PersonAddressFormProps) {
   const t = useTranslations('dataManagement.persons.addresses')
 
   return (
@@ -37,7 +38,7 @@ export function PersonAddressForm({ methods, onSubmit }: PersonAddressFormProps)
               containerClass="mb-3"
               className="form-control-solid"
             />
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

@@ -8,7 +8,7 @@ import { PriceConfig } from '@/services/swr/models/price-config.type'
 import { PricePlan } from '@/services/swr/models/price-plan.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { PricePlansFilter } from './_components/price-plan-filter'
+import { PricePlansFilter } from './_components/PricePlanFilter'
 
 export default function PriceCurrencies() {
   const t = useTranslations('dataManagement.prices.plans')

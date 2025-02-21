@@ -19,6 +19,7 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
     onSubmit,
     isLoading,
     errorMessageInputType,
+    isSubmitting,
   } = useProductPriceConfigForm(Number(params.id))
 
   return (
@@ -34,6 +35,7 @@ export default function UpdateProductPriceConfig({ params }: { params: { id: num
           formDateValue={formDateValue}
           setFormDateValue={setFormDateValue}
           errorMessageInputType={errorMessageInputType}
+          isSubmitting={isSubmitting}
         />
       )}
     </>

@@ -17,6 +17,7 @@ interface EndClientPaymentDetailFormProps {
   handleChange: (value: 'businesspartnerId' | 'enterpriseRootId') => void
   errorMessageInputType?: string
   paymentType: string
+  isSubmitting: boolean
 }
 
 const EndClientPaymentDetailForm = ({
@@ -26,6 +27,7 @@ const EndClientPaymentDetailForm = ({
   handleChange,
   errorMessageInputType,
   paymentType,
+  isSubmitting,
 }: EndClientPaymentDetailFormProps) => {
   const t = useTranslations('dataManagement.endClients.paymentDetails')
 
@@ -109,7 +111,7 @@ const EndClientPaymentDetailForm = ({
               }}
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

@@ -11,9 +11,10 @@ import { ControlledInput } from '@/components/forms/input'
 interface PaymentTypeFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function PaymentTypeForm({ methods, onSubmit }: PaymentTypeFormProps) {
+export default function PaymentTypeForm({ methods, onSubmit, isSubmitting }: PaymentTypeFormProps) {
   const t = useTranslations('dataManagement.paymentTypes')
 
   return (
@@ -28,7 +29,7 @@ export default function PaymentTypeForm({ methods, onSubmit }: PaymentTypeFormPr
               className="form-control-solid"
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

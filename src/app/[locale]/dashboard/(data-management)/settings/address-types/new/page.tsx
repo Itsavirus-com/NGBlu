@@ -9,12 +9,12 @@ import useAddressTypeForm from '../_hooks/address-type-form.hook'
 
 export default function NewAddressType() {
   const t = useTranslations('dataManagement.addressTypes')
-  const { methods, onSubmit } = useAddressTypeForm()
+  const { methods, onSubmit, isSubmitting } = useAddressTypeForm()
 
   return (
     <>
       <PageTitle title={t('newAddressType')} />
-      <AddressTypeForm methods={methods} onSubmit={onSubmit} />
+      <AddressTypeForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

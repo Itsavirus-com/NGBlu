@@ -10,7 +10,9 @@ import useServiceForm from '../../_hooks/service-form.hook'
 
 export default function UpdateService({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.services')
-  const { methods, onSubmit, isLoading, handleChange } = useServiceForm(Number(params.id))
+  const { methods, onSubmit, isLoading, handleChange, isSubmitting } = useServiceForm(
+    Number(params.id)
+  )
 
   return (
     <>
@@ -18,7 +20,12 @@ export default function UpdateService({ params }: { params: { id: string } }) {
       {isLoading ? (
         <Loading />
       ) : (
-        <ServiceForm methods={methods} onSubmit={onSubmit} handleChange={handleChange} />
+        <ServiceForm
+          methods={methods}
+          onSubmit={onSubmit}
+          handleChange={handleChange}
+          isSubmitting={isSubmitting}
+        />
       )}
     </>
   )

@@ -11,9 +11,10 @@ import { ControlledInput } from '@/components/forms/input'
 interface ServiceTypeFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function ServiceTypeForm({ methods, onSubmit }: ServiceTypeFormProps) {
+export default function ServiceTypeForm({ methods, onSubmit, isSubmitting }: ServiceTypeFormProps) {
   const t = useTranslations('dataManagement.services.types')
 
   return (
@@ -29,7 +30,7 @@ export default function ServiceTypeForm({ methods, onSubmit }: ServiceTypeFormPr
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

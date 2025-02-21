@@ -9,12 +9,12 @@ import useEndClientStatusForm from '../_hooks/end-client-status-form.hook'
 
 export default function NewEndClientStatus() {
   const t = useTranslations('dataManagement.endClientStatuses')
-  const { methods, onSubmit } = useEndClientStatusForm()
+  const { methods, onSubmit, isSubmitting } = useEndClientStatusForm()
 
   return (
     <>
       <PageTitle title={t('newEndClientStatus')} />
-      <EndClientStatusForm methods={methods} onSubmit={onSubmit} />
+      <EndClientStatusForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

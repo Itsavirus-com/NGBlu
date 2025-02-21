@@ -9,12 +9,12 @@ import usePackageTypeForm from '../_hooks/package-type-form.hook'
 
 export default function NewPackageType() {
   const t = useTranslations('dataManagement.packages.types')
-  const { methods, onSubmit } = usePackageTypeForm()
+  const { methods, onSubmit, isSubmitting } = usePackageTypeForm()
 
   return (
     <>
       <PageTitle title={t('newPackageType')} />
-      <PackageTypeForm methods={methods} onSubmit={onSubmit} />
+      <PackageTypeForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

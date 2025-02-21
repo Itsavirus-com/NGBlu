@@ -10,12 +10,16 @@ import useResponsibilityForm from '../../_hooks/responsibility-form.hook'
 
 export default function UpdatePersonResponsibility({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.personResponsibilities')
-  const { methods, onSubmit, isLoading } = useResponsibilityForm(Number(params.id))
+  const { methods, onSubmit, isLoading, isSubmitting } = useResponsibilityForm(Number(params.id))
 
   return (
     <>
       <PageTitle title={t('updatePersonResponsibility')} />
-      {isLoading ? <Loading /> : <ResponsibilityForm methods={methods} onSubmit={onSubmit} />}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <ResponsibilityForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
+      )}
     </>
   )
 }

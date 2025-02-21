@@ -3,6 +3,7 @@ import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { personContactApi } from '@/services/api/person-contact-api'
@@ -16,6 +17,7 @@ export default function usePersonContactForm(personContactId?: number) {
   const { id } = useParams()
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const {
     data: personContact,
@@ -86,11 +88,11 @@ export default function usePersonContactForm(personContactId?: number) {
   const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
     if (personContactId) {
-      return updatePersonContact(submitData)
+      return withLoading(() => updatePersonContact(submitData))
     }
 
-    return addPersonContact(submitData)
+    return withLoading(() => addPersonContact(submitData))
   }
 
-  return { methods, inputType, onSubmit, handleChange, isLoading }
+  return { methods, inputType, onSubmit, handleChange, isLoading, isSubmitting }
 }

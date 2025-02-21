@@ -10,7 +10,7 @@ import useEnterpriseRootAddressForm from '../../_hooks/enterprise-root-address-f
 export default function NewEnterpriseRoot({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.addresses')
 
-  const { methods, onSubmit } = useEnterpriseRootAddressForm()
+  const { methods, onSubmit, isSubmitting } = useEnterpriseRootAddressForm()
 
   return (
     <>
@@ -20,6 +20,7 @@ export default function NewEnterpriseRoot({ params }: { params: { id: string } }
         methods={methods}
         onSubmit={onSubmit}
         enterpriseRootId={params.id}
+        isSubmitting={isSubmitting}
       />
     </>
   )

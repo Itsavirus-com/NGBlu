@@ -11,9 +11,14 @@ import { ControlledInput } from '@/components/forms/input'
 interface PriceIntervalFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function PriceIntervalForm({ methods, onSubmit }: PriceIntervalFormProps) {
+export default function PriceIntervalForm({
+  methods,
+  onSubmit,
+  isSubmitting,
+}: PriceIntervalFormProps) {
   const t = useTranslations('dataManagement.prices.intervals')
 
   return (
@@ -29,7 +34,7 @@ export default function PriceIntervalForm({ methods, onSubmit }: PriceIntervalFo
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

@@ -13,9 +13,10 @@ import { ContactType } from '@/services/swr/models/contact-type.type'
 interface ContactTypeFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function ContactTypeForm({ methods, onSubmit }: ContactTypeFormProps) {
+export default function ContactTypeForm({ methods, onSubmit, isSubmitting }: ContactTypeFormProps) {
   const t = useTranslations('dataManagement.contactTypes')
 
   return (
@@ -38,7 +39,7 @@ export default function ContactTypeForm({ methods, onSubmit }: ContactTypeFormPr
               apiPath="contacts/types"
               option={{ label: row => row.contactType, value: row => row.id }}
             />
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>
