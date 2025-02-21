@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { personAddressApi } from '@/services/api/person-address-api'
@@ -15,6 +16,7 @@ export default function usePersonAddressForm(personAddressId?: number) {
   const { id } = useParams()
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const {
     data: personAddress,
@@ -70,11 +72,11 @@ export default function usePersonAddressForm(personAddressId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (personAddressId) {
-      return updatePersonAddress(submitData)
+      return withLoading(() => updatePersonAddress(submitData))
     }
 
-    return addPersonAddress(submitData)
+    return withLoading(() => addPersonAddress(submitData))
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

@@ -9,12 +9,12 @@ import useCompanyStatusForm from '../_hooks/company-status-form.hook'
 
 export default function NewCompanyStatus() {
   const t = useTranslations('dataManagement.companyStatuses')
-  const { methods, onSubmit } = useCompanyStatusForm()
+  const { methods, onSubmit, isSubmitting } = useCompanyStatusForm()
 
   return (
     <>
       <PageTitle title={t('newCompanyStatus')} />
-      <CompanyStatusForm methods={methods} onSubmit={onSubmit} />
+      <CompanyStatusForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

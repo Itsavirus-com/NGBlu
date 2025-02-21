@@ -15,7 +15,7 @@ export default function UpdateEndClientProject({
 }) {
   const t = useTranslations('dataManagement.endClients.projects')
 
-  const { methods, onSubmit, isLoading } = useEndClientProjectForm(
+  const { methods, onSubmit, isLoading, isSubmitting } = useEndClientProjectForm(
     Number(params.id),
     Number(params.projectId)
   )
@@ -26,7 +26,12 @@ export default function UpdateEndClientProject({
       {isLoading ? (
         <Loading />
       ) : (
-        <EndClientProjectForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
+        <EndClientProjectForm
+          methods={methods}
+          onSubmit={onSubmit}
+          id={Number(params.id)}
+          isSubmitting={isSubmitting}
+        />
       )}
     </>
   )

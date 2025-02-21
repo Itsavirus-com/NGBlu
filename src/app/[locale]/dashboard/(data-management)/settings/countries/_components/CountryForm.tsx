@@ -11,9 +11,10 @@ import { ControlledInput } from '@/components/forms/input'
 interface CountryFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function CountryForm({ methods, onSubmit }: CountryFormProps) {
+export default function CountryForm({ methods, onSubmit, isSubmitting }: CountryFormProps) {
   const t = useTranslations('dataManagement.countries')
 
   return (
@@ -49,7 +50,7 @@ export default function CountryForm({ methods, onSubmit }: CountryFormProps) {
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

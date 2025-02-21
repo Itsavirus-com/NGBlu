@@ -14,9 +14,10 @@ import { PriceUnit } from '@/services/swr/models/price-unit.type'
 interface PriceTaxFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function PriceTaxForm({ methods, onSubmit }: PriceTaxFormProps) {
+export default function PriceTaxForm({ methods, onSubmit, isSubmitting }: PriceTaxFormProps) {
   const t = useTranslations('dataManagement.prices.taxes')
 
   return (
@@ -57,7 +58,7 @@ export default function PriceTaxForm({ methods, onSubmit }: PriceTaxFormProps) {
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

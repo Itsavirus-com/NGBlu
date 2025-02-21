@@ -9,12 +9,12 @@ import useEnterpriseRootForm from '../_hooks/enterprise-root-form.hook'
 
 export default function NewEnterpriseRoot() {
   const t = useTranslations('dataManagement.enterpriseRoots')
-  const { methods, onSubmit } = useEnterpriseRootForm()
+  const { methods, onSubmit, isSubmitting } = useEnterpriseRootForm()
 
   return (
     <>
       <PageTitle title={t('newEnterpriseRoot')} />
-      <EnterpriseRootForm methods={methods} onSubmit={onSubmit} />
+      <EnterpriseRootForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

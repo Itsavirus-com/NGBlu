@@ -11,9 +11,10 @@ import { ControlledInput } from '@/components/forms/input'
 interface AddressTypeFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function AddressTypeForm({ methods, onSubmit }: AddressTypeFormProps) {
+export default function AddressTypeForm({ methods, onSubmit, isSubmitting }: AddressTypeFormProps) {
   const t = useTranslations('dataManagement.addressTypes')
 
   return (
@@ -29,7 +30,7 @@ export default function AddressTypeForm({ methods, onSubmit }: AddressTypeFormPr
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

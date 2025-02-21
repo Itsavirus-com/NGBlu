@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { addressApi } from '@/services/api/address-api'
@@ -15,6 +16,7 @@ import { schema } from '../_schemas/address-form.schema'
 export default function useAddressForm(addressId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
   const t = useTranslations('dataManagement.addresses')
 
   const { data: address, isLoading, mutate: invalidateCache } = useAddress(addressId)
@@ -100,10 +102,10 @@ export default function useAddressForm(addressId?: number) {
         back()
       }
     } catch (error: any) {
-      if ('lat' in error?.errors?.detail) {
+      if (error?.errors?.detail && 'lat' in error.errors.detail) {
         return showToast({ variant: 'danger', body: 'Invalid latitude' })
       }
-      if ('lng' in error?.errors?.detail) {
+      if (error?.errors?.detail && 'lng' in error.errors.detail) {
         return showToast({ variant: 'danger', body: 'Invalid longitude' })
       }
       showUnexpectedToast()
@@ -122,10 +124,10 @@ export default function useAddressForm(addressId?: number) {
         back()
       }
     } catch (error: any) {
-      if ('lat' in error?.errors?.detail) {
+      if (error?.errors?.detail && 'lat' in error.errors.detail) {
         return showToast({ variant: 'danger', body: 'Invalid latitude' })
       }
-      if ('lng' in error?.errors?.detail) {
+      if (error?.errors?.detail && 'lng' in error.errors.detail) {
         return showToast({ variant: 'danger', body: 'Invalid longitude' })
       }
       showUnexpectedToast()
@@ -136,11 +138,19 @@ export default function useAddressForm(addressId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (addressId) {
-      return updateAddress(submitData)
+      return withLoading(() => updateAddress(submitData))
     }
 
-    return addNewAddress(submitData)
+    return withLoading(() => addNewAddress(submitData))
   }
 
-  return { methods, onSubmit, isLoading, getFormattedAddress, handleLocationSelect }
+  console.log('isSubmitting', isSubmitting)
+  return {
+    methods,
+    onSubmit,
+    isLoading,
+    isSubmitting,
+    getFormattedAddress,
+    handleLocationSelect,
+  }
 }

@@ -9,7 +9,8 @@ import useAddressForm from '../_hooks/address-form.hook'
 
 export default function NewAddress() {
   const t = useTranslations('dataManagement.addresses')
-  const { methods, onSubmit, getFormattedAddress, handleLocationSelect } = useAddressForm()
+  const { methods, onSubmit, getFormattedAddress, handleLocationSelect, isSubmitting } =
+    useAddressForm()
 
   return (
     <>
@@ -19,6 +20,7 @@ export default function NewAddress() {
         onSubmit={onSubmit}
         getFormattedAddress={getFormattedAddress}
         handleLocationSelect={handleLocationSelect}
+        isSubmitting={isSubmitting}
       />
     </>
   )

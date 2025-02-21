@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { priceConfigApi } from '@/services/api/price-config-api'
@@ -13,7 +14,7 @@ import { schema } from '../_schemas/price-config-form.schema'
 export default function usePriceConfigForm(configId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
-
+  const { isLoading: isSubmitting, withLoading } = useLoading()
   const { data: priceConfig, isLoading, mutate: invalidateCache } = usePriceConfig(configId)
 
   const methods = useForm<InferType<typeof schema>>({
@@ -62,11 +63,11 @@ export default function usePriceConfigForm(configId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (configId) {
-      return updateConfig(submitData)
+      return withLoading(() => updateConfig(submitData))
     }
 
-    return addNewConfig(submitData)
+    return withLoading(() => addNewConfig(submitData))
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

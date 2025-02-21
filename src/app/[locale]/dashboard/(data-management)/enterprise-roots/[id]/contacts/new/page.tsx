@@ -9,7 +9,7 @@ import useEnterpriseRootContactForm from '../../_hooks/enterprise-root-contact-f
 export default function NewEnterpriseRootContact({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.contacts')
 
-  const { methods, onSubmit } = useEnterpriseRootContactForm()
+  const { methods, onSubmit, isSubmitting } = useEnterpriseRootContactForm()
 
   return (
     <>
@@ -18,6 +18,7 @@ export default function NewEnterpriseRootContact({ params }: { params: { id: str
         methods={methods}
         enterpriseRootId={params.id}
         onSubmit={onSubmit}
+        isSubmitting={isSubmitting}
       />
     </>
   )

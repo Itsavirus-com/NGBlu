@@ -11,8 +11,14 @@ import useEndClientForm from '../../_hooks/end-client-form.hook'
 export default function UpdateEndClient({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.endClients')
 
-  const { methods, onSubmit, isLoading, isDisplayCompanyInfo, setIsDisplayCompanyInfo } =
-    useEndClientForm(Number(params.id))
+  const {
+    methods,
+    onSubmit,
+    isLoading,
+    isDisplayCompanyInfo,
+    setIsDisplayCompanyInfo,
+    isSubmitting,
+  } = useEndClientForm(Number(params.id))
 
   return (
     <>
@@ -25,6 +31,7 @@ export default function UpdateEndClient({ params }: { params: { id: string } }) 
           onSubmit={onSubmit}
           isDisplayCompanyInfo={isDisplayCompanyInfo}
           setIsDisplayCompanyInfo={setIsDisplayCompanyInfo}
+          isSubmitting={isSubmitting}
         />
       )}
     </>

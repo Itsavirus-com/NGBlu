@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { endClientStatusApi } from '@/services/api/end-client-status-api'
@@ -13,8 +14,9 @@ import { schema } from '../_schemas/end-client-status.schema'
 export default function useEndClientStatusForm(endClientStatusId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: ccType, mutate: invalidateCache } = useEndClientStatus(endClientStatusId)
+  const { data: ccType, isLoading, mutate: invalidateCache } = useEndClientStatus(endClientStatusId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -57,11 +59,11 @@ export default function useEndClientStatusForm(endClientStatusId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (endClientStatusId) {
-      return updateCompanyStatus(submitData)
+      return withLoading(() => updateCompanyStatus(submitData))
     }
 
-    return addNewCompanyStatus(submitData)
+    return withLoading(() => addNewCompanyStatus(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }

@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 
+import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 
 import { EnterpriseRootCustomerForm } from '../../../_components/EnterpriseRootCustomerForm'
@@ -14,16 +15,23 @@ export default function UpdateEnterpriseRootCustomer({
 }) {
   const t = useTranslations('dataManagement.enterpriseRoots.customers')
 
-  const { methods, onSubmit } = useEnterpriseRootCustomerForm(params.customerId)
+  const { methods, onSubmit, isLoading, isSubmitting } = useEnterpriseRootCustomerForm(
+    params.customerId
+  )
 
   return (
     <>
       <PageTitle title={t('updateCustomer')} />
-      <EnterpriseRootCustomerForm
-        enterpriseRootId={params.id}
-        methods={methods}
-        onSubmit={onSubmit}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <EnterpriseRootCustomerForm
+          enterpriseRootId={params.id}
+          methods={methods}
+          onSubmit={onSubmit}
+          isSubmitting={isSubmitting}
+        />
+      )}
     </>
   )
 }

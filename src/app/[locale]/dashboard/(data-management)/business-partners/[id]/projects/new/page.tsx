@@ -10,13 +10,18 @@ import useBusinessPartnerProjectForm from '../../_hooks/business-partner-project
 export default function NewBusinessPartnerProject({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners.projects')
 
-  const { methods, onSubmit } = useBusinessPartnerProjectForm(Number(params.id))
+  const { methods, onSubmit, isSubmitting } = useBusinessPartnerProjectForm(Number(params.id))
 
   return (
     <>
       <PageTitle title={t('newProject')} />
 
-      <BusinessPartnerProjectForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
+      <BusinessPartnerProjectForm
+        methods={methods}
+        onSubmit={onSubmit}
+        id={Number(params.id)}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }

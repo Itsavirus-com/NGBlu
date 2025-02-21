@@ -15,7 +15,7 @@ export default function UpdateBusinessPartnerUser({
 }) {
   const t = useTranslations('dataManagement.businessPartners.users')
 
-  const { methods, onSubmit, isLoading } = useBusinessPartnerUserForm(
+  const { methods, onSubmit, isLoading, isSubmitting } = useBusinessPartnerUserForm(
     Number(params.id),
     Number(params.userId)
   )
@@ -26,7 +26,12 @@ export default function UpdateBusinessPartnerUser({
       {isLoading ? (
         <Loading />
       ) : (
-        <BusinessPartnerUserForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
+        <BusinessPartnerUserForm
+          methods={methods}
+          onSubmit={onSubmit}
+          id={Number(params.id)}
+          isSubmitting={isSubmitting}
+        />
       )}
     </>
   )

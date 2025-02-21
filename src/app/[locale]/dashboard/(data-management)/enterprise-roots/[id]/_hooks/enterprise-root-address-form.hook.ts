@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { enterpriseRootAddressApi } from '@/services/api/enterprise-root-address-api'
@@ -15,8 +16,13 @@ export default function useEnterpriseRootAddressForm(addressId?: number) {
   const { id } = useParams()
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
-  const { data: address, mutate: invalidateCache } = useEnterpriseRootAddress(Number(id), addressId)
+  const {
+    data: address,
+    isLoading,
+    mutate: invalidateCache,
+  } = useEnterpriseRootAddress(Number(id), addressId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -67,11 +73,11 @@ export default function useEnterpriseRootAddressForm(addressId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (addressId) {
-      return updateEnterpriseRootAddress(submitData)
+      return withLoading(() => updateEnterpriseRootAddress(submitData))
     }
 
-    return addNewEnterpriseRootAddress(submitData)
+    return withLoading(() => addNewEnterpriseRootAddress(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

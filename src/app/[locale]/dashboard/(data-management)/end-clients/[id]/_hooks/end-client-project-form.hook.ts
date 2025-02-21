@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { endClientProjectApi } from '@/services/api/end-client-project-api'
@@ -13,6 +14,7 @@ import { schema } from '../_schemas/end-client-project-form.schema'
 export default function useEndClientProjectForm(endClientId: number, projectId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const {
     data: endClientProject,
@@ -67,12 +69,13 @@ export default function useEndClientProjectForm(endClientId: number, projectId?:
 
   const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
+
     if (projectId) {
-      return updateEndClientProject(submitData)
+      return withLoading(() => updateEndClientProject(submitData))
     }
 
-    return addNewEndClientProject(submitData)
+    return withLoading(() => addNewEndClientProject(submitData))
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

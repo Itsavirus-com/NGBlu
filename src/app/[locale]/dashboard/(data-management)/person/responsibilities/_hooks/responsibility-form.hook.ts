@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { personResponsibilityApi } from '@/services/api/person-responsibility-api'
@@ -13,6 +14,7 @@ import { schema } from '../_schemas/responsibility-form.schema'
 export default function useResponsibilityForm(responsibilityId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const {
     data: responsibility,
@@ -23,7 +25,7 @@ export default function useResponsibilityForm(responsibilityId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: responsibility && {
-      responsibility: responsibility?.responsibility,
+      responsibility: responsibility?.responsibility ?? '',
     },
   })
 
@@ -61,11 +63,11 @@ export default function useResponsibilityForm(responsibilityId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (responsibilityId) {
-      return updateResponsibility(submitData)
+      return withLoading(() => updateResponsibility(submitData))
     }
 
-    return addNewResponsibility(submitData)
+    return withLoading(() => addNewResponsibility(submitData))
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

@@ -15,9 +15,15 @@ interface EndClientProjectFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
   id: number
+  isSubmitting: boolean
 }
 
-export default function EndClientProjectForm({ methods, onSubmit, id }: EndClientProjectFormProps) {
+export default function EndClientProjectForm({
+  methods,
+  onSubmit,
+  id,
+  isSubmitting,
+}: EndClientProjectFormProps) {
   const t = useTranslations('dataManagement.endClients.projects')
 
   return (
@@ -53,7 +59,7 @@ export default function EndClientProjectForm({ methods, onSubmit, id }: EndClien
               isHidden
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

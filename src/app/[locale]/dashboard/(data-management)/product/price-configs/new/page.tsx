@@ -16,6 +16,7 @@ export default function NewProductPriceConfig() {
     setFormDateValue,
     onSubmit,
     errorMessageInputType,
+    isSubmitting,
   } = useProductPriceConfigForm()
 
   return (
@@ -28,6 +29,7 @@ export default function NewProductPriceConfig() {
         formDateValue={formDateValue}
         setFormDateValue={setFormDateValue}
         errorMessageInputType={errorMessageInputType}
+        isSubmitting={isSubmitting}
       />
     </>
   )

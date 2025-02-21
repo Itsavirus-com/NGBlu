@@ -11,8 +11,8 @@ import { PackageProduct, PackageService } from '@/services/swr/models/package.ty
 import { usePackage } from '@/services/swr/use-package'
 import { safeRender } from '@/utils/safeRender'
 
-import { PackageProductFilter } from './components/package-product-filter'
-import { PackageServiceFilter } from './components/package-service-filter'
+import { PackageProductFilter } from './_components/PackageProductFilter'
+import { PackageServiceFilter } from './_components/PackageServiceFilter'
 
 export default function PackageDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.packages')

@@ -3,6 +3,7 @@ import { useSearchParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
 import { DASH_REGEX, SLASH_REGEX } from '@/constants/regex'
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { paymentDetailApi } from '@/services/api/payment-api'
@@ -16,6 +17,7 @@ import { schema } from '../_schemas/payment-form.schema'
 export default function usePaymentForm(paymentId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
   const searchParams = useSearchParams()
   const queryParams = getSearchQueryParams(searchParams.toString().toLowerCase())
 
@@ -157,10 +159,10 @@ export default function usePaymentForm(paymentId?: number) {
     })
 
     if (paymentId) {
-      return updatePayment(submitData)
+      return withLoading(() => updatePayment(submitData))
     }
-    return addNewPayment(submitData)
+    return withLoading(() => addNewPayment(submitData))
   }
 
-  return { methods, onSubmit, isLoading, selectedPayment, handleChange }
+  return { methods, onSubmit, isLoading, selectedPayment, handleChange, isSubmitting }
 }

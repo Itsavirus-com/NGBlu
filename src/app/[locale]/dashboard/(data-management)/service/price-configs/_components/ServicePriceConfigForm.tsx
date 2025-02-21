@@ -22,6 +22,7 @@ interface ServicePriceConfigFormProps {
   errorMessageInputType?: string
   businessPartnerId?: number | null
   enterpriseRootId?: number | null
+  isSubmitting: boolean
 }
 
 export function ServicePriceConfigForm({
@@ -33,6 +34,7 @@ export function ServicePriceConfigForm({
   errorMessageInputType,
   businessPartnerId,
   enterpriseRootId,
+  isSubmitting,
 }: ServicePriceConfigFormProps) {
   const t = useTranslations('dataManagement.services.priceConfig')
 
@@ -166,7 +168,7 @@ export function ServicePriceConfigForm({
                 isHidden
               />
             )}
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

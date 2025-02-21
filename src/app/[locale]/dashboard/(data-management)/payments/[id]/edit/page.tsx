@@ -11,9 +11,8 @@ import usePaymentForm from '../../_hooks/payment-form.hook'
 export default function UpdatePayment({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.payments')
 
-  const { methods, onSubmit, isLoading, selectedPayment, handleChange } = usePaymentForm(
-    Number(params.id)
-  )
+  const { methods, onSubmit, isLoading, selectedPayment, handleChange, isSubmitting } =
+    usePaymentForm(Number(params.id))
 
   return (
     <>
@@ -26,6 +25,7 @@ export default function UpdatePayment({ params }: { params: { id: number } }) {
           onSubmit={onSubmit}
           handleChange={handleChange}
           selectedPayment={selectedPayment}
+          isSubmitting={isSubmitting}
         />
       )}
     </>

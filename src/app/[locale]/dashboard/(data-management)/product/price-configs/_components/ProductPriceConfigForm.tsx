@@ -20,6 +20,7 @@ interface ProductPriceConfigFormProps {
   formDateValue: Date | null
   setFormDateValue: (date: Date | null) => void
   errorMessageInputType?: string
+  isSubmitting: boolean
 }
 
 export function ProductPriceConfigForm({
@@ -29,6 +30,7 @@ export function ProductPriceConfigForm({
   formDateValue,
   setFormDateValue,
   errorMessageInputType,
+  isSubmitting,
 }: ProductPriceConfigFormProps) {
   const t = useTranslations('dataManagement.products.priceConfig')
 
@@ -167,7 +169,7 @@ export function ProductPriceConfigForm({
                 }
               />
             )}
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

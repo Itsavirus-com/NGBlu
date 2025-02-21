@@ -9,12 +9,17 @@ import useServiceForm from '../_hooks/service-form.hook'
 
 export default function NewService() {
   const t = useTranslations('dataManagement.services')
-  const { methods, onSubmit, handleChange } = useServiceForm()
+  const { methods, onSubmit, handleChange, isSubmitting } = useServiceForm()
 
   return (
     <>
       <PageTitle title={t('newService')} />
-      <ServiceForm methods={methods} onSubmit={onSubmit} handleChange={handleChange} />
+      <ServiceForm
+        methods={methods}
+        onSubmit={onSubmit}
+        handleChange={handleChange}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }

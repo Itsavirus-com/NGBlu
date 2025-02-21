@@ -9,7 +9,8 @@ import useEndClientForm from '../_hooks/end-client-form.hook'
 
 export default function NewEndClient() {
   const t = useTranslations('dataManagement.endClients')
-  const { methods, onSubmit, isDisplayCompanyInfo, setIsDisplayCompanyInfo } = useEndClientForm()
+  const { methods, onSubmit, isDisplayCompanyInfo, setIsDisplayCompanyInfo, isSubmitting } =
+    useEndClientForm()
 
   return (
     <>
@@ -19,6 +20,7 @@ export default function NewEndClient() {
         onSubmit={onSubmit}
         isDisplayCompanyInfo={isDisplayCompanyInfo}
         setIsDisplayCompanyInfo={setIsDisplayCompanyInfo}
+        isSubmitting={isSubmitting}
       />
     </>
   )

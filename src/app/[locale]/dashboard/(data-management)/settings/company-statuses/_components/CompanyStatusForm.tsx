@@ -11,9 +11,14 @@ import { ControlledInput } from '@/components/forms/input'
 interface CompanyStatusFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function CompanyStatusForm({ methods, onSubmit }: CompanyStatusFormProps) {
+export default function CompanyStatusForm({
+  methods,
+  onSubmit,
+  isSubmitting,
+}: CompanyStatusFormProps) {
   const t = useTranslations('dataManagement.companyStatuses')
 
   return (
@@ -29,7 +34,7 @@ export default function CompanyStatusForm({ methods, onSubmit }: CompanyStatusFo
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

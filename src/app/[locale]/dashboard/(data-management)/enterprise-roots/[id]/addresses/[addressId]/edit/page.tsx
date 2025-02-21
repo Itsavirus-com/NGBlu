@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 
+import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 
 import { EnterpriseRootAddressForm } from '../../../_components/EnterpriseRootAddressForm'
@@ -14,16 +15,23 @@ export default function UpdateEnterpriseRoot({
 }) {
   const t = useTranslations('dataManagement.enterpriseRoots.addresses')
 
-  const { methods, onSubmit } = useEnterpriseRootAddressForm(Number(params.addressId))
+  const { methods, onSubmit, isLoading, isSubmitting } = useEnterpriseRootAddressForm(
+    Number(params.addressId)
+  )
 
   return (
     <>
       <PageTitle title={t('updateAddress')} />
-      <EnterpriseRootAddressForm
-        methods={methods}
-        onSubmit={onSubmit}
-        enterpriseRootId={params.id}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <EnterpriseRootAddressForm
+          methods={methods}
+          onSubmit={onSubmit}
+          enterpriseRootId={params.id}
+          isSubmitting={isSubmitting}
+        />
+      )}
     </>
   )
 }

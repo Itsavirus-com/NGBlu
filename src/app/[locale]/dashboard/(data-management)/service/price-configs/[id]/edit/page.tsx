@@ -21,6 +21,7 @@ export default function UpdateServicePriceConfig({ params }: { params: { id: str
     onSubmit,
     isLoading,
     errorMessageInputType,
+    isSubmitting,
   } = useServicePriceConfigForm(Number(params.id))
 
   return (
@@ -39,6 +40,7 @@ export default function UpdateServicePriceConfig({ params }: { params: { id: str
           errorMessageInputType={errorMessageInputType}
           businessPartnerId={businessPartnerId}
           enterpriseRootId={enterpriseRootId}
+          isSubmitting={isSubmitting}
         />
       )}
     </>

@@ -15,7 +15,7 @@ export default function UpdateEndClientAddress({
 }) {
   const t = useTranslations('dataManagement.endClients.addresses')
 
-  const { methods, onSubmit, isLoading } = useEndClientAddressForm(
+  const { methods, onSubmit, isLoading, isSubmitting } = useEndClientAddressForm(
     Number(params.id),
     Number(params.addressId)
   )
@@ -23,7 +23,11 @@ export default function UpdateEndClientAddress({
   return (
     <>
       <PageTitle title={t('updateAddress')} />
-      {isLoading ? <Loading /> : <EndClientAddressForm methods={methods} onSubmit={onSubmit} />}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <EndClientAddressForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
+      )}
     </>
   )
 }

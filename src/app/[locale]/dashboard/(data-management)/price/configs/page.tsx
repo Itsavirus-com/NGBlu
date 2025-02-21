@@ -7,7 +7,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { PriceConfig } from '@/services/swr/models/price-config.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { PriceConfigFilter } from './_components/price-config-filter'
+import { PriceConfigFilter } from './_components/PriceConfigFilter'
 
 export default function PriceConfigs() {
   const t = useTranslations('dataManagement.prices.configs')

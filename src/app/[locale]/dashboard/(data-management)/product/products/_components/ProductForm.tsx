@@ -16,6 +16,7 @@ interface ProductFormProps {
   onSubmit: (data: any) => void
   handleChange: (value: 'corporateProductOnly' | 'consumerProductOnly') => void
   errorMessageInputType?: string
+  isSubmitting: boolean
 }
 
 export default function ProductForm({
@@ -23,6 +24,7 @@ export default function ProductForm({
   onSubmit,
   handleChange,
   errorMessageInputType,
+  isSubmitting,
 }: ProductFormProps) {
   const t = useTranslations('dataManagement.products')
 
@@ -75,7 +77,7 @@ export default function ProductForm({
               <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
             )}
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

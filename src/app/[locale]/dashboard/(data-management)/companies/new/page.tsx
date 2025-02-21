@@ -9,12 +9,12 @@ import useCompanyForm from '../_hooks/company-form.hook'
 
 export default function NewCompany() {
   const t = useTranslations('dataManagement.companies')
-  const { methods, onSubmit } = useCompanyForm()
+  const { methods, onSubmit, isSubmitting } = useCompanyForm()
 
   return (
     <>
       <PageTitle title={t('newCompany')} />
-      <CompanyForm methods={methods} onSubmit={onSubmit} />
+      <CompanyForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

@@ -6,7 +6,7 @@ import { TableColumn } from '@/components/table/table.type'
 import { PersonResponsibility } from '@/services/swr/models/person-responsibility.type'
 import { safeRender } from '@/utils/safeRender'
 
-import { PersonResponsibilityFilter } from './_components/responsibility-filter'
+import { PersonResponsibilityFilter } from './_components/ResponsibilityFilter'
 
 export default function PersonResponsibilities() {
   const t = useTranslations('dataManagement.personResponsibilities')

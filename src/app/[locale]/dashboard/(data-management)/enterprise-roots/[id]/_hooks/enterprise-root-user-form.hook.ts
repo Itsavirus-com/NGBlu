@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { enterpriseRootUserApi } from '@/services/api/enterprise-root-user-api'
@@ -15,8 +16,13 @@ export default function useEnterpriseRootUserForm(userId?: number) {
   const { id } = useParams()
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
-  const { data: user, mutate: invalidateCache } = useEnterpriseRootUser(Number(id), userId)
+  const {
+    data: user,
+    isLoading,
+    mutate: invalidateCache,
+  } = useEnterpriseRootUser(Number(id), userId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -67,11 +73,11 @@ export default function useEnterpriseRootUserForm(userId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (userId) {
-      return updateEnterpriseRootUser(submitData)
+      return withLoading(() => updateEnterpriseRootUser(submitData))
     }
 
-    return addNewEnterpriseRootUser(submitData)
+    return withLoading(() => addNewEnterpriseRootUser(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

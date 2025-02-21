@@ -9,12 +9,12 @@ import useProjectInfoForm from '../_hooks/project-info-form.hook'
 
 export default function NewProjectInfo() {
   const t = useTranslations('dataManagement.projects.infos')
-  const { methods, onSubmit } = useProjectInfoForm()
+  const { methods, onSubmit, isSubmitting } = useProjectInfoForm()
 
   return (
     <>
       <PageTitle title={t('newProjectInfo')} />
-      <ProjectInfoForm methods={methods} onSubmit={onSubmit} />
+      <ProjectInfoForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

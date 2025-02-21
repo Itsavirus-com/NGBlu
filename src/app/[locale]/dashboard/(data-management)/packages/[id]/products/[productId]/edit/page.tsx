@@ -5,8 +5,8 @@ import { useTranslations } from 'next-intl'
 import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 
+import { PackageProductForm } from '../../../_components/PackagesProductForm'
 import usePackageProductForm from '../../../_hooks/package-product-form.hook'
-import { PackageProductForm } from '../../../components/PackagesProductForm'
 
 export default function UpdatePackageProduct({
   params,
@@ -15,7 +15,7 @@ export default function UpdatePackageProduct({
 }) {
   const t = useTranslations('dataManagement.packages')
 
-  const { methods, onSubmit, isLoading } = usePackageProductForm(
+  const { methods, onSubmit, isLoading, isSubmitting } = usePackageProductForm(
     Number(params.id),
     Number(params.productId)
   )
@@ -23,7 +23,11 @@ export default function UpdatePackageProduct({
   return (
     <>
       <PageTitle title={t('updatePackageProduct')} />
-      {isLoading ? <Loading /> : <PackageProductForm methods={methods} onSubmit={onSubmit} />}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <PackageProductForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
+      )}
     </>
   )
 }

@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { organizationUnitApi } from '@/services/api/organization-unit-api'
@@ -14,6 +15,7 @@ import { schema } from '../_schemas/organization-unit-form.schema'
 export default function useOrganizationUnitForm(organizationUnitId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
   const {
     data: organizationUnit,
     isLoading: isLoadingOrganizationUnit,
@@ -119,14 +121,14 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
     }
   }
 
-  const onSubmit = (data: InferType<typeof schema>) => {
+  const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
 
     if (organizationUnitId) {
-      return updateOrganizationUnit(submitData)
+      return withLoading(() => updateOrganizationUnit(submitData))
     }
 
-    return addNewOrganizationUnit(submitData)
+    return withLoading(() => addNewOrganizationUnit(submitData))
   }
 
   return {
@@ -137,5 +139,6 @@ export default function useOrganizationUnitForm(organizationUnitId?: number) {
     onSubmit,
     isLoading: isLoadingOrganizationUnit,
     errorMessageInputType,
+    isSubmitting,
   }
 }

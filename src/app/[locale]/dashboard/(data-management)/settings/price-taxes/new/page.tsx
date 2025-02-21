@@ -9,12 +9,12 @@ import usePriceTaxForm from '../_hooks/price-tax-form.hook'
 
 export default function NewPriceTax() {
   const t = useTranslations('dataManagement.prices.taxes')
-  const { methods, onSubmit } = usePriceTaxForm()
+  const { methods, onSubmit, isSubmitting } = usePriceTaxForm()
 
   return (
     <>
       <PageTitle title={t('newPriceTax')} />
-      <PriceTaxForm methods={methods} onSubmit={onSubmit} />
+      <PriceTaxForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

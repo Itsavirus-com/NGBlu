@@ -5,8 +5,8 @@ import { useTranslations } from 'next-intl'
 import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 
+import { PackageServiceForm } from '../../../_components/PackagesServiceForm'
 import usePackageServiceForm from '../../../_hooks/package-service-form.hook'
-import { PackageServiceForm } from '../../../components/PackagesServiceForm'
 
 export default function UpdatePackageService({
   params,
@@ -15,7 +15,7 @@ export default function UpdatePackageService({
 }) {
   const t = useTranslations('dataManagement.packages')
 
-  const { methods, onSubmit, isLoading } = usePackageServiceForm(
+  const { methods, onSubmit, isLoading, isSubmitting } = usePackageServiceForm(
     Number(params.id),
     Number(params.serviceId)
   )
@@ -23,7 +23,11 @@ export default function UpdatePackageService({
   return (
     <>
       <PageTitle title={t('updatePackageService')} />
-      {isLoading ? <Loading /> : <PackageServiceForm methods={methods} onSubmit={onSubmit} />}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <PackageServiceForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
+      )}
     </>
   )
 }

@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { endClientPaymentDetailApi } from '@/services/api/end-client-payment-detail-api'
@@ -16,6 +17,7 @@ export default function useEndClientPaymentDetailForm(
 ) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const {
     data: endClientPaymentDetail,
@@ -89,11 +91,19 @@ export default function useEndClientPaymentDetailForm(
     const submitData = omitNullAndUndefined(data)
 
     if (paymentDetailId) {
-      return updateEndClientPaymentDetail(submitData)
+      return withLoading(() => updateEndClientPaymentDetail(submitData))
     }
 
-    return addNewEndClientPaymentDetail(submitData)
+    return withLoading(() => addNewEndClientPaymentDetail(submitData))
   }
 
-  return { methods, onSubmit, isLoading, handleChange, errorMessageInputType, paymentType }
+  return {
+    methods,
+    onSubmit,
+    isLoading,
+    handleChange,
+    errorMessageInputType,
+    paymentType,
+    isSubmitting,
+  }
 }

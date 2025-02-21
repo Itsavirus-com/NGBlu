@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { endClientTypeApi } from '@/services/api/end-client-type-api'
@@ -13,8 +14,13 @@ import { schema } from '../_schemas/end-client-type.schema'
 export default function useEndClientTypeForm(endClientTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: endClientType, mutate: invalidateCache } = useEndClientType(endClientTypeId)
+  const {
+    data: endClientType,
+    isLoading,
+    mutate: invalidateCache,
+  } = useEndClientType(endClientTypeId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -57,11 +63,11 @@ export default function useEndClientTypeForm(endClientTypeId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (endClientTypeId) {
-      return updateEndClientType(submitData)
+      return withLoading(() => updateEndClientType(submitData))
     }
 
-    return addNewEndClientType(submitData)
+    return withLoading(() => addNewEndClientType(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }

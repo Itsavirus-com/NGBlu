@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { projectApi } from '@/services/api/project-api'
@@ -13,6 +14,7 @@ import { schema } from '../_schemas/project-form.schema'
 export default function useProjectForm(projectId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const { data: projectData, isLoading, mutate: invalidateCache } = useProject(projectId)
 
@@ -99,10 +101,10 @@ export default function useProjectForm(projectId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (projectId) {
-      return updateProject(submitData)
+      return withLoading(() => updateProject(submitData))
     }
 
-    return addNewProject(submitData)
+    return withLoading(() => addNewProject(submitData))
   }
 
   return {
@@ -112,5 +114,6 @@ export default function useProjectForm(projectId?: number) {
     isLoading,
     errorMessageInputType,
     handleFilterOrganizationUnit,
+    isSubmitting,
   }
 }

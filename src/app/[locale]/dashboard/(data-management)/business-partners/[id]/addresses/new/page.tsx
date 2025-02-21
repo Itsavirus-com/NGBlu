@@ -10,12 +10,17 @@ import useBusinessPartnerAddressForm from '../../_hooks/business-partner-address
 export default function NewBusinessPartnerAddress({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners.addresses')
 
-  const { methods, onSubmit } = useBusinessPartnerAddressForm(Number(params.id))
+  const { methods, onSubmit, isSubmitting } = useBusinessPartnerAddressForm(Number(params.id))
 
   return (
     <>
       <PageTitle title={t('newAddress')} />
-      <BusinessPartnerAddressForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
+      <BusinessPartnerAddressForm
+        methods={methods}
+        onSubmit={onSubmit}
+        id={Number(params.id)}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }

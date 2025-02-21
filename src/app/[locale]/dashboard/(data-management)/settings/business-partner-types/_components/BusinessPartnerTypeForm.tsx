@@ -11,11 +11,13 @@ import { ControlledInput } from '@/components/forms/input'
 interface BusinessPartnerTypeFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
 export default function BusinessPartnerTypeForm({
   methods,
   onSubmit,
+  isSubmitting,
 }: BusinessPartnerTypeFormProps) {
   const t = useTranslations('dataManagement.businessPartnerTypes')
 
@@ -32,7 +34,7 @@ export default function BusinessPartnerTypeForm({
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

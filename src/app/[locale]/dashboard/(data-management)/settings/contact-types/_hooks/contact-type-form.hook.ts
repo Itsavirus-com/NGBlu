@@ -21,6 +21,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { contactTypeApi } from '@/services/api/contact-type-api'
@@ -33,8 +34,9 @@ import { schema } from '../_schemas/contact-type.schema'
 export default function useContactTypeForm(contactTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: contactType, mutate: invalidateCache } = useContactType(contactTypeId)
+  const { data: contactType, isLoading, mutate: invalidateCache } = useContactType(contactTypeId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -88,11 +90,11 @@ export default function useContactTypeForm(contactTypeId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (contactTypeId) {
-      return updateContactType(submitData)
+      return withLoading(() => updateContactType(submitData))
     }
 
-    return addNewContactType(submitData)
+    return withLoading(() => addNewContactType(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }

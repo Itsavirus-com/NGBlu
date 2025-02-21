@@ -46,7 +46,7 @@ type ColorClass =
   | 'light-dark'
 
 export type ButtonProps = {
-  icon: string
+  icon?: string
   label?: string
   href?: string
   onClick?: () => void
@@ -57,4 +57,6 @@ export type ButtonProps = {
   iconSize?: FontSize
   extraProps?: Record<string, any>
   type?: 'button' | 'submit' | 'reset'
+  loading?: boolean
+  disabled?: boolean
 }

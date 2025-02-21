@@ -9,7 +9,7 @@ import useBusinessPartnerForm from '../_hooks/business-partner-form.hook'
 
 export default function NewBusinessPartner() {
   const t = useTranslations('dataManagement.businessPartners')
-  const { methods, onSubmit, enterpriseRootIdValue } = useBusinessPartnerForm()
+  const { methods, onSubmit, enterpriseRootIdValue, isSubmitting } = useBusinessPartnerForm()
 
   return (
     <>
@@ -18,6 +18,7 @@ export default function NewBusinessPartner() {
         methods={methods}
         onSubmit={onSubmit}
         enterpriseRootIdValue={enterpriseRootIdValue}
+        isSubmitting={isSubmitting}
       />
     </>
   )

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { DEFAULT_DATE_TIME_END, DEFAULT_DATE_TIME_START } from '@/constants/dateTime'
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { productPriceConfigApi } from '@/services/api/product-price-config-api'
@@ -18,6 +19,7 @@ export default function useProductPriceConfigForm(configId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
   const [formDateValue, setFormDateValue] = useState<Date | null>(null)
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const {
     data: productPriceConfig,
@@ -115,10 +117,10 @@ export default function useProductPriceConfigForm(configId?: number) {
     }) as any
 
     if (configId) {
-      return updateConfig(submitData)
+      return withLoading(() => updateConfig(submitData))
     }
 
-    return addNewConfig(submitData)
+    return withLoading(() => addNewConfig(submitData))
   }
 
   return {
@@ -129,5 +131,6 @@ export default function useProductPriceConfigForm(configId?: number) {
     onSubmit,
     isLoading,
     errorMessageInputType,
+    isSubmitting,
   }
 }

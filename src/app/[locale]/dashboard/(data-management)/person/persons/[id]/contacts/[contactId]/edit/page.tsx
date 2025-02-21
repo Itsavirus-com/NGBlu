@@ -11,7 +11,7 @@ import usePersonContactForm from '../../../_hooks/contact-form.hook'
 export default function UpdatePersonContact({ params }: { params: { contactId: number } }) {
   const t = useTranslations('dataManagement.persons.contacts')
 
-  const { methods, handleChange, onSubmit, isLoading } = usePersonContactForm(
+  const { methods, handleChange, onSubmit, isLoading, isSubmitting } = usePersonContactForm(
     Number(params.contactId)
   )
 
@@ -21,7 +21,12 @@ export default function UpdatePersonContact({ params }: { params: { contactId: n
       {isLoading ? (
         <Loading />
       ) : (
-        <PersonContactForm methods={methods} onSubmit={onSubmit} handleChange={handleChange} />
+        <PersonContactForm
+          methods={methods}
+          onSubmit={onSubmit}
+          handleChange={handleChange}
+          isSubmitting={isSubmitting}
+        />
       )}
     </>
   )

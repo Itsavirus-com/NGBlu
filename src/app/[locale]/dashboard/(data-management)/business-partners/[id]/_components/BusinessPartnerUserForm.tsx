@@ -15,12 +15,14 @@ interface BusinessPartnerUserFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
   id: number
+  isSubmitting: boolean
 }
 
 export default function BusinessPartnerUserForm({
   methods,
   onSubmit,
   id,
+  isSubmitting,
 }: BusinessPartnerUserFormProps) {
   const t = useTranslations('dataManagement.businessPartners.users')
 
@@ -34,15 +36,15 @@ export default function BusinessPartnerUserForm({
               name="userId"
               containerClass="mb-3"
               apiPath={'users'}
-              option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
+              option={{ label: row => row.username, value: row => row.id }}
               isRequired
             />
             <ControlledSelect<Person>
               label={t('person')}
               name="personId"
               containerClass="mb-3"
-              apiPath="persons"
-              option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
+              apiPath={'persons'}
+              option={{ label: row => row.name, value: row => row.id }}
               isRequired
             />
             <ControlledSelect<OrganizationUnit>
@@ -56,7 +58,7 @@ export default function BusinessPartnerUserForm({
               }}
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

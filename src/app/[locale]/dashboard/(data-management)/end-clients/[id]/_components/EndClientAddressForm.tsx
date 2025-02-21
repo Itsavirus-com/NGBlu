@@ -13,9 +13,14 @@ import { Address } from '@/services/swr/models/address.type'
 interface EndClientAddressFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function EndClientAddressForm({ methods, onSubmit }: EndClientAddressFormProps) {
+export default function EndClientAddressForm({
+  methods,
+  onSubmit,
+  isSubmitting,
+}: EndClientAddressFormProps) {
   const t = useTranslations('dataManagement.endClients.addresses')
 
   return (
@@ -33,7 +38,7 @@ export default function EndClientAddressForm({ methods, onSubmit }: EndClientAdd
             />
             <ControlledSwitch label={t('primaryAddress')} name="isPrimaryLocation" />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

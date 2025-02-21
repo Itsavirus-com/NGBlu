@@ -10,12 +10,17 @@ import useEndClientProjectForm from '../../_hooks/end-client-project-form.hook'
 export default function NewEndClientProject({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.endClients.projects')
 
-  const { methods, onSubmit } = useEndClientProjectForm(Number(params.id))
+  const { methods, onSubmit, isSubmitting } = useEndClientProjectForm(Number(params.id))
 
   return (
     <>
       <PageTitle title={t('newProject')} />
-      <EndClientProjectForm methods={methods} onSubmit={onSubmit} id={Number(params.id)} />
+      <EndClientProjectForm
+        methods={methods}
+        onSubmit={onSubmit}
+        id={Number(params.id)}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }

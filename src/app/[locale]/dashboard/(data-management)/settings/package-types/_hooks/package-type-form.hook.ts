@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { packageTypeApi } from '@/services/api/package-type-api'
@@ -13,8 +14,9 @@ import { schema } from '../_schemas/package-type.schema'
 export default function usePackageTypeForm(typeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: packageType, mutate: invalidateCache } = usePackageType(typeId)
+  const { data: packageType, mutate: invalidateCache, isLoading } = usePackageType(typeId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -67,11 +69,11 @@ export default function usePackageTypeForm(typeId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (typeId) {
-      return updatePackageType(submitData)
+      return withLoading(() => updatePackageType(submitData))
     }
 
-    return addNewPackageType(submitData)
+    return withLoading(() => addNewPackageType(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }
