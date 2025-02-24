@@ -31,10 +31,6 @@ export default function useUserForm(userId?: number) {
 
   const errorMessageInputType = methods.formState.errors.invitationMethod?.message
 
-  const handleChange = (value: 'manual' | 'sso') => {
-    methods.setValue('invitationMethod', value)
-  }
-
   const addNewUser = async (data: InferType<typeof schema>) => {
     try {
       const res = await userApi.new(data)
@@ -107,5 +103,5 @@ export default function useUserForm(userId?: number) {
     return withLoading(() => addNewUser(submitData))
   }
 
-  return { methods, onSubmit, blockUser, isSubmitting, errorMessageInputType, handleChange }
+  return { methods, onSubmit, blockUser, isSubmitting, errorMessageInputType }
 }

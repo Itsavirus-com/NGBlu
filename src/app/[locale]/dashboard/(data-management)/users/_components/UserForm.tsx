@@ -66,7 +66,6 @@ export default function UserForm({
               label={t('roles')}
               name="roles"
               containerClass="mb-3"
-              // apiPath="roles"
               option={{ label: row => row.name, value: row => row.id }}
               isRequired
             />
@@ -81,7 +80,6 @@ export default function UserForm({
                 name="invitationMethod"
                 containerClass="mb-3"
                 value={'manual'}
-                // onChange={() => handleChange('endclientId')}
               />
               <ControlledSwitch
                 type="radio"
@@ -89,7 +87,6 @@ export default function UserForm({
                 name="invitationMethod"
                 containerClass="mb-3"
                 value={'entra'}
-                // onChange={() => handleChange('businesspartnerId')}
               />
             </div>
             {errorMessageInputType && (
