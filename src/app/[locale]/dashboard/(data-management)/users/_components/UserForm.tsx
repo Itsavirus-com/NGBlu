@@ -83,7 +83,7 @@ export default function UserForm({
               />
               <ControlledSwitch
                 type="radio"
-                label={t('sso')}
+                label={t('entra')}
                 name="invitationMethod"
                 containerClass="mb-3"
                 value={'entra'}
