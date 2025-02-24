@@ -34,26 +34,29 @@ export default function BusinessPartnerContactForm({
               name="personId"
               containerClass="mb-3"
               apiPath={'persons'}
-              option={{ label: row => row.name, value: row => row.id }}
+              option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
               isRequired
+              onChange={() => {
+                methods.setValue('contactInfoId', 0)
+              }}
             />
             <ControlledSelect<Contact>
               label={t('contactInfo')}
               name="contactInfoId"
               containerClass="mb-3"
-              apiPath={'contacts'}
-              option={{ label: row => row.contactName, value: row => row.id }}
+              apiPath={'contacts/infos'}
+              option={{ label: row => row.contactInfo, value: row => row.id }}
+              filter={{ personId: Number(methods.watch('personId')) }}
               isRequired
             />
             <ControlledSelect<PersonResponsibility>
               label={t('responsibility')}
               name="responsibilityId"
               containerClass="mb-3"
-              apiPath={'person-responsibilities'}
-              option={{ label: row => row.name, value: row => row.id }}
+              apiPath={'persons/responsibilities'}
+              option={{ label: row => row.responsibility, value: row => row.id }}
               isRequired
             />
-
             <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
