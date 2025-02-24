@@ -426,7 +426,7 @@
       "roles": "Roles",
       "invitationMethod": "Invitation Method",
       "manual": "Manual",
-      "entra": "Entra (Microsoft)"
+      "entra": "Entra (Microsoft SSO)"
     },
     "persons": {
       "title": "Persons",
