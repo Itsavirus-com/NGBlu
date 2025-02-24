@@ -1,6 +1,6 @@
 {
   "name": "infraorders",
-  "version": "2.0.1-rc.1",
+  "version": "2.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,7 +10,7 @@
     "format": "prettier --ignore-unknown --write .",
     "clean": "rm -rf node_modules .next && npm install",
     "commit": "git-cz",
-    "release": "standard-version --prerelease rc"
+    "release": "standard-version"
   },
   "engines": {
     "node": ">=20",
