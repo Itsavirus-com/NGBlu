@@ -9,7 +9,7 @@ import useProductForm from '../_hooks/product-form.hook'
 
 export default function NewProduct() {
   const t = useTranslations('dataManagement.products')
-  const { methods, onSubmit, handleChange, errorMessageInputType } = useProductForm()
+  const { methods, onSubmit, handleChange, errorMessageInputType, isSubmitting } = useProductForm()
 
   return (
     <>
@@ -19,6 +19,7 @@ export default function NewProduct() {
         onSubmit={onSubmit}
         handleChange={handleChange}
         errorMessageInputType={errorMessageInputType}
+        isSubmitting={isSubmitting}
       />
     </>
   )

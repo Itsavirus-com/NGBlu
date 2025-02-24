@@ -21,6 +21,7 @@ interface AddressFormProps {
     lng: number
     placeId: string
   }) => void
+  isSubmitting: boolean
 }
 
 export default function AddressForm({
@@ -28,6 +29,7 @@ export default function AddressForm({
   onSubmit,
   getFormattedAddress,
   handleLocationSelect,
+  isSubmitting,
 }: AddressFormProps) {
   const t = useTranslations('dataManagement.addresses')
 
@@ -150,7 +152,7 @@ export default function AddressForm({
               </Col>
             </Row>
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

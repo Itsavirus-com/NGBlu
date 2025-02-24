@@ -18,12 +18,12 @@ import { EnterpriseRootUser } from '@/services/swr/models/enterprise-root-user.t
 import { useEnterpriseRoot } from '@/services/swr/use-enterprise-root'
 import { safeRender } from '@/utils/safeRender'
 
-import { EnterpriseRootAddressFilter } from './_components/enterprise-root-address-filter'
-import { EnterpriseRootContactFilter } from './_components/enterprise-root-contact-filter'
-import { EnterpriseRootCustomerFilter } from './_components/enterprise-root-customer-filter'
-import { EnterpriseRootProjectFilter } from './_components/enterprise-root-project-filter'
-import { EnterpriseRootUserFilter } from './_components/enterprise-root-user-filter'
+import { EnterpriseRootAddressFilter } from './_components/EnterpriseRootAddressFilter'
 import { EnterpriseRootBusinessPartnerFilter } from './_components/EnterpriseRootBusinessPartnerFilter'
+import { EnterpriseRootContactFilter } from './_components/EnterpriseRootContactFilter'
+import { EnterpriseRootCustomerFilter } from './_components/EnterpriseRootCustomerFilter'
+import { EnterpriseRootProjectFilter } from './_components/EnterpriseRootProjectFilter'
+import { EnterpriseRootUserFilter } from './_components/EnterpriseRootUserFilter'
 
 export default function EnterpriseRootDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.enterpriseRoots')

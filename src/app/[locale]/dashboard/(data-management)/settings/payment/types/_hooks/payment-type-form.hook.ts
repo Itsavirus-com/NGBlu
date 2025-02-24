@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { paymentTypeApi } from '@/services/api/payment-type-api'
@@ -12,8 +13,9 @@ import { InferType } from '@/utils/typescript'
 export default function usePaymentTypeForm(paymentTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: paymentType, mutate: invalidateCache } = usePaymentType(paymentTypeId)
+  const { data: paymentType, mutate: invalidateCache, isLoading } = usePaymentType(paymentTypeId)
 
   const schema = yup.object().shape({
     paymentType: yup.string().ensure().required().max(150),
@@ -60,11 +62,11 @@ export default function usePaymentTypeForm(paymentTypeId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (paymentTypeId) {
-      return updatePaymentType(submitData)
+      return withLoading(() => updatePaymentType(submitData))
     }
 
-    return addNewPaymentType(submitData)
+    return withLoading(() => addNewPaymentType(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }

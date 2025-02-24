@@ -15,7 +15,7 @@ export default function UpdateEndClientContact({
 }) {
   const t = useTranslations('dataManagement.endClients.contacts')
 
-  const { methods, onSubmit, isLoading } = useEndClientContactForm(
+  const { methods, onSubmit, isLoading, isSubmitting } = useEndClientContactForm(
     Number(params.id),
     Number(params.contactId)
   )
@@ -23,7 +23,11 @@ export default function UpdateEndClientContact({
   return (
     <>
       <PageTitle title={t('updateContact')} />
-      {isLoading ? <Loading /> : <EndClientContactForm methods={methods} onSubmit={onSubmit} />}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <EndClientContactForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
+      )}
     </>
   )
 }

@@ -10,12 +10,12 @@ import useEndClientContactForm from '../../_hooks/end-client-contact-form.hook'
 export default function NewEndClientContact({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.endClients.contacts')
 
-  const { methods, onSubmit } = useEndClientContactForm(Number(params.id))
+  const { methods, onSubmit, isSubmitting } = useEndClientContactForm(Number(params.id))
 
   return (
     <>
       <PageTitle title={t('newContact')} />
-      <EndClientContactForm methods={methods} onSubmit={onSubmit} />
+      <EndClientContactForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

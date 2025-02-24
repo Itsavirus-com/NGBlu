@@ -1,0 +1,82 @@
+.react-select-container {
+  .react-select__control {
+    background-color: var(--bs-body-bg);
+    border-color: var(--bs-border-color);
+    color: var(--bs-body-color);
+    cursor: pointer;
+
+    &--is-disabled {
+      background-color: var(--bs-secondary-bg);
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    &--is-invalid {
+      border-color: var(--bs-form-invalid-border-color);
+
+      &:hover {
+        border-color: var(--bs-form-invalid-border-color);
+      }
+    }
+  }
+
+  .react-select__menu {
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+  }
+
+  .react-select__option {
+    cursor: pointer;
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+
+    &--is-focused {
+      background-color: var(--bs-primary);
+      color: white;
+    }
+
+    &--is-selected {
+      background-color: var(--bs-primary);
+      color: white;
+    }
+
+    &:active {
+      background-color: var(--bs-primary);
+      color: white;
+    }
+  }
+
+  .react-select__single-value {
+    color: var(--bs-body-color);
+
+    &--is-disabled {
+      color: var(--bs-secondary-color);
+    }
+  }
+
+  .react-select__input {
+    color: var(--bs-body-color);
+  }
+
+  .react-select__placeholder {
+    color: var(--bs-gray-600);
+  }
+
+  .react-select__loading-message,
+  .react-select__no-options-message {
+    color: var(--bs-body-color);
+  }
+
+  &.is-invalid {
+    .react-select__control {
+      border-color: var(--bs-form-invalid-border-color, #dc3545);
+
+      &:hover,
+      &:focus,
+      &.react-select__control--is-focused {
+        border-color: var(--bs-form-invalid-border-color, #dc3545);
+        box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+      }
+    }
+  }
+}

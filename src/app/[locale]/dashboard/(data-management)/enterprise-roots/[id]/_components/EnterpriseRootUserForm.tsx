@@ -15,12 +15,14 @@ interface EnterpriseRootUserFormProps {
   enterpriseRootId: number
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
 export function EnterpriseRootUserForm({
   enterpriseRootId,
   methods,
   onSubmit,
+  isSubmitting,
 }: EnterpriseRootUserFormProps) {
   const t = useTranslations('dataManagement.enterpriseRoots.users')
 
@@ -34,7 +36,7 @@ export function EnterpriseRootUserForm({
               name="userId"
               containerClass="mb-3"
               apiPath={'users'}
-              option={{ label: row => row.displayName, value: row => row.id }}
+              option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
               isRequired
             />
             <ControlledSelect<Person>
@@ -53,7 +55,7 @@ export function EnterpriseRootUserForm({
               option={{ label: row => row.name, value: row => row.id }}
               filter={{ enterpriseRootId }}
             />
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

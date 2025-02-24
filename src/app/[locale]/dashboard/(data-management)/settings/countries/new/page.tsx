@@ -9,12 +9,12 @@ import useCountryForm from '../_hooks/country-form.hook'
 
 export default function NewCountry() {
   const t = useTranslations('dataManagement.countries')
-  const { methods, onSubmit } = useCountryForm()
+  const { methods, onSubmit, isSubmitting } = useCountryForm()
 
   return (
     <>
       <PageTitle title={t('newCountry')} />
-      <CountryForm methods={methods} onSubmit={onSubmit} />
+      <CountryForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

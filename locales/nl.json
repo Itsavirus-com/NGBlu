@@ -629,7 +629,8 @@
         "postalCode": "Postal Code",
         "latitude": "Latitude",
         "longitude": "Longitude",
-        "googleAddressId": "Google Address ID"
+        "googleAddressId": "Google Address ID",
+        "chooseOption": "Choose the Option"
       },
       "projects": {
         "title": "End Client Projects",

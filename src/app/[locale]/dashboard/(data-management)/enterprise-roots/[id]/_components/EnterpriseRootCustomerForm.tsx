@@ -16,12 +16,14 @@ interface EnterpriseRootCustomerFormProps {
   enterpriseRootId: number
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
 export function EnterpriseRootCustomerForm({
   enterpriseRootId,
   methods,
   onSubmit,
+  isSubmitting,
 }: EnterpriseRootCustomerFormProps) {
   const t = useTranslations('dataManagement.enterpriseRoots.customers')
 
@@ -64,7 +66,7 @@ export function EnterpriseRootCustomerForm({
                 value: row => row.id as number,
               }}
             />
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

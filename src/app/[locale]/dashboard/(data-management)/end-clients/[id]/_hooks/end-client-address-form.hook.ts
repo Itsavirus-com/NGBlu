@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { endClientAddressApi } from '@/services/api/end-client-address-api'
@@ -13,6 +14,7 @@ import { schema } from '../_schemas/end-client-address-form.schema'
 export default function useEndClientAddressForm(endClientId: number, addressId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const {
     data: endClientAddress,
@@ -73,11 +75,11 @@ export default function useEndClientAddressForm(endClientId: number, addressId?:
     const submitData = omitNullAndUndefined(data)
 
     if (addressId) {
-      return updateEndClientAddress(submitData)
+      return withLoading(() => updateEndClientAddress(submitData))
     }
 
-    return addNewEndClientAddress(submitData)
+    return withLoading(() => addNewEndClientAddress(submitData))
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

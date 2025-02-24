@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { businessPartnerAddressApi } from '@/services/api/business-partner-address-api'
@@ -16,6 +17,7 @@ export default function useBusinessPartnerAddressForm(
 ) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const {
     data: businessPartnerAddress,
@@ -44,8 +46,12 @@ export default function useBusinessPartnerAddressForm(
         invalidateCache()
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if ('addressId' in error?.errors?.detail) {
+        showToast({ variant: 'danger', body: error?.errors?.detail?.addressId })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
@@ -72,11 +78,11 @@ export default function useBusinessPartnerAddressForm(
     const submitData = omitNullAndUndefined(data)
 
     if (addressId) {
-      return updateBusinessPartnerAddress(submitData)
+      return withLoading(() => updateBusinessPartnerAddress(submitData))
     }
 
-    return addNewBusinessPartnerAddress(submitData)
+    return withLoading(() => addNewBusinessPartnerAddress(submitData))
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

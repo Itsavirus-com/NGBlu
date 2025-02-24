@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { serviceApi } from '@/services/api/service-api'
@@ -13,6 +14,7 @@ import { schema } from '../_schemas/service-form.schema'
 export default function useServiceForm(serviceId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
   const { data: service, isLoading, mutate: invalidateCache } = useService(serviceId)
 
@@ -78,11 +80,11 @@ export default function useServiceForm(serviceId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (serviceId) {
-      return updateService(submitData)
+      return withLoading(() => updateService(submitData))
     }
 
-    return addNewService(submitData)
+    return withLoading(() => addNewService(submitData))
   }
 
-  return { methods, onSubmit, isLoading, handleChange }
+  return { methods, onSubmit, isLoading, handleChange, isSubmitting }
 }

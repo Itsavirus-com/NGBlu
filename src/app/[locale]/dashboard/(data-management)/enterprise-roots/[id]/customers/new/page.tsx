@@ -10,7 +10,7 @@ import useEnterpriseRootCustomerForm from '../../_hooks/enterprise-root-customer
 export default function NewEnterpriseRootCustomer({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.customers')
 
-  const { methods, onSubmit } = useEnterpriseRootCustomerForm()
+  const { methods, onSubmit, isSubmitting } = useEnterpriseRootCustomerForm()
 
   return (
     <>
@@ -19,6 +19,7 @@ export default function NewEnterpriseRootCustomer({ params }: { params: { id: nu
         enterpriseRootId={params.id}
         methods={methods}
         onSubmit={onSubmit}
+        isSubmitting={isSubmitting}
       />
     </>
   )

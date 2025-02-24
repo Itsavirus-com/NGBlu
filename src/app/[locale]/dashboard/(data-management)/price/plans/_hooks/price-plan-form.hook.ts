@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { pricePlanApi } from '@/services/api/price-plan-api'
@@ -13,7 +14,7 @@ import { schema } from '../_schemas/price-plan-form.schema'
 export default function usePricePlanForm(planId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
-
+  const { isLoading: isSubmitting, withLoading } = useLoading()
   const { data: pricePlan, isLoading, mutate: invalidateCache } = usePricePlan(planId)
 
   const methods = useForm<InferType<typeof schema>>({
@@ -69,11 +70,11 @@ export default function usePricePlanForm(planId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (planId) {
-      return updatePlan(submitData)
+      return withLoading(() => updatePlan(submitData))
     }
 
-    return addNewPlan(submitData)
+    return withLoading(() => addNewPlan(submitData))
   }
 
-  return { methods, handleChange, onSubmit, isLoading }
+  return { methods, handleChange, onSubmit, isLoading, isSubmitting }
 }

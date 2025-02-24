@@ -18,7 +18,7 @@ export const Drawer = (props: DrawerProps) => {
       data-kt-drawer-toggle={`#${drawerId}_toggle`}
       data-kt-drawer-close={`#${drawerId}_close`}
     >
-      <div className="card shadow-none rounded-0 w-100 h-100">
+      <div className="card shadow-none rounded-0 w-100 vh-100">
         <div className="card-header" id={`${drawerId}_header`}>
           {props.title ? (
             <div className="d-flex align-items-center">

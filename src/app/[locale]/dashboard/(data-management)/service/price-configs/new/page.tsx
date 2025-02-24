@@ -28,6 +28,7 @@ export default function NewServicePriceConfig() {
     setFormDateValue,
     onSubmit,
     errorMessageInputType,
+    isSubmitting,
   } = useServicePriceConfigForm()
 
   return (
@@ -42,6 +43,7 @@ export default function NewServicePriceConfig() {
         errorMessageInputType={errorMessageInputType}
         businessPartnerId={businessPartnerId}
         enterpriseRootId={enterpriseRootId}
+        isSubmitting={isSubmitting}
       />
     </>
   )

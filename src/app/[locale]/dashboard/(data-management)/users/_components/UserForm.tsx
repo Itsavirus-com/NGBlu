@@ -16,9 +16,16 @@ interface UserFormProps {
   onSubmit: (data: any) => void
   blockUser?: (checked: boolean) => void
   isEdit?: boolean
+  isSubmitting: boolean
 }
 
-export default function UserForm({ methods, onSubmit, blockUser, isEdit }: UserFormProps) {
+export default function UserForm({
+  methods,
+  onSubmit,
+  blockUser,
+  isEdit,
+  isSubmitting,
+}: UserFormProps) {
   const t = useTranslations('dataManagement.users')
 
   return (
@@ -64,7 +71,7 @@ export default function UserForm({ methods, onSubmit, blockUser, isEdit }: UserF
               />
             )}
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

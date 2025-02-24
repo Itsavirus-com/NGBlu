@@ -11,9 +11,14 @@ import { ControlledInput } from '@/components/forms/input'
 interface ResponsibilityFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function ResponsibilityForm({ methods, onSubmit }: ResponsibilityFormProps) {
+export default function ResponsibilityForm({
+  methods,
+  onSubmit,
+  isSubmitting,
+}: ResponsibilityFormProps) {
   const t = useTranslations('dataManagement.personResponsibilities')
 
   return (
@@ -29,7 +34,7 @@ export default function ResponsibilityForm({ methods, onSubmit }: Responsibility
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

@@ -5,8 +5,8 @@ import { useTranslations } from 'next-intl'
 import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 
+import EndClientProjectForm from '../../../_components/EndClientProjectForm'
 import useEndClientProjectForm from '../../../_hooks/end-client-project-form.hook'
-import EndClientProjectForm from '../../_components/EndClientProjectForm'
 
 export default function UpdateEndClientProject({
   params,
@@ -15,7 +15,7 @@ export default function UpdateEndClientProject({
 }) {
   const t = useTranslations('dataManagement.endClients.projects')
 
-  const { methods, onSubmit, isLoading } = useEndClientProjectForm(
+  const { methods, onSubmit, isLoading, isSubmitting } = useEndClientProjectForm(
     Number(params.id),
     Number(params.projectId)
   )
@@ -23,7 +23,16 @@ export default function UpdateEndClientProject({
   return (
     <>
       <PageTitle title={t('updateProject')} />
-      {isLoading ? <Loading /> : <EndClientProjectForm methods={methods} onSubmit={onSubmit} />}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <EndClientProjectForm
+          methods={methods}
+          onSubmit={onSubmit}
+          id={Number(params.id)}
+          isSubmitting={isSubmitting}
+        />
+      )}
     </>
   )
 }

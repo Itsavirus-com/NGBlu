@@ -29,6 +29,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { enterpriseRootCustomerApi } from '@/services/api/enterprise-root-customer-api'
@@ -42,11 +43,13 @@ export default function useEnterpriseRootCustomerForm(customerId?: number) {
   const { id } = useParams()
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
-  const { data: customer, mutate: invalidateCache } = useEnterpriseRootCustomer(
-    Number(id),
-    customerId
-  )
+  const {
+    data: customer,
+    isLoading,
+    mutate: invalidateCache,
+  } = useEnterpriseRootCustomer(Number(id), customerId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -108,15 +111,15 @@ export default function useEnterpriseRootCustomerForm(customerId?: number) {
     }
   }
 
-  const onSubmit = (data: InferType<typeof schema>) => {
+  const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
 
     if (customerId) {
-      return updateEnterpriseRootCustomer(submitData)
+      return withLoading(() => updateEnterpriseRootCustomer(submitData))
     }
 
-    return addNewEnterpriseRootCustomer(submitData)
+    return withLoading(() => addNewEnterpriseRootCustomer(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

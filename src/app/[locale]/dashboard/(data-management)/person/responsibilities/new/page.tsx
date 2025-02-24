@@ -9,12 +9,12 @@ import useResponsibilityForm from '../_hooks/responsibility-form.hook'
 
 export default function NewPersonResponsibility() {
   const t = useTranslations('dataManagement.personResponsibilities')
-  const { methods, onSubmit } = useResponsibilityForm()
+  const { methods, onSubmit, isSubmitting } = useResponsibilityForm()
 
   return (
     <>
       <PageTitle title={t('newPersonResponsibility')} />
-      <ResponsibilityForm methods={methods} onSubmit={onSubmit} />
+      <ResponsibilityForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

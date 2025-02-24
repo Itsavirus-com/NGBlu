@@ -24,6 +24,7 @@ interface PaymentFormProps {
   onSubmit: (data: any) => void
   handleChange: (value: number) => void
   selectedPayment: number
+  isSubmitting: boolean
 }
 
 export default function PaymentForm({
@@ -31,6 +32,7 @@ export default function PaymentForm({
   onSubmit,
   handleChange,
   selectedPayment,
+  isSubmitting,
 }: PaymentFormProps) {
   const t = useTranslations('dataManagement.payments')
 
@@ -183,7 +185,7 @@ export default function PaymentForm({
               option={{ label: row => row.name, value: row => row.id }}
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

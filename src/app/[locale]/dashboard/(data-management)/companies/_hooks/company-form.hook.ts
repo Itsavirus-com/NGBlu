@@ -28,6 +28,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { companyApi } from '@/services/api/company-api'
@@ -40,6 +41,7 @@ import { schema } from '../_schemas/company-form.schema'
 export default function useCompanyForm(companyId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const { data: company, isLoading, mutate: invalidateCache } = useCompany(companyId)
 
@@ -104,11 +106,11 @@ export default function useCompanyForm(companyId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (companyId) {
-      return updateCompany(submitData)
+      return withLoading(() => updateCompany(submitData))
     }
 
-    return addNewCompany(submitData)
+    return withLoading(() => addNewCompany(submitData))
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

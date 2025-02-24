@@ -21,6 +21,7 @@ interface ProjectFormProps {
   handleChange: (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => void
   handleFilterOrganizationUnit: () => Record<string, any> | undefined
   errorMessageInputType?: string
+  isSubmitting: boolean
 }
 
 export default function ProjectForm({
@@ -29,6 +30,7 @@ export default function ProjectForm({
   handleChange,
   handleFilterOrganizationUnit,
   errorMessageInputType,
+  isSubmitting,
 }: ProjectFormProps) {
   const t = useTranslations('dataManagement.projects')
 
@@ -158,7 +160,7 @@ export default function ProjectForm({
               </Col>
             </Row>
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

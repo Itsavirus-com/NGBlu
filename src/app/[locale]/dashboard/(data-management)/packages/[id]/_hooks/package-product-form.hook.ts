@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { packageProductApi } from '@/services/api/package-product-api'
@@ -13,6 +14,7 @@ import { schema } from '../_schemas/package-product-form.schema'
 export default function usePackageProductForm(id: number, packageProductId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const {
     data: productType,
@@ -68,11 +70,11 @@ export default function usePackageProductForm(id: number, packageProductId?: num
     const submitData = omitNullAndUndefined(data)
 
     if (packageProductId) {
-      return updatePackageProduct(submitData)
+      return withLoading(() => updatePackageProduct(submitData))
     }
 
-    return addNewPackageProduct(submitData)
+    return withLoading(() => addNewPackageProduct(submitData))
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

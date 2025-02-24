@@ -9,12 +9,12 @@ import usePersonTypeForm from '../_hooks/person-type-form.hook'
 
 export default function NewPersonType() {
   const t = useTranslations('dataManagement.personTypes')
-  const { methods, onSubmit } = usePersonTypeForm()
+  const { methods, onSubmit, isSubmitting } = usePersonTypeForm()
 
   return (
     <>
       <PageTitle title={t('newPersonType')} />
-      <PersonTypeForm methods={methods} onSubmit={onSubmit} />
+      <PersonTypeForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

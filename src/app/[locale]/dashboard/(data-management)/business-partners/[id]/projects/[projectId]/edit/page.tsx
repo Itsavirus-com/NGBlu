@@ -15,7 +15,7 @@ export default function UpdateBusinessPartnerProject({
 }) {
   const t = useTranslations('dataManagement.businessPartners.projects')
 
-  const { methods, onSubmit, isLoading } = useBusinessPartnerProjectForm(
+  const { methods, onSubmit, isLoading, isSubmitting } = useBusinessPartnerProjectForm(
     Number(params.id),
     Number(params.projectId)
   )
@@ -26,7 +26,12 @@ export default function UpdateBusinessPartnerProject({
       {isLoading ? (
         <Loading />
       ) : (
-        <BusinessPartnerProjectForm methods={methods} onSubmit={onSubmit} />
+        <BusinessPartnerProjectForm
+          methods={methods}
+          onSubmit={onSubmit}
+          id={Number(params.id)}
+          isSubmitting={isSubmitting}
+        />
       )}
     </>
   )

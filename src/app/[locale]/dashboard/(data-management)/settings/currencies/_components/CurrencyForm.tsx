@@ -11,9 +11,10 @@ import { ControlledInput } from '@/components/forms/input'
 interface CurrencyFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function CurrencyForm({ methods, onSubmit }: CurrencyFormProps) {
+export default function CurrencyForm({ methods, onSubmit, isSubmitting }: CurrencyFormProps) {
   const t = useTranslations('dataManagement.prices.currencies')
 
   return (
@@ -29,7 +30,7 @@ export default function CurrencyForm({ methods, onSubmit }: CurrencyFormProps) {
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

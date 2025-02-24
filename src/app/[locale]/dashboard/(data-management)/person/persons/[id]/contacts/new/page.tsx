@@ -10,12 +10,17 @@ import usePersonContactForm from '../../_hooks/contact-form.hook'
 export default function NewPersonContact() {
   const t = useTranslations('dataManagement.persons.contacts')
 
-  const { methods, handleChange, onSubmit } = usePersonContactForm()
+  const { methods, handleChange, onSubmit, isSubmitting } = usePersonContactForm()
 
   return (
     <>
       <PageTitle title={t('newPersonContact')} />
-      <PersonContactForm methods={methods} onSubmit={onSubmit} handleChange={handleChange} />
+      <PersonContactForm
+        methods={methods}
+        onSubmit={onSubmit}
+        handleChange={handleChange}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }

@@ -9,12 +9,12 @@ import usePriceUnitForm from '../_hooks/price-unit-form.hook'
 
 export default function NewPriceUnit() {
   const t = useTranslations('dataManagement.prices.units')
-  const { methods, onSubmit } = usePriceUnitForm()
+  const { methods, onSubmit, isSubmitting } = usePriceUnitForm()
 
   return (
     <>
       <PageTitle title={t('newPriceUnit')} />
-      <PriceUnitForm methods={methods} onSubmit={onSubmit} />
+      <PriceUnitForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

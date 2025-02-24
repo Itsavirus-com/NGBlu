@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { creditCardBrandApi } from '@/services/api/credit-card-brand-api'
@@ -13,8 +14,9 @@ import { schema } from '../_schemas/credit-card-brand.schema'
 export default function useCreditCardBrandForm(creditCardBrandId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: ccType, mutate: invalidateCache } = useCreditCardBrand(creditCardBrandId)
+  const { data: ccType, mutate: invalidateCache, isLoading } = useCreditCardBrand(creditCardBrandId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -57,11 +59,11 @@ export default function useCreditCardBrandForm(creditCardBrandId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (creditCardBrandId) {
-      return updateCreditCardBrand(submitData)
+      return withLoading(() => updateCreditCardBrand(submitData))
     }
 
-    return addNewCreditCardBrand(submitData)
+    return withLoading(() => addNewCreditCardBrand(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }

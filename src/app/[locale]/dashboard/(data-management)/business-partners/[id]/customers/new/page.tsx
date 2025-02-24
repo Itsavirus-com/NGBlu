@@ -10,12 +10,17 @@ import useBusinessPartnerCustomerForm from '../../_hooks/business-partner-custom
 export default function NewBusinessPartnerCustomer({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners.customers')
 
-  const { methods, onSubmit } = useBusinessPartnerCustomerForm(Number(params.id))
+  const { methods, onSubmit, isSubmitting } = useBusinessPartnerCustomerForm(Number(params.id))
 
   return (
     <>
       <PageTitle title={t('newCustomer')} />
-      <BusinessPartnerCustomerForm methods={methods} onSubmit={onSubmit} />
+      <BusinessPartnerCustomerForm
+        methods={methods}
+        onSubmit={onSubmit}
+        id={Number(params.id)}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }

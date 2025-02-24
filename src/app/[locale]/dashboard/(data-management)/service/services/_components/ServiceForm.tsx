@@ -15,9 +15,15 @@ interface ServiceFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
   handleChange: (value: 'corporateOnlyService' | 'consumerOnlyService') => void
+  isSubmitting: boolean
 }
 
-export default function ServiceForm({ methods, onSubmit, handleChange }: ServiceFormProps) {
+export default function ServiceForm({
+  methods,
+  onSubmit,
+  handleChange,
+  isSubmitting,
+}: ServiceFormProps) {
   const t = useTranslations('dataManagement.services')
 
   return (
@@ -65,7 +71,7 @@ export default function ServiceForm({ methods, onSubmit, handleChange }: Service
               />
             </div>
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

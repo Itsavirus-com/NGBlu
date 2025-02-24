@@ -11,9 +11,8 @@ import useBusinessPartnerForm from '../../_hooks/business-partner-form.hook'
 export default function UpdateBusinessPartner({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners')
 
-  const { methods, onSubmit, isLoading, enterpriseRootIdValue } = useBusinessPartnerForm(
-    Number(params.id)
-  )
+  const { methods, onSubmit, isLoading, enterpriseRootIdValue, isSubmitting } =
+    useBusinessPartnerForm(Number(params.id))
 
   return (
     <>
@@ -25,6 +24,7 @@ export default function UpdateBusinessPartner({ params }: { params: { id: string
           methods={methods}
           onSubmit={onSubmit}
           enterpriseRootIdValue={enterpriseRootIdValue}
+          isSubmitting={isSubmitting}
         />
       )}
     </>

@@ -10,7 +10,7 @@ import useEnterpriseRootProjectForm from '../../_hooks/enterprise-root-project-f
 export default function NewEnterpriseRootProject({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.enterpriseRoots.projects')
 
-  const { methods, onSubmit } = useEnterpriseRootProjectForm()
+  const { methods, onSubmit, isSubmitting } = useEnterpriseRootProjectForm()
 
   return (
     <>
@@ -20,6 +20,7 @@ export default function NewEnterpriseRootProject({ params }: { params: { id: num
         enterpriseRootId={params.id}
         methods={methods}
         onSubmit={onSubmit}
+        isSubmitting={isSubmitting}
       />
     </>
   )

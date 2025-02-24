@@ -9,15 +9,20 @@ import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledSelect } from '@/components/forms/select'
 import { AddressType } from '@/services/swr/models/address-type.type'
 import { Address } from '@/services/swr/models/address.type'
+import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
 interface BusinessPartnerAddressFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  id: number
+  isSubmitting: boolean
 }
 
 export default function BusinessPartnerAddressForm({
   methods,
   onSubmit,
+  id,
+  isSubmitting,
 }: BusinessPartnerAddressFormProps) {
   const t = useTranslations('dataManagement.businessPartners.addresses')
 
@@ -30,7 +35,7 @@ export default function BusinessPartnerAddressForm({
               label={t('address')}
               name="addressId"
               containerClass="mb-3"
-              apiPath="addresses"
+              apiPath={'addresses'}
               option={{ label: row => row.addressName, value: row => row.id }}
               isRequired
             />
@@ -38,12 +43,22 @@ export default function BusinessPartnerAddressForm({
               label={t('addressType')}
               name="addressTypeId"
               containerClass="mb-3"
-              apiPath="addresses/types"
+              apiPath={'addresses/types'}
               option={{ label: row => row.addressType, value: row => row.id }}
               isRequired
             />
+            <ControlledSelect<OrganizationUnit>
+              label={t('organisationalUnit')}
+              name="ouUnitId"
+              containerClass="mb-3"
+              apiPath={'organisational-units'}
+              option={{ label: row => row.name, value: row => row.id }}
+              filter={{
+                businesspartnerId: id,
+              }}
+            />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

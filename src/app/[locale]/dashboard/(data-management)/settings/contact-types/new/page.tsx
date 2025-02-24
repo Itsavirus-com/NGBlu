@@ -9,12 +9,12 @@ import useContactTypeForm from '../_hooks/contact-type-form.hook'
 
 export default function NewContactType() {
   const t = useTranslations('dataManagement.contactTypes')
-  const { methods, onSubmit } = useContactTypeForm()
+  const { methods, onSubmit, isSubmitting } = useContactTypeForm()
 
   return (
     <>
       <PageTitle title={t('newContactType')} />
-      <ContactTypeForm methods={methods} onSubmit={onSubmit} />
+      <ContactTypeForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

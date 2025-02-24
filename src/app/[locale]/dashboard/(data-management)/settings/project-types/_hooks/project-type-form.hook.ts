@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { projectTypeApi } from '@/services/api/project-type-api'
@@ -13,8 +14,9 @@ import { schema } from '../_schemas/project-type.schema'
 export default function useProjectTypeForm(typeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
-  const { data: projectType, mutate: invalidateCache } = useProjectType(typeId)
+  const { data: projectType, isLoading, mutate: invalidateCache } = useProjectType(typeId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -56,11 +58,11 @@ export default function useProjectTypeForm(typeId?: number) {
   const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
     if (typeId) {
-      return updateProjectType(submitData)
+      return withLoading(() => updateProjectType(submitData))
     }
 
-    return addNewProjectType(submitData)
+    return withLoading(() => addNewProjectType(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

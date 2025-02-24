@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { addressTypeApi } from '@/services/api/address-type-api'
@@ -13,8 +14,9 @@ import { schema } from '../_schemas/address-type.schema'
 export default function useAddressTypeForm(addressTypeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: addressType, mutate: invalidateCache } = useAddressType(addressTypeId)
+  const { data: addressType, isLoading, mutate: invalidateCache } = useAddressType(addressTypeId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -57,11 +59,11 @@ export default function useAddressTypeForm(addressTypeId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (addressTypeId) {
-      return updateAddressType(submitData)
+      return withLoading(() => updateAddressType(submitData))
     }
 
-    return addNewAddressType(submitData)
+    return withLoading(() => addNewAddressType(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }

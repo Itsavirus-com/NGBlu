@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { endClientContactApi } from '@/services/api/end-client-contact-api'
@@ -13,6 +14,7 @@ import { schema } from '../_schemas/end-client-contact-form.schema'
 export default function useEndClientContactForm(endClientId: number, contactId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const {
     data: endClientContact,
@@ -81,11 +83,11 @@ export default function useEndClientContactForm(endClientId: number, contactId?:
     const submitData = omitNullAndUndefined(data)
 
     if (contactId) {
-      return updateEndClientContact(submitData)
+      return withLoading(() => updateEndClientContact(submitData))
     }
 
-    return addNewEndClientContact(submitData)
+    return withLoading(() => addNewEndClientContact(submitData))
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

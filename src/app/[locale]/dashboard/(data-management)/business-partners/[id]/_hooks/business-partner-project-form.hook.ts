@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { businessPartnerProjectApi } from '@/services/api/business-partner-project-api'
@@ -16,6 +17,7 @@ export default function useBusinessPartnerProjectForm(
 ) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
   const {
     data: project,
@@ -45,8 +47,12 @@ export default function useBusinessPartnerProjectForm(
         invalidateCache()
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if ('projectId' in error?.errors?.detail) {
+        showToast({ variant: 'danger', body: error?.errors?.detail?.projectId })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
@@ -73,10 +79,10 @@ export default function useBusinessPartnerProjectForm(
     const submitData = omitNullAndUndefined(data)
 
     if (projectId) {
-      return updateBusinessPartnerProject(submitData)
+      return withLoading(() => updateBusinessPartnerProject(submitData))
     }
-    return addNewBusinessPartnerProject(submitData)
+    return withLoading(() => addNewBusinessPartnerProject(submitData))
   }
 
-  return { methods, onSubmit, isLoading }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

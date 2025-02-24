@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { genderApi } from '@/services/api/gender-api'
@@ -13,8 +14,9 @@ import { schema } from '../_schemas/gender.schema'
 export default function useGenderForm(genderId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: gender, mutate: invalidateCache } = useGender(genderId)
+  const { data: gender, isLoading, mutate: invalidateCache } = useGender(genderId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -57,11 +59,11 @@ export default function useGenderForm(genderId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (genderId) {
-      return updateGender(submitData)
+      return withLoading(() => updateGender(submitData))
     }
 
-    return addNewGender(submitData)
+    return withLoading(() => addNewGender(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }

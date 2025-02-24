@@ -17,9 +17,15 @@ interface PricePlanFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
   handleChange: (value: 'productId' | 'serviceId') => void
+  isSubmitting: boolean
 }
 
-export default function PricePlanForm({ methods, onSubmit, handleChange }: PricePlanFormProps) {
+export default function PricePlanForm({
+  methods,
+  onSubmit,
+  handleChange,
+  isSubmitting,
+}: PricePlanFormProps) {
   const t = useTranslations('dataManagement.prices.plans')
 
   return (
@@ -97,7 +103,7 @@ export default function PricePlanForm({ methods, onSubmit, handleChange }: Price
 
             <ControlledSwitch label={t('default')} name="isDefault" containerClass="mb-3" />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

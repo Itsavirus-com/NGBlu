@@ -24,6 +24,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { endClientApi } from '@/services/api/end-client-api'
@@ -36,6 +37,7 @@ import { schema } from '../_schemas/end-client-form.schema'
 export default function useEndClientForm(id?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
   const [isDisplayCompanyInfo, setIsDisplayCompanyInfo] = useState(false)
 
   const { data: endClient, isLoading, mutate: invalidateCache } = useEndClient(id)
@@ -85,10 +87,10 @@ export default function useEndClientForm(id?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (id) {
-      return updateEndClient(submitData)
+      return withLoading(() => updateEndClient(submitData))
     }
 
-    return addNewEndClient(submitData)
+    return withLoading(() => addNewEndClient(submitData))
   }
 
   useEffect(() => {
@@ -97,5 +99,12 @@ export default function useEndClientForm(id?: number) {
     }
   }, [endClient?.type])
 
-  return { methods, onSubmit, isLoading, isDisplayCompanyInfo, setIsDisplayCompanyInfo }
+  return {
+    methods,
+    onSubmit,
+    isLoading,
+    isSubmitting,
+    isDisplayCompanyInfo,
+    setIsDisplayCompanyInfo,
+  }
 }

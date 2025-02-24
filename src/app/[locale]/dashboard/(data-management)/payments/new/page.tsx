@@ -9,7 +9,7 @@ import usePaymentForm from '../_hooks/payment-form.hook'
 
 export default function NewPayment() {
   const t = useTranslations('dataManagement.payments')
-  const { methods, onSubmit, handleChange, selectedPayment } = usePaymentForm()
+  const { methods, onSubmit, handleChange, selectedPayment, isSubmitting } = usePaymentForm()
 
   return (
     <>
@@ -19,6 +19,7 @@ export default function NewPayment() {
         onSubmit={onSubmit}
         handleChange={handleChange}
         selectedPayment={selectedPayment}
+        isSubmitting={isSubmitting}
       />
     </>
   )

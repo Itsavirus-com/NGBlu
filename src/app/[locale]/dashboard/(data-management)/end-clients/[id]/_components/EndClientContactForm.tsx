@@ -7,15 +7,21 @@ import { UseFormReturn } from 'react-hook-form'
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledSelect } from '@/components/forms/select'
-import { ContactType } from '@/services/swr/models/contact-type.type'
+import { Contact } from '@/services/swr/models/contact.type'
+import { PersonResponsibility } from '@/services/swr/models/person-responsibility.type'
 import { Person } from '@/services/swr/models/person.type'
 
 interface EndClientContactFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function EndClientContactForm({ methods, onSubmit }: EndClientContactFormProps) {
+export default function EndClientContactForm({
+  methods,
+  onSubmit,
+  isSubmitting,
+}: EndClientContactFormProps) {
   const t = useTranslations('dataManagement.endClients.contacts')
 
   return (
@@ -27,20 +33,32 @@ export default function EndClientContactForm({ methods, onSubmit }: EndClientCon
               label={t('person')}
               name="personId"
               containerClass="mb-3"
-              apiPath="persons"
+              apiPath={'persons'}
               option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
+              onChange={() => {
+                methods.setValue('contactInfoId', 0)
+              }}
               isRequired
             />
-            <ControlledSelect<ContactType>
-              label={t('contactType')}
-              name="contactTypeId"
+            <ControlledSelect<Contact>
+              label={t('contactInfo')}
+              name="contactInfoId"
               containerClass="mb-3"
-              apiPath="contacts/types"
-              option={{ label: row => row.contactType, value: row => row.id }}
+              apiPath={'contacts/infos'}
+              option={{ label: row => row.contactInfo, value: row => row.id }}
+              filter={{ personId: Number(methods.watch('personId')) }}
+              isRequired
+            />
+            <ControlledSelect<PersonResponsibility>
+              label={t('responsibility')}
+              name="responsibilityId"
+              containerClass="mb-3"
+              apiPath={'persons/responsibilities'}
+              option={{ label: row => row.responsibility, value: row => row.id }}
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

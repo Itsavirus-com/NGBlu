@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { serviceTypeApi } from '@/services/api/service-type-api'
@@ -13,8 +14,9 @@ import { schema } from '../_schemas/service-type.schema'
 export default function useServiceTypeForm(typeId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
-  const { data: serviceType, mutate: invalidateCache } = useServiceType(typeId)
+  const { data: serviceType, isLoading, mutate: invalidateCache } = useServiceType(typeId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -56,11 +58,11 @@ export default function useServiceTypeForm(typeId?: number) {
   const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
     if (typeId) {
-      return updateServiceType(submitData)
+      return withLoading(() => updateServiceType(submitData))
     }
 
-    return addNewServiceType(submitData)
+    return withLoading(() => addNewServiceType(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

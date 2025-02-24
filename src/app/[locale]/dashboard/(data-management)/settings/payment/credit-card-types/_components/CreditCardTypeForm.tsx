@@ -11,9 +11,14 @@ import { ControlledInput } from '@/components/forms/input'
 interface CreditCardTypeFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function CreditCardTypeForm({ methods, onSubmit }: CreditCardTypeFormProps) {
+export default function CreditCardTypeForm({
+  methods,
+  onSubmit,
+  isSubmitting,
+}: CreditCardTypeFormProps) {
   const t = useTranslations('dataManagement.creditCardTypes')
 
   return (
@@ -29,7 +34,7 @@ export default function CreditCardTypeForm({ methods, onSubmit }: CreditCardType
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

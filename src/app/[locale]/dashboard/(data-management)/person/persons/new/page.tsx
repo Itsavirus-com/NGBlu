@@ -9,12 +9,12 @@ import usePersonForm from '../_hooks/person-form.hook'
 
 export default function NewPerson() {
   const t = useTranslations('dataManagement.persons')
-  const { methods, onSubmit } = usePersonForm()
+  const { methods, onSubmit, isSubmitting } = usePersonForm()
 
   return (
     <>
       <PageTitle title={t('newPerson')} />
-      <PersonForm methods={methods} onSubmit={onSubmit} />
+      <PersonForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

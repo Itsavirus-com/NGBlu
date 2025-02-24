@@ -14,9 +14,10 @@ import { PersonType } from '@/services/swr/models/person-type.type'
 interface PersonFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function PersonForm({ methods, onSubmit }: PersonFormProps) {
+export default function PersonForm({ methods, onSubmit, isSubmitting }: PersonFormProps) {
   const t = useTranslations('dataManagement.persons')
 
   return (
@@ -98,7 +99,7 @@ export default function PersonForm({ methods, onSubmit }: PersonFormProps) {
               </Col>
             </Row>
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

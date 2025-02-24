@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { enterpriseRootContactApi } from '@/services/api/enterprise-root-contact-api'
@@ -15,8 +16,13 @@ export default function useEnterpriseRootContactForm(contactId?: number) {
   const { id } = useParams()
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { isLoading: isSubmitting, withLoading } = useLoading()
 
-  const { data: contact, mutate: invalidateCache } = useEnterpriseRootContact(Number(id), contactId)
+  const {
+    data: contact,
+    isLoading,
+    mutate: invalidateCache,
+  } = useEnterpriseRootContact(Number(id), contactId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -76,11 +82,11 @@ export default function useEnterpriseRootContactForm(contactId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (contactId) {
-      return updateEnterpriseRootContact(submitData)
+      return withLoading(() => updateEnterpriseRootContact(submitData))
     }
 
-    return addNewEnterpriseRootContact(submitData)
+    return withLoading(() => addNewEnterpriseRootContact(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isLoading, isSubmitting }
 }

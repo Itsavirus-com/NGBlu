@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { currencyApi } from '@/services/api/currency-api'
@@ -13,8 +14,9 @@ import { schema } from '../_schemas/currency.schema'
 export default function useCurrencyForm(currencyId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: currency, mutate: invalidateCache } = useCurrency(currencyId)
+  const { data: currency, isLoading, mutate: invalidateCache } = useCurrency(currencyId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -57,11 +59,11 @@ export default function useCurrencyForm(currencyId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (currencyId) {
-      return updateCurrency(submitData)
+      return withLoading(() => updateCurrency(submitData))
     }
 
-    return addNewCurrency(submitData)
+    return withLoading(() => addNewCurrency(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }

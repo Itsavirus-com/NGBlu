@@ -11,9 +11,10 @@ import { ControlledInput } from '@/components/forms/input'
 interface PriceUnitFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
+  isSubmitting: boolean
 }
 
-export default function PriceUnitForm({ methods, onSubmit }: PriceUnitFormProps) {
+export default function PriceUnitForm({ methods, onSubmit, isSubmitting }: PriceUnitFormProps) {
   const t = useTranslations('dataManagement.prices.units')
 
   return (
@@ -29,7 +30,7 @@ export default function PriceUnitForm({ methods, onSubmit }: PriceUnitFormProps)
               isRequired
             />
 
-            <FormButtons />
+            <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
       </div>

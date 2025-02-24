@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { priceIntervalApi } from '@/services/api/price-interval-api'
@@ -13,8 +14,13 @@ import { schema } from '../_schemas/price-interval.schema'
 export default function usePriceIntervalForm(priceIntervalId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
+  const { withLoading, isLoading: isSubmitting } = useLoading()
 
-  const { data: priceInterval, mutate: invalidateCache } = usePriceInterval(priceIntervalId)
+  const {
+    data: priceInterval,
+    mutate: invalidateCache,
+    isLoading,
+  } = usePriceInterval(priceIntervalId)
 
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
@@ -57,11 +63,11 @@ export default function usePriceIntervalForm(priceIntervalId?: number) {
     const submitData = omitNullAndUndefined(data)
 
     if (priceIntervalId) {
-      return updatePriceInterval(submitData)
+      return withLoading(() => updatePriceInterval(submitData))
     }
 
-    return addNewPriceInterval(submitData)
+    return withLoading(() => addNewPriceInterval(submitData))
   }
 
-  return { methods, onSubmit }
+  return { methods, onSubmit, isSubmitting, isLoading }
 }
