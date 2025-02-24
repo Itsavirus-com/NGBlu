@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useController, useFormContext } from 'react-hook-form'
 
 import { useOptionData, useOptionDataById } from '@/services/swr/use-option-data'
@@ -6,7 +6,7 @@ import { Option, formatSelectedOption } from '@/utils/format-option.util'
 
 interface UseSelectProps<OptionValue> {
   name: string
-  apiPath: string
+  apiPath?: string
   apiPathSelected?: string
   option: Option
   filter?: Record<string, any>
@@ -16,7 +16,7 @@ interface UseSelectProps<OptionValue> {
 
 export const useSelect = <OptionValue extends Record<string, any>>({
   name,
-  apiPath,
+  apiPath = '',
   apiPathSelected,
   option,
   filter,
@@ -60,18 +60,24 @@ export const useSelect = <OptionValue extends Record<string, any>>({
     }
   }, [data, page])
 
-  const options = [
-    { value: '0', label: 'Select one', data: null },
-    ...(allData?.length
-      ? allData.map(item => ({
-          value: String(option.value(item)),
-          label: `${item.id} | ${option.label(item)}`,
-          data: item,
-        }))
-      : []),
-  ]
+  const options = useMemo(
+    () => [
+      { value: '0', label: 'Select one', data: null },
+      ...(allData?.length
+        ? allData.map(item => ({
+            value: String(option.value(item)),
+            label: `${item.id} | ${option.label(item)}`,
+            data: item,
+          }))
+        : []),
+    ],
+    [allData, option]
+  )
 
-  const selectedOption = formatSelectedOption(detailData, field.value, option, options)
+  const selectedOption = useMemo(
+    () => formatSelectedOption(detailData, field.value, option, options),
+    [detailData, field.value, option, options]
+  )
 
   const handleScrollBottom = () => {
     if (pagination && page < pagination.lastPage && !isLoadingInfinity) {

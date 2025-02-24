@@ -20,13 +20,20 @@ export default function useUserForm(userId?: number) {
   const methods = useForm<InferType<typeof schema>>({
     resolver: yupResolver(schema),
     values: user && {
-      displayName: user?.displayName ?? '',
+      firstname: user?.firstname ?? '',
+      lastname: user?.lastname ?? '',
+      phoneNumber: user?.phoneNumber ?? '',
       email: user?.email ?? '',
-      password: '',
-      personId: user?.personId ?? 0,
-      blocked: Boolean(user?.blockedAt),
+      roles: user?.roles ?? [],
+      invitationMethod: user?.invitationMethod ?? '',
     },
   })
+
+  const errorMessageInputType = methods.formState.errors.invitationMethod?.message
+
+  const handleChange = (value: 'manual' | 'sso') => {
+    methods.setValue('invitationMethod', value)
+  }
 
   const addNewUser = async (data: InferType<typeof schema>) => {
     try {
@@ -62,9 +69,10 @@ export default function useUserForm(userId?: number) {
     }
   }
 
+  // TODO: Implement block user feature later if needed
   const blockUser = async (data: boolean) => {
     if (!userId) return
-    methods.setValue('blocked', data)
+    // methods.setValue('blocked', data)
 
     try {
       const body = data
@@ -99,5 +107,5 @@ export default function useUserForm(userId?: number) {
     return withLoading(() => addNewUser(submitData))
   }
 
-  return { methods, onSubmit, blockUser, isSubmitting }
+  return { methods, onSubmit, blockUser, isSubmitting, errorMessageInputType, handleChange }
 }

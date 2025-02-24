@@ -15,4 +15,5 @@ export type User = {
   blocked: boolean
   createdAt: string
   updatedAt: string
+  invitationMethod: string
 }
