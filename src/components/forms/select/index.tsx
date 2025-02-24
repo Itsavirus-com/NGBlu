@@ -15,7 +15,7 @@ type SelectProps<OptionValue> = {
   name: string
   filterName?: string
   containerClass?: string
-  apiPath: string
+  apiPath?: string
   apiPathSelected?: string
   option: Option
   filter?: Record<string, any>

@@ -419,7 +419,14 @@
       "password": "Password",
       "person": "Person",
       "lastLogin": "Last Login",
-      "blocked": "Blocked"
+      "blocked": "Blocked",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "phoneNumber": "Phone Number",
+      "roles": "Roles",
+      "invitationMethod": "Invitation Method",
+      "manual": "Manual",
+      "entra": "Entra (Microsoft SSO)"
     },
     "persons": {
       "title": "Persons",
