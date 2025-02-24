@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1-rc.0](https://bitbucket.org/infraorders2/io2-frontend/compare/v1.0.0-rc.1...v2.0.1-rc.0) (2025-02-24)
+
 ## [1.0.0-rc.1](https://bitbucket.org/infraorders2/io2-frontend/compare/v1.0.0-rc.2...v1.0.0-rc.1) (2025-02-24)
 
 ## 2.2.0 (2025-02-18)
