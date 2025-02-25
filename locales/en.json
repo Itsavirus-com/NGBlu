@@ -105,7 +105,12 @@
     "login": {
       "title": "Sign In",
       "subtitle": "Sign in to InfraOrders 2.0",
-      "sign_in_button": "Sign in with Microsoft"
+      "signInButton": "Sign in with Microsoft",
+      "orContinueWith": "OR CONTINUE WITH",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "signIn": "Sign In"
     }
   },
   "dataValidation": {

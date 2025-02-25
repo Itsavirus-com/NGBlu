@@ -102,9 +102,14 @@
     "terms": "Voorwaarden",
     "contact_us": "Contacteer ons",
     "login": {
-      "title": "Inloggen",
-      "subtitle": "Log in op InfraOrders 2.0",
-      "sign_in_button": "Log in met Microsoft"
+      "title": "Sign In",
+      "subtitle": "Sign in to InfraOrders 2.0",
+      "signInButton": "Sign in with Microsoft",
+      "orContinueWith": "OR CONTINUE WITH",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "signIn": "Sign In"
     }
   },
   "dataValidation": {
