@@ -10,12 +10,14 @@ import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
 import { ControlledSelect } from '@/components/forms/select'
 import { ContactType } from '@/services/swr/models/contact-type.type'
+import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
 interface PersonContactFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
   handleChange: (value: 'endclientId' | 'businesspartnerId' | 'enterpriseRootId') => void
   isSubmitting: boolean
+  handleFilterOrganizationUnit: () => Record<string, any> | undefined
 }
 
 export function PersonContactForm({
@@ -23,6 +25,7 @@ export function PersonContactForm({
   onSubmit,
   handleChange,
   isSubmitting,
+  handleFilterOrganizationUnit,
 }: PersonContactFormProps) {
   const t = useTranslations('dataManagement.persons.contacts')
 
@@ -102,6 +105,18 @@ export function PersonContactForm({
                 apiPath="enterprise-roots"
                 option={{ label: row => row.name, value: row => row.id }}
                 isRequired
+              />
+            )}
+            {!!methods.watch('inputType') && (
+              <ControlledSelect<OrganizationUnit>
+                label={t('organizationUnit')}
+                name="ouUnitId"
+                containerClass="mb-3"
+                apiPath="organisational-units"
+                filter={handleFilterOrganizationUnit()}
+                option={{ label: row => row.name, value: row => row.id }}
+                disabled={!handleFilterOrganizationUnit()}
+                isHidden
               />
             )}
             <FormButtons isSubmitting={isSubmitting} />

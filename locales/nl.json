@@ -458,7 +458,8 @@
         "businesspartner": "Business Partner",
         "businesspartnerId": "Business Partner ID",
         "endclient": "End Client",
-        "endclientId": "End Client ID"
+        "endclientId": "End Client ID",
+        "organizationUnit": "Organization Unit"
       },
       "addresses": {
         "title": "Addresses",

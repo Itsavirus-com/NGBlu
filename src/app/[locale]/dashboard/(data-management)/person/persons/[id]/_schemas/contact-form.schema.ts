@@ -55,4 +55,5 @@ export const schema = yup.object().shape({
       },
     }),
   inputType: yup.string(),
+  ouUnitId: yup.number().nullable(),
 })
