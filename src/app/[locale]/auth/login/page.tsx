@@ -52,7 +52,9 @@ export default function Login() {
         {/* Password Input */}
         <div className="mb-6">
           <div className="d-flex justify-content-between align-items-center mb-2">
-            <label className="form-label fw-bold">{t('password')}</label>
+            <label className="form-label fw-bold">
+              {t('password')} <span className="text-danger">*</span>
+            </label>
             <Link href="/auth/reset-password" className="text-primary">
               {t('forgotPassword')}
             </Link>
