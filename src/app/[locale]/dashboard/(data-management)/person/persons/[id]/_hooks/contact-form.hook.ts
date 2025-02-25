@@ -35,6 +35,7 @@ export default function usePersonContactForm(personContactId?: number) {
     methods.setValue('endclientId', null)
     methods.setValue('businesspartnerId', null)
     methods.setValue('enterpriseRootId', 0)
+    methods.setValue('ouUnitId', null)
   }
 
   const methods = useForm<InferType<typeof schema>>({
@@ -45,6 +46,7 @@ export default function usePersonContactForm(personContactId?: number) {
       businesspartnerId: personContact.businesspartnerId,
       endclientId: personContact.endclientId,
       enterpriseRootId: personContact.enterpriseRootId,
+      ouUnitId: personContact.ouUnitId,
       inputType: personContact.endclientId
         ? 'endclientId'
         : personContact.businesspartnerId
@@ -54,6 +56,20 @@ export default function usePersonContactForm(personContactId?: number) {
             : '',
     },
   })
+
+  const handleFilterOrganizationUnit = () => {
+    const endclientId = methods.watch('endclientId')
+    const businesspartnerId = methods.watch('businesspartnerId')
+    const enterpriseRootId = methods.watch('enterpriseRootId')
+
+    if (endclientId && enterpriseRootId) {
+      return { endclientId: endclientId, enterpriseRootId: enterpriseRootId }
+    } else if (businesspartnerId) {
+      return { businesspartnerId: businesspartnerId, enterpriseRootId: enterpriseRootId }
+    } else if (enterpriseRootId) {
+      return { enterpriseRootId: enterpriseRootId }
+    }
+  }
 
   const addPersonContact = async (data: InferType<typeof schema>) => {
     try {
@@ -94,5 +110,13 @@ export default function usePersonContactForm(personContactId?: number) {
     return withLoading(() => addPersonContact(submitData))
   }
 
-  return { methods, inputType, onSubmit, handleChange, isLoading, isSubmitting }
+  return {
+    methods,
+    inputType,
+    onSubmit,
+    handleChange,
+    isLoading,
+    isSubmitting,
+    handleFilterOrganizationUnit,
+  }
 }
