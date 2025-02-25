@@ -44,7 +44,7 @@ export default function Login() {
           label={t('email')}
           name="email"
           type="email"
-          placeholder="m@example.com"
+          placeholder="mail@example.com"
           containerClass="mb-6"
           isRequired
         />
