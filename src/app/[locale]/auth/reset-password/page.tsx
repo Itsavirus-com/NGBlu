@@ -14,7 +14,7 @@ export default function ForgotPasswordPage() {
   const { email, isSubmitting, isSubmitted, error, handleSubmit, setEmail } = useResetPassword()
 
   return (
-    <Container className="d-flex align-items-center justify-content-center min-vh-100">
+    <Container className="d-flex align-items-center justify-content-center">
       <div className="w-100 px-3" style={{ maxWidth: '400px' }}>
         <Card className="h-400">
           <Card.Body className="p-4 d-flex flex-column align-items-center justify-content-center">
