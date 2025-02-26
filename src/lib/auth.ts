@@ -18,7 +18,7 @@ async function generateSecret(clientPrivateKey: string) {
 async function getAccessToken(idToken: string) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login?id_token=${idToken}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login/sso?id_token=${idToken}`,
       {
         method: 'GET',
       }

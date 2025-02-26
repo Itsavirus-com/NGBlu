@@ -45,12 +45,27 @@ export default function AuthLayout({
 
           <div className="text-white fs-base text-center">
             {t.rich('subtitle', {
-              blogger: chunks => (
+              company: chunks => (
                 <a href="#" className="opacity-75-hover text-warning fw-bold me-1">
                   {chunks}
                 </a>
               ),
-              interviewee: chunks => (
+              vision: chunks => (
+                <a href="#" className="opacity-75-hover text-warning fw-bold me-1">
+                  {chunks}
+                </a>
+              ),
+              partners: chunks => (
+                <a href="#" className="opacity-75-hover text-warning fw-bold me-1">
+                  {chunks}
+                </a>
+              ),
+              solutions: chunks => (
+                <a href="#" className="opacity-75-hover text-warning fw-bold me-1">
+                  {chunks}
+                </a>
+              ),
+              goal: chunks => (
                 <a href="#" className="opacity-75-hover text-warning fw-bold me-1">
                   {chunks}
                 </a>

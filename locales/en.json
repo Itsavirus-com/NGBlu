@@ -99,13 +99,27 @@
   },
   "auth": {
     "title": "Fast, Efficient and Productive",
-    "subtitle": "In this kind of post, <blogger>the blogger</blogger> introduces a person they’ve interviewed <br></br> and provides some background information about <interviewee>the interviewee</interviewee> and their <br></br> work following this is a transcript of the interview.",
+    "subtitle": "We are <company>pioneers in broadband solutions</company>, driven by our belief in <vision>universal internet access</vision> as the <br></br> foundation of Cloud adoption. Our mission empowers <partners>partners' digital transformation</partners> through <br></br> <solutions>comprehensive network solutions and customizable services</solutions>, leveraging our expertise to <br></br> <goal>shape the future of the broadband economy</goal>.",
     "terms": "Terms",
     "contact_us": "Contact Us",
     "login": {
       "title": "Sign In",
       "subtitle": "Sign in to InfraOrders 2.0",
-      "sign_in_button": "Sign in with Microsoft"
+      "signInButton": "Sign in with Microsoft",
+      "orContinueWith": "OR CONTINUE WITH",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "signIn": "Sign In"
+    },
+    "resetPassword": {
+      "title": "Forgot Password",
+      "subtitle": "Enter your email address and we'll send you instructions to reset your password.",
+      "email": "Email",
+      "sendResetInstructions": "Send Reset Instructions",
+      "backToLogin": "Back to login",
+      "sending": "Sending...",
+      "success": "Check your email for password reset instructions."
     }
   },
   "dataValidation": {
