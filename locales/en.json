@@ -111,6 +111,15 @@
       "password": "Password",
       "forgotPassword": "Forgot password?",
       "signIn": "Sign In"
+    },
+    "resetPassword": {
+      "title": "Forgot Password",
+      "subtitle": "Enter your email address and we'll send you instructions to reset your password.",
+      "email": "Email",
+      "sendResetInstructions": "Send Reset Instructions",
+      "backToLogin": "Back to login",
+      "sending": "Sending...",
+      "success": "Check your email for password reset instructions."
     }
   },
   "dataValidation": {
