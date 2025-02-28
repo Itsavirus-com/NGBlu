@@ -21,7 +21,6 @@ export default function usePriceConfigForm(configId?: number) {
     resolver: yupResolver(schema),
     values: priceConfig && {
       priceValue: priceConfig?.priceValue,
-      priceUnitId: priceConfig?.priceUnitId,
       priceCurrencyId: priceConfig?.priceCurrencyId,
       priceTypeId: priceConfig?.priceTypeId,
       priceIntervalId: priceConfig?.priceIntervalId,
