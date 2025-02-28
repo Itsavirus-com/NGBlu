@@ -23,7 +23,7 @@ export default function usePriceTaxForm(priceTaxId?: number) {
     values: priceTax && {
       name: priceTax?.name ?? '',
       taxValue: priceTax?.taxValue ?? 0,
-      priceUnitId: priceTax?.priceUnitId ?? 0,
+      priceTypeId: priceTax?.priceTypeId ?? 0,
       countryId: priceTax?.countryId ?? 0,
     },
   })
