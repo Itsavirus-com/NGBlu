@@ -84,7 +84,9 @@
     },
     "error": {
       "unexpectedErrorTitle": "Unexpected Error!",
-      "unexpectedErrorDesc": "An unexpected error occurred. Please try again later."
+      "unexpectedErrorDesc": "An unexpected error occurred. Please try again later.",
+      "authErrorMessage": "An authentication error occurred. Please try again later.",
+      "authError": "Authentication Error!"
     }
   },
   "404": {

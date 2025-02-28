@@ -57,15 +57,32 @@ export const authOptions: NextAuthOptions = {
     error: '/auth/login',
   },
   callbacks: {
-    async redirect({ baseUrl }) {
+    async redirect({ baseUrl, url }) {
+      if (url.includes('error=')) {
+        return `${baseUrl}/auth/login${url.split('?')[1] ? `?${url.split('?')[1]}` : ''}`
+      }
       return baseUrl
     },
     async jwt({ token, account }) {
       if (account) {
-        const resp = await getAccessToken(account.id_token as string)
+        // This block only runs during initial sign-in
+        try {
+          // Exchange the Microsoft ID token for backend access token
+          const resp = await getAccessToken(account.id_token as string)
 
-        token.accessToken = resp?.accessToken
-        token.sharedSecret = resp?.sharedSecret
+          if (resp) {
+            // Store the access token and shared secret in the JWT
+            token.accessToken = resp.accessToken
+            token.sharedSecret = resp.sharedSecret
+          } else {
+            // Handle the case where token exchange failed
+            token.error = 'auth_error'
+            throw new Error('auth_error')
+          }
+        } catch (error) {
+          token.error = 'auth_error'
+          throw new Error('auth_error')
+        }
       }
 
       return token
