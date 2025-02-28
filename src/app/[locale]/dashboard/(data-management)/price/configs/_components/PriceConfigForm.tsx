@@ -12,7 +12,6 @@ import { PriceCurrency } from '@/services/swr/models/price-currency.type'
 import { PriceInterval } from '@/services/swr/models/price-interval.type'
 import { PriceTax } from '@/services/swr/models/price-tax.type'
 import { PriceType } from '@/services/swr/models/price-type.type'
-import { PriceUnit } from '@/services/swr/models/price-unit.type'
 
 interface PriceConfigFormProps {
   methods: UseFormReturn<any>
@@ -73,14 +72,6 @@ export default function PriceConfigForm({ methods, onSubmit, isSubmitting }: Pri
                   containerClass="mb-3"
                   apiPath="prices/types"
                   option={{ label: row => row.type, value: row => row.id }}
-                  isRequired
-                />
-                <ControlledSelect<PriceUnit>
-                  label={t('unit')}
-                  name="priceUnitId"
-                  containerClass="mb-3"
-                  apiPath="prices/units"
-                  option={{ label: row => row.unit, value: row => row.id }}
                   isRequired
                 />
               </Col>
