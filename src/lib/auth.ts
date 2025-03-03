@@ -20,7 +20,7 @@ console.log(process.env.NEXT_PUBLIC_API_BASE_URL)
 async function getAccessToken(idToken: string) {
   try {
     const res = await fetch(
-      `https://io2-api.development.ngblu.io/api/login/sso?id_token=${idToken}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login/sso?id_token=${idToken}`,
       {
         method: 'GET',
       }
