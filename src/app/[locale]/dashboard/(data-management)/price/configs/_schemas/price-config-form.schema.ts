@@ -5,11 +5,6 @@ export const schema = yup.object().shape({
     .number()
     .typeError('Price value must be a number')
     .required('Price value is required'),
-  priceUnitId: yup
-    .number()
-    .typeError('Price unit must be a number')
-    .required('Price unit is required')
-    .notOneOf([0], 'Price unit is required'),
   priceCurrencyId: yup
     .number()
     .typeError('Price currency must be a number')

@@ -42,11 +42,11 @@ export default function PriceTaxForm({ methods, onSubmit, isSubmitting }: PriceT
               isRequired
             />
             <ControlledSelect<PriceUnit>
-              label={t('priceUnit')}
-              name="priceUnitId"
+              label={t('priceType')}
+              name="priceTypeId"
               containerClass="mb-3"
-              apiPath="prices/units"
-              option={{ label: row => row.unit, value: row => row.id }}
+              apiPath="prices/types"
+              option={{ label: row => row.type, value: row => row.id }}
               isRequired
             />
             <ControlledSelect<Country>

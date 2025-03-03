@@ -1,5 +1,5 @@
 import { Country } from './country.type'
-import { PriceUnit } from './price-unit.type'
+import { PriceType } from './price-type.type'
 
 export type PriceTax = {
   id: number
@@ -7,8 +7,8 @@ export type PriceTax = {
   taxValue: number
   countryId: number
   country: Country
-  priceUnitId: number
-  priceUnit: PriceUnit
+  priceTypeId: number
+  priceType: PriceType
   createdAt: string
   updatedAt: string
 }

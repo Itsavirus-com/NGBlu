@@ -407,6 +407,7 @@
         "unit": "Unit",
         "tax": "Tax",
         "priceUnit": "Price Unit",
+        "priceType": "Price Type",
         "country": "Country"
       },
       "types": {
