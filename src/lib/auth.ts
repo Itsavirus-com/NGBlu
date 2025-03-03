@@ -15,10 +15,12 @@ async function generateSecret(clientPrivateKey: string) {
   return sharedSecret
 }
 
+console.log(process.env.NEXT_PUBLIC_API_BASE_URL)
+
 async function getAccessToken(idToken: string) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login/sso?id_token=${idToken}`,
+      `https://io2-api.development.ngblu.io/api/login/sso?id_token=${idToken}`,
       {
         method: 'GET',
       }
@@ -76,10 +78,12 @@ export const authOptions: NextAuthOptions = {
             token.sharedSecret = resp.sharedSecret
           } else {
             // Handle the case where token exchange failed
+            console.error('Token exchange failed')
             token.error = 'auth_error'
             throw new Error('auth_error')
           }
         } catch (error) {
+          console.error('Auth error', error)
           token.error = 'auth_error'
           throw new Error('auth_error')
         }
