@@ -3,7 +3,6 @@ import { useTranslations } from 'next-intl'
 
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
-import { BinaryView } from '@/components/view/binary-view/binary-view'
 import { DateTimeView } from '@/components/view/date-time-view/date-time-view'
 import { User } from '@/services/swr/models/user.type'
 import { safeRender } from '@/utils/safeRender'
@@ -35,9 +34,9 @@ export default function Users() {
       render: row => <DateTimeView value={safeRender(row, 'lastLogin')} disableColumn />,
     },
     {
-      id: 'blocked',
-      title: t('blocked'),
-      render: row => <BinaryView value={!!row?.blockedAt} disableColumn />,
+      id: 'status',
+      title: t('status'),
+      render: row => safeRender(row, 'status'),
     },
   ]
 

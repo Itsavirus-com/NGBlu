@@ -15,8 +15,6 @@ async function generateSecret(clientPrivateKey: string) {
   return sharedSecret
 }
 
-console.log(process.env.NEXT_PUBLIC_API_BASE_URL)
-
 async function getAccessToken(idToken: string) {
   try {
     const res = await fetch(
@@ -28,13 +26,22 @@ async function getAccessToken(idToken: string) {
 
     if (!res.ok) return null
 
-    const sharedSecret = await generateSecret(res.headers.get('client-private-key') as string)
+    const clientPrivateKey = res.headers.get('client-private-key')
+
+    // Check if the key is empty
+    if (!clientPrivateKey) {
+      console.error('Missing client-private-key in API response')
+      return null
+    }
+
+    const sharedSecret = await generateSecret(clientPrivateKey)
 
     return {
       accessToken: res.headers.get('access-token'),
       sharedSecret,
     }
   } catch (error) {
+    console.error('Error in getAccessToken:', error)
     return null
   }
 }

@@ -37,7 +37,7 @@ const HeaderUserMenu: FC = () => {
       <Languages />
 
       <div className="menu-item px-5 my-1">
-        <Link href="/dashboard" className="menu-link px-5">
+        <Link href="/dashboard/account-profile-settings" className="menu-link px-5">
           {t('account_settings')}
         </Link>
       </div>
