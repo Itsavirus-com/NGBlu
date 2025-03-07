@@ -105,8 +105,7 @@
     "terms": "Terms",
     "contact_us": "Contact Us",
     "login": {
-      "title": "Sign In",
-      "subtitle": "Sign in to InfraOrders 2.0",
+      "signInToInfraOrders": "Sign in to InfraOrders 2.0",
       "signInButton": "Sign in with Microsoft",
       "orContinueWith": "OR CONTINUE WITH",
       "email": "Email",
@@ -122,6 +121,15 @@
       "backToLogin": "Back to login",
       "sending": "Sending...",
       "success": "Check your email for password reset instructions."
+    },
+    "setPassword": {
+      "welcome": "Welcome to InfraOrders",
+      "pleaseSetPassword": "Please set a password to activate your account",
+      "createPassword": "Create Your Password",
+      "thisWillBeUsedToSecureYourAccount": "This will be used to secure your account",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "setPassword": "Set Password"
     }
   },
   "dataValidation": {

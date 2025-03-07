@@ -1,3 +1,4 @@
+import { createHmac } from 'crypto'
 import sodium from 'libsodium-wrappers'
 import { NextAuthOptions } from 'next-auth'
 import AzureADProvider from 'next-auth/providers/azure-ad'
@@ -19,22 +20,32 @@ console.log(process.env.NEXT_PUBLIC_API_BASE_URL)
 
 async function getAccessToken(idToken: string) {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login/sso?id_token=${idToken}`,
-      {
-        method: 'GET',
-      }
-    )
+    const timestamp = new Date().toISOString()
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login/sso?id_token=${idToken}`
+    const method = 'GET'
+    const message = `${timestamp}${method}${url}`
+
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'X-Timestamp': timestamp,
+      },
+    })
 
     if (!res.ok) return null
 
     const sharedSecret = await generateSecret(res.headers.get('client-private-key') as string)
 
+    // Generate signature after getting the shared secret
+    const signature = await createHmac('sha256', sharedSecret).update(message).digest('hex')
+
     return {
       accessToken: res.headers.get('access-token'),
       sharedSecret,
+      signature,
     }
   } catch (error) {
+    console.log('error in getAccessToken', error)
     return null
   }
 }

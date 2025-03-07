@@ -1,23 +1,40 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { loginManualApi } from '@/services/api/login-manual-api'
+import { omitNullAndUndefined } from '@/utils/object'
 
 import { schema } from '../_schemas/login.schema'
 
 export const useLogin = () => {
-  const { showToast } = useToast()
   const searchParams = useSearchParams()
-  const methods = useForm({ resolver: yupResolver(schema) })
+  const router = useRouter()
   const tError = useTranslations('common.error')
   const toastShownRef = useRef(false)
 
-  const onSubmit = (data: any) => {
-    // TODO: Implement Integration with API later
-    console.log(data)
+  const { showToast } = useToast()
+  const [isLoading, setIsLoading] = useState(false)
+
+  const methods = useForm({ resolver: yupResolver(schema) })
+
+  const onSubmit = async (data: any) => {
+    const submitData = omitNullAndUndefined(data)
+    setIsLoading(true)
+
+    try {
+      const response = await loginManualApi.new(submitData)
+      if (response.ok) {
+        router.push(`/dashboard`)
+      }
+    } catch (error: any) {
+      console.error('Login failed:', error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -35,5 +52,9 @@ export const useLogin = () => {
     }
   }, [searchParams, showToast, tError])
 
-  return { methods, onSubmit }
+  return {
+    methods,
+    onSubmit,
+    isLoading,
+  }
 }

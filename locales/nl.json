@@ -104,8 +104,7 @@
     "terms": "Voorwaarden",
     "contact_us": "Contacteer ons",
     "login": {
-      "title": "Sign In",
-      "subtitle": "Sign in to InfraOrders 2.0",
+      "signInToInfraOrders": "Sign in to InfraOrders 2.0",
       "signInButton": "Sign in with Microsoft",
       "orContinueWith": "OR CONTINUE WITH",
       "email": "Email",

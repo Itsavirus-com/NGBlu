@@ -14,14 +14,14 @@ import { useLogin } from './_hooks/login.hook'
 
 export default function Login() {
   const t = useTranslations('auth.login')
-  const { methods, onSubmit } = useLogin()
+  const { methods, onSubmit, isLoading } = useLogin()
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <div className="app-container container-fluid">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-2">Sign In</h1>
-          <div className="text-gray-600">Sign in to InfraOrders 2.0</div>
+          <h1 className="text-3xl font-bold mb-2">{t('signIn')}</h1>
+          <div className="text-gray-600">{t('signInToInfraOrders')}</div>
         </div>
 
         {/* Microsoft Sign In Button */}
@@ -67,7 +67,9 @@ export default function Login() {
           type="submit"
           label={t('signIn')}
           colorClass="primary"
-          className="w-100 flex-center "
+          className="w-100 flex-center"
+          loading={isLoading}
+          disabled={isLoading}
         />
       </div>
     </FormProvider>
