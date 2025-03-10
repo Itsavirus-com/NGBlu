@@ -29,6 +29,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 
+import { useSentry } from '@/hooks'
 import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
@@ -43,6 +44,7 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
   const { isLoading: isSubmitting, withLoading } = useLoading()
+  const { captureException, withSpan } = useSentry()
 
   const {
     data: enterpriseRoot,
@@ -60,6 +62,8 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
   })
 
   const addNewEnterpriseRoot = async (data: InferType<typeof schema>) => {
+    console.log('Starting enterprise root creation with data:', data)
+
     try {
       const res = await enterpriseRootApi.new(data)
 
@@ -67,14 +71,32 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
         showToast({ variant: 'success', body: 'Enterprise root created successfully' })
         invalidateCache()
         back()
+        return res
+      } else {
+        const error = new Error(`Failed to create enterprise root: ${res.status} ${res.problem}`)
+        Object.assign(error, {
+          apiResponse: res,
+          formData: data,
+          context: 'EnterpriseRootForm.addNewEnterpriseRoot',
+        })
+        throw error
       }
     } catch (error) {
+      console.error('Enterprise root creation error:', error)
+      captureException(error instanceof Error ? error : new Error(String(error)), {
+        component: 'EnterpriseRootForm',
+        action: 'addNewEnterpriseRoot',
+        extra: { data },
+      })
       showUnexpectedToast()
+      throw error
     }
   }
 
   const updateEnterpriseRoot = async (data: InferType<typeof schema>) => {
     if (!enterpriseRootId) return
+
+    console.log('Starting enterprise root update with data:', data)
 
     try {
       const res = await enterpriseRootApi.update(enterpriseRootId, data)
@@ -83,20 +105,41 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
         showToast({ variant: 'success', body: 'Enterprise root updated successfully' })
         invalidateCache()
         back()
+        return res
+      } else {
+        const error = new Error(`Failed to update enterprise root: ${res.status} ${res.problem}`)
+        Object.assign(error, {
+          apiResponse: res,
+          formData: data,
+          enterpriseRootId,
+          context: 'EnterpriseRootForm.updateEnterpriseRoot',
+        })
+        throw error
       }
     } catch (error) {
+      console.error('Enterprise root update error:', error)
+      captureException(error instanceof Error ? error : new Error(String(error)), {
+        component: 'EnterpriseRootForm',
+        action: 'updateEnterpriseRoot',
+        extra: { enterpriseRootId, data },
+      })
       showUnexpectedToast()
+      throw error
     }
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {
     const submitData = omitNullAndUndefined(data)
 
-    if (enterpriseRootId) {
-      return withLoading(() => updateEnterpriseRoot(submitData))
+    try {
+      if (enterpriseRootId) {
+        await withLoading(() => updateEnterpriseRoot(submitData))
+      } else {
+        await withLoading(() => addNewEnterpriseRoot(submitData))
+      }
+    } catch (error) {
+      console.error('Form submission error (fallback handler):', error)
     }
-
-    return withLoading(() => addNewEnterpriseRoot(submitData))
   }
 
   return { methods, onSubmit, isLoading, isSubmitting }
