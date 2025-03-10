@@ -144,7 +144,6 @@ export default function useAddressForm(addressId?: number) {
     return withLoading(() => addNewAddress(submitData))
   }
 
-  console.log('isSubmitting', isSubmitting)
   return {
     methods,
     onSubmit,

@@ -8,7 +8,7 @@
     "submit": "Submit",
     "navbar": {
       "language": "Taal",
-      "account_settings": "Gebruikersinstellingen",
+      "account_settings": "Account & Profile Settings",
       "sign_out": "Uitloggen"
     },
     "sidebar": {
@@ -440,7 +440,8 @@
       "roles": "Roles",
       "invitationMethod": "Invitation Method",
       "manual": "Manual",
-      "entra": "Entra (Microsoft SSO)"
+      "entra": "Entra (Microsoft SSO)",
+      "status": "Status"
     },
     "persons": {
       "title": "Persons",
@@ -1265,5 +1266,22 @@
       "id": "ID",
       "type": "Type"
     }
+  },
+  "account": {
+    "accountSettings": "Account & Profile Settings",
+    "manageYourAccount": "Manage your account settings and profile information",
+    "personalInformation": "Personal Information",
+    "updatePersonalDetails": "Update your personal details here",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phoneNumber": "Phone Number",
+    "accountInformation": "Account Information",
+    "accountDetailsAndRole": "Your account details and role",
+    "emailAddress": "Email Address",
+    "contactSupportToChangeEmail": "Contact support to change your email address",
+    "role": "Role",
+    "rolePermissionsInfo": "Your role determines your permissions",
+    "profileUpdated": "Profile updated successfully",
+    "profileUpdateError": "Error updating profile"
   }
 }

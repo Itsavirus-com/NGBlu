@@ -16,4 +16,5 @@ export type User = {
   createdAt: string
   updatedAt: string
   invitationMethod: string
+  status: string
 }
