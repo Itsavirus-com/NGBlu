@@ -1,10 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { generateSecret } from '@/lib/auth'
 import { loginManualApi } from '@/services/api/login-manual-api'
 import { omitNullAndUndefined } from '@/utils/object'
 
@@ -27,11 +29,68 @@ export const useLogin = () => {
 
     try {
       const response = await loginManualApi.new(submitData)
-      if (response.ok) {
-        router.push(`/dashboard`)
+
+      // Get the response data
+      const responseData = response.data || {}
+
+      // Access headers directly as properties instead of using get()
+      const headers = response.headers as Record<string, string>
+      const accessToken = headers['access-token']
+      const clientPrivateKey = headers['client-private-key']
+
+      if (response.ok && accessToken && clientPrivateKey && responseData.success) {
+        try {
+          // Generate the shared secret
+          const sharedSecret = await generateSecret(clientPrivateKey)
+
+          // Use NextAuth signIn to create a session
+          const result = await signIn('manual-login', {
+            redirect: false,
+            accessToken: accessToken,
+            sharedSecret: Buffer.from(sharedSecret).toString('base64'), // Convert binary data to base64
+            userData: JSON.stringify(responseData.data), // Pass user data to NextAuth
+            callbackUrl: '/dashboard',
+          })
+
+          if (result?.ok) {
+            router.push('/dashboard')
+          } else {
+            console.error('SignIn failed:', result?.error)
+            showToast({
+              variant: 'danger',
+              title: tError('authError'),
+              body: tError('authErrorMessage'),
+            })
+          }
+        } catch (secretError) {
+          console.error('Error generating shared secret:', secretError)
+          showToast({
+            variant: 'danger',
+            title: tError('authError'),
+            body: 'Error generating security credentials',
+          })
+        }
+      } else {
+        console.error('Login failed or missing required data:', {
+          ok: response.ok,
+          accessToken,
+          clientPrivateKey,
+          success: responseData?.success,
+          message: responseData?.message,
+        })
+        showToast({
+          variant: 'danger',
+          title: tError('authError'),
+          body: responseData?.message || tError('authErrorMessage'),
+        })
       }
     } catch (error: any) {
       console.error('Login failed:', error)
+      showToast({
+        variant: 'danger',
+        title: tError('authError'),
+        body: tError('authErrorMessage'),
+      })
     } finally {
       setIsLoading(false)
     }

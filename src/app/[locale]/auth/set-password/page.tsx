@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Card, Container, ProgressBar } from 'react-bootstrap'
+import { Card, Container, ProgressBar, Spinner } from 'react-bootstrap'
 import { useWatch } from 'react-hook-form'
 
 import { Button } from '@/components/button/button'
@@ -18,10 +18,8 @@ export default function SetPasswordFirstTime() {
     methods,
     onSubmit,
     isLoading,
-    showPassword,
-    setShowPassword,
-    showConfirmPassword,
-    setShowConfirmPassword,
+    isValidating,
+    isTokenValid,
     getPasswordStrength,
     getStrengthColor,
     getStrengthText,
@@ -34,20 +32,38 @@ export default function SetPasswordFirstTime() {
 
   const passwordStrength = getPasswordStrength(newPassword || '')
 
+  if (isValidating) {
+    return (
+      <Container
+        className="d-flex align-items-center justify-content-center"
+        style={{ height: '100vh' }}
+      >
+        <div className="text-center">
+          <Spinner animation="border" variant="primary" />
+          <p className="mt-3">{t('validatingToken')}</p>
+        </div>
+      </Container>
+    )
+  }
+
+  if (isTokenValid === false) {
+    return null // Will redirect to login page
+  }
+
   return (
     <Container className="d-flex align-items-center justify-content-center">
       <div className="w-100 px-3">
         <div className="text-center mb-4">
-          <h2 className="fw-bold mb-3">Welcome to InfraOrders</h2>
-          <p className="text-muted">Please set a password to activate your account</p>
+          <h2 className="fw-bold mb-3">{t('welcome')}</h2>
+          <p className="text-muted">{t('pleaseSetPassword')}</p>
         </div>
 
         <FormProvider methods={methods} onSubmit={onSubmit}>
           <Card>
             <Card.Header>
-              <Card.Title>Create Your Password</Card.Title>
+              <Card.Title>{t('createPassword')}</Card.Title>
               <Card.Subtitle className="text-muted">
-                This will be used to secure your account
+                {t('thisWillBeUsedToSecureYourAccount')}
               </Card.Subtitle>
             </Card.Header>
             <Card.Body>
@@ -55,8 +71,8 @@ export default function SetPasswordFirstTime() {
                 <div className="position-relative">
                   <ControlledInput
                     name="newPassword"
-                    type={showPassword ? 'text' : 'password'}
-                    label="New Password"
+                    type="password"
+                    label={t('newPassword')}
                     isRequired
                     autoFocus
                     containerClass="mb-2"
@@ -66,7 +82,7 @@ export default function SetPasswordFirstTime() {
                 {newPassword && (
                   <div className="mt-3">
                     <div className="d-flex justify-content-between align-items-center mb-2">
-                      <span className="fs-7">Password strength:</span>
+                      <span className="fs-7">{t('passwordStrength')}</span>
                       <span className="fs-7 fw-bold">{getStrengthText(passwordStrength)}</span>
                     </div>
                     <ProgressBar
@@ -76,7 +92,7 @@ export default function SetPasswordFirstTime() {
                     />
 
                     <div className="mt-4">
-                      <p className="fs-7 fw-bold mb-2">Password requirements:</p>
+                      <p className="fs-7 fw-bold mb-2">{t('passwordRequirements')}</p>
                       <ul className="fs-7 ps-4">
                         <li className="mb-1">
                           <div className="d-flex align-items-center">
@@ -86,46 +102,7 @@ export default function SetPasswordFirstTime() {
                                 newPassword.length >= 12 ? 'text-success' : 'text-danger'
                               }`}
                             />
-                            <span>At least 12 characters</span>
-                          </div>
-                        </li>
-                        <li className="mb-1">
-                          <div className="d-flex align-items-center">
-                            <KTIcon
-                              iconName={/[A-Z]/.test(newPassword) ? 'check' : 'cross'}
-                              className={`fs-7 me-2 ${
-                                /[A-Z]/.test(newPassword) ? 'text-success' : 'text-danger'
-                              }`}
-                            />
-                            <span>At least one uppercase letter</span>
-                          </div>
-                        </li>
-                        <li className="mb-1">
-                          <div className="d-flex align-items-center">
-                            <KTIcon
-                              iconName={/[a-z]/.test(newPassword) ? 'check' : 'cross'}
-                              className={`fs-7 me-2 ${
-                                /[a-z]/.test(newPassword) ? 'text-success' : 'text-danger'
-                              }`}
-                            />
-                            <span>At least one lowercase letter</span>
-                          </div>
-                        </li>
-                        <li>
-                          <div className="d-flex align-items-center">
-                            <KTIcon
-                              iconName={
-                                /[0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(newPassword)
-                                  ? 'check'
-                                  : 'cross'
-                              }
-                              className={`fs-7 me-2 ${
-                                /[0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(newPassword)
-                                  ? 'text-success'
-                                  : 'text-danger'
-                              }`}
-                            />
-                            <span>At least one number or special character</span>
+                            <span>{t('atLeast12Characters')}</span>
                           </div>
                         </li>
                       </ul>
@@ -138,8 +115,8 @@ export default function SetPasswordFirstTime() {
                 <div className="position-relative">
                   <ControlledInput
                     name="confirmPassword"
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    label="Confirm Password"
+                    type="password"
+                    label={t('confirmPassword')}
                     isRequired
                     containerClass="mb-2"
                   />
@@ -149,7 +126,7 @@ export default function SetPasswordFirstTime() {
             <Card.Footer>
               <Button
                 type="submit"
-                label={isLoading ? 'Activating Account...' : 'Activate Account'}
+                label={isLoading ? t('activatingAccount') : t('activateAccount')}
                 colorClass="primary"
                 className="w-100"
                 loading={isLoading}
