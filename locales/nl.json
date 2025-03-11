@@ -120,6 +120,31 @@
       "backToLogin": "Back to login",
       "sending": "Sending...",
       "success": "Check your email for password reset instructions."
+    },
+    "setPassword": {
+      "welcome": "Welcome to InfraOrders",
+      "pleaseSetPassword": "Please set a password to activate your account",
+      "createPassword": "Create Your Password",
+      "thisWillBeUsedToSecureYourAccount": "This will be used to secure your account",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "setPassword": "Set Password",
+      "passwordMustBeAtLeast12CharactersLong": "Password must be at least 12 characters long.",
+      "passwordTooWeak": "Password too weak",
+      "passwordGood": "Password good",
+      "activatingAccount": "Activating Account...",
+      "activateAccount": "Activate Account",
+      "success": "Your password has been set successfully. Welcome to the infraorders!",
+      "passwordRequirements": "Password requirements:",
+      "atLeast12Characters": "At least 12 characters",
+      "passwordTooShort": "Password too short",
+      "passwordStrength": "Password strength:",
+      "weak": "Weak",
+      "good": "Good",
+      "strong": "Strong",
+      "invalidOrMissingToken": "Invalid or missing token",
+      "invalidOrExpiredToken": "Invalid or expired token",
+      "validatingToken": "Validating token..."
     }
   },
   "dataValidation": {
