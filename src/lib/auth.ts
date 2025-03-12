@@ -187,7 +187,17 @@ export const authOptions: NextAuthOptions = {
     async redirect({ baseUrl, url }) {
       // Handle error redirects
       if (url.includes('error=')) {
-        return `${baseUrl}/auth/login${url.split('?')[1] ? `?${url.split('?')[1]}` : ''}`
+        // Parse the URL to extract and clean up query parameters
+        const parsedUrl = new URL(url, baseUrl)
+        const callbackUrl = parsedUrl.searchParams.get('callbackUrl')
+
+        // Create a clean URL without the error parameter
+        if (callbackUrl) {
+          return `${baseUrl}/auth/login?callbackUrl=${encodeURIComponent(callbackUrl)}`
+        }
+
+        // If no callbackUrl, just return to login without parameters
+        return `${baseUrl}/auth/login`
       }
 
       // If URL contains callbackUrl parameter, use that
