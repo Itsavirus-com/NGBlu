@@ -4,7 +4,13 @@ import createIntlMiddleware from 'next-intl/middleware'
 
 import { defaultLocale, localePrefix, locales } from './navigation'
 
-const publicPages = ['/', '/auth/login', '/auth/reset-password', '/auth/set-password']
+const publicPages = [
+  '/',
+  '/auth/login',
+  '/auth/request-password-reset',
+  '/auth/password-reset',
+  '/auth/set-password',
+]
 
 const intlMiddleware = createIntlMiddleware({
   defaultLocale,

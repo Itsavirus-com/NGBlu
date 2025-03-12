@@ -113,14 +113,21 @@
       "forgotPassword": "Forgot password?",
       "signIn": "Sign In"
     },
-    "resetPassword": {
+    "requestResetPassword": {
       "title": "Forgot Password",
       "subtitle": "Enter your email address and we'll send you instructions to reset your password.",
       "email": "Email",
       "sendResetInstructions": "Send Reset Instructions",
       "backToLogin": "Back to login",
       "sending": "Sending...",
-      "success": "Check your email for password reset instructions."
+      "success": "Check your email for password reset instructions.",
+      "error": "Failed to send reset email. Please try again."
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "subtitle": "Enter your new password below to reset your account.",
+      "successReset": "Password reset successfully. Please sign in to continue.",
+      "resetPassword": "Reset Password"
     },
     "setPassword": {
       "welcome": "Welcome to InfraOrders",
@@ -133,7 +140,6 @@
       "passwordMustBeAtLeast12CharactersLong": "Password must be at least 12 characters long.",
       "passwordTooWeak": "Password too weak",
       "passwordGood": "Password good",
-      "activatingAccount": "Activating Account...",
       "activateAccount": "Activate Account",
       "success": "Your password has been set successfully. Welcome to the infraorders!",
       "passwordRequirements": "Password requirements:",

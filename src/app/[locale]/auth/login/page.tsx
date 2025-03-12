@@ -55,7 +55,7 @@ export default function Login() {
             <label className="form-label fw-bold">
               {t('password')} <span className="text-danger">*</span>
             </label>
-            <Link href="/auth/reset-password" className="text-primary">
+            <Link href="/auth/request-password-reset" className="text-primary">
               {t('forgotPassword')}
             </Link>
           </div>
