@@ -60,8 +60,6 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
   })
 
   const addNewEnterpriseRoot = async (data: InferType<typeof schema>) => {
-    console.log('Starting enterprise root creation with data:', data)
-
     try {
       const res = await enterpriseRootApi.new(data)
 
@@ -69,7 +67,6 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
         showToast({ variant: 'success', body: 'Enterprise root created successfully' })
         invalidateCache()
         back()
-        return res
       }
     } catch (error) {
       showUnexpectedToast()
@@ -79,8 +76,6 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
   const updateEnterpriseRoot = async (data: InferType<typeof schema>) => {
     if (!enterpriseRootId) return
 
-    console.log('Starting enterprise root update with data:', data)
-
     try {
       const res = await enterpriseRootApi.update(enterpriseRootId, data)
 
@@ -88,7 +83,6 @@ export default function useEnterpriseRootForm(enterpriseRootId?: number) {
         showToast({ variant: 'success', body: 'Enterprise root updated successfully' })
         invalidateCache()
         back()
-        return res
       }
     } catch (error) {
       showUnexpectedToast()

@@ -4,7 +4,7 @@ export const schema = yup.object().shape({
   name: yup
     .string()
     .ensure()
-    // .required('Company Name is required')
+    .required('Company Name is required')
     .max(255, 'Company Name cannot exceed 255 characters'),
   enterpriseRootAddressesId: yup
     .number()
