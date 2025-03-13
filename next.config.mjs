@@ -33,11 +33,10 @@ const nextConfig = {
 }
 
 export default withSentryConfig(withNextIntl(nextConfig), {
-  // For all available options, see:
-  // https://www.npmjs.com/package/@sentry/webpack-plugin#options
-
+  // Organization and project settings
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -53,11 +52,14 @@ export default withSentryConfig(withNextIntl(nextConfig), {
     enabled: true,
   },
 
+  // Ensure errors are captured in development
+  transpileClientSDK: true,
+
   // Uncomment to route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
   // This can increase your server load as well as your hosting bill.
   // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
   // side errors will fail.
-  // tunnelRoute: "/monitoring",
+  tunnelRoute: '/monitoring',
 
   // Automatically tree-shake Sentry logger statements to reduce bundle size
   disableLogger: true,
@@ -67,5 +69,7 @@ export default withSentryConfig(withNextIntl(nextConfig), {
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
-  authToken: process.env.SENTRY_AUTH_TOKEN,
+
+  // Enable debug mode in development to help troubleshoot Sentry issues
+  debug: process.env.NODE_ENV === 'development',
 })
