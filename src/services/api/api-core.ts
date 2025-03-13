@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/nextjs'
 import { ApiResponse, ApisauceInstance, create } from 'apisauce'
 import { createHmac } from 'crypto'
 import { getSession } from 'next-auth/react'
@@ -146,18 +147,43 @@ export class ApiCore {
   protected async processResult(response: ApiResponse<any>) {
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
-      if (problem) return Promise.reject(problem)
+      if (problem) {
+        // Add Sentry error reporting for failed API calls
+        Sentry.captureMessage('API request failed', {
+          level: 'error',
+          extra: {
+            status: response.status,
+            problem: response.problem,
+            url: response.config?.url,
+            method: response.config?.method,
+            data: typeof response.data === 'object' ? response.data : undefined,
+          },
+        })
+        return Promise.reject(problem)
+      }
     }
 
     return Promise.resolve(response)
   }
 
   protected async callApi(method: RequestMethod, { path, payload }: ApiParams) {
-    const response: ApiResponse<any> = await this.api[method](path, payload, {
-      baseURL: this.baseURL,
-    })
+    try {
+      const response: ApiResponse<any> = await this.api[method](path, payload, {
+        baseURL: this.baseURL,
+      })
 
-    return await this.processResult(response)
+      return await this.processResult(response)
+    } catch (error) {
+      // Capture any unexpected errors during API calls
+      Sentry.captureException(error, {
+        extra: {
+          method,
+          path,
+          payload: typeof payload === 'object' ? payload : undefined,
+        },
+      })
+      throw error
+    }
   }
 
   protected async get(apiParams: ApiParams) {

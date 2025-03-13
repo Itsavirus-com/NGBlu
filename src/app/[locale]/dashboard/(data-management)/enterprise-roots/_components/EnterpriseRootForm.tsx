@@ -8,7 +8,6 @@ import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
 import { ControlledSelect } from '@/components/forms/select'
-import { SentryErrorButton } from '@/components/SentryErrorButton'
 import { Address } from '@/services/swr/models/address.type'
 import { OrganizationUnit } from '@/services/swr/models/organization-unit.type'
 
@@ -53,7 +52,6 @@ export default function EnterpriseRootForm({
               option={{ label: row => row.name, value: row => row.id }}
             />
             <FormButtons isSubmitting={isSubmitting} />
-            <SentryErrorButton label="Test Sentry Error" />
           </CardBody>
         </Card>
       </div>
