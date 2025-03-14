@@ -17,21 +17,24 @@ export default function useUserForm(userId?: number) {
   const { isLoading: isSubmitting, withLoading } = useLoading()
   const { data: user, mutate: invalidateCache } = useUser(userId)
 
-  const methods = useForm<InferType<typeof schema>>({
-    resolver: yupResolver(schema),
+  const isEdit = !!userId
+  const userSchema = schema(isEdit)
+
+  const methods = useForm<InferType<typeof userSchema>>({
+    resolver: yupResolver(userSchema),
     values: user && {
       firstname: user?.firstname ?? '',
       lastname: user?.lastname ?? '',
       phoneNumber: user?.phoneNumber ?? '',
       email: user?.email ?? '',
       roles: user?.roles ?? [''],
-      invitationMethod: user?.invitationMethod ?? '',
+      invitationMethod: user?.invitationMethod ?? undefined,
     },
   })
 
   const errorMessageInputType = methods.formState.errors.invitationMethod?.message
 
-  const addNewUser = async (data: InferType<typeof schema>) => {
+  const addNewUser = async (data: InferType<typeof userSchema>) => {
     try {
       const res = await userApi.new(data)
 
@@ -47,9 +50,8 @@ export default function useUserForm(userId?: number) {
     }
   }
 
-  const updateUser = async (data: InferType<typeof schema>) => {
+  const updateUser = async (data: InferType<typeof userSchema>) => {
     if (!userId) return
-
     try {
       const res = await userApi.update(userId, data)
 
@@ -94,7 +96,7 @@ export default function useUserForm(userId?: number) {
     }
   }
 
-  const onSubmit = async (data: InferType<typeof schema>) => {
+  const onSubmit = async (data: InferType<typeof userSchema>) => {
     const submitData = omitNullAndUndefined(data)
     if (userId) {
       return withLoading(() => updateUser(submitData))
@@ -103,5 +105,5 @@ export default function useUserForm(userId?: number) {
     return withLoading(() => addNewUser(submitData))
   }
 
-  return { methods, onSubmit, blockUser, isSubmitting, errorMessageInputType }
+  return { methods, onSubmit, blockUser, isSubmitting, errorMessageInputType, isEdit }
 }
