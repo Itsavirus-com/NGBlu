@@ -122,6 +122,14 @@
       "backToLogin": "Back to login",
       "sending": "Sending...",
       "success": "Check your email for password reset instructions."
+    },
+    "verifyEmail": {
+      "emailVerification": "Email Verification",
+      "verifyingEmail": "Verifying Email...",
+      "verificationEmailVerified": "Email verified successfully.",
+      "verificationEmailError": "Failed to verify email. The link may be expired or invalid. Please contact admin for support.",
+      "backToLogin": "Back to login",
+      "redirecting": "Redirecting you shortly..."
     }
   },
   "dataValidation": {
