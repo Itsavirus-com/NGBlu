@@ -1,14 +1,21 @@
 'use client'
 
+import * as Sentry from '@sentry/nextjs'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
+import { useEffect } from 'react'
 
 import serverErrorDark from '@/assets/images/misc/500-error-dark.png'
 import serverError from '@/assets/images/misc/500-error.png'
 import { Link } from '@/navigation'
 
-export default function Error() {
+export default function Error({ error }: { error: Error & { digest?: string } }) {
   const t = useTranslations('500')
+
+  useEffect(() => {
+    // Report the error to Sentry
+    Sentry.captureException(error)
+  }, [error])
 
   return (
     <div className="d-flex flex-column flex-root">
