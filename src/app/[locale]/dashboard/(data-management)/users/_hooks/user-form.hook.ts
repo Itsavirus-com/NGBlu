@@ -68,7 +68,7 @@ export default function useUserForm(userId?: number) {
   // TODO: Implement block user feature later if needed
   const blockUser = async (data: boolean) => {
     if (!userId) return
-    // methods.setValue('blocked', data)
+    methods.setValue('blocked', data)
 
     try {
       const body = data

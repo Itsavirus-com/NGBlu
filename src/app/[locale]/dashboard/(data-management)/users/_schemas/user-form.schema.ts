@@ -12,4 +12,5 @@ export const schema = yup.object().shape({
     .string()
     .required('Invitation method is required')
     .oneOf(['manual', 'entra']),
+  blocked: yup.boolean(),
 })

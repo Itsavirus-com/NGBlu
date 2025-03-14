@@ -73,28 +73,42 @@ export default function UserForm({
               isMulti
             />
 
-            <FormLabel className="fw-bold">
-              {t('invitationMethod')} <span className="text-danger">*</span>
-            </FormLabel>
-            <div className="d-flex gap-3">
-              <ControlledSwitch
-                type="radio"
-                label={t('manual')}
-                name="invitationMethod"
-                containerClass="mb-3"
-                value={'manual'}
-              />
-              <ControlledSwitch
-                type="radio"
-                label={t('entra')}
-                name="invitationMethod"
-                containerClass="mb-3"
-                value={'entra'}
-              />
-            </div>
-            {errorMessageInputType && (
-              <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
+            {!isEdit && (
+              <>
+                <FormLabel className="fw-bold">
+                  {t('invitationMethod')} <span className="text-danger">*</span>
+                </FormLabel>
+                <div className="d-flex gap-3">
+                  <ControlledSwitch
+                    type="radio"
+                    label={t('manual')}
+                    name="invitationMethod"
+                    containerClass="mb-3"
+                    value={'manual'}
+                  />
+                  <ControlledSwitch
+                    type="radio"
+                    label={t('entra')}
+                    name="invitationMethod"
+                    containerClass="mb-3"
+                    value={'entra'}
+                  />
+                </div>
+                {errorMessageInputType && (
+                  <div className="invalid-feedback d-block mt-0">{errorMessageInputType}</div>
+                )}
+              </>
             )}
+
+            {isEdit && blockUser && (
+              <ControlledSwitch
+                label={t('blocked')}
+                name="blocked"
+                className="form-control-solid"
+                onChange={(value: any) => blockUser(!!value)}
+              />
+            )}
+
             <FormButtons isSubmitting={isSubmitting} />
           </CardBody>
         </Card>
