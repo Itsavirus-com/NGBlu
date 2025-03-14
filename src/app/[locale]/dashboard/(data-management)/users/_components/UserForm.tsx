@@ -66,8 +66,11 @@ export default function UserForm({
               label={t('roles')}
               name="roles"
               containerClass="mb-3"
-              option={{ label: row => row.name, value: row => row.id }}
+              apiPath="users/roles"
+              option={{ label: role => role, value: role => role }}
               isRequired
+              haveDetailOptions={false}
+              isMulti
             />
 
             <FormLabel className="fw-bold">

@@ -24,7 +24,7 @@ export default function useUserForm(userId?: number) {
       lastname: user?.lastname ?? '',
       phoneNumber: user?.phoneNumber ?? '',
       email: user?.email ?? '',
-      roles: user?.roles ?? [],
+      roles: user?.roles ?? [''],
       invitationMethod: user?.invitationMethod ?? '',
     },
   })
