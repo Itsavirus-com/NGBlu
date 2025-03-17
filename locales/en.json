@@ -1298,6 +1298,13 @@
     "role": "Role",
     "rolePermissionsInfo": "Your role determines your permissions",
     "profileUpdated": "Profile updated successfully",
-    "profileUpdateError": "Error updating profile"
+    "profileUpdateError": "Error updating profile",
+    "passwordUpdate": "Password Update",
+    "changeYourPassword": "Change your account password",
+    "password": "Password",
+    "passwordRequirements": "Password must be at least 12 characters long",
+    "passwordUpdateSuccess": "Password updated successfully",
+    "profileUpdateErrorMessage": "An error occurred while updating your profile",
+    "profileUpdateSuccess": "Your profile has been updated successfully"
   }
 }
