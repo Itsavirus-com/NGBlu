@@ -23,8 +23,8 @@ const useAccountProfileSettings = () => {
   const methods = useForm<UserProfileType>({
     resolver: yupResolver(schema),
     values: userProfile && {
-      firstName: userProfile.firstname ?? '',
-      lastName: userProfile.lastname ?? '',
+      firstname: userProfile.firstname ?? '',
+      lastname: userProfile.lastname ?? '',
       email: userProfile.email ?? '',
       phoneNumber: userProfile.phoneNumber ?? '',
       roles: userProfile.roles.join(', ') ?? [],
@@ -34,11 +34,10 @@ const useAccountProfileSettings = () => {
 
   const onSubmit = async (data: UserProfileType) => {
     setIsSubmitting(true)
-    const { roles, ...dataToSubmit } = data
-    const submitData = omitNullAndUndefined(dataToSubmit)
+    const { roles, ...submitData } = data
 
     try {
-      const response = await userProfileApi.update(userProfile?.id as number, submitData)
+      const response = await userProfileApi.update(submitData)
 
       if (response.ok) {
         showToast({

@@ -35,7 +35,7 @@ export default function AccountSettings() {
                   <div className="row mb-6">
                     <div className="col-md-6">
                       <ControlledInput
-                        name="firstName"
+                        name="firstname"
                         label={t('firstName')}
                         isRequired
                         containerClass="mb-4"
@@ -43,7 +43,7 @@ export default function AccountSettings() {
                     </div>
                     <div className="col-md-6">
                       <ControlledInput
-                        name="lastName"
+                        name="lastname"
                         label={t('lastName')}
                         isRequired
                         containerClass="mb-4"

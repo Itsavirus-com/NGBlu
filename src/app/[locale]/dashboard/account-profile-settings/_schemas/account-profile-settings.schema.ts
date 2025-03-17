@@ -3,8 +3,8 @@ import * as yup from 'yup'
 import { PHONE_NUMBER_REGEX } from '@/constants/regex'
 
 export const schema = yup.object().shape({
-  firstName: yup.string().ensure().max(255, 'First name must be less than 255 characters'),
-  lastName: yup.string().ensure().max(255, 'Last name must be less than 255 characters'),
+  firstname: yup.string().ensure().max(255, 'First name must be less than 255 characters'),
+  lastname: yup.string().ensure().max(255, 'Last name must be less than 255 characters'),
   phoneNumber: yup
     .string()
     .nullable()
