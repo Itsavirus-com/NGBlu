@@ -40,7 +40,7 @@ export const ControlledSwitch = (props: SwitchProps) => {
 
   return (
     <Form.Group className={containerClass}>
-      <div className="d-flex mt-4">
+      <div className="d-flex mt-6">
         <Form.Check
           type={type}
           id={name}

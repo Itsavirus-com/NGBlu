@@ -9,7 +9,7 @@ import useUserForm from '../../_hooks/user-form.hook'
 
 export default function UpdateUser({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.users')
-  const { methods, onSubmit, blockUser, isSubmitting } = useUserForm(Number(params.id))
+  const { methods, onSubmit, blockUser, isSubmitting, isEdit } = useUserForm(Number(params.id))
 
   return (
     <>
@@ -18,8 +18,8 @@ export default function UpdateUser({ params }: { params: { id: string } }) {
         methods={methods}
         onSubmit={onSubmit}
         blockUser={blockUser}
-        isEdit
         isSubmitting={isSubmitting}
+        isEdit={isEdit}
       />
     </>
   )
