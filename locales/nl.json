@@ -103,24 +103,45 @@
     "subtitle": "We are <company>pioneers in broadband solutions</company>, driven by our belief in <vision>universal internet access</vision> as the <br></br> foundation of Cloud adoption. Our mission empowers <partners>partners' digital transformation</partners> through <br></br> <solutions>comprehensive network solutions and customizable services</solutions>, leveraging our expertise to <br></br> <goal>shape the future of the broadband economy</goal>.",
     "terms": "Voorwaarden",
     "contact_us": "Contacteer ons",
-    "login": {
-      "title": "Sign In",
-      "subtitle": "Sign in to InfraOrders 2.0",
-      "signInButton": "Sign in with Microsoft",
-      "orContinueWith": "OR CONTINUE WITH",
-      "email": "Email",
-      "password": "Password",
-      "forgotPassword": "Forgot password?",
-      "signIn": "Sign In"
-    },
-    "resetPassword": {
+    "requestResetPassword": {
       "title": "Forgot Password",
       "subtitle": "Enter your email address and we'll send you instructions to reset your password.",
       "email": "Email",
       "sendResetInstructions": "Send Reset Instructions",
       "backToLogin": "Back to login",
       "sending": "Sending...",
-      "success": "Check your email for password reset instructions."
+      "success": "Check your email for password reset instructions.",
+      "error": "Failed to send reset email. Please try again."
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "subtitle": "Enter your new password below to reset your account.",
+      "successReset": "Password reset successfully. Please sign in to continue.",
+      "resetPassword": "Reset Password"
+    },
+    "setPassword": {
+      "welcome": "Welcome to InfraOrders",
+      "pleaseSetPassword": "Please set a password to activate your account",
+      "createPassword": "Create Your Password",
+      "thisWillBeUsedToSecureYourAccount": "This will be used to secure your account",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "setPassword": "Set Password",
+      "passwordMustBeAtLeast12CharactersLong": "Password must be at least 12 characters long.",
+      "passwordTooWeak": "Password too weak",
+      "passwordGood": "Password good",
+      "activateAccount": "Activate Account",
+      "success": "Your password has been set successfully. Welcome to the infraorders!",
+      "passwordRequirements": "Password requirements:",
+      "atLeast12Characters": "At least 12 characters",
+      "passwordTooShort": "Password too short",
+      "passwordStrength": "Password strength:",
+      "weak": "Weak",
+      "good": "Good",
+      "strong": "Strong",
+      "invalidOrMissingToken": "Invalid or missing token",
+      "invalidOrExpiredToken": "Invalid or expired token",
+      "validatingToken": "Validating token..."
     }
   },
   "dataValidation": {
