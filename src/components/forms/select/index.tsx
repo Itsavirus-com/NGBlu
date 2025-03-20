@@ -24,6 +24,8 @@ type SelectProps<OptionValue> = {
   isRequired?: boolean
   disabled?: boolean
   isSelectedIdWithParams?: boolean
+  haveDetailOptions?: boolean
+  isMulti?: boolean
 }
 
 export const ControlledSelect = <OptionValue extends Record<string, any>>(
@@ -42,6 +44,8 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     onChange,
     disabled,
     isSelectedIdWithParams,
+    haveDetailOptions,
+    isMulti,
   } = props
 
   const {
@@ -61,6 +65,8 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     onChange,
     isSelectedIdWithParams,
     apiPathSelected,
+    haveDetailOptions,
+    isMulti,
   })
 
   if (isHidden && options.length <= 1) {
@@ -85,6 +91,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
           placeholder="Select one"
           loadingMessage={() => 'Loading more...'}
           isDisabled={disabled}
+          isMulti={isMulti}
         />
       )}
       {invalid && error && <div className="invalid-feedback d-block">{error.message}</div>}

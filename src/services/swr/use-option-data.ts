@@ -20,7 +20,12 @@ export const useOptionData = <OptionValue extends AnyObject>(
       : null
   )
 
-  return { ...data, ...results }
+  if (Array.isArray(data)) {
+    // Handle multi-select values
+    return { data, pagination: null, ...results }
+  } else {
+    return { ...data, ...results }
+  }
 }
 
 export const useOptionDataById = <OptionValue extends AnyObject>(

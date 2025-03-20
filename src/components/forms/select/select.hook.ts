@@ -12,6 +12,8 @@ interface UseSelectProps<OptionValue> {
   filter?: Record<string, any>
   onChange?: (value: string | number | null, optionData?: OptionValue | null) => void
   isSelectedIdWithParams?: boolean
+  haveDetailOptions?: boolean
+  isMulti?: boolean
 }
 
 export const useSelect = <OptionValue extends Record<string, any>>({
@@ -22,6 +24,8 @@ export const useSelect = <OptionValue extends Record<string, any>>({
   filter,
   onChange,
   isSelectedIdWithParams,
+  haveDetailOptions = true,
+  isMulti = false,
 }: UseSelectProps<OptionValue>) => {
   const { control } = useFormContext()
   const {
@@ -46,7 +50,7 @@ export const useSelect = <OptionValue extends Record<string, any>>({
   })
 
   const { data: detailData } = useOptionDataById<OptionValue>(
-    apiPathSelected ? apiPathSelected : apiPath,
+    haveDetailOptions ? (apiPathSelected ? apiPathSelected : apiPath) : undefined,
     field.value,
     isSelectedIdWithParams,
     { ...filter, id: field.value }
@@ -64,9 +68,9 @@ export const useSelect = <OptionValue extends Record<string, any>>({
     () => [
       { value: '0', label: 'Select one', data: null },
       ...(allData?.length
-        ? allData.map(item => ({
+        ? allData.map((item, index) => ({
             value: String(option.value(item)),
-            label: `${item.id} | ${option.label(item)}`,
+            label: `${item.id ? item.id : index + 1} | ${option.label(item)}`,
             data: item,
           }))
         : []),
@@ -87,9 +91,17 @@ export const useSelect = <OptionValue extends Record<string, any>>({
   }
 
   const handleChange = (option: any) => {
-    const value = option?.value ?? ''
-    field.onChange(value as string)
-    onChange?.(value, option?.data ?? null)
+    if (isMulti) {
+      // Handle multi-select
+      const values = option ? option.map((opt: any) => opt.value) : []
+      field.onChange(values)
+      onChange?.(values, option)
+    } else {
+      // Handle single select
+      const value = option?.value ?? ''
+      field.onChange(value as string)
+      onChange?.(value, option?.data ?? null)
+    }
   }
 
   return {

@@ -66,6 +66,11 @@ export const formatSelectedOption = (
   option: Option,
   options: any[]
 ) => {
+  // Handle multi-select values
+  if (Array.isArray(fieldValue)) {
+    return options.filter(opt => fieldValue.includes(opt.value))
+  }
+
   // Handle empty or invalid detailData
   if (!detailData || (Array.isArray(detailData) && detailData.length === 0)) {
     return fieldValue ? options.find(opt => opt.value === String(fieldValue)) : null
