@@ -110,6 +110,15 @@
       "sendResetInstructions": "Send Reset Instructions",
       "backToLogin": "Back to login",
       "sending": "Sending...",
+      "success": "Check your email for password reset instructions."
+    },
+    "verifyEmail": {
+      "emailVerification": "Email Verification",
+      "verifyingEmail": "Verifying Email...",
+      "verificationEmailVerified": "Email verified successfully.",
+      "verificationEmailError": "Failed to verify email. The link may be expired or invalid. Please contact admin for support.",
+      "backToLogin": "Back to login",
+      "redirecting": "Redirecting you shortly...",
       "success": "Check your email for password reset instructions.",
       "error": "Failed to send reset email. Please try again."
     },
@@ -1304,6 +1313,13 @@
     "role": "Role",
     "rolePermissionsInfo": "Your role determines your permissions",
     "profileUpdated": "Profile updated successfully",
-    "profileUpdateError": "Error updating profile"
+    "profileUpdateError": "Error updating profile",
+    "passwordUpdate": "Password Update",
+    "changeYourPassword": "Change your account password",
+    "password": "Password",
+    "passwordRequirements": "Password must be at least 12 characters long",
+    "passwordUpdateSuccess": "Password updated successfully",
+    "profileUpdateErrorMessage": "An error occurred while updating your profile",
+    "profileUpdateSuccess": "Your profile has been updated successfully"
   }
 }

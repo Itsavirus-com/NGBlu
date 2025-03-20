@@ -14,7 +14,6 @@ import { setInitialPasswordApi } from '@/services/api/set-initial-password-api'
 import { validateTokenUserApi } from '@/services/api/validate-token-user-api'
 import { InferType } from '@/utils/typescript'
 
-
 import { schema } from '../_schemas/set-password.schema'
 
 interface UseSetPasswordFormProps {
