@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
-import { generateSecret } from '@/lib/auth'
 import { loginManualApi } from '@/services/api/login-manual-api'
 import { omitNullAndUndefined } from '@/utils/object'
 
@@ -40,14 +39,11 @@ export const useLogin = () => {
 
       if (response.ok && accessToken && clientPrivateKey && responseData.success) {
         try {
-          // Generate the shared secret
-          const sharedSecret = await generateSecret(clientPrivateKey)
-
           // Use NextAuth signIn to create a session
           const result = await signIn('manual-login', {
             redirect: false,
             accessToken: accessToken,
-            sharedSecret: Buffer.from(sharedSecret).toString('base64'), // Convert binary data to base64
+            clientPrivateKey: clientPrivateKey,
             userData: JSON.stringify(responseData.data), // Pass user data to NextAuth
             callbackUrl: '/dashboard',
           })

@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/nextjs'
 import { ApiResponse, ApisauceInstance, create } from 'apisauce'
 import { createHmac } from 'crypto'
+import sodium from 'libsodium-wrappers'
 import { getSession } from 'next-auth/react'
 
 import { ApiParams, RequestMethod } from './api-core.type'
@@ -34,8 +35,14 @@ export class ApiCore {
    */
   protected payloadWrapper?: string
 
-  protected async generateSignature(sharedSecret: string, message: string): Promise<string> {
-    return createHmac('sha256', sharedSecret).update(message).digest('hex')
+  protected async generateSignature(clientPrivateKey: string, message: string): Promise<string> {
+    const serverPublicKey = process.env.NEXT_PUBLIC_SERVER_PUBLIC_KEY as string
+    const sharedSecret = sodium.crypto_scalarmult(
+      sodium.from_base64(clientPrivateKey, sodium.base64_variants.ORIGINAL),
+      sodium.from_base64(serverPublicKey, sodium.base64_variants.ORIGINAL)
+    )
+    const hmac = createHmac('sha256', sharedSecret).update(message).digest('hex')
+    return hmac
   }
 
   protected buildQueryParams(params: Record<string, any>): string {
@@ -71,12 +78,13 @@ export class ApiCore {
       const url = this.getUrl(request)
       const method = request.method?.toUpperCase() || ''
       const body = request.data ? JSON.stringify(request.data) : ''
-      const message = `${timestamp}${method}${url}${body}`
+      const message =
+        method !== 'GET' ? `${timestamp}${method}${url}${body}` : `${timestamp}${method}${url}`
 
       const session = await getSession()
 
-      if (session?.accessToken && session?.sharedSecret) {
-        const signature = await this.generateSignature(session.sharedSecret, message)
+      if (session?.accessToken && session?.clientPrivateKey) {
+        const signature = await this.generateSignature(session.clientPrivateKey, message)
         request.headers['X-Signature'] = signature
         request.headers['X-Timestamp'] = timestamp
         request.headers.Authorization = `Bearer ${session.accessToken}`
