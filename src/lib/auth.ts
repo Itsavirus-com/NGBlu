@@ -1,5 +1,3 @@
-import { createHmac } from 'crypto'
-import sodium from 'libsodium-wrappers'
 import { NextAuthOptions } from 'next-auth'
 import AzureADProvider from 'next-auth/providers/azure-ad'
 import CredentialsProvider from 'next-auth/providers/credentials'
@@ -8,7 +6,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 interface CustomUser {
   id: string
   accessToken: string
-  sharedSecret: string
+  clientPrivateKey: string
   userData?: UserData
 }
 
@@ -43,6 +41,7 @@ declare module 'next-auth' {
     accessToken: string
     sharedSecret: string
     provider: string
+    clientPrivateKey: string
     user: {
       id: number
       name: string
@@ -60,30 +59,16 @@ declare module 'next-auth/jwt' {
     accessToken: string
     sharedSecret: string
     provider: string
+    clientPrivateKey: string
     error?: string
     userData?: UserData
   }
-}
-
-export async function generateSecret(clientPrivateKey: string) {
-  await sodium.ready
-
-  const serverPublicKey = process.env.NEXT_PUBLIC_SERVER_PUBLIC_KEY as string
-
-  const sharedSecret = sodium.crypto_scalarmult(
-    sodium.from_base64(clientPrivateKey, sodium.base64_variants.ORIGINAL),
-    sodium.from_base64(serverPublicKey, sodium.base64_variants.ORIGINAL)
-  )
-
-  return sharedSecret
 }
 
 async function getAccessToken(idToken: string) {
   try {
     const timestamp = new Date().toISOString()
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login/sso?id_token=${idToken}`
-    const method = 'GET'
-    const message = `${timestamp}${method}${url}`
 
     const res = await fetch(url, {
       method: 'GET',
@@ -102,18 +87,11 @@ async function getAccessToken(idToken: string) {
       return null
     }
 
-    const sharedSecret = await generateSecret(clientPrivateKey)
-
-    // Generate signature after getting the shared secret
-    const signature = await createHmac('sha256', sharedSecret).update(message).digest('hex')
-
-    // Parse the response body to get user data
     const userData = await res.json()
 
     return {
       accessToken: res.headers.get('access-token') || '',
-      sharedSecret: Buffer.from(sharedSecret).toString('base64'),
-      signature,
+      clientPrivateKey: clientPrivateKey || '',
       userData: userData.data,
     }
   } catch (error) {
@@ -142,15 +120,16 @@ export const authOptions: NextAuthOptions = {
       name: 'Manual Login',
       credentials: {
         accessToken: { label: 'Access Token', type: 'text' },
-        sharedSecret: { label: 'Shared Secret', type: 'text' },
+        clientPrivateKey: { label: 'Client Private Key', type: 'text' },
         userData: { label: 'User Data', type: 'text' },
       },
       async authorize(credentials) {
+        console.log('credentials', credentials)
         try {
-          if (!credentials?.accessToken || !credentials?.sharedSecret) {
+          if (!credentials?.accessToken || !credentials?.clientPrivateKey) {
             console.error('Missing credentials:', {
               hasAccessToken: !!credentials?.accessToken,
-              hasSharedSecret: !!credentials?.sharedSecret,
+              hasClientPrivateKey: !!credentials?.clientPrivateKey,
             })
             return null
           }
@@ -169,7 +148,7 @@ export const authOptions: NextAuthOptions = {
           return {
             id: '1', // Required by NextAuth
             accessToken: credentials.accessToken,
-            sharedSecret: credentials.sharedSecret,
+            clientPrivateKey: credentials.clientPrivateKey,
             userData,
           } as CustomUser
         } catch (error) {
@@ -210,64 +189,83 @@ export const authOptions: NextAuthOptions = {
       return `${baseUrl}/dashboard`
     },
     async jwt({ token, account, user }) {
-      // Initialize token properties if they don't exist
-      token.accessToken = token.accessToken || ''
-      token.sharedSecret = token.sharedSecret || ''
-      token.provider = token.provider || ''
+      // This block handles initial sign-in via Azure AD
+      if (account && account.provider === 'azure-ad') {
+        try {
+          // Exchange the Microsoft ID token for backend access token
+          const resp = await getAccessToken(account.id_token as string)
 
-      // This runs during initial sign-in
-      if (account) {
-        if (account.provider === 'azure-ad') {
-          try {
-            // Exchange the Microsoft ID token for backend access token
-            const resp = await getAccessToken(account.id_token as string)
-
-            if (resp) {
-              // Store the access token and shared secret in the JWT
-              token.accessToken = resp.accessToken
-              token.sharedSecret = resp.sharedSecret
-              token.provider = 'azure-ad'
-              token.userData = resp.userData
-            } else {
-              // Handle the case where token exchange failed
-              console.error('Token exchange failed')
-              token.error = 'auth_error'
-              throw new Error('auth_error')
-            }
-          } catch (error) {
-            console.error('Auth error', error)
+          if (resp) {
+            // Store the tokens and user data in the JWT
+            token.accessToken = resp.accessToken
+            token.clientPrivateKey = resp.clientPrivateKey
+            token.provider = 'azure-ad'
+            token.userData = resp.userData
+          } else {
+            // Handle the case where token exchange failed
+            console.error('Token exchange failed')
             token.error = 'auth_error'
             throw new Error('auth_error')
           }
+        } catch (error) {
+          console.error('Auth error:', error)
+          token.error = 'auth_error'
+          throw new Error('auth_error')
         }
       }
 
-      // For credentials provider, the user object already contains the tokens
-      if (user) {
-        const customUser = user as CustomUser
-        token.accessToken = customUser.accessToken
-        token.sharedSecret = customUser.sharedSecret
-        token.provider = 'credentials'
-        token.userData = customUser.userData
+      // This block handles manual/credentials login
+      // The provider ID should be 'manual-login' from CredentialsProvider
+      if (user && account?.provider === 'manual-login') {
+        const customUser = user as unknown as CustomUser
+
+        if (customUser.accessToken && customUser.clientPrivateKey) {
+          token.accessToken = customUser.accessToken
+          token.clientPrivateKey = customUser.clientPrivateKey
+          token.provider = 'credentials'
+
+          // Handle userData, which might be an object or stringified JSON
+          if (customUser.userData) {
+            token.userData = customUser.userData
+          }
+        } else {
+          console.error('Invalid credentials in manual login')
+          token.error = 'invalid_credentials'
+        }
       }
 
       return token
     },
     async session({ session, token }) {
-      // Ensure session has the required properties
+      // Ensure session has the required properties from token
       session.accessToken = token.accessToken
-      session.sharedSecret = token.sharedSecret
+      session.clientPrivateKey = token.clientPrivateKey
       session.provider = token.provider
 
       // Add user data to the session
       if (token.userData) {
+        // If we have userData from token, use it as the primary source
         session.user = {
           id: token.userData.id,
-          name: token.userData.displayName,
-          email: token.userData.email,
-          roles: token.userData.roles,
+          name: token.userData.displayName || session.user?.name || '',
+          email: token.userData.email || session.user?.email || '',
+          roles: token.userData.roles || [],
           personId: token.userData.personId,
           lastLogin: token.userData.lastLogin,
+        }
+      } else if (session.user) {
+        // If no userData from token but we have session.user (e.g., from provider)
+        // Preserve all existing fields and add required fields with defaults
+        session.user = {
+          ...session.user,
+          id: session.user.id || 0,
+          // Use session.user.name which should be available from OAuth provider
+          name: session.user.name || '',
+          email: session.user.email || '',
+          // Add default arrays for roles to avoid type errors
+          roles: [],
+          personId: 0,
+          lastLogin: new Date().toISOString(),
         }
       }
 
