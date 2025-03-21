@@ -237,20 +237,35 @@ export const authOptions: NextAuthOptions = {
       return token
     },
     async session({ session, token }) {
-      // Ensure session has the required properties
+      // Ensure session has the required properties from token
       session.accessToken = token.accessToken
-      session.provider = token.provider
       session.clientPrivateKey = token.clientPrivateKey
+      session.provider = token.provider
 
       // Add user data to the session
       if (token.userData) {
+        // If we have userData from token, use it as the primary source
         session.user = {
           id: token.userData.id,
-          name: token.userData.displayName,
-          email: token.userData.email,
-          roles: token.userData.roles,
+          name: token.userData.displayName || session.user?.name || '',
+          email: token.userData.email || session.user?.email || '',
+          roles: token.userData.roles || [],
           personId: token.userData.personId,
           lastLogin: token.userData.lastLogin,
+        }
+      } else if (session.user) {
+        // If no userData from token but we have session.user (e.g., from provider)
+        // Preserve all existing fields and add required fields with defaults
+        session.user = {
+          ...session.user,
+          id: session.user.id || 0,
+          // Use session.user.name which should be available from OAuth provider
+          name: session.user.name || '',
+          email: session.user.email || '',
+          // Add default arrays for roles to avoid type errors
+          roles: [],
+          personId: 0,
+          lastLogin: new Date().toISOString(),
         }
       }
 
