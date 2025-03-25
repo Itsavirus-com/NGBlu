@@ -120,7 +120,8 @@
       "sendResetInstructions": "Send Reset Instructions",
       "backToLogin": "Back to login",
       "sending": "Sending...",
-      "success": "Check your email for password reset instructions."
+      "success": "Check your email for password reset instructions.",
+      "error": "Failed to send reset email. Please try again."
     },
     "verifyEmail": {
       "emailVerification": "Email Verification",
