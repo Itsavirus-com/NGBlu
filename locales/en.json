@@ -1319,6 +1319,7 @@
     "accountSettings": "Account & Profile Settings",
     "manageYourAccount": "Manage your account settings and profile information",
     "personalInformation": "Personal Information",
+    "profileInformation": "Profile Information",
     "updatePersonalDetails": "Update your personal details here",
     "firstName": "First Name",
     "lastName": "Last Name",
@@ -1334,9 +1335,17 @@
     "passwordUpdate": "Password Update",
     "changeYourPassword": "Change your account password",
     "password": "Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
     "passwordRequirements": "Password must be at least 12 characters long",
     "passwordUpdateSuccess": "Password updated successfully",
+    "passwordUpdated": "Password updated successfully",
+    "passwordUpdateError": "Error updating password",
+    "passwordUpdateErrorMessage": "An error occurred while updating your password",
     "profileUpdateErrorMessage": "An error occurred while updating your profile",
-    "profileUpdateSuccess": "Your profile has been updated successfully"
+    "profileUpdateSuccess": "Your profile has been updated successfully",
+    "updateProfile": "Update Profile",
+    "updatePassword": "Update Password"
   }
 }
