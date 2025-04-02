@@ -11,14 +11,12 @@ export async function GET(request: NextRequest) {
   // Build the URL for the actual Socket.IO server
   const targetUrl = `${SOCKET_SERVER}${path}${searchParams}`
 
-  console.log(`Proxying Socket.IO request to: ${targetUrl}`)
-
   try {
     // Forward the request to the actual Socket.IO server
     const response = await fetch(targetUrl, {
       method: request.method,
       headers: {
-        Origin: process.env.NEXT_PUBLIC_SOCKET_IO_PROXY_URL || '',
+        Origin: process.env.NEXT_PUBLIC_SOCKET_IO_URL || '',
       },
     })
 
@@ -65,7 +63,7 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Origin: process.env.NEXT_PUBLIC_SOCKET_IO_PROXY_URL || '',
+        Origin: process.env.NEXT_PUBLIC_SOCKET_IO_URL || '',
       },
       body: body,
     })

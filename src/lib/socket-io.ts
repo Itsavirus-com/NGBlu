@@ -15,12 +15,6 @@ export const createSocketConnection = (options: SocketOptions): Socket => {
   // Choose the appropriate URL based on namespace
   const socketUrl = namespace ? `${SERVER_URL}${namespace}` : SERVER_URL
 
-  console.log(`Connecting to Socket.IO server at: ${socketUrl}`, {
-    user_id,
-    fullname,
-    namespace,
-  })
-
   // Create the Socket.IO client with proper options - using only websocket transport
   const socket = io(socketUrl, {
     // Authentication data
