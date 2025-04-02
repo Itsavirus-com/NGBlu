@@ -30,6 +30,16 @@ const nextConfig = {
   webpack: config => {
     return config
   },
+  /* Uncomment and simplify rewrites */
+  async rewrites() {
+    return [
+      {
+        // This will handle all Socket.IO requests
+        source: '/socket-proxy/:path*',
+        destination: `${process.env.NEXT_PUBLIC_SOCKET_IO_URL}/:path*`,
+      },
+    ]
+  },
 }
 
 export default withSentryConfig(withNextIntl(nextConfig), {

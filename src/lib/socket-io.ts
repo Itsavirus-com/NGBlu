@@ -1,0 +1,65 @@
+import { Socket, io } from 'socket.io-client'
+
+type SocketOptions = {
+  user_id: string
+  fullname: string
+  namespace?: string
+}
+
+export const createSocketConnection = (options: SocketOptions): Socket => {
+  const { user_id, fullname, namespace } = options
+
+  // Get server URL from environment variable with fallback
+  const SERVER_URL = process.env.NEXT_PUBLIC_SOCKET_IO_URL
+
+  // Choose the appropriate URL based on namespace
+  const socketUrl = namespace ? `${SERVER_URL}${namespace}` : SERVER_URL
+
+  console.log(`Connecting to Socket.IO server at: ${socketUrl}`, {
+    user_id,
+    fullname,
+    namespace,
+  })
+
+  // Create the Socket.IO client with proper options - using only websocket transport
+  const socket = io(socketUrl, {
+    // Authentication data
+    auth: {
+      user_id,
+      fullname,
+    },
+    // Force websocket transport only
+    transports: ['websocket'],
+    // Don't send cookies
+    withCredentials: false,
+  })
+
+  // Add debug event listeners
+  socket.on('connect', () => {
+    console.log('Socket connected!', socket.id)
+  })
+
+  socket.on('connect_error', error => {
+    console.error('Socket connection error:', error)
+    console.error('Socket connection error details:', error.message)
+  })
+
+  socket.on('disconnect', reason => {
+    console.log('Socket disconnected:', reason)
+  })
+
+  return socket
+}
+
+export const createMessengerConnection = (
+  options: Omit<SocketOptions, 'namespace'>,
+  channelId: string
+): Socket => {
+  console.log(`Creating messenger connection for channel: ${channelId}`)
+  return createSocketConnection({
+    ...options,
+    namespace: `/messenger/${channelId}`,
+  })
+}
+
+export default createSocketConnection
