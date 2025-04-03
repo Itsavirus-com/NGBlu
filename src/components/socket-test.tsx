@@ -1,21 +1,54 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import useSocket from '@/hooks/use-socket'
+import { createSocketConnection } from '@/lib/socket-io'
 
 interface SocketTestProps {
   userId: string
   fullname: string
-  channelId?: string
+  namespace?: string
 }
 
-const SocketTest: React.FC<SocketTestProps> = ({ userId, fullname, channelId }) => {
+const SocketTest: React.FC<SocketTestProps> = ({ userId, fullname, namespace }) => {
   const [testMessage, setTestMessage] = useState('')
   const { isConnected, messages, clients, sendMessage, connect, disconnect, socket } = useSocket({
     user_id: userId,
     fullname,
-    channelId: channelId as string,
+    namespace: namespace as string,
     autoConnect: true,
   })
+
+  const [broadcastMessages, setBroadcastMessages] = useState<string[]>([])
+
+  useEffect(() => {
+    // 1. Create the socket connection
+    const socket = createSocketConnection({
+      user_id: userId,
+      fullname,
+      // Optional: specify a namespace if needed for the broadcast
+      namespace: namespace,
+    })
+
+    // 2. Listen for the broadcast event
+    socket.on('microsoft-role-sync-started', (data: any) => {
+      // Replace 'microsoft-role-sync-started' with the actual event name from your server
+      console.log('Received broadcast message:', data)
+      // Example: Add the message to component state
+      // Adjust based on the actual structure of 'data'
+      if (typeof data === 'string') {
+        setBroadcastMessages(prevMessages => [...prevMessages, data])
+      } else if (data && typeof data.message === 'string') {
+        setBroadcastMessages(prevMessages => [...prevMessages, data.message])
+      }
+    })
+
+    // 3. Important: Clean up the listener and disconnect when the component unmounts
+    return () => {
+      console.log('Cleaning up socket listener and disconnecting...')
+      socket.off('microsoft-role-sync-started') // Remove the specific listener
+      socket.disconnect()
+    }
+  }, []) // Empty dependency array ensures this runs once on mount and cleans up on unmount
 
   const handleSendMessage = () => {
     if (testMessage.trim()) {
@@ -84,6 +117,15 @@ const SocketTest: React.FC<SocketTestProps> = ({ userId, fullname, channelId }) 
             <li key={index} className="list-group-item">
               <strong>{msg.sender}:</strong> {JSON.stringify(msg.data)}
             </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h2>Broadcast Messages:</h2>
+        <ul>
+          {broadcastMessages.map((msg, index) => (
+            <li key={index}>{msg}</li>
           ))}
         </ul>
       </div>

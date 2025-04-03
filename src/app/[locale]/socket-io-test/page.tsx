@@ -18,7 +18,11 @@ export default function SocketTestPage() {
               <h2 className="h5 mb-0">General Connection</h2>
             </div>
             <div className="card-body">
-              <SocketTest userId={testUserId} fullname={testFullname} />
+              <SocketTest
+                userId={testUserId}
+                fullname={testFullname}
+                namespace="/messenger/account-management"
+              />
             </div>
           </div>
         </div>
@@ -32,7 +36,7 @@ export default function SocketTestPage() {
               <SocketTest
                 userId={testUserId}
                 fullname={testFullname}
-                channelId="test-channel-123"
+                namespace="/messenger/account-management"
               />
             </div>
           </div>

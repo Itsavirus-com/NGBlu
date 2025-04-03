@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Socket } from 'socket.io-client'
 
-import { createMessengerConnection, createSocketConnection } from '@/lib/socket-io'
+import { createSocketConnection } from '@/lib/socket-io'
 
 interface UseSocketOptions {
   user_id: string
   fullname: string
-  channelId?: string
+  namespace?: string
   autoConnect?: boolean
 }
 
@@ -24,7 +24,7 @@ interface ClientInfo {
 export const useSocket = ({
   user_id,
   fullname,
-  channelId,
+  namespace,
   autoConnect = true,
 }: UseSocketOptions) => {
   const [isConnected, setIsConnected] = useState(false)
@@ -36,9 +36,11 @@ export const useSocket = ({
   useEffect(() => {
     if (!user_id || !fullname || !autoConnect) return
 
-    const socket = channelId
-      ? createMessengerConnection({ user_id, fullname }, channelId)
-      : createSocketConnection({ user_id, fullname })
+    const socket = createSocketConnection({
+      user_id,
+      fullname,
+      namespace: namespace,
+    })
 
     socketRef.current = socket
 
@@ -66,7 +68,7 @@ export const useSocket = ({
       socket.disconnect()
       socketRef.current = null
     }
-  }, [user_id, fullname, channelId, autoConnect])
+  }, [user_id, fullname, namespace, autoConnect])
 
   // Send message
   const sendMessage = useCallback(
@@ -91,15 +93,13 @@ export const useSocket = ({
   // Manual connect/disconnect methods
   const connect = useCallback(() => {
     if (!socketRef.current && user_id && fullname) {
-      const socket = channelId
-        ? createMessengerConnection({ user_id, fullname }, channelId)
-        : createSocketConnection({ user_id, fullname })
+      const socket = createSocketConnection({ user_id, fullname, namespace })
 
       socketRef.current = socket
     } else if (socketRef.current) {
       socketRef.current.connect()
     }
-  }, [user_id, fullname, channelId])
+  }, [user_id, fullname, namespace])
 
   const disconnect = useCallback(() => {
     if (socketRef.current) {
