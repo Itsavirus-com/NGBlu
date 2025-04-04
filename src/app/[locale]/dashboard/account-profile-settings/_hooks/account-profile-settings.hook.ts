@@ -63,11 +63,11 @@ const useAccountProfileSettings = () => {
         profileMethods.setValue('phoneNumber', data.phoneNumber)
         profileMethods.setValue('email', data.email)
       }
-    } catch (error) {
+    } catch (error: any) {
       showToast({
         variant: 'danger',
         title: t('profileUpdateError'),
-        body: t('profileUpdateErrorMessage'),
+        body: error.message ?? t('profileUpdateErrorMessage'),
       })
     } finally {
       setIsSubmittingProfile(false)
@@ -99,11 +99,11 @@ const useAccountProfileSettings = () => {
         passwordMethods.setValue('password', '')
         passwordMethods.setValue('passwordConfirmation', '')
       }
-    } catch (error) {
+    } catch (error: any) {
       showToast({
         variant: 'danger',
         title: t('passwordUpdateError'),
-        body: t('passwordUpdateErrorMessage'),
+        body: error.message ?? t('passwordUpdateErrorMessage'),
       })
     } finally {
       setIsSubmittingPassword(false)

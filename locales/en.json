@@ -484,7 +484,8 @@
       "invitationMethod": "Invitation Method",
       "manual": "Manual",
       "entra": "Entra (Microsoft SSO)",
-      "status": "Status"
+      "status": "Status",
+      "loginRequired": "Login Required"
     },
     "persons": {
       "title": "Persons",
