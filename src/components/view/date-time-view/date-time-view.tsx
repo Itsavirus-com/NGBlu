@@ -4,9 +4,18 @@ import { Col, Placeholder } from 'react-bootstrap'
 import { DateTimeViewProps, dateTimeFormats } from './date-time-view.type'
 
 export const DateTimeView = (props: DateTimeViewProps) => {
-  const { label, value, disableColumn, isLoading, format = 'default', ...colProps } = props
+  const {
+    label,
+    value,
+    disableColumn,
+    isLoading,
+    format = 'default',
+    customEmptyText = '-',
+    ...colProps
+  } = props
 
-  const formattedValue = value ? dayjs(value).format(dateTimeFormats[format]) : '-'
+  const formattedValue =
+    value && dayjs(value).isValid() ? dayjs(value).format(dateTimeFormats[format]) : customEmptyText
 
   const renderContent = () => (
     <>

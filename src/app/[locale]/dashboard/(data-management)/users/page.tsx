@@ -31,12 +31,18 @@ export default function Users() {
     {
       id: 'lastLogin',
       title: t('lastLogin'),
-      render: row => <DateTimeView value={safeRender(row, 'lastLogin')} disableColumn />,
+      render: row => (
+        <DateTimeView
+          value={safeRender(row, 'lastLogin')}
+          disableColumn
+          customEmptyText={t('loginRequired')}
+        />
+      ),
     },
     {
       id: 'status',
       title: t('status'),
-      render: row => safeRender(row, 'status'),
+      render: row => safeRender(row, 'stateUser'),
     },
   ]
 
