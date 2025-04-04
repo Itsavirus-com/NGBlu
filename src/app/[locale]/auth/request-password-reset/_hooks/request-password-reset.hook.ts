@@ -21,11 +21,11 @@ const useResetPassword = () => {
       try {
         await requestPasswordResetApi.new(data)
         setIsSubmitted(true)
-      } catch (err) {
+      } catch (error: any) {
         setIsSubmitted(false)
         showToast({
           variant: 'danger',
-          body: t('error'),
+          body: error.message ?? t('error'),
         })
       }
     })

@@ -30,39 +30,85 @@ export type GeneralApiProblem =
   /**
    * We're not allowed because we haven't identified ourself. This is 401.
    */
-  | { kind: ApiErrorKind.UNAUTHORIZED }
+  | {
+      kind: ApiErrorKind.UNAUTHORIZED
+      message?: string
+      errors?: Record<string, object[]>
+      detail?: Record<string, string[]>
+    }
   /**
    * We don't have access to perform that request. This is 403.
    */
-  | { kind: ApiErrorKind.FORBIDDEN }
+  | {
+      kind: ApiErrorKind.FORBIDDEN
+      message?: string
+      errors?: Record<string, object[]>
+      detail?: Record<string, string[]>
+    }
   /**
    * Unable to find that resource.  This is a 404.
    */
-  | { kind: ApiErrorKind.NOT_FOUND }
+  | {
+      kind: ApiErrorKind.NOT_FOUND
+      message?: string
+      errors?: Record<string, object[]>
+      detail?: Record<string, string[]>
+    }
   /**
    * Unable to find that resource.  This is a 410.
    */
-  | { kind: ApiErrorKind.GONE }
+  | {
+      kind: ApiErrorKind.GONE
+      message?: string
+      errors?: Record<string, object[]>
+      detail?: Record<string, string[]>
+    }
   /**
    * Data already exists.  This is a 409.
    */
-  | { kind: ApiErrorKind.CONFLICT }
+  | {
+      kind: ApiErrorKind.CONFLICT
+      message?: string
+      errors?: Record<string, object[]>
+      detail?: Record<string, string[]>
+    }
   /**
    * The data we sent is not valid.  This is a 422.
    */
-  | { kind: ApiErrorKind.UNPROCESSABLE; errors?: any }
+  | {
+      kind: ApiErrorKind.UNPROCESSABLE
+      message?: string
+      errors?: Record<string, object[]>
+      detail?: Record<string, string[]>
+    }
   /**
    * All other 4xx series errors.
    */
-  | { kind: ApiErrorKind.REJECTED }
+  | {
+      kind: ApiErrorKind.REJECTED
+      message?: string
+      errors?: Record<string, object[]>
+      detail?: Record<string, string[]>
+    }
   /**
    * No an error but a temporary redirect.  This is a 302.
    */
-  | { kind: ApiErrorKind.FOUND; temporary: true }
+  | {
+      kind: ApiErrorKind.FOUND
+      temporary: true
+      message?: string
+      errors?: Record<string, object[]>
+      detail?: Record<string, string[]>
+    }
   /**
    * Something truly unexpected happened. Most likely can try again. This is a catch all.
    */
-  | { kind: ApiErrorKind.UNKNOWN; temporary: true }
+  | {
+      kind: ApiErrorKind.UNKNOWN
+      temporary: true
+      message?: string
+      errors?: Record<string, object[]>
+    }
   /**
    * The data we received is not in the expected format.
    */
@@ -70,5 +116,6 @@ export type GeneralApiProblem =
       kind: ApiErrorKind.BAD_DATA
       errors?: Record<string, object[]>
       message?: string
+      detail?: Record<string, string[]>
       relatedRecords?: string[]
     }

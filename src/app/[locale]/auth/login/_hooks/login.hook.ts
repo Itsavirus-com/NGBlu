@@ -81,11 +81,10 @@ export const useLogin = () => {
         })
       }
     } catch (error: any) {
-      console.error('Login failed:', error)
       showToast({
         variant: 'danger',
         title: tError('authError'),
-        body: tError('authErrorMessage'),
+        body: error.message ?? tError('authErrorMessage'),
       })
     } finally {
       setIsLoading(false)
