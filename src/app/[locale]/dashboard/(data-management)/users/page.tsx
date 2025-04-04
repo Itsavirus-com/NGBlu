@@ -21,7 +21,7 @@ export default function Users() {
     {
       id: 'displayName',
       title: t('displayName'),
-      render: row => safeRender(row, 'displayName'),
+      render: row => `${safeRender(row, 'firstname')} ${safeRender(row, 'lastname')}`,
     },
     {
       id: 'email',
