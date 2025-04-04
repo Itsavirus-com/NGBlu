@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { DateTimeView } from '@/components/view/date-time-view/date-time-view'
+import { CAPITALIZE_WORD_REGEX, UNDERSCORE_REGEX } from '@/constants/regex'
 import { User } from '@/services/swr/models/user.type'
 import { safeRender } from '@/utils/safeRender'
 
@@ -42,7 +43,15 @@ export default function Users() {
     {
       id: 'status',
       title: t('status'),
-      render: row => safeRender(row, 'stateUser'),
+      render: row => {
+        const stateUser = safeRender(row, 'stateUser').toLowerCase()
+        // Replace underscores with spaces and capitalize each word
+        return stateUser === '-'
+          ? stateUser
+          : stateUser
+              .replace(UNDERSCORE_REGEX, ' ')
+              .replace(CAPITALIZE_WORD_REGEX, c => c.toUpperCase())
+      },
     },
   ]
 
