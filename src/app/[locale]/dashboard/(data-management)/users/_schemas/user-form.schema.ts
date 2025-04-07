@@ -9,7 +9,7 @@ export const schema = (isEdit: boolean) =>
     phoneNumber: yup.string().nullable().matches(PHONE_NUMBER_REGEX, 'Phone number is not valid'),
     email: yup.string().required('Email is required').email('Invalid email format'),
     roles: yup.array().min(1, 'At least one role is required').required('Roles are required'),
-    invitationMethod: !isEdit
+    authType: !isEdit
       ? yup.string().required('Invitation method is required').oneOf(['manual', 'entra'])
       : yup.string().oneOf(['manual', 'entra']).optional(),
     blocked: yup.boolean(),

@@ -82,14 +82,14 @@ export default function UserForm({
                   <ControlledSwitch
                     type="radio"
                     label={t('manual')}
-                    name="invitationMethod"
+                    name="authType"
                     containerClass="mb-3"
                     value={'manual'}
                   />
                   <ControlledSwitch
                     type="radio"
                     label={t('entra')}
-                    name="invitationMethod"
+                    name="authType"
                     containerClass="mb-3"
                     value={'entra'}
                   />
