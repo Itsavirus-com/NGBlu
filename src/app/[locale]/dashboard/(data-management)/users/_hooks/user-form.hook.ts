@@ -28,11 +28,11 @@ export default function useUserForm(userId?: number) {
       phoneNumber: user?.phoneNumber ?? '',
       email: user?.email ?? '',
       roles: user?.roles ?? [''],
-      invitationMethod: user?.invitationMethod ?? undefined,
+      authType: user?.authType ?? undefined,
     },
   })
 
-  const errorMessageInputType = methods.formState.errors.invitationMethod?.message
+  const errorMessageInputType = methods.formState.errors.authType?.message
 
   const addNewUser = async (data: InferType<typeof userSchema>) => {
     try {
