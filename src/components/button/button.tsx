@@ -1,7 +1,6 @@
 import { Spinner } from 'react-bootstrap'
 
 import { KTIcon } from '@/components/kt-icon/kt-icon'
-import { useTheme } from '@/contexts/ThemeContext'
 import { Link } from '@/navigation'
 
 import { ButtonProps } from './button.type'
@@ -22,11 +21,9 @@ export const Button = (props: ButtonProps) => {
     loading = false,
     disabled = false,
   } = props
-  const { themeMode } = useTheme()
 
   const ButtonWrapper = !!href ? Link : 'button'
   const btnIconClass = !label ? 'btn-icon' : 'd-flex align-items-center'
-  const color = themeMode === 'dark' ? 'dark' : colorClass
 
   return (
     <ButtonWrapper
@@ -34,7 +31,7 @@ export const Button = (props: ButtonProps) => {
       onClick={onClick}
       type={!href ? type : undefined}
       disabled={disabled}
-      className={`btn btn-${size} d-flex justify-content-center ${className} ${btnIconClass} btn-${color} btn-active-${activeColorClass}`}
+      className={`btn btn-${size} d-flex justify-content-center ${className} ${btnIconClass} btn-${colorClass} btn-active-${activeColorClass}`}
       {...extraProps}
     >
       {loading ? (
