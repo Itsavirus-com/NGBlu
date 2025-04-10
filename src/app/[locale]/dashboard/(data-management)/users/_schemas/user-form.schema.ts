@@ -10,7 +10,7 @@ export const schema = (isEdit: boolean) =>
     email: yup.string().required('Email is required').email('Invalid email format'),
     roles: yup.array().min(1, 'At least one role is required').required('Roles are required'),
     authType: !isEdit
-      ? yup.string().required('Invitation method is required').oneOf(['manual', 'entra'])
-      : yup.string().oneOf(['manual', 'entra']).optional(),
+      ? yup.string().required('Invitation method is required').oneOf(['manual', 'microsoft'])
+      : yup.string().oneOf(['manual', 'microsoft']).optional(),
     blocked: yup.boolean(),
   })
