@@ -91,7 +91,7 @@ export default function UserForm({
                     label={t('entra')}
                     name="authType"
                     containerClass="mb-3"
-                    value={'entra'}
+                    value={'microsoft'}
                   />
                 </div>
                 {errorMessageInputType && (
