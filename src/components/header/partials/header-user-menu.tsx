@@ -25,7 +25,11 @@ const HeaderUserMenu: FC = () => {
 
           <div className="d-flex flex-column">
             <div className="fw-bolder d-flex align-items-center fs-5">{session?.user?.name}</div>
-            <a href="#" className="fw-bold text-muted text-hover-primary fs-7">
+            <a
+              href="#"
+              className="fw-bold text-muted text-hover-primary fs-7 text-truncate d-block"
+              style={{ maxWidth: '180px' }}
+            >
               {session?.user?.email}
             </a>
           </div>

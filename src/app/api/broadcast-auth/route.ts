@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   console.log(requestUrl)
 
   // Build the URL for the actual Socket.IO server
-  const targetUrl = `${process.env.NEXT_PUBLIC_SOCKET_BROADCASTING_AUTH_URL}/broadcasting/auth`
+  const targetUrl = `${process.env.NEXT_PUBLIC_SOCKET_IO_URL}/broadcasting/auth`
 
   try {
     // Get the request body
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Origin: process.env.NEXT_PUBLIC_SOCKET_BROADCASTING_AUTH_URL || '',
+        Origin: process.env.NEXT_PUBLIC_SOCKET_IO_URL || '',
         // Forward the Authorization header if it exists
         ...(authHeader && { Authorization: authHeader }),
       },

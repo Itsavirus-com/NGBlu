@@ -116,6 +116,7 @@ const useAccountProfileSettings = () => {
     isSubmittingPassword,
     profileMethods,
     passwordMethods,
+    userProfile,
     onSubmitProfile,
     onSubmitPassword,
   }

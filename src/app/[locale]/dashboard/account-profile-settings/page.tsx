@@ -20,6 +20,7 @@ export default function AccountSettings() {
     isSubmittingProfile,
     isSubmittingPassword,
     isLoading,
+    userProfile,
   } = useAccountProfileSettings()
 
   const profileInfoTab = {
@@ -37,6 +38,7 @@ export default function AccountSettings() {
   const passwordUpdateTab = {
     eventKey: 'password-update',
     title: t('passwordUpdate'),
+    condition: Boolean(userProfile?.authType !== 'microsoft'),
     content: (
       <PasswordForm
         isSubmitting={isSubmittingPassword}
