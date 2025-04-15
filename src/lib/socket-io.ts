@@ -4,10 +4,11 @@ type SocketOptions = {
   user_id: string
   fullname: string
   namespace?: string
+  apiToken: string
 }
 
 export const createSocketConnection = (options: SocketOptions): Socket => {
-  const { user_id, fullname, namespace } = options
+  const { namespace, apiToken } = options
 
   // Get server URL from environment variable with fallback
   const SERVER_URL = process.env.NEXT_PUBLIC_SOCKET_IO_URL
@@ -19,8 +20,7 @@ export const createSocketConnection = (options: SocketOptions): Socket => {
   const socket = io(socketUrl, {
     // Authentication data
     auth: {
-      user_id,
-      fullname,
+      token: `Bearer ${apiToken}`,
     },
     // Force websocket transport only
     transports: ['websocket'],
