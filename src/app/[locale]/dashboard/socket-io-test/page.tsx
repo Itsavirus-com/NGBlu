@@ -1,11 +1,29 @@
 'use client'
 
+import { useSession } from 'next-auth/react'
+
 import SocketTest from '@/components/socket-test'
 
 export default function SocketTestPage() {
-  // can replace these with actual user credentials or use state to input them
+  // Use the useSession hook to get session data
+  const { data: session, status } = useSession()
+
+  // Extract the access token
+  // Note: Adjust 'accessToken' if your session object uses a different key
+  const apiToken = session?.accessToken as string | undefined
+  // Keep using test credentials for now, or fetch real ones if needed
   const testUserId = 'test-user-123'
   const testFullname = 'Test User'
+
+  // Handle loading state while session is being fetched
+  if (status === 'loading') {
+    return <div>Loading session...</div>
+  }
+
+  // Optional: Handle unauthenticated state
+  // if (status === 'unauthenticated' || !apiToken) {
+  //   return <div>Not authenticated or token missing.</div>;
+  // }
 
   return (
     <div className="container py-5">
@@ -19,9 +37,10 @@ export default function SocketTestPage() {
             </div>
             <div className="card-body">
               <SocketTest
+                roomName="private-admin" // Ensure this is the correct room name
                 userId={testUserId}
                 fullname={testFullname}
-                namespace="/messenger/account-management"
+                apiToken={apiToken} // Pass the fetched token
               />
             </div>
           </div>
@@ -34,9 +53,10 @@ export default function SocketTestPage() {
             </div>
             <div className="card-body">
               <SocketTest
+                roomName="private-admin" // Ensure this is the correct room name
                 userId={testUserId}
                 fullname={testFullname}
-                namespace="/messenger/account-management"
+                apiToken={apiToken} // Pass the fetched token
               />
             </div>
           </div>

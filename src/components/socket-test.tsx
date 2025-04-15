@@ -1,57 +1,67 @@
 import React, { useEffect, useState } from 'react'
 
 import useSocket from '@/hooks/use-socket'
-import { createSocketConnection } from '@/lib/socket-io'
 
 interface SocketTestProps {
   userId: string
   fullname: string
   namespace?: string
+  roomName: string
+  apiToken?: string // Add apiToken prop
 }
 
-const SocketTest: React.FC<SocketTestProps> = ({ userId, fullname, namespace }) => {
+const SocketTest: React.FC<SocketTestProps> = ({
+  userId,
+  fullname,
+  namespace,
+  roomName,
+  apiToken,
+}) => {
   const [testMessage, setTestMessage] = useState('')
-  const { isConnected, messages, clients, sendMessage, connect, disconnect, socket } = useSocket({
-    user_id: userId,
-    fullname,
-    namespace: namespace as string,
-    autoConnect: true,
-  })
-
-  const [broadcastMessages, setBroadcastMessages] = useState<string[]>([])
-
-  useEffect(() => {
-    // 1. Create the socket connection
-    const socket = createSocketConnection({
+  // Pass apiToken to useSocket and get joinRoom function
+  const { isConnected, messages, clients, sendMessage, connect, disconnect, socket, joinRoom } =
+    useSocket({
       user_id: userId,
       fullname,
-      // Optional: specify a namespace if needed for the broadcast
-      namespace: namespace,
+      namespace: namespace as string,
+      autoConnect: true,
+      apiToken, // Pass the token
     })
 
-    // 2. Listen for the broadcast event
-    socket.on('microsoft-role-sync-started', (data: any) => {
-      // Replace 'microsoft-role-sync-started' with the actual event name from your server
-      console.log('Received broadcast message:', data)
-      // Example: Add the message to component state
-      // Adjust based on the actual structure of 'data'
-      if (typeof data === 'string') {
+  const [broadcastMessages, setBroadcastMessages] = useState<any[]>([]) // Changed to any[] to handle diverse payloads
+
+  console.log('broadcastMessages', broadcastMessages)
+
+  useEffect(() => {
+    // We now use the joinRoom function from the hook which handles authorization
+    if (socket && isConnected && joinRoom) {
+      console.log(`Socket connected: ${socket.id}. Attempting to join rooms...`)
+
+      // Join the primary room (assuming it might be private)
+      joinRoom(roomName, true)
+
+      // Define the handler for broadcast messages
+      const handleBroadcast = (data: any) => {
+        console.log(`Received broadcast message (event: roles.synced):`, data)
+        // Adjust how you process and store the message based on actual payload
+        // Example: storing the whole data object
         setBroadcastMessages(prevMessages => [...prevMessages, data])
-      } else if (data && typeof data.message === 'string') {
-        setBroadcastMessages(prevMessages => [...prevMessages, data.message])
       }
-    })
 
-    // 3. Important: Clean up the listener and disconnect when the component unmounts
-    return () => {
-      console.log('Cleaning up socket listener and disconnecting...')
-      socket.off('microsoft-role-sync-started') // Remove the specific listener
-      socket.disconnect()
+      // Set up the listener
+      socket.on('roles.synced', handleBroadcast)
+
+      // Cleanup function
+      return () => {
+        console.log(`Cleaning up broadcast listener for room ${roomName}...`)
+        socket.off('roles.synced', handleBroadcast)
+      }
     }
-  }, []) // Empty dependency array ensures this runs once on mount and cleans up on unmount
+    // Add joinRoom and isConnected to dependency array
+  }, [socket, roomName, joinRoom, isConnected])
 
   const handleSendMessage = () => {
-    if (testMessage.trim()) {
+    if (testMessage.trim() && socket) {
       sendMessage({ text: testMessage })
       setTestMessage('')
     }
@@ -121,12 +131,22 @@ const SocketTest: React.FC<SocketTestProps> = ({ userId, fullname, namespace }) 
         </ul>
       </div>
 
+      <div className="mb-3">
+        <h4>Listening in Room: {roomName}</h4>
+      </div>
+
       <div>
-        <h2>Broadcast Messages:</h2>
-        <ul>
+        <h4>Broadcast Messages (Room: {roomName})</h4>
+        <ul className="list-group">
           {broadcastMessages.map((msg, index) => (
-            <li key={index}>{msg}</li>
+            <li key={index} className="list-group-item">
+              {/* Display the message - adjust based on expected structure */}
+              {typeof msg === 'string' ? msg : JSON.stringify(msg)}
+            </li>
           ))}
+          {broadcastMessages.length === 0 && (
+            <li className="list-group-item">No broadcast messages received yet.</li>
+          )}
         </ul>
       </div>
     </div>
