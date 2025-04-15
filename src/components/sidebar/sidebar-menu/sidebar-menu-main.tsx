@@ -1,4 +1,7 @@
+'use client'
 import { useTranslations } from 'next-intl'
+
+import { useIsSuperAdmin } from '@/hooks/use-auth'
 
 import { SidebarMenuItem } from './sidebar-menu-item'
 import { SidebarMenuItemWithSub } from './sidebar-menu-item-with-sub'
@@ -6,6 +9,7 @@ import { SidebarMenuSeparator } from './sidebar-menu-separator'
 
 const SidebarMenuMain = () => {
   const t = useTranslations('common.sidebar')
+  const { isSuperAdmin } = useIsSuperAdmin()
 
   return (
     <>
@@ -70,7 +74,9 @@ const SidebarMenuMain = () => {
           hasBullet
         />
       </SidebarMenuItemWithSub>
-      <SidebarMenuItem to="/dashboard/users" title={t('users')} icon="security-user" />
+      {isSuperAdmin && (
+        <SidebarMenuItem to="/dashboard/users" title={t('users')} icon="security-user" />
+      )}
       {/* End of Data Management */}
 
       {/* Data Management - Settings */}
