@@ -1,9 +1,8 @@
 'use client'
 
-import { useSession } from 'next-auth/react' // Import useSession
+import { useSession } from 'next-auth/react'
 
 import SocketTest from '@/components/socket-test'
-// import { useUserProfile } from '@/services/swr/use-user-profile' // Keep commented if not using
 
 export default function SocketTestPage() {
   // Use the useSession hook to get session data
@@ -12,7 +11,6 @@ export default function SocketTestPage() {
   // Extract the access token
   // Note: Adjust 'accessToken' if your session object uses a different key
   const apiToken = session?.accessToken as string | undefined
-  console.log('apiToken', apiToken)
   // Keep using test credentials for now, or fetch real ones if needed
   const testUserId = 'test-user-123'
   const testFullname = 'Test User'
