@@ -5,6 +5,7 @@ export type EndClientAddress = {
   endclientId: number
   addressId: number
   address: Address
+  addressTypeId: number
   isPrimaryAddress: number
   isPrimaryLocation: boolean
   created_at: string
