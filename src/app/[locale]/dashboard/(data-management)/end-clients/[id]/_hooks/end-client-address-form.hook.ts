@@ -29,6 +29,7 @@ export default function useEndClientAddressForm(endClientId: number, addressId?:
     },
     values: endClientAddress && {
       addressId: endClientAddress?.addressId ?? 0,
+      addressTypeId: endClientAddress?.addressTypeId ?? 0,
       isPrimaryLocation: endClientAddress?.isPrimaryAddress === 1 ? true : false,
     },
   })

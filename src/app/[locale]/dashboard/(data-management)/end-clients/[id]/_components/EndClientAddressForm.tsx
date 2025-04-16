@@ -8,6 +8,7 @@ import { ControlledSwitch } from '@/components/forms/checkbox'
 import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledSelect } from '@/components/forms/select'
+import { AddressType } from '@/services/swr/models/address-type.type'
 import { Address } from '@/services/swr/models/address.type'
 
 interface EndClientAddressFormProps {
@@ -34,6 +35,14 @@ export default function EndClientAddressForm({
               containerClass="mb-3"
               apiPath={'addresses'}
               option={{ label: row => row.addressName, value: row => row.id }}
+              isRequired
+            />
+            <ControlledSelect<AddressType>
+              label={t('addressType')}
+              name="addressTypeId"
+              containerClass="mb-3"
+              apiPath="addresses/types"
+              option={{ label: row => row.addressType, value: row => row.id }}
               isRequired
             />
             <ControlledSwitch label={t('primaryAddress')} name="isPrimaryLocation" />

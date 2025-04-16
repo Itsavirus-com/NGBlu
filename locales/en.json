@@ -650,7 +650,8 @@
         "no": "No",
         "addressInfo": "Address Info",
         "addresses": "Addresses",
-        "info": "Info"
+        "info": "Info",
+        "addressType": "Address Type"
       },
       "contacts": {
         "title": "End Client Contact",
