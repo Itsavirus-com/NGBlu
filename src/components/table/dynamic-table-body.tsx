@@ -27,12 +27,24 @@ export const DynamicTableBody = <TableValues extends Record<string, any>>(
   const [page, setPage] = useState<number>(1)
   const [perPage, setPerPage] = useState<number>(20)
 
+  // Filter out empty values from filters object
+  const filteredFilters = filters
+    ? {
+        ...filters,
+        filter: filters.filter
+          ? Object.fromEntries(Object.entries(filters.filter).filter(([_, value]) => value !== ''))
+          : {},
+      }
+    : { filter: {} }
+
+  console.log('filteredFilters', filteredFilters)
+
   const { data, isLoading, pagination, mutate } = useTableData<TableValues>(apiPath, {
     page,
     limit: perPage,
     filter: {
       ...defaultFilters,
-      ...filters?.filter,
+      ...filteredFilters.filter,
     },
   })
 

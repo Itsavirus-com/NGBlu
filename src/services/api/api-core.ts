@@ -46,22 +46,28 @@ export class ApiCore {
   }
 
   protected buildQueryParams(params: Record<string, any>): string {
-    const queryParams = new URLSearchParams()
-    const sortedKeys = Object.keys(params).sort()
+    // Create array to hold parameter pairs instead of using URLSearchParams
+    const queryParts: string[] = []
 
-    sortedKeys.forEach(key => {
+    // Add non-filter parameters first (limit, page, etc)
+    const nonFilterKeys = Object.keys(params).filter(key => key !== 'filter')
+    nonFilterKeys.forEach(key => {
       const value = params[key]
-      if (typeof value === 'object' && value !== null) {
-        const nestedKeys = Object.keys(value).sort()
-        nestedKeys.forEach(nestedKey => {
-          queryParams.append(`${key}[${nestedKey}]`, value[nestedKey])
-        })
-      } else {
-        queryParams.append(key, value)
+      if (value !== undefined && value !== null) {
+        queryParts.push(`${key}=${encodeURIComponent(value)}`)
       }
     })
 
-    return queryParams.toString()
+    // Add filter parameters last and include empty values
+    if (params.filter) {
+      Object.entries(params.filter).forEach(([key, value]) => {
+        // Include empty values for filter parameters
+        const valueStr = value === null || value === undefined ? '' : String(value)
+        queryParts.push(`filter[${key}]=${encodeURIComponent(valueStr)}`)
+      })
+    }
+
+    return queryParts.join('&')
   }
 
   protected getUrl(request: any): string {
@@ -80,6 +86,11 @@ export class ApiCore {
       const body = request.data ? JSON.stringify(request.data) : ''
       const message =
         method !== 'GET' ? `${timestamp}${method}${url}${body}` : `${timestamp}${method}${url}`
+
+      console.log('message', message)
+      console.log('url', url)
+      console.log('method', method)
+      console.log('body', body)
 
       const session = await getSession()
 

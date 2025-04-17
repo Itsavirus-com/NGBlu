@@ -26,11 +26,6 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
       render: row => safeRender(row, 'id'),
     },
     {
-      id: 'package',
-      title: t('package'),
-      render: row => safeRender(row, 'package.name'),
-    },
-    {
       id: 'service',
       title: t('service'),
       render: row => safeRender(row, 'service.name'),
@@ -47,11 +42,6 @@ export default function PackageDetails({ params }: { params: { id: number } }) {
       id: 'id',
       title: t('id'),
       render: row => safeRender(row, 'id'),
-    },
-    {
-      id: 'package',
-      title: t('package'),
-      render: row => safeRender(row, 'package.name'),
     },
     {
       id: 'product',
