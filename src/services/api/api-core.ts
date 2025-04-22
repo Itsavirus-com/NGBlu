@@ -87,11 +87,6 @@ export class ApiCore {
       const message =
         method !== 'GET' ? `${timestamp}${method}${url}${body}` : `${timestamp}${method}${url}`
 
-      console.log('message', message)
-      console.log('url', url)
-      console.log('method', method)
-      console.log('body', body)
-
       const session = await getSession()
 
       if (session?.accessToken && session?.clientPrivateKey) {
