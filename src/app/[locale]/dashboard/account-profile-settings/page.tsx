@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 
+import { ConfirmationModal } from '@/components/confirmation-modal/confirmation-modal'
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import Loading from '@/components/loading/loading'
 import { Page } from '@/components/page/page'
@@ -21,6 +22,11 @@ export default function AccountSettings() {
     isSubmittingPassword,
     isLoading,
     userProfile,
+    showEmailConfirmModal,
+    confirmEmailChange,
+    cancelEmailChange,
+    emailUpdatesRemaining,
+    maxEmailUpdatesPerDay,
   } = useAccountProfileSettings()
 
   const profileInfoTab = {
@@ -61,6 +67,19 @@ export default function AccountSettings() {
           </div>
         </div>
       )}
+
+      <ConfirmationModal
+        title={t('emailChangeConfirmation')}
+        body={t('emailChangeLimitWarning', {
+          count: emailUpdatesRemaining,
+          max: maxEmailUpdatesPerDay,
+        })}
+        visible={showEmailConfirmModal}
+        onCancel={cancelEmailChange}
+        onConfirm={confirmEmailChange}
+        confirmLabel={t('confirmEmailChange')}
+        variant="warning"
+      />
     </Page>
   )
 }

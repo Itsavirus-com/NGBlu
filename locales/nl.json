@@ -1332,6 +1332,13 @@
     "profileUpdateErrorMessage": "An error occurred while updating your profile",
     "profileUpdateSuccess": "Your profile has been updated successfully",
     "updateProfile": "Update Profile",
-    "updatePassword": "Update Password"
+    "updatePassword": "Update Password",
+    "yourSessionHasExpired": "Your session has expired",
+    "pleaseLoginAgain": "Please login again to continue using the application",
+    "emailChangeConfirmation": "Email Change Confirmation",
+    "emailChangeLimitWarning": "You are about to change your email address. Please note that you can only change your email {max} times per day. You have {count} attempts remaining today. Do you want to continue?",
+    "confirmEmailChange": "Yes, Change Email",
+    "emailUpdateLimitReached": "You've reached the limit of 3 email updates per day. Your account will be blocked.",
+    "emailAttemptsRemaining": "You have {count} email update attempts remaining today."
   }
 }

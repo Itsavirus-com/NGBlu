@@ -33,6 +33,7 @@ const VerifyEmail = () => {
                 {t('verificationEmailVerified')}
               </Alert>
               <p className="mt-4 text-sm text-gray-600">{t('redirecting')}</p>
+              <Spinner animation="border" variant="primary" />
             </div>
           )}
 

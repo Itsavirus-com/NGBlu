@@ -1,9 +1,6 @@
 import { type NextRequest } from 'next/server'
 
 export async function POST(request: NextRequest) {
-  const requestUrl = new URL(request.url)
-  console.log(requestUrl)
-
   // Build the URL for the actual Socket.IO server
   const targetUrl = `${process.env.NEXT_PUBLIC_SOCKET_IO_URL}/broadcasting/auth`
 
