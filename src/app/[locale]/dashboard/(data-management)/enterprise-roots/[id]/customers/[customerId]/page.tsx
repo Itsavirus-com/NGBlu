@@ -7,6 +7,7 @@ import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
 import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
+import { useEnterpriseRootCustomerNamespace } from '@/services/swr/use-enterprise-root'
 import { useEnterpriseRootCustomer } from '@/services/swr/use-enterprise-root-customer'
 import { safeRender } from '@/utils/safeRender'
 
@@ -18,6 +19,10 @@ export default function EnterpriseRootCustomerDetails({
   const t = useTranslations('dataManagement.enterpriseRoots.customers')
 
   const { data, isLoading } = useEnterpriseRootCustomer(params.id, params.customerId)
+  const { data: customerNamespaceData } = useEnterpriseRootCustomerNamespace(
+    params.id,
+    params.customerId
+  )
 
   const customerInfoFields = [
     { label: t('name'), value: safeRender(data, 'endclient.name') },
@@ -83,7 +88,7 @@ export default function EnterpriseRootCustomerDetails({
   return (
     <>
       <div className="app-container">
-        <Breadcrumbs items={getBreadcrumbItems(data)} />
+        <Breadcrumbs items={getBreadcrumbItems({ namespace: customerNamespaceData })} />
       </div>
 
       <PageTitle title={`${t('endClient')}: ${safeRender(data, 'endclient.name')}`} />

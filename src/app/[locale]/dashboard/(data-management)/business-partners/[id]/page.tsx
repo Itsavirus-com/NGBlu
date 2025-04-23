@@ -14,7 +14,10 @@ import { BusinessPartnerContact } from '@/services/swr/models/business-partner-c
 import { BusinessPartnerCustomer } from '@/services/swr/models/business-partner-customer.type'
 import { BusinessPartnerProject } from '@/services/swr/models/business-partner-project.type'
 import { BusinessPartnerUser } from '@/services/swr/models/business-partner-user.type'
-import { useBusinessPartner } from '@/services/swr/use-business-partner'
+import {
+  useBusinessPartner,
+  useBusinessPartnerNamespace,
+} from '@/services/swr/use-business-partner'
 import { safeRender } from '@/utils/safeRender'
 
 import { BusinessPartnerAddressFilter } from './_components/business-partner-address-filter'
@@ -28,6 +31,7 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
   const t = useTranslations('dataManagement.businessPartners')
 
   const { data, isLoading } = useBusinessPartner(Number(params.id))
+  const { data: namespaceData } = useBusinessPartnerNamespace(Number(params.id))
 
   const addressColumns: TableColumn<BusinessPartnerAddress>[] = [
     {
@@ -271,7 +275,7 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
   return (
     <>
       <div className="app-container">
-        <Breadcrumbs items={getBreadcrumbItems(data)} />
+        <Breadcrumbs items={getBreadcrumbItems({ namespace: namespaceData })} />
       </div>
 
       <PageTitle title={`${t('businessPartner')}: ${safeRender(data, 'name')}`} />
