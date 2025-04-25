@@ -7,6 +7,7 @@ import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
 import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
+import { useBusinessPartnerProjectNamespace } from '@/services/swr/use-business-partner'
 import { useBusinessPartnerProject } from '@/services/swr/use-business-partner-project'
 import { safeRender } from '@/utils/safeRender'
 
@@ -18,6 +19,10 @@ export default function BusinessPartnerProjectDetails({
   const t = useTranslations('dataManagement.businessPartners.projects')
 
   const { data, isLoading } = useBusinessPartnerProject(params.id, params.projectId)
+  const { data: projectNamespaceData } = useBusinessPartnerProjectNamespace(
+    params.id,
+    params.projectId
+  )
 
   const projectFields = [
     { label: t('projectName'), value: safeRender(data, 'project.projectName'), lg: 6 },
@@ -48,7 +53,7 @@ export default function BusinessPartnerProjectDetails({
   return (
     <>
       <div className="app-container">
-        <Breadcrumbs items={getBreadcrumbItems(data)} />
+        <Breadcrumbs items={getBreadcrumbItems({ namespace: projectNamespaceData })} />
       </div>
       <PageTitle title={`${t('projectInfo')}: ${safeRender(data, 'project.projectName')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="projectInfo" />

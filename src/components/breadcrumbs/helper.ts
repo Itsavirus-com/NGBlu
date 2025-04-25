@@ -25,11 +25,13 @@ export const getBreadcrumbItems = (
   if (!data || !data.namespace) return []
 
   if (Array.isArray(data.namespace)) {
-    return data.namespace.map(item => ({
-      name: item.name,
-      type: item.type,
-      path: item.path,
-    }))
+    return data.namespace.map(item => {
+      return {
+        name: item.name,
+        type: item.type,
+        path: item.path,
+      }
+    })
   }
 
   const item = data.namespace as Namespace

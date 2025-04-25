@@ -7,6 +7,7 @@ import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
 import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
+import { useEnterpriseRootProjectNamespace } from '@/services/swr/use-enterprise-root'
 import { useEnterpriseRootProject } from '@/services/swr/use-enterprise-root-project'
 import { safeRender } from '@/utils/safeRender'
 
@@ -18,6 +19,10 @@ export default function EnterpriseRootProjectDetails({
   const t = useTranslations('dataManagement.enterpriseRoots.projects')
 
   const { data, isLoading } = useEnterpriseRootProject(params.id, params.projectId)
+  const { data: projectNamespaceData } = useEnterpriseRootProjectNamespace(
+    params.id,
+    params.projectId
+  )
 
   const projectInfoFields = [
     { label: t('projectName'), value: safeRender(data, 'project.projectName'), lg: 6 },
@@ -79,7 +84,7 @@ export default function EnterpriseRootProjectDetails({
   return (
     <>
       <div className="app-container">
-        <Breadcrumbs items={getBreadcrumbItems(data)} />
+        <Breadcrumbs items={getBreadcrumbItems({ namespace: projectNamespaceData })} />
       </div>
       <PageTitle title={`${t('project')}: ${safeRender(data, 'project.projectName')}`} />
       <DynamicTabs tabs={tabs} defaultActiveKey="projectInfo" />

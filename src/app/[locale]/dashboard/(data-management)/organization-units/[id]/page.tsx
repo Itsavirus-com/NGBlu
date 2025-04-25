@@ -7,13 +7,17 @@ import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
 import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
 import { PageTitle } from '@/components/page-title'
 import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
-import { useOrganizationUnit } from '@/services/swr/use-organization-unit'
+import {
+  useOrganizationUnit,
+  useOrganizationUnitNamespace,
+} from '@/services/swr/use-organization-unit'
 import { safeRender } from '@/utils/safeRender'
 
 export default function OrganizationUnitDetails({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.organizationUnits')
 
   const { data, isLoading } = useOrganizationUnit(params.id)
+  const { data: namespaceData } = useOrganizationUnitNamespace(params.id)
 
   const organizationUnitInfoFields = [
     { label: t('addressName'), value: safeRender(data, 'primaryAddress.addressName') },
@@ -49,7 +53,7 @@ export default function OrganizationUnitDetails({ params }: { params: { id: numb
   return (
     <>
       <div className="app-container">
-        <Breadcrumbs items={getBreadcrumbItems(data)} />
+        <Breadcrumbs items={getBreadcrumbItems({ namespace: namespaceData })} />
       </div>
 
       <PageTitle title={`${t('organizationUnit')}: ${safeRender(data, 'name')}`} />

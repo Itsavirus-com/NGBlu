@@ -37,8 +37,6 @@ export const DynamicTableBody = <TableValues extends Record<string, any>>(
       }
     : { filter: {} }
 
-  console.log('filteredFilters', filteredFilters)
-
   const { data, isLoading, pagination, mutate } = useTableData<TableValues>(apiPath, {
     page,
     limit: perPage,

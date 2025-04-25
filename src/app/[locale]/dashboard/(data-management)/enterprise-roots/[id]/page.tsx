@@ -15,7 +15,7 @@ import { EnterpriseRootContact } from '@/services/swr/models/enterprise-root-con
 import { EnterpriseRootCustomer } from '@/services/swr/models/enterprise-root-customer.type'
 import { EnterpriseRootProject } from '@/services/swr/models/enterprise-root-project.type'
 import { EnterpriseRootUser } from '@/services/swr/models/enterprise-root-user.type'
-import { useEnterpriseRoot } from '@/services/swr/use-enterprise-root'
+import { useEnterpriseRoot, useEnterpriseRootNamespace } from '@/services/swr/use-enterprise-root'
 import { safeRender } from '@/utils/safeRender'
 
 import { EnterpriseRootAddressFilter } from './_components/EnterpriseRootAddressFilter'
@@ -29,6 +29,7 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
   const t = useTranslations('dataManagement.enterpriseRoots')
 
   const { data, isLoading } = useEnterpriseRoot(params.id)
+  const { data: namespaceData } = useEnterpriseRootNamespace(params.id)
 
   const addressColumns: TableColumn<EnterpriseRootAddress>[] = [
     {
@@ -266,9 +267,12 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
           className="mt-4"
           filters={<EnterpriseRootBusinessPartnerFilter />}
           columns={businessPartnerColumns}
-          apiPath={`business-partners?filter[enterprise_root_id]=${params.id}`}
+          apiPath="business-partners"
           actionBasePath={`/dashboard/business-partners`}
           actions={['view']}
+          defaultFilters={{
+            enterprise_root_id: params.id,
+          }}
         />
       ),
       condition: Boolean(data),
@@ -301,7 +305,7 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
   return (
     <>
       <div className="app-container">
-        <Breadcrumbs items={getBreadcrumbItems(data)} />
+        <Breadcrumbs items={getBreadcrumbItems({ namespace: namespaceData })} />
       </div>
 
       <PageTitle title={`${t('enterpriseRoot')}: ${safeRender(data, 'name')}`} />
