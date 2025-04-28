@@ -86,7 +86,9 @@
       "unexpectedErrorTitle": "Unexpected Error!",
       "unexpectedErrorDesc": "An unexpected error occurred. Please try again later.",
       "authErrorMessage": "An authentication error occurred. Please try again later.",
-      "authError": "Authentication Error!"
+      "authError": "Authentication Error!",
+      "sessionExpired": "Session Expired",
+      "sessionExpiredMessage": "Your session has expired. You will be redirected to the login page."
     }
   },
   "404": {
