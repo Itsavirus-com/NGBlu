@@ -27,7 +27,6 @@ export const SessionChecker = () => {
         // Set token expiration time 60 minutes from now
         const expiresAt = Date.now() + 60 * 60 * 1000
         localStorage.setItem('token_expires_at', expiresAt.toString())
-        console.log('Token set to expire at:', new Date(expiresAt).toLocaleTimeString())
       }
     }
   }, [session, status, mounted])
@@ -69,7 +68,6 @@ export const SessionChecker = () => {
       // Check token expiration directly by looking at the token's expiresAt property
       const expiresAt = parseInt(localStorage.getItem('token_expires_at') || '0', 10)
       if (expiresAt && Date.now() > expiresAt) {
-        console.log('Token expired (time check). Logging out...')
         handleTokenExpiration('time check')
         return
       }

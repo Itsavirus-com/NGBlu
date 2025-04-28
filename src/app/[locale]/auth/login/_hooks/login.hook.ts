@@ -57,7 +57,6 @@ export const useLogin = () => {
             // Set token expiration time 60 minutes from now
             const expiresAt = Date.now() + 60 * 60 * 1000
             localStorage.setItem('token_expires_at', expiresAt.toString())
-            console.log('Token set to expire at:', new Date(expiresAt).toLocaleTimeString())
 
             router.push('/dashboard')
           } else {
