@@ -10,5 +10,5 @@ export const schema = yup.object().shape({
     .number()
     .required('Contact info is required')
     .notOneOf([0], 'Contact info is required'),
-  ouUnitId: yup.number(),
+  ouUnitId: yup.number().nullable(),
 })
