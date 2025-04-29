@@ -25,5 +25,5 @@ export const schema = yup.object().shape({
     .notOneOf([0], 'Legal address is required'),
   chamberOfCommerceId: yup.string().ensure().required('Chamber of commerce ID is required'),
   vatNumber: yup.string(),
-  originId: yup.number(),
+  originId: yup.number().nullable(),
 })

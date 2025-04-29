@@ -6,5 +6,5 @@ export const schema = yup.object().shape({
     .required('Business Partner Address is required')
     .notOneOf([0], 'Business Partner Address is required'),
   projectId: yup.number().required('Project is required').notOneOf([0], 'Project is required'),
-  ouUnitId: yup.number(),
+  ouUnitId: yup.number().nullable(),
 })
