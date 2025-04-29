@@ -43,7 +43,7 @@ const nextConfig = {
 }
 
 export default withSentryConfig(withNextIntl(nextConfig), {
-  // Organization and project settings
+  // organizational and project settings
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
   authToken: process.env.SENTRY_AUTH_TOKEN,
@@ -69,7 +69,7 @@ export default withSentryConfig(withNextIntl(nextConfig), {
   // This can increase your server load as well as your hosting bill.
   // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
   // side errors will fail.
-  tunnelRoute: '/monitoring',
+  // tunnelRoute: '/monitoring',
 
   // Automatically tree-shake Sentry logger statements to reduce bundle size
   disableLogger: true,
