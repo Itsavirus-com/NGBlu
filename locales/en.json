@@ -62,7 +62,7 @@
       "paymentTypes": "Payment Types",
       "creditCardTypes": "Credit Card Types",
       "creditCardBrands": "Credit Card Brands",
-      "organizationUnits": "Organization Units",
+      "organizationUnits": "Organizational Units",
       "settings": "Settings"
     },
     "table": {
@@ -200,7 +200,7 @@
       "customers": "Customers",
       "projects": "Projects",
       "users": "Users",
-      "orgUnits": "Organization Units",
+      "orgUnits": "Organizational Units",
       "companyInfo": {
         "companyInfo": "Company Info",
         "companyName": "Company Name",
@@ -521,7 +521,7 @@
         "businesspartnerId": "Business Partner ID",
         "endclient": "End Client",
         "endclientId": "End Client ID",
-        "organizationUnit": "Organization Unit"
+        "organizationUnit": "Organizational Unit"
       },
       "addresses": {
         "title": "Addresses",
@@ -755,8 +755,8 @@
       "updateEnterpriseRoot": "Update Enterprise Root",
       "id": "ID",
       "name": "Company Name",
-      "organisationUnit": "Organisational Unit",
-      "organisationUnitId": "Organisation Unit ID",
+      "organisationUnit": "Organizational Unit",
+      "organisationUnitId": "Organizational Unit ID",
       "enterpriseRootAddress": "Address",
       "enterpriseRootAddressId": "Enterprise Root Address ID",
       "addressesCount": "Addresses Count",
@@ -778,7 +778,7 @@
         "addressName": "Address Name",
         "addressType": "Address Type",
         "addressTypeId": "Address Type ID",
-        "organisationUnit": "Organisation Unit",
+        "organisationUnit": "Organizational Unit",
         "streetName": "Street Name",
         "houseNumber": "House Number",
         "houseNumberSuffix": "House Number Suffix",
@@ -807,7 +807,7 @@
         "responsibility": "Responsibility",
         "responsibilityId": "Responsibility ID",
         "enterpriseRoot": "Enterprise Root",
-        "organisationUnit": "Organisation Unit",
+        "organisationUnit": "Organizational Unit",
         "contactType": "Contact Type",
         "contacts": "Contacts",
         "contact": "Contact",
@@ -947,6 +947,7 @@
       "products": "Products",
       "productId": "Product ID",
       "productPricingConfig": "Product Pricing Config",
+      "productPricingConfigId": "Product Pricing Config ID",
       "newPackageProduct": "New Package Product",
       "updatePackageProduct": "Update Package Product",
       "packageInfo": "Package Info",
@@ -1115,9 +1116,9 @@
       "brand": "Brand"
     },
     "organizationUnits": {
-      "title": "Organization Units",
-      "newOrganizationUnit": "New Organization Unit",
-      "updateOrganizationUnit": "Update Organization Unit",
+      "title": "Organizational Units",
+      "newOrganizationUnit": "New Organizational Unit",
+      "updateOrganizationUnit": "Update Organizational Unit",
       "id": "ID",
       "name": "Company Name",
       "addressName": "Address Name",
@@ -1137,9 +1138,9 @@
       "endClient": "End Client",
       "businessPartner": "Business Partner",
       "enterpriseRoot": "Enterprise Root",
-      "organizationUnitInfo": "Organization Unit Info",
+      "organizationUnitInfo": "Organizational Unit Info",
       "info": "Info",
-      "organizationUnit": "Organization Unit"
+      "organizationUnit": "Organizational Unit"
     },
     "businessPartners": {
       "title": "Business Partners",
@@ -1156,7 +1157,7 @@
       "businessPartnerType": "Business Partner Type",
       "businessPartnersAddresses": "Business Partners Address",
       "enterpriseRoot": "Enterprise Root",
-      "organisationalUnit": "Organisational Unit",
+      "organisationalUnit": "Organizational Unit",
       "addressCount": "Address Count",
       "contactCount": "Contact Count",
       "customerCount": "Customer Count",
