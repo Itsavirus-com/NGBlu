@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import { signIn } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 
 import microsoftIcon from '@/assets/images/brand-logos/microsoft-5.svg'
@@ -14,7 +13,7 @@ import { useLogin } from './_hooks/login.hook'
 
 export default function Login() {
   const t = useTranslations('auth.login')
-  const { methods, onSubmit, isLoading } = useLogin()
+  const { methods, onSubmit, isLoading, handleMicrosoftSignIn } = useLogin()
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
@@ -26,7 +25,7 @@ export default function Login() {
 
         {/* Microsoft Sign In Button */}
         <div
-          onClick={() => signIn('azure-ad')}
+          onClick={handleMicrosoftSignIn}
           className="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100"
         >
           <Image alt="Logo" src={microsoftIcon} width={15} height={15} className="h-15px me-3" />

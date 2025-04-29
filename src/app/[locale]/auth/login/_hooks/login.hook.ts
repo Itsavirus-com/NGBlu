@@ -22,6 +22,11 @@ export const useLogin = () => {
 
   const methods = useForm({ resolver: yupResolver(schema) })
 
+  // Handler for Microsoft sign-in
+  const handleMicrosoftSignIn = async () => {
+    await signIn('azure-ad')
+  }
+
   const onSubmit = async (data: any) => {
     const submitData = omitNullAndUndefined(data)
     setIsLoading(true)
@@ -49,6 +54,10 @@ export const useLogin = () => {
           })
 
           if (result?.ok) {
+            // Set token expiration time 60 minutes from now
+            const expiresAt = Date.now() + 60 * 60 * 1000
+            localStorage.setItem('token_expires_at', expiresAt.toString())
+
             router.push('/dashboard')
           } else {
             console.error('SignIn failed:', result?.error)
@@ -110,5 +119,6 @@ export const useLogin = () => {
     methods,
     onSubmit,
     isLoading,
+    handleMicrosoftSignIn,
   }
 }

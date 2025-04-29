@@ -47,7 +47,14 @@ const HeaderUserMenu: FC = () => {
       </div>
 
       <div className="menu-item px-5" data-kt-menu-trigger="click">
-        <div className="menu-link px-5" onClick={() => signOut()}>
+        <div
+          className="menu-link px-5"
+          onClick={() => {
+            // Clear token data from localStorage before signing out
+            localStorage.removeItem('token_expires_at')
+            signOut()
+          }}
+        >
           {t('sign_out')}
         </div>
       </div>

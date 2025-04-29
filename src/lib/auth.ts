@@ -124,7 +124,6 @@ export const authOptions: NextAuthOptions = {
         userData: { label: 'User Data', type: 'text' },
       },
       async authorize(credentials) {
-        console.log('credentials', credentials)
         try {
           if (!credentials?.accessToken || !credentials?.clientPrivateKey) {
             console.error('Missing credentials:', {
