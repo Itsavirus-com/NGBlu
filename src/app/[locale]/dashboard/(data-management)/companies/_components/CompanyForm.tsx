@@ -61,7 +61,7 @@ export default function CompanyForm({ methods, onSubmit, isSubmitting }: Company
                   label={t('origin')}
                   name="originId"
                   containerClass="mb-3"
-                  apiPath="/companies/infos"
+                  apiPath="companies/infos"
                   option={{ label: row => row.companyname, value: row => row.id }}
                 />
               </Col>
