@@ -22,7 +22,7 @@
 - Users Management
 - Payments Management
 - Packages Management
-- Organization Units Management
+- organizational Units Management
 - Enterprise Roots Management
 - End Clients Management
 - Companies Management
