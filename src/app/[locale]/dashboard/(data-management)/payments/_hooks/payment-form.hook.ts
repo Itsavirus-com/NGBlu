@@ -68,22 +68,31 @@ export default function usePaymentForm(paymentId?: number) {
   const selectedPayment = methods.watch('selectedPayment')
 
   const handleChange = (value: number) => {
-    methods.reset({
-      selectedPayment: value,
-      bankname: null,
-      bankIban: null,
-      bankBic: null,
-      creditcardNumber: null,
-      validTo: null,
-      cvv: null,
-      paymentTypeId: 0,
-      creditcardTypeId: null,
-      creditcardBrandId: null,
-      bankAddressId: null,
-      personId: 0,
-      endclientId: null,
-    })
-    methods.setValue('selectedPayment', value)
+    // Get current values for fields we want to preserve
+    const currentValues = methods.getValues()
+
+    if (value === 1) {
+      // Switch to Bank Account
+      methods.setValue('selectedPayment', value)
+      methods.setValue('paymentTypeId', value)
+
+      // Clear credit card fields
+      methods.setValue('creditcardNumber', null)
+      methods.setValue('validTo', null)
+      methods.setValue('cvv', null)
+      methods.setValue('creditcardTypeId', null)
+      methods.setValue('creditcardBrandId', null)
+    } else {
+      // Switch to Credit Card
+      methods.setValue('selectedPayment', value)
+      methods.setValue('paymentTypeId', value)
+
+      // Clear bank fields
+      methods.setValue('bankname', null)
+      methods.setValue('bankIban', null)
+      methods.setValue('bankBic', null)
+      methods.setValue('bankAddressId', null)
+    }
   }
   const addNewPayment = async (data: InferType<typeof schema>) => {
     try {
@@ -103,6 +112,8 @@ export default function usePaymentForm(paymentId?: number) {
       }
     } catch (error) {
       showUnexpectedToast()
+      // Preserve form data on error by explicitly setting all values back
+      preserveFormData(data)
     }
   }
 
@@ -149,7 +160,23 @@ export default function usePaymentForm(paymentId?: number) {
       }
     } catch (error) {
       showUnexpectedToast()
+      // Preserve form data on error by explicitly setting all values back
+      preserveFormData(data)
     }
+  }
+
+  // Helper function to preserve form data after an error
+  const preserveFormData = (data: InferType<typeof schema>) => {
+    // Keep the current values by setting them again
+    Object.keys(data).forEach(key => {
+      // Handle validTo separately due to formatting
+      if (key === 'validTo' && data.validTo) {
+        methods.setValue('validTo', data.validTo.replace(DASH_REGEX, '/'))
+      } else {
+        // Set all other values directly
+        methods.setValue(key as any, data[key as keyof typeof data])
+      }
+    })
   }
 
   const onSubmit = async (data: InferType<typeof schema>) => {

@@ -50,7 +50,6 @@ export default function PaymentForm({
                 value={1}
                 onChange={() => {
                   handleChange(1)
-                  methods.setValue('paymentTypeId', 1)
                 }}
               />
               <ControlledSwitch
@@ -61,7 +60,6 @@ export default function PaymentForm({
                 value={2}
                 onChange={() => {
                   handleChange(2)
-                  methods.setValue('paymentTypeId', 2)
                 }}
               />
             </div>
