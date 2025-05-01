@@ -82,11 +82,6 @@ export default function ServiceDetails({ params }: { params: { id: number } }) {
       render: row => safeRender(row, 'activeTo'),
     },
     {
-      id: 'product',
-      title: t('product'),
-      render: row => `${safeRender(row.service, 'id')} | ${safeRender(row.service, 'name')}`,
-    },
-    {
       id: 'pricePlan',
       title: t('pricePlan'),
       render: row => `${safeRender(row.pricePlan, 'id')} | ${safeRender(row.pricePlan, 'name')}`,

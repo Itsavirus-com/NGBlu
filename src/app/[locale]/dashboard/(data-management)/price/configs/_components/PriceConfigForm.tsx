@@ -74,6 +74,14 @@ export default function PriceConfigForm({ methods, onSubmit, isSubmitting }: Pri
                   option={{ label: row => row.type, value: row => row.id }}
                   isRequired
                 />
+                <ControlledSelect<PriceType>
+                  label={t('unit')}
+                  name="priceUnitId"
+                  containerClass="mb-3"
+                  apiPath="prices/units"
+                  option={{ label: row => row.unit, value: row => row.id }}
+                  isRequired
+                />
               </Col>
             </Row>
 

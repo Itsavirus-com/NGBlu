@@ -25,6 +25,7 @@ export default function usePriceConfigForm(configId?: number) {
       priceTypeId: priceConfig?.priceTypeId,
       priceIntervalId: priceConfig?.priceIntervalId,
       priceTaxId: priceConfig?.priceTaxId,
+      priceUnitId: priceConfig?.priceUnitId,
     },
   })
 

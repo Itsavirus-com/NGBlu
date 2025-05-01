@@ -73,7 +73,10 @@ export class ApiCore {
   protected getUrl(request: any): string {
     const { baseURL, url, params } = request
     const queryString = params ? this.buildQueryParams(params) : ''
-    return `${baseURL}/${url}${queryString ? `?${queryString}` : ''}`
+
+    // Handle the case where url starts with a slash to prevent double slashes
+    const path = url.startsWith('/') ? url : `/${url}`
+    return `${baseURL.replace(/\/+$/, '')}${path}${queryString ? `?${queryString}` : ''}`
   }
 
   protected async addHeaderTransformer() {

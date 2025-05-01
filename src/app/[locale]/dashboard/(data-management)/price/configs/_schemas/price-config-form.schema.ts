@@ -25,4 +25,9 @@ export const schema = yup.object().shape({
     .typeError('Price tax must be a number')
     .required('Price tax is required')
     .notOneOf([0], 'Price tax is required'),
+  priceUnitId: yup
+    .number()
+    .typeError('Price unit must be a number')
+    .required('Price unit is required')
+    .notOneOf([0], 'Price unit is required'),
 })
