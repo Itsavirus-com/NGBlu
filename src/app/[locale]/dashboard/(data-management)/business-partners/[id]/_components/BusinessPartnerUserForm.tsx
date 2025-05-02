@@ -36,7 +36,7 @@ export default function BusinessPartnerUserForm({
               name="userId"
               containerClass="mb-3"
               apiPath={'users'}
-              option={{ label: row => row.username, value: row => row.id }}
+              option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
               isRequired
             />
             <ControlledSelect<Person>
@@ -44,7 +44,7 @@ export default function BusinessPartnerUserForm({
               name="personId"
               containerClass="mb-3"
               apiPath={'persons'}
-              option={{ label: row => row.name, value: row => row.id }}
+              option={{ label: row => `${row.firstname} ${row.lastname}`, value: row => row.id }}
               isRequired
             />
             <ControlledSelect<OrganizationUnit>

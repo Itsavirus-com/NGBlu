@@ -12,7 +12,11 @@ export const modelAdaptor: ModelAdaptor = (computeFn, dataPrefix = '') => {
       if (computeFn && rawData && typeof rawData === 'object') {
         const state = proxy<any>(rawData)
         const computed = computeFn(state)
-        const data = { ...snapshot(state), ...snapshot(computed) }
+
+        // Check if the original data is an array to preserve its structure
+        const data = Array.isArray(rawData)
+          ? [...snapshot(state)] // Preserve array structure
+          : { ...snapshot(state), ...snapshot(computed) } // Object spread for objects
 
         return Object.assign({}, swr, { data })
       }

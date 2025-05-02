@@ -50,7 +50,7 @@ export default function useProductPriceConfigForm(configId?: number) {
         : '',
       activeToTime: productPriceConfig?.activeTo ?? DEFAULT_DATE_TIME_END,
       productId: productPriceConfig?.productId!,
-      priceplanId: productPriceConfig?.enterpriseRootId!,
+      priceplanId: productPriceConfig?.priceplanId!,
       enterpriseRootId: productPriceConfig?.enterpriseRootId!,
       businesspartnerId: productPriceConfig?.businesspartnerId,
       orgUnitId: productPriceConfig?.orgUnitId,

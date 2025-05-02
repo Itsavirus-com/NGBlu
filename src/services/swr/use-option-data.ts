@@ -5,6 +5,11 @@ import { modelAdaptor } from './middleware/model-adaptor'
 import { AnyObject } from './middleware/model-adaptor.type'
 import { OptionDataCollection, OptionDataParams } from './models/option-data.type'
 
+// Helper function to validate API path
+const isValidPath = (path?: string): boolean => {
+  return !!path && !path.includes('/null')
+}
+
 export const useOptionData = <OptionValue extends AnyObject>(
   path: string | undefined,
   params?: OptionDataParams
@@ -12,7 +17,7 @@ export const useOptionData = <OptionValue extends AnyObject>(
   const { limit = 20, page = 1, ...otherParams } = params || {}
 
   const { data, ...results } = useSWR<OptionDataCollection<OptionValue>>(
-    path
+    isValidPath(path)
       ? {
           path,
           params: { limit, page, ...otherParams },
@@ -35,7 +40,7 @@ export const useOptionDataById = <OptionValue extends AnyObject>(
   params?: OptionDataParams
 ) => {
   const { data, mutate, isLoading } = useSWR<OptionValue>(
-    path
+    isValidPath(path) && identifier
       ? isSelectedIdWithParams
         ? {
             path: `${path}`,
