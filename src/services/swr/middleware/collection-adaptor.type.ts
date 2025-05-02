@@ -6,6 +6,7 @@ export type Collection<K extends string, T extends AnyObject> = {
   [key in K]: T[]
 } & {
   pagination: {
+    perPage: number
     currentPage: number
     lastPage: number
     total: number
