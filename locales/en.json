@@ -168,7 +168,8 @@
   },
   "dataValidation": {
     "reject": "Reject",
-    "accept": "Accept",
+    "acceptOriginalAddress": "Accept Original Address",
+    "acceptKvkAddress": "Accept KVK Address",
     "unconfirmed": "Unconfirmed",
     "counter": "Counter {start} out of {end}",
     "companyName": "Company Name",
@@ -180,9 +181,12 @@
     "postcode": "Postcode",
     "city": "City",
     "country": "Country",
+    "noDataAvailable": "No data available",
+    "allItemsProcessed": "All items processed",
+
     "kvk": {
       "title": "KVK Data Validation",
-      "registeredAddress": "Registered Address in Chamber of Commerce",
+      "registeredAddress": "Registered Address in Chambers of Commerce",
       "originalAddress": "Original Address"
     },
     "google": {

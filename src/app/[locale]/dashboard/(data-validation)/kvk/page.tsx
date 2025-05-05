@@ -23,11 +23,11 @@ export default function Kvk() {
     hasNextItem,
     hasPreviousItem,
     handleAccept,
-    handleReject,
     similarityStatus,
     currentItem,
     fieldDifferences,
     isSubmitting,
+    loadingType,
   } = useKvkForm()
 
   return (
@@ -39,6 +39,19 @@ export default function Kvk() {
           <div className="spinner-border" role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
+        </div>
+      ) : totalItems <= 0 ? (
+        <div className="app-container container-fluid">
+          <Card>
+            <CardBody>
+              <div className="d-flex justify-content-center align-items-center py-10">
+                <div className="text-center">
+                  <h4>{t('noDataAvailable')}</h4>
+                  <p className="text-muted">{t('allItemsProcessed')}</p>
+                </div>
+              </div>
+            </CardBody>
+          </Card>
         </div>
       ) : (
         <FormProvider methods={methods} onSubmit={onSubmit}>
@@ -55,30 +68,70 @@ export default function Kvk() {
                       </span>
                     )}
                   </Col>
-                  <Col lg={6} className="d-flex justify-content-end">
-                    <Button
-                      type="button"
-                      colorClass="success"
-                      className="me-2"
-                      onClick={handleAccept}
-                      disabled={isLoading || isSubmitting || totalItems === 0}
-                      loading={isSubmitting}
-                      label={t('accept')}
-                      icon="check"
-                    />
-                    <Button
-                      type="button"
-                      colorClass="danger"
-                      className="btn-light-danger"
-                      // variant="outline"
-                      onClick={handleReject}
-                      disabled={isLoading || isSubmitting || totalItems === 0}
-                      label={t('reject')}
-                      icon="cross"
-                    />
-                  </Col>
                 </Row>
                 <Row>
+                  <Col lg={6}>
+                    <h4 className="mb-5">{t('kvk.originalAddress')}</h4>
+                    <ControlledInput
+                      label={t('companyName')}
+                      name="companyNameOriginal"
+                      containerClass="mb-3"
+                      className="form-control-solid"
+                    />
+                    <ControlledInput
+                      label={t('kvkNumber')}
+                      name="kvkNumberOriginal"
+                      containerClass="mb-3"
+                      className="form-control-solid"
+                    />
+                    <ControlledInput
+                      label={t('streetAddress')}
+                      name="streetAddressOriginal"
+                      containerClass="mb-3"
+                      className="form-control-solid"
+                      isInvalid={fieldDifferences.streetAddress}
+                    />
+                    <Row>
+                      <Col lg={6}>
+                        <ControlledInput
+                          label={t('houseNumber')}
+                          name="houseNumberOriginal"
+                          containerClass="mb-3"
+                          className="form-control-solid"
+                          isInvalid={fieldDifferences.houseNumber}
+                        />
+                      </Col>
+                      <Col lg={6}>
+                        <ControlledInput
+                          label={t('houseNumberExtension')}
+                          name="houseNumberExtensionOriginal"
+                          containerClass="mb-3"
+                          className="form-control-solid"
+                          isInvalid={fieldDifferences.houseNumberExtension}
+                        />
+                      </Col>
+                    </Row>
+                    <ControlledInput
+                      label={t('postcode')}
+                      name="postcodeOriginal"
+                      containerClass="mb-3"
+                      className="form-control-solid"
+                      isInvalid={fieldDifferences.postcode}
+                    />
+                    <ControlledInput
+                      label={t('city')}
+                      name="cityOriginal"
+                      containerClass="mb-3"
+                      className="form-control-solid"
+                      isInvalid={fieldDifferences.city}
+                    />
+                    <ControlledInput
+                      label={t('country')}
+                      name="countryOriginal"
+                      className="form-control-solid"
+                      isInvalid={fieldDifferences.country}
+                    />
+                  </Col>
                   <Col lg={6}>
                     <h4 className="mb-5">{t('kvk.registeredAddress')}</h4>
 
@@ -143,67 +196,30 @@ export default function Kvk() {
                       disabled
                     />
                   </Col>
+                </Row>
 
-                  <Col lg={6}>
-                    <h4 className="mb-5">{t('kvk.originalAddress')}</h4>
-                    <ControlledInput
-                      label={t('companyName')}
-                      name="companyNameOriginal"
-                      containerClass="mb-3"
-                      className="form-control-solid"
+                <Row className="mt-4">
+                  <Col lg={6} className="d-flex justify-content-end">
+                    <Button
+                      type="button"
+                      colorClass="success"
+                      onClick={() => handleAccept('original')}
+                      disabled={isLoading || isSubmitting || totalItems === 0}
+                      loading={isSubmitting && loadingType === 'original'}
+                      label={t('acceptOriginalAddress')}
+                      icon="check"
+                      activeColorClass="light-success"
                     />
-                    <ControlledInput
-                      label={t('kvkNumber')}
-                      name="kvkNumberOriginal"
-                      containerClass="mb-3"
-                      className="form-control-solid"
-                    />
-                    <ControlledInput
-                      label={t('streetAddress')}
-                      name="streetAddressOriginal"
-                      containerClass="mb-3"
-                      className="form-control-solid"
-                      isInvalid={fieldDifferences.streetAddress}
-                    />
-                    <Row>
-                      <Col lg={6}>
-                        <ControlledInput
-                          label={t('houseNumber')}
-                          name="houseNumberOriginal"
-                          containerClass="mb-3"
-                          className="form-control-solid"
-                          isInvalid={fieldDifferences.houseNumber}
-                        />
-                      </Col>
-                      <Col lg={6}>
-                        <ControlledInput
-                          label={t('houseNumberExtension')}
-                          name="houseNumberExtensionOriginal"
-                          containerClass="mb-3"
-                          className="form-control-solid"
-                          isInvalid={fieldDifferences.houseNumberExtension}
-                        />
-                      </Col>
-                    </Row>
-                    <ControlledInput
-                      label={t('postcode')}
-                      name="postcodeOriginal"
-                      containerClass="mb-3"
-                      className="form-control-solid"
-                      isInvalid={fieldDifferences.postcode}
-                    />
-                    <ControlledInput
-                      label={t('city')}
-                      name="cityOriginal"
-                      containerClass="mb-3"
-                      className="form-control-solid"
-                      isInvalid={fieldDifferences.city}
-                    />
-                    <ControlledInput
-                      label={t('country')}
-                      name="countryOriginal"
-                      className="form-control-solid"
-                      isInvalid={fieldDifferences.country}
+                  </Col>
+                  <Col lg={6} className="d-flex justify-content-end">
+                    <Button
+                      type="button"
+                      colorClass="primary"
+                      onClick={() => handleAccept('kvk')}
+                      disabled={isLoading || isSubmitting || totalItems === 0}
+                      loading={isSubmitting && loadingType === 'kvk'}
+                      label={t('acceptKvkAddress')}
+                      icon="check"
                     />
                   </Col>
                 </Row>
