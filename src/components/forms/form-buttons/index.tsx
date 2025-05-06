@@ -6,10 +6,9 @@ import { useRouter } from '@/navigation'
 interface FormButtonsProps {
   isSubmitting: boolean
   submitText?: string
-  onSubmitClick?: () => void
 }
 
-export const FormButtons = ({ isSubmitting, submitText, onSubmitClick }: FormButtonsProps) => {
+export const FormButtons = ({ isSubmitting, submitText }: FormButtonsProps) => {
   const { back } = useRouter()
   const t = useTranslations('common')
 
@@ -20,10 +19,9 @@ export const FormButtons = ({ isSubmitting, submitText, onSubmitClick }: FormBut
         colorClass="success"
         className="me-2"
         loading={isSubmitting}
-        label={t('submit')}
+        label={submitText || t('submit')}
         icon="check"
         disabled={isSubmitting}
-        onClick={onSubmitClick}
       />
       <Button type="button" colorClass="danger" onClick={back} label={t('cancel')} icon="cross" />
     </div>

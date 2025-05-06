@@ -8,6 +8,7 @@ import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { addressValidationApi } from '@/services/api/address-validation-api'
 import { useAddressValidation } from '@/services/swr/use-address-validation'
+import { omitNullAndUndefined } from '@/utils/object'
 import { normalizeString } from '@/utils/string'
 import { InferType } from '@/utils/typescript'
 
@@ -33,9 +34,14 @@ export default function useKvkForm() {
   const [currentPage, setCurrentPage] = useState(1)
   const { showToast, showUnexpectedToast } = useToast()
   const { isLoading: isSubmitting, withLoading } = useLoading()
+  const [loadingType, setLoadingType] = useState<'original' | 'kvk' | null>(null)
   const { data: session } = useSession()
 
-  const { data: kvkAddress, isLoading: isLoadingData } = useAddressValidation('kvk', currentPage)
+  const {
+    data: kvkAddress,
+    mutate: invalidateKvkAddress,
+    isLoading: isLoadingData,
+  } = useAddressValidation('kvk', currentPage)
 
   // Get the array of data items and pagination info from kvkAddress
   const dataItems = kvkAddress?.data || []
@@ -215,25 +221,41 @@ export default function useKvkForm() {
     ? getSimilarityStatus(dataItems[currentIndex].similarityScore)
     : { status: '', color: '' }
 
-  const validateKvkData = async (data: InferType<typeof schema>, action: 'accept' | 'reject') => {
+  const validateKvkData = async (data: InferType<typeof schema>, type: 'original' | 'kvk') => {
     if (dataItems.length === 0 || !dataItems[currentIndex]) {
       return
     }
 
-    let submitData = {
-      streetname: data.streetAddress,
-      housenumber: data.houseNumber,
-      housenumberSuffix: data.houseNumberExtension,
-      postalcode: data.postcode,
-      country: data.country,
-      userName: session?.user?.email,
-      type: action,
-      city: data.city,
-      companyName: data.companyName,
-      chamberOfCommerceId: data.kvkNumber,
+    let submitDataKVK = {
+      streetname: data.streetAddress || '',
+      housenumber: data.houseNumber || '',
+      housenumberSuffix: data.houseNumberExtension || '',
+      postalcode: data.postcode || '',
+      country: data.country || '',
+      username: session?.user?.email || '',
+      type: 'accept',
+      city: data.city || '',
+      companyname: data.companyName || '',
+      chamberOfCommerceId: data.kvkNumber || '',
+    }
+
+    let submitDataOriginal = {
+      streetname: data.streetAddressOriginal || '',
+      housenumber: data.houseNumberOriginal || '',
+      housenumberSuffix: data.houseNumberExtensionOriginal || '',
+      postalcode: data.postcodeOriginal || '',
+      country: data.countryOriginal || '',
+      username: session?.user?.email || '',
+      type: 'accept',
+      city: data.cityOriginal || '',
+      companyname: data.companyNameOriginal || '',
     }
 
     try {
+      const submitData =
+        type === 'kvk'
+          ? omitNullAndUndefined(submitDataKVK)
+          : omitNullAndUndefined(submitDataOriginal)
       const res = await addressValidationApi.update(dataItems[currentIndex].id, submitData)
 
       if (res.ok) {
@@ -242,16 +264,13 @@ export default function useKvkForm() {
           body: t('addressAccepted'),
         })
 
-        // If we're at the last item on the current page but there are more pages
         if (currentIndex === dataItems.length - 1 && currentPage < lastPage) {
-          goToNext()
+          invalidateKvkAddress()
         }
         // If we're at the last item on the current page and it's the last page
-        else if (
-          currentIndex === dataItems.length - 1 &&
-          currentPage === lastPage &&
-          currentIndex > 0
-        ) {
+        else if (currentIndex === dataItems.length - 1 && currentPage === lastPage) {
+          invalidateKvkAddress()
+        } else if (currentIndex > 0) {
           setCurrentIndex(currentIndex - 1)
         }
       }
@@ -263,49 +282,25 @@ export default function useKvkForm() {
   const onSubmit = async (data: InferType<typeof schema>) => {
     const currentFormValues = { ...data }
 
-    const action = data.validationAction as 'accept' | 'reject'
-
     try {
-      await withLoading(() => validateKvkData(currentFormValues, action))
+      await withLoading(() => validateKvkData(currentFormValues, 'kvk'))
     } catch (error) {
       showUnexpectedToast()
     }
   }
 
-  const handleAccept = () => {
-    methods.handleSubmit(onSubmit)()
-
-    setTimeout(() => {
-      if (dataItems[currentIndex]) {
-        methods.setValue('validationAction', 'accept')
-
-        // Directly set form values from chamber one by one
-        methods.setValue(
-          'companyNameOriginal',
-          dataItems[currentIndex].reference.companyInfo.companyname
-        )
-        methods.setValue('streetAddressOriginal', dataItems[currentIndex].differences.streetName)
-        methods.setValue(
-          'houseNumberOriginal',
-          dataItems[currentIndex].differences.houseNumber.toString()
-        )
-        methods.setValue(
-          'houseNumberExtensionOriginal',
-          dataItems[currentIndex].differences.houseNumberSuffix || ''
-        )
-        methods.setValue('postcodeOriginal', dataItems[currentIndex].differences.postalCode)
-        methods.setValue('cityOriginal', dataItems[currentIndex].differences.city)
-        methods.setValue('countryOriginal', dataItems[currentIndex].differences.country)
-        methods.setValue(
-          'kvkNumberOriginal',
-          dataItems[currentIndex].reference.companyInfo.chamberOfCommerceId
-        )
-      }
-    }, 500)
-  }
-
-  const handleReject = () => {
-    goToNext()
+  const handleAccept = (type: 'original' | 'kvk') => {
+    setLoadingType(type)
+    methods.handleSubmit(data => {
+      const currentFormValues = { ...data }
+      withLoading(async () => {
+        try {
+          await validateKvkData(currentFormValues, type)
+        } finally {
+          setLoadingType(null)
+        }
+      })
+    })()
   }
 
   const position = calculateOverallPosition()
@@ -375,12 +370,12 @@ export default function useKvkForm() {
     totalItems: total,
     isLoading: isLoadingData,
     isSubmitting,
+    loadingType,
     hasNextPage: currentPage < lastPage,
     hasPreviousPage: currentPage > 1,
     hasNextItem: currentIndex < dataItems.length - 1 || currentPage < lastPage,
     hasPreviousItem: currentIndex > 0 || currentPage > 1,
     handleAccept,
-    handleReject,
     similarityStatus: currentSimilarityStatus,
     currentItem: dataItems[currentIndex],
     fieldDifferences,

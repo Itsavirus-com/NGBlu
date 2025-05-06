@@ -61,11 +61,13 @@ export default function usePaymentForm(paymentId?: number) {
       endclientId: payment?.endclientId ?? null,
       businesspartnerId: payment?.businesspartnerId ?? null,
       enterpriseRootId: payment?.enterpriseRootId ?? 0,
-      selectedPayment: payment?.paymentTypeId,
+      selectedPayment: Number(payment?.paymentTypeId),
     },
   })
 
-  const selectedPayment = methods.watch('selectedPayment')
+  // Always ensure selectedPayment is a number
+  const rawSelectedPayment = methods.watch('selectedPayment')
+  const selectedPayment = Number(rawSelectedPayment)
 
   const handleChange = (value: number) => {
     // Get current values for fields we want to preserve
