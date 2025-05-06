@@ -20,6 +20,7 @@ export const Button = (props: ButtonProps) => {
     type = 'button',
     loading = false,
     disabled = false,
+    onlyIconLoading = false,
   } = props
 
   const ButtonWrapper = !!href ? Link : 'button'
@@ -37,7 +38,7 @@ export const Button = (props: ButtonProps) => {
       {loading ? (
         <>
           <Spinner size="sm" animation="border" />
-          <span className="ms-1"> Loading...</span>
+          {!onlyIconLoading && <span className="ms-1"> Loading...</span>}
         </>
       ) : (
         <>

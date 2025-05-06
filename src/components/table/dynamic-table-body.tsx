@@ -82,6 +82,7 @@ export const DynamicTableBody = <TableValues extends Record<string, any>>(
                     apiPath={apiPath}
                     onDelete={mutate}
                     queryParams={processQueryParams(row, queryParams)}
+                    rowData={row}
                   />
                 </tr>
               ))}

@@ -59,4 +59,5 @@ export type ButtonProps = {
   type?: 'button' | 'submit' | 'reset'
   loading?: boolean
   disabled?: boolean
+  onlyIconLoading?: boolean
 }

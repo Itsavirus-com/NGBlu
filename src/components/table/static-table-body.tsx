@@ -43,6 +43,7 @@ export const StaticTableBody = <TableValues extends Record<string, any>>(
                   actionBasePath={actionBasePath}
                   dataId={row.id}
                   queryParams={processQueryParams(row, queryParams)}
+                  rowData={row}
                 />
               </tr>
             ))}

@@ -1,21 +1,28 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
 import { userApi } from '@/services/api/user-api'
+import { useTableData } from '@/services/swr/use-table-data'
 import { useUser } from '@/services/swr/use-user'
 import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
+
 import { schema } from '../_schemas/user-form.schema'
 
 export default function useUserForm(userId?: number) {
+  const t = useTranslations('dataManagement.users')
   const { back } = useRouter()
   const { showToast, showUnexpectedToast } = useToast()
   const { isLoading: isSubmitting, withLoading } = useLoading()
   const { data: user, mutate: invalidateCache } = useUser(userId)
+  const { mutate: refreshUsersList } = useTableData('users')
+  const [loadingResendEmail, setLoadingResendEmail] = useState<Record<string, boolean>>({})
 
   const isEdit = !!userId
   const userSchema = schema(isEdit)
@@ -39,8 +46,9 @@ export default function useUserForm(userId?: number) {
       const res = await userApi.new(data)
 
       if (res.ok) {
-        showToast({ variant: 'success', body: 'User created successfully' })
+        showToast({ variant: 'success', body: t('userCreated') })
         invalidateCache()
+        refreshUsersList()
         back()
       } else {
         showUnexpectedToast()
@@ -56,8 +64,9 @@ export default function useUserForm(userId?: number) {
       const res = await userApi.update(userId, data)
 
       if (res.ok) {
-        showToast({ variant: 'success', body: 'User updated successfully' })
+        showToast({ variant: 'success', body: t('userUpdated') })
         invalidateCache()
+        refreshUsersList()
         back()
       } else {
         showUnexpectedToast()
@@ -86,14 +95,64 @@ export default function useUserForm(userId?: number) {
       if (res.ok) {
         showToast({
           variant: 'success',
-          body: data ? 'User blocked successfully' : 'User unblocked successfully',
+          body: data ? t('userBlocked') : t('userUnblocked'),
         })
+        refreshUsersList()
       } else {
         showUnexpectedToast()
       }
     } catch (error) {
       showUnexpectedToast()
     }
+  }
+
+  /**
+   * Resends activation email to a user
+   * @param email The email address of the user to send activation to
+   * @param userId The ID of the user, used for tracking loading state
+   * @returns Promise that resolves to a boolean indicating success/failure
+   */
+  const resendActivationEmail = async (
+    email: string,
+    userId: string | number
+  ): Promise<boolean> => {
+    // Convert userId to string to ensure consistent key type
+    const userIdKey = userId.toString()
+
+    try {
+      // Set loading state for this specific user
+      setLoadingResendEmail(prev => ({ ...prev, [userIdKey]: true }))
+
+      const res = await userApi.resendActivationEmail(email)
+
+      if (res.ok) {
+        showToast({
+          variant: 'success',
+          body: t('resendEmailActivationSuccess'),
+        })
+        // Refresh the table data to show any updated status
+        refreshUsersList()
+        return true
+      } else {
+        showUnexpectedToast()
+        return false
+      }
+    } catch (error) {
+      showUnexpectedToast()
+      return false
+    } finally {
+      // Always clear loading state when done
+      setLoadingResendEmail(prev => ({ ...prev, [userIdKey]: false }))
+    }
+  }
+
+  /**
+   * Checks if resend activation email is in progress for a specific user
+   * @param userId The ID of the user to check
+   * @returns Boolean indicating if operation is in progress
+   */
+  const isResendingActivation = (userId: string | number): boolean => {
+    return !!loadingResendEmail[userId.toString()]
   }
 
   const onSubmit = async (data: InferType<typeof userSchema>) => {
@@ -105,5 +164,14 @@ export default function useUserForm(userId?: number) {
     return withLoading(() => addNewUser(submitData))
   }
 
-  return { methods, onSubmit, blockUser, isSubmitting, errorMessageInputType, isEdit }
+  return {
+    methods,
+    onSubmit,
+    blockUser,
+    resendActivationEmail,
+    isResendingActivation,
+    isSubmitting,
+    errorMessageInputType,
+    isEdit,
+  }
 }

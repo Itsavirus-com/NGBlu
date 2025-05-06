@@ -79,7 +79,10 @@
       "deleteConfirmationTitle": "Delete Item",
       "deleteConfirmationDesc": "Are you sure you want to delete this item?",
       "deleteSuccess": "Item has been deleted successfully.",
-      "deleteError": "An error occurred while deleting the item. Please try again later."
+      "deleteError": "An error occurred while deleting the item. Please try again later.",
+      "viewDetails": "View Details",
+      "edit": "Edit",
+      "delete": "Delete"
     },
     "error": {
       "unexpectedErrorTitle": "Unexpected Error!",
@@ -481,7 +484,13 @@
       "manual": "Manual",
       "entra": "Entra (Microsoft SSO)",
       "status": "Status",
-      "loginRequired": "Login Required"
+      "loginRequired": "Login Required",
+      "userCreated": "User created successfully",
+      "userUpdated": "User updated successfully",
+      "userBlocked": "User blocked successfully",
+      "userUnblocked": "User unblocked successfully",
+      "resendEmailActivation": "Resend Email Activation",
+      "resendEmailActivationSuccess": "Email activation has been resent successfully"
     },
     "persons": {
       "title": "Persons",

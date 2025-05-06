@@ -22,6 +22,7 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
     actionBasePath,
     className,
     queryParams,
+    customActions,
   } = props
 
   const [filters, setFilters] = useState<Record<string, any>>({})
@@ -65,6 +66,7 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
               filters={filters}
               defaultFilters={defaultFilters}
               queryParams={queryParams}
+              customActions={customActions}
             />
           )}
         </div>
