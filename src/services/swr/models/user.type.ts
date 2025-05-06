@@ -17,4 +17,5 @@ export type User = {
   updatedAt: string
   authType: string
   status: string
+  stateUser: string
 }

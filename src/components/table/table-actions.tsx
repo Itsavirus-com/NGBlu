@@ -1,7 +1,9 @@
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { Button } from '@/components/button/button'
+import { ButtonProps } from '@/components/button/button.type'
 import { useToast } from '@/hooks/use-toast.hook'
 import { generalApi } from '@/services/api/general-api'
 
@@ -17,7 +19,16 @@ export const TableActionsHead = ({ actions, customActions }: TableActionsHeadPro
 }
 
 export const TableActions = (props: TableActionsProps) => {
-  const { actions, customActions, actionBasePath, dataId, apiPath, onDelete, queryParams } = props
+  const {
+    actions,
+    customActions,
+    actionBasePath,
+    dataId,
+    apiPath,
+    onDelete,
+    queryParams,
+    rowData,
+  } = props
 
   const t = useTranslations('common.table')
 
@@ -46,54 +57,95 @@ export const TableActions = (props: TableActionsProps) => {
     }
   }
 
-  if (!actions?.length && !customActions?.length) return null
+  // Get the appropriate custom actions
+  const getCustomActions = (): ButtonProps[] => {
+    if (!customActions) return []
+    if (typeof customActions === 'function') {
+      return customActions(rowData)
+    }
+    return customActions
+  }
+
+  const customActionsList = getCustomActions()
+  if (!actions?.length && !customActionsList.length) return null
 
   return (
     <td>
       <div className="d-flex justify-content-end flex-shrink-0">
-        {customActions?.map((customAction, index) => <Button key={index} {...customAction} />)}
-
         {actions?.includes('view') && (
-          /**
-           * Renders a view button that navigates to the detailed view of a data entry
-           * @param actionBasePath - Base URL path for the view action (optional)
-           * @param dataId - Unique identifier for the data record
-           * @param queryParams - Additional query parameters to append to the URL
-           */
-          <Button
-            href={`${actionBasePath ? `${actionBasePath}/${dataId}` : dataId}${
-              queryParams ? `?${new URLSearchParams(queryParams).toString()}` : ''
-            }`}
-            icon="book"
-            colorClass="light"
-            activeColorClass="color-primary"
-            iconSize="fs-3"
-            className="me-1"
-          />
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip id="view-tooltip">{t('viewDetails')}</Tooltip>}
+          >
+            <span>
+              <Button
+                href={`${actionBasePath ? `${actionBasePath}/${dataId}` : dataId}${
+                  queryParams ? `?${new URLSearchParams(queryParams).toString()}` : ''
+                }`}
+                icon="book"
+                colorClass="light"
+                activeColorClass="color-primary"
+                iconSize="fs-3"
+                className="me-1"
+              />
+            </span>
+          </OverlayTrigger>
         )}
 
         {actions?.includes('edit') && (
-          <Button
-            href={`${actionBasePath}/${dataId}/edit${
-              queryParams ? `?${new URLSearchParams(queryParams).toString()}` : ''
-            }`}
-            icon="pencil"
-            colorClass="light"
-            activeColorClass="color-primary"
-            iconSize="fs-3"
-            className="me-1"
-          />
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip id="edit-tooltip">{t('edit')}</Tooltip>}
+          >
+            <span>
+              <Button
+                href={`${actionBasePath}/${dataId}/edit${
+                  queryParams ? `?${new URLSearchParams(queryParams).toString()}` : ''
+                }`}
+                icon="pencil"
+                colorClass="light"
+                activeColorClass="color-primary"
+                iconSize="fs-3"
+                className="me-1"
+              />
+            </span>
+          </OverlayTrigger>
         )}
 
         {actions?.includes('delete') && (
-          <Button
-            icon="trash"
-            colorClass="light"
-            activeColorClass="color-danger"
-            iconSize="fs-3"
-            onClick={() => setDeleteConfirmVisible(true)}
-          />
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip id="delete-tooltip">{t('delete')}</Tooltip>}
+          >
+            <span>
+              <Button
+                icon="trash"
+                colorClass="light"
+                activeColorClass="color-danger"
+                iconSize="fs-3"
+                className="me-1"
+                onClick={() => setDeleteConfirmVisible(true)}
+              />
+            </span>
+          </OverlayTrigger>
         )}
+
+        {customActionsList.map((customAction, index) => {
+          const tooltipText = customAction.extraProps?.tooltip as string
+          return tooltipText ? (
+            <OverlayTrigger
+              key={index}
+              placement="top"
+              overlay={<Tooltip id={`custom-tooltip-${index}`}>{tooltipText}</Tooltip>}
+            >
+              <span>
+                <Button {...customAction} />
+              </span>
+            </OverlayTrigger>
+          ) : (
+            <Button key={index} {...customAction} />
+          )
+        })}
       </div>
 
       <ConfirmationModal

@@ -1,6 +1,7 @@
 'use client'
 import { useTranslations } from 'next-intl'
 
+import { ButtonProps } from '@/components/button/button.type'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { DateTimeView } from '@/components/view/date-time-view/date-time-view'
@@ -9,9 +10,11 @@ import { User } from '@/services/swr/models/user.type'
 import { safeRender } from '@/utils/safeRender'
 
 import { UserFilter } from './_components/UserFilter'
+import useUserForm from './_hooks/user-form.hook'
 
 export default function Users() {
   const t = useTranslations('dataManagement.users')
+  const { resendActivationEmail, isResendingActivation, isSubmitting } = useUserForm()
 
   const columns: TableColumn<User>[] = [
     {
@@ -55,6 +58,40 @@ export default function Users() {
     },
   ]
 
+  const getCustomActions = (rowData?: User): ButtonProps[] => {
+    if (!rowData) return []
+
+    // we should show a different action based on the user's status
+    const canResendActivation = rowData.stateUser.toLowerCase() === 'pending'
+
+    // Return an array of button props
+    const actions: ButtonProps[] = []
+
+    if (canResendActivation) {
+      const userId = rowData.id.toString()
+      const isButtonLoading = isResendingActivation(userId)
+
+      actions.push({
+        icon: 'arrows-loop',
+        colorClass: 'light',
+        activeColorClass: 'color-primary',
+        iconSize: 'fs-3',
+        className: 'me-1',
+        onClick: async () => {
+          await resendActivationEmail(rowData.email, userId)
+        },
+        extraProps: {
+          tooltip: t('resendEmailActivation'),
+          disabled: isSubmitting || isButtonLoading,
+        },
+        loading: isButtonLoading,
+        onlyIconLoading: true,
+      })
+    }
+
+    return actions
+  }
+
   return (
     <Table<User>
       title={t('title')}
@@ -71,6 +108,7 @@ export default function Users() {
       apiPath="users"
       actionBasePath="users"
       actions={['edit', 'delete']}
+      customActions={getCustomActions}
     />
   )
 }

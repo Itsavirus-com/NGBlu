@@ -12,6 +12,13 @@ export class UserApi extends ApiCore {
   async blockUser(id: number, payload: Record<string, any>) {
     return await this.patch({ path: `users/${id}/blocked`, payload })
   }
+
+  async resendActivationEmail(email: string) {
+    return await this.post({
+      path: 'users/resend-activation-email',
+      payload: { email },
+    })
+  }
 }
 
 export const userApi = new UserApi()

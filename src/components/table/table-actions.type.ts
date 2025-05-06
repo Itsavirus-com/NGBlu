@@ -4,7 +4,7 @@ export type Action = 'view' | 'edit' | 'delete'
 
 export type TableActionsHeadProps = {
   actions?: Action[]
-  customActions?: ButtonProps[]
+  customActions?: ButtonProps[] | ((rowData?: any) => ButtonProps[])
 }
 
 export type TableActionsProps = TableActionsHeadProps & {
@@ -13,4 +13,5 @@ export type TableActionsProps = TableActionsHeadProps & {
   apiPath?: string
   onDelete?: () => void
   queryParams?: Record<string, string>
+  rowData?: any
 }
