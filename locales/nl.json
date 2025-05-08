@@ -186,7 +186,7 @@
     "google": {
       "title": "Google Address Validation",
       "originalAddress": "Original Address",
-      "proposedAddress": "Proposed Address",
+      "proposedGoogleAddress": "Proposed Google Address",
       "lat": "Latitude",
       "lon": "Longitude"
     },

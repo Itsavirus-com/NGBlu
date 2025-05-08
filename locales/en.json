@@ -198,10 +198,7 @@
       "originalAddress": "Original Address",
       "proposedAddress": "Proposed Google Address",
       "lat": "Latitude",
-      "lon": "Longitude",
-      "confirmed": "Confirmed",
-      "plausible": "Plausible",
-      "unconfirmed": "Unconfirmed"
+      "lon": "Longitude"
     },
     "dataHierarchy": {
       "title": "Data Hierarchy",
