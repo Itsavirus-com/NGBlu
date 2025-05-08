@@ -172,6 +172,7 @@
   "dataValidation": {
     "reject": "Reject",
     "acceptOriginalAddress": "Accept Original Address",
+    "acceptGoogleAddress": "Accept Google Address",
     "acceptKvkAddress": "Accept KVK Address",
     "unconfirmed": "Unconfirmed",
     "counter": "Counter {start} out of {end}",
@@ -195,9 +196,12 @@
     "google": {
       "title": "Google Address Validation",
       "originalAddress": "Original Address",
-      "proposedAddress": "Proposed Address",
+      "proposedAddress": "Proposed Google Address",
       "lat": "Latitude",
-      "lon": "Longitude"
+      "lon": "Longitude",
+      "confirmed": "Confirmed",
+      "plausible": "Plausible",
+      "unconfirmed": "Unconfirmed"
     },
     "dataHierarchy": {
       "title": "Data Hierarchy",

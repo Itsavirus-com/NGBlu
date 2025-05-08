@@ -162,6 +162,7 @@
   "dataValidation": {
     "reject": "Reject",
     "acceptOriginalAddress": "Accept Original Address",
+    "acceptGoogleAddress": "Accept Google Address",
     "acceptKvkAddress": "Accept KVK Address",
     "unconfirmed": "Unconfirmed",
     "counter": "Counter {start} out of {end}",

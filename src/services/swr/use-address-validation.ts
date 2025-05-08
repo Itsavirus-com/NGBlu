@@ -2,15 +2,15 @@ import useSWR, { SWRConfiguration } from 'swr'
 import { derive } from 'valtio/utils'
 
 import { collectionAdaptor } from './middleware/collection-adaptor'
-import { AddressValidationData } from './models/address-validation.type'
+import { AddressValidationData, GoogleData, KvkData } from './models/address-validation.type'
 
-export const useAddressValidation = (
+export const useAddressValidation = <T = KvkData | GoogleData>(
   provider?: string,
   page = 1,
   limit = 1,
   config?: SWRConfiguration
 ) => {
-  const { data, mutate, isLoading } = useSWR<AddressValidationData>(
+  const { data, mutate, isLoading } = useSWR<AddressValidationData<T>>(
     () =>
       provider && {
         path: `addresses/validations`,
