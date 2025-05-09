@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/button/button'
+import { sanitizeFilterValues } from '@/utils/filter-sanitizer'
 
 import { FilterProps } from './filter.type'
 
@@ -11,12 +12,30 @@ export const Filter = ({ children, onFilter }: FilterProps) => {
   const methods = useForm({ defaultValues: {} })
   const [isOpen, setIsOpen] = useState(false)
 
+  // Handler for form submission
+  const handleFilterSubmit = (data: Record<string, any>) => {
+    // Sanitize the values to only allow alphanumeric and spaces
+    const sanitizedData = sanitizeFilterValues(data)
+
+    if (onFilter) {
+      onFilter(sanitizedData)
+    }
+  }
+
+  // Add a reset handler to log reset action
+  const handleReset = () => {
+    console.log('Filter reset - clearing all values')
+    if (onFilter) {
+      onFilter({})
+    }
+  }
+
   return (
     <FormProvider {...methods}>
       <form
         className={!children ? 'd-none' : ''}
-        onSubmit={onFilter && methods.handleSubmit(onFilter)}
-        onReset={() => onFilter && onFilter({})}
+        onSubmit={onFilter && methods.handleSubmit(handleFilterSubmit)}
+        onReset={handleReset}
       >
         <Button
           icon="filter"
