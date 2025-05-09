@@ -54,7 +54,8 @@ export class ApiCore {
     nonFilterKeys.forEach(key => {
       const value = params[key]
       if (value !== undefined && value !== null) {
-        queryParts.push(`${key}=${encodeURIComponent(value)}`)
+        // Use PHP-compatible encoding
+        queryParts.push(`${key}=${this.phpCompatibleEncode(String(value))}`)
       }
     })
 
@@ -63,11 +64,25 @@ export class ApiCore {
       Object.entries(params.filter).forEach(([key, value]) => {
         // Include empty values for filter parameters
         const valueStr = value === null || value === undefined ? '' : String(value)
-        queryParts.push(`filter[${key}]=${encodeURIComponent(valueStr)}`)
+
+        // Use PHP-compatible encoding
+        queryParts.push(`filter[${key}]=${this.phpCompatibleEncode(valueStr)}`)
       })
     }
 
     return queryParts.join('&')
+  }
+
+  /**
+   * Simple encoding function that matches PHP's urlencode behavior for query strings
+   * PHP uses the application/x-www-form-urlencoded format, which encodes spaces as +
+   */
+  private phpCompatibleEncode(str: string): string {
+    // This simulates PHP's urlencode function which is used for query parameters
+    return encodeURIComponent(str)
+      .replace(/%20/g, '+') // Replace space with + (this is the key difference from encodeURIComponent)
+      .replace(/%2C/g, ',') // Keep commas as is (frequently seen in filter values)
+      .replace(/%40/g, '@') // Keep @ as is (frequently seen in emails)
   }
 
   protected getUrl(request: any): string {
