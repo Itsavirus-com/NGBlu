@@ -1,3 +1,72 @@
+export interface AddressComponent {
+  value: string
+  confirmationLevel: 'CONFIRMED' | 'UNCONFIRMED_BUT_PLAUSIBLE' | 'UNCONFIRMED'
+}
+
+export interface GeoLocation {
+  latitude: number
+  longitude: number
+}
+
+export interface GeocodeData {
+  location: GeoLocation
+  plusCode?: {
+    globalCode: string
+  }
+  bounds?: {
+    low: GeoLocation
+    high: GeoLocation
+  }
+  placeId?: string
+  placeTypes?: string[]
+}
+
+export interface GoogleData {
+  id: number
+  provider: string
+  similarityScore: number
+  differences: {
+    streetname?: AddressComponent
+    housenumber?: AddressComponent
+    housenumberSuffix?: AddressComponent
+    postalcode?: AddressComponent
+    city?: AddressComponent
+    country?: AddressComponent
+    geocode?: GeocodeData
+  }
+  address: {
+    id: number
+    addressName: string | null
+    streetname: string
+    housenumber: string
+    housenumberSuffix: string | null
+    appartmentNumber: string | null
+    area: string | null
+    county: string | null
+    city: string
+    postalcode: string
+    countryId: number
+    country: {
+      id: number
+      name: string
+      iso: string
+      locale: string
+      currency: string
+      decimalSymbol: string
+    }
+    lat: string
+    lng: string
+    googleAddressId: string | null
+    createdAt: string
+    updatedAt: string
+  }
+  reference: any | null
+  validatedBy: string
+  validatedAt: string
+  createdAt: string
+  updatedAt: string
+}
+
 export interface KvkData {
   id: number
   provider: string
@@ -81,8 +150,8 @@ export interface KvkData {
   updatedAt: string
 }
 
-export type AddressValidationData = {
-  data: KvkData[]
+export type AddressValidationData<T = KvkData | GoogleData> = {
+  data: T[]
   currentPage: number
   lastPage: number
   totalData: number

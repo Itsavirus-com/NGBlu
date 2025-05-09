@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { addressValidationApi } from '@/services/api/address-validation-api'
+import { KvkData } from '@/services/swr/models/address-validation.type'
 import { useAddressValidation } from '@/services/swr/use-address-validation'
 import { omitNullAndUndefined } from '@/utils/object'
 import { normalizeString } from '@/utils/string'
@@ -41,7 +42,7 @@ export default function useKvkForm() {
     data: kvkAddress,
     mutate: invalidateKvkAddress,
     isLoading: isLoadingData,
-  } = useAddressValidation('kvk', currentPage)
+  } = useAddressValidation<KvkData>('kvk', currentPage)
 
   // Get the array of data items and pagination info from kvkAddress
   const dataItems = kvkAddress?.data || []
@@ -51,11 +52,8 @@ export default function useKvkForm() {
   const perPage = kvkAddress?.perPage || 10
   const lastPage = kvkAddress?.lastPage || 1
 
-  // Use refs to track previous dataItems length and currentIndex
-  const prevDataItemsLength = useRef(0)
   // Create debounce timeout ref outside the debounce function
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const prevCurrentIndex = useRef(currentIndex)
 
   // Initialize form once data is loaded
   useEffect(() => {
@@ -198,27 +196,33 @@ export default function useKvkForm() {
 
   // Get the similarity status based on score
   const getSimilarityStatus = (score: number): SimilarityStatus => {
-    if (score >= 97 && score < 100) {
-      return {
-        status: 'Need to be checked',
-        color: 'light-success',
-      }
-    } else if (score >= 70 && score < 97) {
-      return {
-        status: 'Similar',
-        color: 'warning',
-      }
-    } else {
-      return {
-        status: 'Invalid',
-        color: 'light-danger',
-      }
+    switch (true) {
+      case score === 100:
+        return {
+          status: 'Valid',
+          color: 'success',
+        }
+      case score >= 97 && score < 100:
+        return {
+          status: 'Need to be checked',
+          color: 'light-success',
+        }
+      case score >= 70 && score < 97:
+        return {
+          status: 'Similar',
+          color: 'warning',
+        }
+      default:
+        return {
+          status: 'Invalid',
+          color: 'light-danger',
+        }
     }
   }
 
   // Get the current item's similarity status
   const currentSimilarityStatus = dataItems[currentIndex]
-    ? getSimilarityStatus(dataItems[currentIndex].similarityScore)
+    ? getSimilarityStatus((dataItems[currentIndex] as KvkData).similarityScore)
     : { status: '', color: '' }
 
   const validateKvkData = async (data: InferType<typeof schema>, type: 'original' | 'kvk') => {

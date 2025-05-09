@@ -5,6 +5,7 @@ import { Card, CardBody, Col, Row } from 'react-bootstrap'
 import { Button } from '@/components/button/button'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
+import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 
 import useKvkForm from './_hooks/kvk.hook'
@@ -35,11 +36,7 @@ export default function Kvk() {
       <PageTitle title={t('kvk.title')} />
 
       {isLoading ? (
-        <div className="d-flex justify-content-center align-items-center">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
+        <Loading />
       ) : totalItems <= 0 ? (
         <div className="app-container container-fluid">
           <Card>
