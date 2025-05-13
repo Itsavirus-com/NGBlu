@@ -255,7 +255,7 @@ export const GoogleAddressAutocomplete = ({
 
         {isLoading && (
           <div className="position-absolute end-0 top-50 translate-middle-y me-3">
-            <div className="spinner-border spinner-border-sm text-secondary" role="status">
+            <div className="spinner-border spinner-border-sm text-primary" role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
           </div>
