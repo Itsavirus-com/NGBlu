@@ -5,7 +5,9 @@ import { Card, CardBody, Col, Row } from 'react-bootstrap'
 import { Button } from '@/components/button/button'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
+import { GoogleAddressAutocomplete } from '@/components/google-map/GoogleAddressAutocomplete'
 import { GoogleMap } from '@/components/google-map/GoogleMap'
+import { GoogleMapsProvider } from '@/components/google-map/GoogleMapsProvider'
 import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 
@@ -20,10 +22,11 @@ export default function Google() {
     handlePrevious,
     handleNext,
     handleAccept,
+    handleAddressSelect,
     methods,
     currentValidation,
     paginationInfo,
-    mapCoordinates,
+    displayMapCoordinates,
     currentSimilarityStatus,
     differences,
     isSubmitting,
@@ -31,13 +34,15 @@ export default function Google() {
     isLoading,
   } = useGoogleForm()
 
+  if (isLoading) {
+    return <Loading />
+  }
+
   return (
     <>
       <PageTitle title={t('google.title')} />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <FormProvider methods={methods} onSubmit={onSubmit}>
+      <FormProvider methods={methods} onSubmit={onSubmit}>
+        <GoogleMapsProvider>
           <div className="app-container container-fluid">
             <Card>
               <CardBody>
@@ -122,15 +127,13 @@ export default function Google() {
                   <Col lg={4}>
                     <h4 className="mb-5">{t('google.proposedAddress')}</h4>
 
-                    <ControlledInput
+                    <GoogleAddressAutocomplete
+                      key={`address-autocomplete-${currentValidation?.id}`}
                       label={t('streetAddress')}
                       name="streetAddress"
-                      containerClass="mb-3"
-                      className="form-control-solid"
-                      isInvalid={
-                        differences.streetname &&
-                        differences.streetname.confirmationLevel !== 'CONFIRMED'
-                      }
+                      placeholder={t('streetAddress')}
+                      disabled={isSubmitting}
+                      onAddressSelect={handleAddressSelect}
                     />
 
                     <Row>
@@ -207,10 +210,7 @@ export default function Google() {
                   </Col>
 
                   <Col lg={4}>
-                    <GoogleMap
-                      lat={mapCoordinates?.latitude || 0}
-                      lng={mapCoordinates?.longitude || 0}
-                    />
+                    <GoogleMap lat={displayMapCoordinates.lat} lng={displayMapCoordinates.lng} />
                   </Col>
                 </Row>
 
@@ -274,8 +274,8 @@ export default function Google() {
               </CardBody>
             </Card>
           </div>
-        </FormProvider>
-      )}
+        </GoogleMapsProvider>
+      </FormProvider>
     </>
   )
 }

@@ -1,9 +1,8 @@
-import { Status, Wrapper } from '@googlemaps/react-wrapper'
-import { ReactElement, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 type MapProps = {
-  center: google.maps.LatLngLiteral
-  zoom: number
+  lat: number
+  lng: number
   address?: string
   onLocationSelect?: (location: {
     address: string
@@ -13,44 +12,61 @@ type MapProps = {
   }) => void
 }
 
-function Map({ center, zoom, address, onLocationSelect }: MapProps) {
+export const GoogleMap = ({ lat, lng, address, onLocationSelect }: MapProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const mapRef = useRef<google.maps.Map>()
   const markerRef = useRef<google.maps.marker.AdvancedMarkerElement>()
   const geocoderRef = useRef<google.maps.Geocoder>()
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    if (!ref.current) return
-
-    geocoderRef.current = new window.google.maps.Geocoder()
-
-    mapRef.current = new window.google.maps.Map(ref.current, {
-      center,
-      zoom,
-      mapTypeControl: false,
-      streetViewControl: false,
-      mapId: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
-    })
-
-    markerRef.current = new window.google.maps.marker.AdvancedMarkerElement({
-      map: mapRef.current,
-      position: center,
-    })
+    const checkGoogleMapsLoaded = () => {
+      if (window.google?.maps?.Geocoder && window.google?.maps?.Map) {
+        setIsLoaded(true)
+      } else {
+        setTimeout(checkGoogleMapsLoaded, 100)
+      }
+    }
+    checkGoogleMapsLoaded()
   }, [])
+
+  useEffect(() => {
+    if (!ref.current || !isLoaded) return
+
+    try {
+      geocoderRef.current = new window.google.maps.Geocoder()
+
+      mapRef.current = new window.google.maps.Map(ref.current, {
+        center: { lat, lng },
+        zoom: 12,
+        mapTypeControl: false,
+        streetViewControl: false,
+        mapId: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+      })
+
+      markerRef.current = new window.google.maps.marker.AdvancedMarkerElement({
+        map: mapRef.current,
+        position: { lat, lng },
+      })
+    } catch (error) {
+      console.error('Error initializing Google Maps:', error)
+    }
+  }, [isLoaded, lat, lng])
 
   // Update marker position when center changes
   useEffect(() => {
+    if (!isLoaded) return
     if (markerRef.current) {
-      markerRef.current.position = center
+      markerRef.current.position = { lat, lng }
     }
     if (mapRef.current) {
-      mapRef.current.panTo(center)
+      mapRef.current.panTo({ lat, lng })
     }
-  }, [center])
+  }, [lat, lng, isLoaded])
 
   // Handle address changes
   useEffect(() => {
-    if (!address || !geocoderRef.current) return
+    if (!address || !geocoderRef.current || !isLoaded) return
 
     geocoderRef.current
       .geocode({ address })
@@ -79,31 +95,11 @@ function Map({ center, zoom, address, onLocationSelect }: MapProps) {
         }
       })
       .catch(error => console.error('Geocoding error:', error))
-  }, [address])
+  }, [address, onLocationSelect, isLoaded])
+
+  if (!isLoaded) {
+    return <div>Loading map...</div>
+  }
 
   return <div ref={ref} id="map" style={{ width: '100%', height: '400px' }} />
-}
-
-const render = (status: Status): ReactElement => {
-  if (status === Status.FAILURE) return <div>Error loading map</div>
-  return <div>Loading map...</div>
-}
-
-type GoogleMapProps = {
-  lat: number
-  lng: number
-  address?: string
-  onLocationSelect?: MapProps['onLocationSelect']
-}
-
-export const GoogleMap = ({ lat, lng, address, onLocationSelect }: GoogleMapProps) => {
-  return (
-    <Wrapper
-      apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string}
-      render={render}
-      libraries={['maps', 'places', 'geocoding', 'marker']}
-    >
-      <Map center={{ lat, lng }} zoom={12} address={address} onLocationSelect={onLocationSelect} />
-    </Wrapper>
-  )
 }
