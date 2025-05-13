@@ -81,15 +81,24 @@ export default function useAddressForm(addressId?: number) {
     lat,
     lng,
     placeId,
+    fieldName,
+    street,
   }: {
     address: string
     lat: number
     lng: number
     placeId: string
+    fieldName?: string
+    street?: string
   }) => {
     methods.setValue('lat', lat.toFixed(9))
     methods.setValue('lng', lng.toFixed(9))
     methods.setValue('googleAddressId', placeId)
+
+    // If fieldName is provided and this is from an autocomplete component, use it
+    if (fieldName && street) {
+      methods.setValue(fieldName as keyof InferType<typeof schema>, street)
+    }
   }
 
   const addNewAddress = async (data: InferType<typeof schema>) => {

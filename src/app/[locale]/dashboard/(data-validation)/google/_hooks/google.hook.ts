@@ -25,6 +25,7 @@ interface AddressSuggestion {
   postalCode?: string
   city?: string
   country?: string
+  fieldName?: string
 }
 
 interface FormValues {
@@ -316,8 +317,13 @@ export default function useGoogleForm() {
       setSelectedMapCoords({ lat, lng })
     }
 
-    // Update address fields - use only street name for street address
-    methods.setValue('streetAddress', place.street || '')
+    // If we're handling a specific field and fieldName is provided, update that field directly
+    if (place.fieldName) {
+      methods.setValue(place.fieldName as keyof FormValues, place.street || '')
+    } else {
+      // Update address fields - use only street name for street address
+      methods.setValue('streetAddress', place.street || '')
+    }
 
     if (place.streetNumber) {
       methods.setValue('houseNumber', place.streetNumber)

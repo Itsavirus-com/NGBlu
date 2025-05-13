@@ -25,6 +25,7 @@ interface AddressSuggestion {
   city?: string
   country?: string
   addressComponents?: AddressComponent[]
+  fieldName?: string
 }
 
 type GoogleAddressAutocompleteProps = {
@@ -146,8 +147,6 @@ export const GoogleAddressAutocomplete = ({
   const handleSelectSuggestion = async (suggestion: AddressSuggestion) => {
     // Show loading state while fetching details
     setIsLoading(true)
-    // Don't update input value yet to avoid the glitch
-
     // Hide suggestions immediately
     setShowSuggestions(false)
 
@@ -197,7 +196,7 @@ export const GoogleAddressAutocomplete = ({
           }
         })
 
-        // Update the input field to show only the street
+        // Update the input field with the value appropriate for this field
         const displayValue = street || data.result.formatted_address || data.result.name || ''
         setInputValue(displayValue)
         setValue(name, displayValue)
@@ -218,6 +217,7 @@ export const GoogleAddressAutocomplete = ({
           city,
           country,
           addressComponents: addressComponents,
+          fieldName: name,
         }
 
         // Call the callback with updated location data

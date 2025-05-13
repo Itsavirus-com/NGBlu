@@ -8,9 +8,26 @@ import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
 import { ControlledSelect } from '@/components/forms/select'
+import { GoogleAddressAutocomplete } from '@/components/google-map/GoogleAddressAutocomplete'
 import { GoogleMap } from '@/components/google-map/GoogleMap'
 import { GoogleMapsProvider } from '@/components/google-map/GoogleMapsProvider'
 import { Country } from '@/services/swr/models/country.type'
+
+interface AddressSuggestion {
+  placeId: string
+  description?: string
+  mainText?: string
+  secondaryText?: string
+  latitude?: number | null
+  longitude?: number | null
+  street?: string
+  streetNumber?: string
+  subpremise?: string
+  postalCode?: string
+  city?: string
+  country?: string
+  fieldName?: string
+}
 
 interface AddressFormProps {
   methods: UseFormReturn<any>
@@ -21,6 +38,8 @@ interface AddressFormProps {
     lat: number
     lng: number
     placeId: string
+    fieldName?: string
+    street?: string
   }) => void
   isSubmitting: boolean
 }
@@ -49,12 +68,22 @@ export default function AddressForm({
                     className="form-control-solid"
                   />
                   <Col>
-                    <ControlledInput
+                    <GoogleAddressAutocomplete
                       label={t('streetName')}
                       name="streetname"
                       containerClass="mb-3"
-                      className="form-control-solid"
                       isRequired
+                      placeholder={t('streetName')}
+                      onAddressSelect={(suggestion: AddressSuggestion) =>
+                        handleLocationSelect({
+                          address: suggestion.description || '',
+                          lat: suggestion.latitude || 0,
+                          lng: suggestion.longitude || 0,
+                          placeId: suggestion.placeId,
+                          fieldName: suggestion.fieldName,
+                          street: suggestion.street,
+                        })
+                      }
                     />
                   </Col>
                   <Row>
