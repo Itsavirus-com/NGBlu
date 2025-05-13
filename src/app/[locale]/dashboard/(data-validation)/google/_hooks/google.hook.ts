@@ -12,6 +12,21 @@ import { omitNullAndUndefined } from '@/utils/object'
 
 import { schema } from '../_schemas/google.schema'
 
+interface AddressSuggestion {
+  placeId: string
+  description: string
+  mainText: string
+  secondaryText: string
+  latitude: number | null
+  longitude: number | null
+  street?: string
+  streetNumber?: string
+  subpremise?: string
+  postalCode?: string
+  city?: string
+  country?: string
+}
+
 interface FormValues {
   // Original address fields (read-only)
   streetAddressOriginal: string
@@ -280,11 +295,74 @@ export default function useGoogleForm() {
   // Get validation details for UI display
   const differences = (currentValidation?.differences || {}) as GoogleData['differences']
 
+  // Add state to track map coordinates from address selection
+  const [selectedMapCoords, setSelectedMapCoords] = useState<{ lat: number; lng: number } | null>(
+    null
+  )
+
+  // New function to handle address selection
+  const handleAddressSelect = (place: AddressSuggestion) => {
+    if (!place) return
+
+    const lat = place.latitude || 0
+    const lng = place.longitude || 0
+
+    // Always use 6 decimal places which is within the required 2-9 range
+    methods.setValue('lat', lat.toFixed(6))
+    methods.setValue('lon', lng.toFixed(6))
+
+    // Update map coordinates state
+    if (lat && lng) {
+      setSelectedMapCoords({ lat, lng })
+    }
+
+    // Update address fields - use only street name for street address
+    methods.setValue('streetAddress', place.street || '')
+
+    if (place.streetNumber) {
+      methods.setValue('houseNumber', place.streetNumber)
+    }
+
+    if (place.subpremise) {
+      methods.setValue('houseNumberExtension', place.subpremise)
+    }
+
+    if (place.postalCode) {
+      methods.setValue('postcode', place.postalCode)
+    }
+
+    if (place.city) {
+      methods.setValue('city', place.city)
+    }
+
+    if (place.country) {
+      methods.setValue('country', place.country)
+    }
+  }
+
+  // Combine the original map coordinates with any selected coordinates
+  const displayMapCoordinates = useMemo(() => {
+    if (selectedMapCoords) {
+      return selectedMapCoords
+    }
+
+    return {
+      lat: mapCoordinates?.latitude || 0,
+      lng: mapCoordinates?.longitude || 0,
+    }
+  }, [selectedMapCoords, mapCoordinates])
+
+  // Reset selected coordinates when currentValidation changes
+  useEffect(() => {
+    setSelectedMapCoords(null)
+  }, [currentValidation?.id])
+
   return {
     onSubmit,
     handlePrevious,
     handleNext,
     handleAccept,
+    handleAddressSelect,
     methods,
     isSubmitting,
     loadingType,
@@ -299,6 +377,7 @@ export default function useGoogleForm() {
         }
       : null,
     mapCoordinates,
+    displayMapCoordinates,
     isLoading,
   }
 }

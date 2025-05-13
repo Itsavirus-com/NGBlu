@@ -1,0 +1,30 @@
+// Google Address Autocomplete Styles
+.address-suggestions-dropdown {
+  position: absolute;
+  width: 100%;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.25rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  background-color: var(--bs-white, white);
+  z-index: 1000;
+  margin-top: 0.25rem;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.address-suggestion-item {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--bs-border-color);
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+
+  &:hover,
+  &:focus {
+    background-color: var(--bs-light, #d1e1f0);
+    outline: none;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
