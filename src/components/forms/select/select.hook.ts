@@ -66,7 +66,7 @@ export const useSelect = <OptionValue extends Record<string, any>>({
 
   const options = useMemo(
     () => [
-      { value: '0', label: 'Select one', data: null },
+      ...(isMulti ? [] : [{ value: '0', label: 'Select one', data: null }]),
       ...(allData?.length
         ? allData.map((item, index) => ({
             value: String(option.value(item)),
@@ -75,7 +75,7 @@ export const useSelect = <OptionValue extends Record<string, any>>({
           }))
         : []),
     ],
-    [allData, option]
+    [allData, option, isMulti]
   )
 
   const selectedOption = useMemo(
