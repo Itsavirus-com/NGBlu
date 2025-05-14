@@ -106,8 +106,6 @@ export default function useAddressForm(addressId?: number) {
       methods.setValue('city', place.city)
     }
 
-    // Area is not in the imported type, so we can't set it
-    // Set county from available data if needed
     if (place.country && countryList) {
       // Find country ID by name
       const country = countryList.find(c => c.name.toLowerCase() === place.country?.toLowerCase())
