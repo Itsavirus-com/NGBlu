@@ -77,14 +77,19 @@ export default function useAddressForm(addressId?: number) {
     methods.setValue('lng', lng.toFixed(9))
     methods.setValue('googleAddressId', place.placeId)
 
+    // Update the map coordinates when an address is selected
+    setSelectedMapCoords({ lat, lng })
+
     // If we're handling a specific field and fieldName is provided, update that field directly
     if (place.fieldName) {
-      methods.setValue(place.fieldName as keyof InferType<typeof schema>, place.street || '')
+      // When fieldName is provided but street is null, use the mainText or description
+      const streetValue = place.street || place.mainText || place.description || ''
+      methods.setValue(place.fieldName as keyof InferType<typeof schema>, streetValue)
     } else {
       // Update all address fields with data from the suggestion
-      if (place.street) {
-        methods.setValue('streetname', place.street)
-      }
+      // When street is null, use mainText as a fallback for street name
+      const streetValue = place.street || place.mainText || place.description || ''
+      methods.setValue('streetname', streetValue)
     }
 
     // Set other address components based on schema field names
