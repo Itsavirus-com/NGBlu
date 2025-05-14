@@ -1,11 +1,11 @@
-// Google Address Autocomplete Styles
 .address-suggestions-dropdown {
   position: absolute;
   width: 100%;
   border: 1px solid var(--bs-border-color);
   border-radius: 0.25rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  background-color: var(--bs-white, white);
+  background-color: var(--bs-body-bg, white);
+  color: var(--bs-body-color);
   z-index: 1000;
   margin-top: 0.25rem;
   max-height: 250px;
@@ -20,7 +20,8 @@
 
   &:hover,
   &:focus {
-    background-color: var(--bs-light, #d1e1f0);
+    background-color: var(--bs-tertiary-bg, #d1e1f0);
+    color: var(--bs-body-color);
     outline: none;
   }
 
