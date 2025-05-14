@@ -60,8 +60,8 @@ export default function useEndClientPaymentDetailForm(
         back()
       }
     } catch (error: any) {
-      if ('paymentInfoId' in error?.errors?.detail) {
-        showToast({ variant: 'danger', body: error?.errors?.detail?.paymentInfoId })
+      if (error?.errors?.detail && 'paymentInfoId' in error.errors.detail) {
+        showToast({ variant: 'danger', body: error.errors.detail.paymentInfoId })
       } else {
         showUnexpectedToast()
       }

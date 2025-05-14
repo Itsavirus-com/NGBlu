@@ -35,7 +35,7 @@ export default function usePackageTypeForm(typeId?: number) {
         back()
       }
     } catch (error: any) {
-      if ('name' in error.errors.detail) {
+      if (error?.errors?.detail && 'name' in error.errors.detail) {
         showToast({ variant: 'danger', body: 'Package type already exists' })
         return
       }
@@ -56,7 +56,7 @@ export default function usePackageTypeForm(typeId?: number) {
         back()
       }
     } catch (error: any) {
-      if ('name' in error.errors.detail) {
+      if (error?.errors?.detail && 'name' in error.errors.detail) {
         showToast({ variant: 'danger', body: 'Package type already exists' })
         return
       }

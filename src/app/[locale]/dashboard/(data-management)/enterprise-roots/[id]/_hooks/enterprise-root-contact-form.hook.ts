@@ -47,8 +47,8 @@ export default function useEnterpriseRootContactForm(contactId?: number) {
         back()
       }
     } catch (error: any) {
-      if ('contactInfoId' in error?.errors?.detail) {
-        showToast({ variant: 'danger', body: error?.errors?.detail?.contactInfoId })
+      if (error?.errors?.detail && 'contactInfoId' in error.errors.detail) {
+        showToast({ variant: 'danger', body: error.errors.detail.contactInfoId })
       } else {
         showUnexpectedToast()
       }
@@ -70,8 +70,8 @@ export default function useEnterpriseRootContactForm(contactId?: number) {
         back()
       }
     } catch (error: any) {
-      if ('contactInfoId' in error?.errors?.detail) {
-        showToast({ variant: 'danger', body: error?.errors?.detail?.contactInfoId })
+      if (error?.errors?.detail && 'contactInfoId' in error.errors.detail) {
+        showToast({ variant: 'danger', body: error.errors.detail.contactInfoId })
       } else {
         showUnexpectedToast()
       }
