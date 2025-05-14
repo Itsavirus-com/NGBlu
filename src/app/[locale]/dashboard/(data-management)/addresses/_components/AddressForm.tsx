@@ -8,48 +8,26 @@ import { FormButtons } from '@/components/forms/form-buttons'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
 import { ControlledSelect } from '@/components/forms/select'
+import { AddressSuggestion } from '@/components/google-map/google-map.type'
 import { GoogleAddressAutocomplete } from '@/components/google-map/GoogleAddressAutocomplete'
 import { GoogleMap } from '@/components/google-map/GoogleMap'
 import { GoogleMapsProvider } from '@/components/google-map/GoogleMapsProvider'
 import { Country } from '@/services/swr/models/country.type'
 
-interface AddressSuggestion {
-  placeId: string
-  description?: string
-  mainText?: string
-  secondaryText?: string
-  latitude?: number | null
-  longitude?: number | null
-  street?: string
-  streetNumber?: string
-  subpremise?: string
-  postalCode?: string
-  city?: string
-  country?: string
-  fieldName?: string
-}
-
 interface AddressFormProps {
   methods: UseFormReturn<any>
   onSubmit: (data: any) => void
-  getFormattedAddress: () => string
-  handleLocationSelect: (location: {
-    address: string
-    lat: number
-    lng: number
-    placeId: string
-    fieldName?: string
-    street?: string
-  }) => void
   isSubmitting: boolean
+  displayMapCoordinates: { lat: number; lng: number }
+  handleAddressSelect: (suggestion: AddressSuggestion) => void
 }
 
 export default function AddressForm({
   methods,
   onSubmit,
-  getFormattedAddress,
-  handleLocationSelect,
   isSubmitting,
+  displayMapCoordinates,
+  handleAddressSelect,
 }: AddressFormProps) {
   const t = useTranslations('dataManagement.addresses')
 
@@ -71,19 +49,8 @@ export default function AddressForm({
                     <GoogleAddressAutocomplete
                       label={t('streetName')}
                       name="streetname"
-                      containerClass="mb-3"
-                      isRequired
-                      placeholder={t('streetName')}
-                      onAddressSelect={(suggestion: AddressSuggestion) =>
-                        handleLocationSelect({
-                          address: suggestion.description || '',
-                          lat: suggestion.latitude || 0,
-                          lng: suggestion.longitude || 0,
-                          placeId: suggestion.placeId,
-                          fieldName: suggestion.fieldName,
-                          street: suggestion.street,
-                        })
-                      }
+                      disabled={isSubmitting}
+                      onAddressSelect={handleAddressSelect}
                     />
                   </Col>
                   <Row>
@@ -149,12 +116,8 @@ export default function AddressForm({
                 </Col>
 
                 <Col md={4}>
-                  <GoogleMap
-                    lat={52.3676}
-                    lng={4.9041}
-                    address={getFormattedAddress()}
-                    onLocationSelect={handleLocationSelect}
-                  />
+                  <GoogleMap lat={displayMapCoordinates.lat} lng={displayMapCoordinates.lng} />
+
                   <Row className="mt-3">
                     <Col>
                       <ControlledInput

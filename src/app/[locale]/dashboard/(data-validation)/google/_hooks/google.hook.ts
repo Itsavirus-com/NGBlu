@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { AddressSuggestion } from '@/components/google-map/google-map.type'
 import { useToast } from '@/hooks/use-toast.hook'
 import { addressValidationApi } from '@/services/api/address-validation-api'
 import { GoogleData } from '@/services/swr/models/address-validation.type'
@@ -11,22 +12,6 @@ import { useAddressValidation } from '@/services/swr/use-address-validation'
 import { omitNullAndUndefined } from '@/utils/object'
 
 import { schema } from '../_schemas/google.schema'
-
-interface AddressSuggestion {
-  placeId: string
-  description: string
-  mainText: string
-  secondaryText: string
-  latitude: number | null
-  longitude: number | null
-  street?: string
-  streetNumber?: string
-  subpremise?: string
-  postalCode?: string
-  city?: string
-  country?: string
-  fieldName?: string
-}
 
 interface FormValues {
   // Original address fields (read-only)

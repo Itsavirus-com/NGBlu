@@ -11,7 +11,7 @@ import useAddressForm from '../../_hooks/address-form.hook'
 export default function UpdateAddress({ params }: { params: { id: number } }) {
   const t = useTranslations('dataManagement.addresses')
 
-  const { methods, onSubmit, isLoading, getFormattedAddress, handleLocationSelect, isSubmitting } =
+  const { methods, onSubmit, isLoading, isSubmitting, displayMapCoordinates, handleAddressSelect } =
     useAddressForm(Number(params.id))
 
   return (
@@ -21,10 +21,10 @@ export default function UpdateAddress({ params }: { params: { id: number } }) {
         <Loading />
       ) : (
         <AddressForm
+          displayMapCoordinates={displayMapCoordinates}
+          handleAddressSelect={handleAddressSelect}
           methods={methods}
           onSubmit={onSubmit}
-          getFormattedAddress={getFormattedAddress}
-          handleLocationSelect={handleLocationSelect}
           isSubmitting={isSubmitting}
         />
       )}

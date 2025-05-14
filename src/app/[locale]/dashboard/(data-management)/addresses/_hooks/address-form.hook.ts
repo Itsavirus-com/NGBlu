@@ -1,7 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useTranslations } from 'next-intl'
+import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { AddressSuggestion } from '@/components/google-map/google-map.type'
 import { useLoading } from '@/hooks/use-loading.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'
@@ -58,48 +60,74 @@ export default function useAddressForm(addressId?: number) {
   const countryId = methods.watch('countryId')
   const selectedCountry = countryList?.find(country => country.id === countryId)
 
-  // Combine address fields into a single string
-  const getFormattedAddress = () => {
-    const houseNumberPart =
-      houseNumber && houseNumberSuffix ? `${houseNumber}${houseNumberSuffix}` : houseNumber
+  // Add state to track map coordinates from address selection
+  const [selectedMapCoords, setSelectedMapCoords] = useState<{ lat: number; lng: number } | null>(
+    null
+  )
 
-    const addressParts = [
-      streetName,
-      houseNumberPart,
-      apartmentNumber ? `Apt ${apartmentNumber}` : null,
-      area,
-      city,
-      selectedCountry?.name,
-      postalCode,
-    ].filter(Boolean) // Remove empty values
+  // Enhanced function to handle address selection from Google Autocomplete
+  const handleAddressSelect = (place: AddressSuggestion) => {
+    if (!place) return
 
-    return addressParts.join(', ')
-  }
+    const lat = place.latitude || 0
+    const lng = place.longitude || 0
 
-  // Handle location selection from map
-  const handleLocationSelect = ({
-    lat,
-    lng,
-    placeId,
-    fieldName,
-    street,
-  }: {
-    address: string
-    lat: number
-    lng: number
-    placeId: string
-    fieldName?: string
-    street?: string
-  }) => {
+    // Set coordinates with proper decimal places (based on schema field names)
     methods.setValue('lat', lat.toFixed(9))
     methods.setValue('lng', lng.toFixed(9))
-    methods.setValue('googleAddressId', placeId)
+    methods.setValue('googleAddressId', place.placeId)
 
-    // If fieldName is provided and this is from an autocomplete component, use it
-    if (fieldName && street) {
-      methods.setValue(fieldName as keyof InferType<typeof schema>, street)
+    // If we're handling a specific field and fieldName is provided, update that field directly
+    if (place.fieldName) {
+      methods.setValue(place.fieldName as keyof InferType<typeof schema>, place.street || '')
+    } else {
+      // Update all address fields with data from the suggestion
+      if (place.street) {
+        methods.setValue('streetname', place.street)
+      }
+    }
+
+    // Set other address components based on schema field names
+    if (place.streetNumber) {
+      methods.setValue('housenumber', place.streetNumber)
+    }
+
+    if (place.subpremise) {
+      methods.setValue('housenumberSuffix', place.subpremise)
+      // If subpremise exists, it could also be an apartment number
+      methods.setValue('appartmentNumber', place.subpremise)
+    }
+
+    if (place.postalCode) {
+      methods.setValue('postalcode', place.postalCode)
+    }
+
+    if (place.city) {
+      methods.setValue('city', place.city)
+    }
+
+    // Area is not in the imported type, so we can't set it
+    // Set county from available data if needed
+    if (place.country && countryList) {
+      // Find country ID by name
+      const country = countryList.find(c => c.name.toLowerCase() === place.country?.toLowerCase())
+      if (country) {
+        methods.setValue('countryId', country.id)
+      }
     }
   }
+
+  // Combine the original map coordinates with any selected coordinates
+  const displayMapCoordinates = useMemo(() => {
+    if (selectedMapCoords) {
+      return selectedMapCoords
+    }
+
+    return {
+      lat: parseFloat(address?.lat || '0'),
+      lng: parseFloat(address?.lng || '0'),
+    }
+  }, [selectedMapCoords, address])
 
   const addNewAddress = async (data: InferType<typeof schema>) => {
     try {
@@ -158,7 +186,9 @@ export default function useAddressForm(addressId?: number) {
     onSubmit,
     isLoading,
     isSubmitting,
-    getFormattedAddress,
-    handleLocationSelect,
+    displayMapCoordinates,
+    handleAddressSelect,
+    selectedMapCoords,
+    setSelectedMapCoords,
   }
 }
