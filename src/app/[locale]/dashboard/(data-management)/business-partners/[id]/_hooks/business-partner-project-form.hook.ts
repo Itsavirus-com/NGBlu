@@ -48,8 +48,8 @@ export default function useBusinessPartnerProjectForm(
         back()
       }
     } catch (error: any) {
-      if ('projectId' in error?.errors?.detail) {
-        showToast({ variant: 'danger', body: error?.errors?.detail?.projectId })
+      if (error?.errors?.detail && 'projectId' in error.errors.detail) {
+        showToast({ variant: 'danger', body: error.errors.detail.projectId })
       } else {
         showUnexpectedToast()
       }

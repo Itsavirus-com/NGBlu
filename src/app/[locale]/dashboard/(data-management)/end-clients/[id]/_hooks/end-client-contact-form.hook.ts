@@ -46,8 +46,8 @@ export default function useEndClientContactForm(endClientId: number, contactId?:
         back()
       }
     } catch (error: any) {
-      if ('contactInfoId' in error?.errors?.detail) {
-        showToast({ variant: 'danger', body: error?.errors?.detail?.contactInfoId })
+      if (error?.errors?.detail && 'contactInfoId' in error.errors.detail) {
+        showToast({ variant: 'danger', body: error.errors.detail.contactInfoId })
       } else {
         showUnexpectedToast()
       }
@@ -71,8 +71,8 @@ export default function useEndClientContactForm(endClientId: number, contactId?:
         back()
       }
     } catch (error: any) {
-      if ('contactInfoId' in error?.errors?.detail) {
-        showToast({ variant: 'danger', body: error?.errors?.detail?.contactInfoId })
+      if (error?.errors?.detail && 'contactInfoId' in error.errors.detail) {
+        showToast({ variant: 'danger', body: error.errors.detail.contactInfoId })
       } else {
         showUnexpectedToast()
       }

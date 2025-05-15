@@ -38,7 +38,7 @@ export const GoogleMap = ({ lat, lng, address, onLocationSelect }: MapProps) => 
 
       mapRef.current = new window.google.maps.Map(ref.current, {
         center: { lat, lng },
-        zoom: 12,
+        zoom: 20,
         mapTypeControl: false,
         streetViewControl: false,
         mapId: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,

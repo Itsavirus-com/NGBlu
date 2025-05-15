@@ -44,8 +44,8 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
         back()
       }
     } catch (error: any) {
-      if ('userId' in error?.errors?.detail) {
-        showToast({ variant: 'danger', body: error?.errors?.detail?.userId })
+      if (error?.errors?.detail && 'userId' in error.errors.detail) {
+        showToast({ variant: 'danger', body: error.errors.detail.userId })
       } else {
         showUnexpectedToast()
       }

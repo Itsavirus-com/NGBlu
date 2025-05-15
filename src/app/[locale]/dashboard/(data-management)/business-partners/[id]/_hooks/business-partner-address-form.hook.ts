@@ -47,8 +47,8 @@ export default function useBusinessPartnerAddressForm(
         back()
       }
     } catch (error: any) {
-      if ('addressId' in error?.errors?.detail) {
-        showToast({ variant: 'danger', body: error?.errors?.detail?.addressId })
+      if (error?.errors?.detail && 'addressId' in error.errors.detail) {
+        showToast({ variant: 'danger', body: error.errors.detail.addressId })
       } else {
         showUnexpectedToast()
       }
