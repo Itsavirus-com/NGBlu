@@ -338,7 +338,8 @@ export default function Kvk() {
                   <Col lg={6} className="d-flex justify-content-end">
                     <Button
                       type="button"
-                      colorClass="primary"
+                      colorClass="success"
+                      activeColorClass="light-success"
                       onClick={() => handleAccept('kvk')}
                       disabled={isLoading || isSubmitting || totalItems === 0}
                       loading={isSubmitting && loadingType === 'kvk'}
