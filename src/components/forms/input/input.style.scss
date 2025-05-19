@@ -1,0 +1,20 @@
+.form-control-solid.border-success {
+  border-color: var(--bs-success) !important;
+  border-width: 1px;
+}
+
+.form-control-solid.border-warning {
+  border-color: var(--bs-warning) !important;
+  border-width: 1px;
+}
+
+.form-control-solid.border-danger {
+  border-color: var(--bs-danger) !important;
+  border-width: 1px;
+}
+
+.form-control:disabled {
+  background-color: var(--bs-gray-300) !important;
+  color: var(--bs-gray-600) !important;
+  cursor: not-allowed;
+}
