@@ -191,14 +191,18 @@
     "kvk": {
       "title": "KVK Data Validation",
       "registeredAddress": "Registered Address in Chambers of Commerce",
-      "originalAddress": "Original Address"
+      "originalAddress": "Original Address",
+      "needsToBeChecked": "Field needs to be checked with KVK",
+      "similarAddress": "Field is similar but not exact with KVK",
+      "invalidAddress": "Field is different from KVK"
     },
     "google": {
       "title": "Google Address Validation",
       "originalAddress": "Original Address",
       "proposedAddress": "Proposed Google Address",
       "lat": "Latitude",
-      "lon": "Longitude"
+      "lon": "Longitude",
+      "googleCannotVerifyAddress": "Google cannot verify this address"
     },
     "dataHierarchy": {
       "title": "Data Hierarchy",

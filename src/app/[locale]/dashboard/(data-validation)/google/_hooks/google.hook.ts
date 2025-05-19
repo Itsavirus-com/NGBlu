@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { InferType } from 'yup'
 
 import { AddressSuggestion } from '@/components/google-map/google-map.type'
 import { useToast } from '@/hooks/use-toast.hook'
@@ -13,32 +14,12 @@ import { omitNullAndUndefined } from '@/utils/object'
 
 import { schema } from '../_schemas/google.schema'
 
-interface FormValues {
-  // Original address fields (read-only)
-  streetAddressOriginal: string
-  houseNumberOriginal: string
-  houseNumberExtensionOriginal: string
-  postcodeOriginal: string
-  cityOriginal: string
-  countryOriginal: string
-  latOriginal: string
-  lonOriginal: string
-
-  // Proposed address fields (editable)
-  streetAddress: string
-  houseNumber: string
-  houseNumberExtension: string
-  postcode: string
-  city: string
-  country: string
-  lat: string
-  lon: string
-}
-
 interface SimilarityStatus {
   status: string
   color: string
 }
+// Define form values type
+export type FormValuesGoogle = InferType<typeof schema>
 
 export default function useGoogleForm() {
   const t = useTranslations('dataValidation')
@@ -85,7 +66,7 @@ export default function useGoogleForm() {
   }
 
   // Initialize form with empty values first
-  const methods = useForm<FormValues>({
+  const methods = useForm<FormValuesGoogle>({
     resolver: yupResolver(schema),
     defaultValues: {
       // Original address fields
@@ -161,7 +142,7 @@ export default function useGoogleForm() {
     methods.reset(formValues)
   }, [validationData]) // Only depend on validationData to avoid loops
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormValuesGoogle) => {
     if (!currentValidation) return
 
     try {
@@ -217,7 +198,7 @@ export default function useGoogleForm() {
     )
   }, [currentValidation])
 
-  const validateGoogleData = async (data: FormValues, type: 'original' | 'google') => {
+  const validateGoogleData = async (data: FormValuesGoogle, type: 'original' | 'google') => {
     if (!currentValidation) {
       return
     }
@@ -304,7 +285,7 @@ export default function useGoogleForm() {
 
     // If we're handling a specific field and fieldName is provided, update that field directly
     if (place.fieldName) {
-      methods.setValue(place.fieldName as keyof FormValues, place.street || '')
+      methods.setValue(place.fieldName as keyof FormValuesGoogle, place.street || '')
     } else {
       // Update address fields - use only street name for street address
       methods.setValue('streetAddress', place.street || '')

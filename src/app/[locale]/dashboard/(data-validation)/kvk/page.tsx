@@ -1,6 +1,6 @@
 'use client'
 import { useTranslations } from 'next-intl'
-import { Card, CardBody, Col, Row } from 'react-bootstrap'
+import { Badge, Card, CardBody, Col, Row } from 'react-bootstrap'
 
 import { Button } from '@/components/button/button'
 import { FormProvider } from '@/components/forms/form-provider'
@@ -8,7 +8,7 @@ import { ControlledInput } from '@/components/forms/input'
 import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 
-import useKvkForm from './_hooks/kvk.hook'
+import useKvkForm, { FormValuesKvk } from './_hooks/kvk.hook'
 
 export default function Kvk() {
   const t = useTranslations('dataValidation')
@@ -26,18 +26,45 @@ export default function Kvk() {
     handleAccept,
     similarityStatus,
     currentItem,
-    fieldDifferences,
     isSubmitting,
     loadingType,
+    fieldSimilarityStatuses,
   } = useKvkForm()
+
+  // Helper to determine badge color based on similarity status
+  const getSimilarityFieldStatus = (similarityStatus?: string, fieldName?: keyof FormValuesKvk) => {
+    if (!similarityStatus) return null
+
+    // Check if field has been changed
+    if (fieldName && methods.formState.dirtyFields[fieldName]) {
+      return null // Don't show badge for changed fields
+    }
+
+    switch (similarityStatus) {
+      case 'Need to be checked':
+        return <Badge bg="warning">{t('kvk.needsToBeChecked')}</Badge>
+      case 'Similar':
+        return <Badge bg="warning">{t('kvk.similarAddress')}</Badge>
+      case 'Invalid':
+        return (
+          <Badge bg="danger" className="text-white">
+            {t('kvk.invalidAddress')}
+          </Badge>
+        )
+      default:
+        return null
+    }
+  }
+
+  if (isLoading) {
+    return <Loading />
+  }
 
   return (
     <>
       <PageTitle title={t('kvk.title')} />
 
-      {isLoading ? (
-        <Loading />
-      ) : totalItems <= 0 ? (
+      {totalItems <= 0 ? (
         <div className="app-container container-fluid">
           <Card>
             <CardBody>
@@ -69,64 +96,179 @@ export default function Kvk() {
                 <Row>
                   <Col lg={6}>
                     <h4 className="mb-5">{t('kvk.originalAddress')}</h4>
+
                     <ControlledInput
-                      label={t('companyName')}
+                      label={
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">{t('companyName')}</span>
+                          {getSimilarityFieldStatus(
+                            fieldSimilarityStatuses.companyName?.status,
+                            'companyNameOriginal'
+                          )}
+                        </div>
+                      }
                       name="companyNameOriginal"
                       containerClass="mb-3"
-                      className="form-control-solid"
+                      className={`form-control-solid ${
+                        getSimilarityFieldStatus(
+                          fieldSimilarityStatuses.companyName?.status,
+                          'companyNameOriginal'
+                        )
+                          ? `border-${fieldSimilarityStatuses.companyName?.color}`
+                          : ''
+                      }`}
                     />
                     <ControlledInput
-                      label={t('kvkNumber')}
+                      label={
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">{t('kvkNumber')}</span>
+                          {getSimilarityFieldStatus(
+                            fieldSimilarityStatuses.kvkNumber?.status,
+                            'kvkNumberOriginal'
+                          )}
+                        </div>
+                      }
                       name="kvkNumberOriginal"
                       containerClass="mb-3"
-                      className="form-control-solid"
+                      className={`form-control-solid ${
+                        getSimilarityFieldStatus(
+                          fieldSimilarityStatuses.kvkNumber?.status,
+                          'kvkNumberOriginal'
+                        )
+                          ? `border-${fieldSimilarityStatuses.kvkNumber?.color}`
+                          : ''
+                      }`}
                     />
                     <ControlledInput
-                      label={t('streetAddress')}
+                      label={
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">{t('streetAddress')}</span>
+                          {getSimilarityFieldStatus(
+                            fieldSimilarityStatuses.streetName?.status,
+                            'streetAddressOriginal'
+                          )}
+                        </div>
+                      }
                       name="streetAddressOriginal"
                       containerClass="mb-3"
-                      className="form-control-solid"
-                      isInvalid={fieldDifferences.streetAddress}
+                      className={`form-control-solid ${
+                        getSimilarityFieldStatus(
+                          fieldSimilarityStatuses.streetName?.status,
+                          'streetAddressOriginal'
+                        )
+                          ? `border-${fieldSimilarityStatuses.streetName?.color}`
+                          : ''
+                      }`}
                     />
                     <Row>
                       <Col lg={6}>
                         <ControlledInput
-                          label={t('houseNumber')}
+                          label={
+                            <div className="d-flex justify-content-between align-items-center">
+                              <span className="fw-bold">{t('houseNumber')}</span>
+                              {getSimilarityFieldStatus(
+                                fieldSimilarityStatuses.houseNumber?.status,
+                                'houseNumberOriginal'
+                              )}
+                            </div>
+                          }
                           name="houseNumberOriginal"
                           containerClass="mb-3"
-                          className="form-control-solid"
-                          isInvalid={fieldDifferences.houseNumber}
+                          className={`form-control-solid ${
+                            getSimilarityFieldStatus(
+                              fieldSimilarityStatuses.houseNumber?.status,
+                              'houseNumberOriginal'
+                            )
+                              ? `border-${fieldSimilarityStatuses.houseNumber?.color}`
+                              : ''
+                          }`}
                         />
                       </Col>
                       <Col lg={6}>
                         <ControlledInput
-                          label={t('houseNumberExtension')}
+                          label={
+                            <div className="d-flex justify-content-between align-items-center">
+                              <span className="fw-bold">{t('houseNumberExtension')}</span>
+                              {getSimilarityFieldStatus(
+                                fieldSimilarityStatuses.houseNumberExtension?.status,
+                                'houseNumberExtensionOriginal'
+                              )}
+                            </div>
+                          }
                           name="houseNumberExtensionOriginal"
                           containerClass="mb-3"
-                          className="form-control-solid"
-                          isInvalid={fieldDifferences.houseNumberExtension}
+                          className={`form-control-solid ${
+                            getSimilarityFieldStatus(
+                              fieldSimilarityStatuses.houseNumberExtension?.status,
+                              'houseNumberExtensionOriginal'
+                            )
+                              ? `border-${fieldSimilarityStatuses.houseNumberExtension?.color}`
+                              : ''
+                          }`}
                         />
                       </Col>
                     </Row>
                     <ControlledInput
-                      label={t('postcode')}
+                      label={
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">{t('postcode')}</span>
+                          {getSimilarityFieldStatus(
+                            fieldSimilarityStatuses.postalcode?.status,
+                            'postcodeOriginal'
+                          )}
+                        </div>
+                      }
                       name="postcodeOriginal"
                       containerClass="mb-3"
-                      className="form-control-solid"
-                      isInvalid={fieldDifferences.postcode}
+                      className={`form-control-solid ${
+                        getSimilarityFieldStatus(
+                          fieldSimilarityStatuses.postalcode?.status,
+                          'postcodeOriginal'
+                        )
+                          ? `border-${fieldSimilarityStatuses.postalcode?.color}`
+                          : ''
+                      }`}
                     />
                     <ControlledInput
-                      label={t('city')}
+                      label={
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">{t('city')}</span>
+                          {getSimilarityFieldStatus(
+                            fieldSimilarityStatuses.city?.status,
+                            'cityOriginal'
+                          )}
+                        </div>
+                      }
                       name="cityOriginal"
                       containerClass="mb-3"
-                      className="form-control-solid"
-                      isInvalid={fieldDifferences.city}
+                      className={`form-control-solid ${
+                        getSimilarityFieldStatus(
+                          fieldSimilarityStatuses.city?.status,
+                          'cityOriginal'
+                        )
+                          ? `border-${fieldSimilarityStatuses.city?.color}`
+                          : ''
+                      }`}
                     />
                     <ControlledInput
-                      label={t('country')}
+                      label={
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">{t('country')}</span>
+                          {getSimilarityFieldStatus(
+                            fieldSimilarityStatuses.country?.status,
+                            'countryOriginal'
+                          )}
+                        </div>
+                      }
                       name="countryOriginal"
-                      className="form-control-solid"
-                      isInvalid={fieldDifferences.country}
+                      className={`form-control-solid ${
+                        getSimilarityFieldStatus(
+                          fieldSimilarityStatuses.country?.status,
+                          'countryOriginal'
+                        )
+                          ? `border-${fieldSimilarityStatuses.country?.color}`
+                          : ''
+                      }`}
                     />
                   </Col>
                   <Col lg={6}>
@@ -149,7 +291,6 @@ export default function Kvk() {
                       label={t('streetAddress')}
                       name="streetAddress"
                       containerClass="mb-3"
-                      className={`form-control-solid ${fieldDifferences.streetAddress ? 'is-invalid' : ''}`}
                       disabled
                     />
                     <Row>
@@ -158,7 +299,6 @@ export default function Kvk() {
                           label={t('houseNumber')}
                           name="houseNumber"
                           containerClass="mb-3"
-                          className={`form-control-solid ${fieldDifferences.houseNumber ? 'is-invalid' : ''}`}
                           disabled
                         />
                       </Col>
@@ -167,7 +307,6 @@ export default function Kvk() {
                           label={t('houseNumberExtension')}
                           name="houseNumberExtension"
                           containerClass="mb-3"
-                          className={`form-control-solid ${fieldDifferences.houseNumberExtension ? 'is-invalid' : ''}`}
                           disabled
                         />
                       </Col>
@@ -176,22 +315,10 @@ export default function Kvk() {
                       label={t('postcode')}
                       name="postcode"
                       containerClass="mb-3"
-                      className={`form-control-solid ${fieldDifferences.postcode ? 'is-invalid' : ''}`}
                       disabled
                     />
-                    <ControlledInput
-                      label={t('city')}
-                      name="city"
-                      containerClass="mb-3"
-                      className={`form-control-solid ${fieldDifferences.city ? 'is-invalid' : ''}`}
-                      disabled
-                    />
-                    <ControlledInput
-                      label={t('country')}
-                      name="country"
-                      className={`form-control-solid ${fieldDifferences.country ? 'is-invalid' : ''}`}
-                      disabled
-                    />
+                    <ControlledInput label={t('city')} name="city" containerClass="mb-3" disabled />
+                    <ControlledInput label={t('country')} name="country" disabled />
                   </Col>
                 </Row>
 

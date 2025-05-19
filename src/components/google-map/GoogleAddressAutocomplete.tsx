@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useEffect, useRef, useState } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useController, useFormContext } from 'react-hook-form'
 
@@ -29,13 +29,14 @@ interface AddressSuggestion {
 }
 
 type GoogleAddressAutocompleteProps = {
-  label?: string
+  label?: string | ReactNode
   name: string
   containerClass?: string
   placeholder?: string
   disabled?: boolean
   isRequired?: boolean
   onAddressSelect?: (address: AddressSuggestion) => void
+  className?: string
 }
 
 export const GoogleAddressAutocomplete = ({
@@ -46,6 +47,7 @@ export const GoogleAddressAutocomplete = ({
   disabled = false,
   isRequired = false,
   onAddressSelect,
+  className,
 }: GoogleAddressAutocompleteProps) => {
   const { control, setValue } = useFormContext()
   const {
@@ -230,11 +232,23 @@ export const GoogleAddressAutocomplete = ({
     }
   }
 
+  // Check if label is a ReactNode (for custom layout) or a string
+  const renderLabel = () => {
+    if (!label) return null
+
+    if (typeof label === 'string') {
+      return (
+        <Form.Label className={clsx('fw-bold mb-2', { required: isRequired })}>{label}</Form.Label>
+      )
+    }
+
+    // For ReactNode, render directly but add mb-2 class for consistent spacing
+    return <div className="mb-2">{label}</div>
+  }
+
   return (
     <Form.Group className={containerClass}>
-      {label && (
-        <Form.Label className={clsx('fw-bold', { required: isRequired })}>{label}</Form.Label>
-      )}
+      {renderLabel()}
 
       <div className="position-relative">
         <Form.Control
@@ -246,7 +260,7 @@ export const GoogleAddressAutocomplete = ({
           placeholder={placeholder}
           disabled={disabled}
           isInvalid={invalid}
-          className={clsx('form-control', { 'is-invalid': invalid })}
+          className={clsx('form-control mb-2', { 'is-invalid': invalid }, className)}
           data-test-id={name}
           autoComplete="off" // Disable browser's native autocomplete
         />

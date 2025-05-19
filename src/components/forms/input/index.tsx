@@ -1,14 +1,15 @@
 import clsx from 'clsx'
 import Image from 'next/image'
-import { ElementType, useState } from 'react'
+import { ElementType, ReactNode, useState } from 'react'
 import { Form, FormControlProps, InputGroup } from 'react-bootstrap'
 import { useController, useFormContext } from 'react-hook-form'
 
 import eyePassClosed from '@/assets/images/general/eye-password-closed.png'
 import eyePassOpen from '@/assets/images/general/eye-password-open.png'
+import './input.style.scss'
 
 type InputProps = FormControlProps & {
-  label?: string
+  label?: string | ReactNode
   name: string
   containerClass?: string
   step?: number
@@ -17,6 +18,8 @@ type InputProps = FormControlProps & {
   isRequired?: boolean
   inputType?: ElementType
   hidePasswordToggle?: boolean
+  className?: string
+  disabled?: boolean
 }
 
 export const ControlledInput = (props: InputProps) => {
@@ -30,6 +33,8 @@ export const ControlledInput = (props: InputProps) => {
     inputType = 'input',
     type,
     hidePasswordToggle,
+    className,
+    disabled,
     ...otherProps
   } = props
 
@@ -54,17 +59,30 @@ export const ControlledInput = (props: InputProps) => {
       {...otherProps}
       autoComplete={name}
       data-test-id={name}
-      className={clsx('form-control', { 'is-invalid': invalid })}
+      className={clsx('form-control', { 'is-invalid': invalid }, className)}
+      disabled={disabled}
     >
       {children}
     </Form.Control>
   )
 
+  // Check if label is a ReactNode (for custom layout) or a string
+  const renderLabel = () => {
+    if (!label) return null
+
+    if (typeof label === 'string') {
+      return (
+        <Form.Label className={clsx('fw-bold mb-2', { required: isRequired })}>{label}</Form.Label>
+      )
+    }
+
+    // For ReactNode, render directly but add mb-2 class for consistent spacing
+    return <div className="mb-2">{label}</div>
+  }
+
   return (
     <Form.Group className={containerClass}>
-      {label && (
-        <Form.Label className={clsx('fw-bold', { required: isRequired })}>{label}</Form.Label>
-      )}
+      {renderLabel()}
 
       {isPasswordField ? (
         <div className="position-relative">

@@ -1,6 +1,6 @@
 'use client'
 import { useTranslations } from 'next-intl'
-import { Card, CardBody, Col, Row } from 'react-bootstrap'
+import { Badge, Card, CardBody, Col, Row } from 'react-bootstrap'
 
 import { Button } from '@/components/button/button'
 import { FormProvider } from '@/components/forms/form-provider'
@@ -11,8 +11,7 @@ import { GoogleMapsProvider } from '@/components/google-map/GoogleMapsProvider'
 import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 
-import useGoogleForm from './_hooks/google.hook'
-import './style.scss'
+import useGoogleForm, { FormValuesGoogle } from './_hooks/google.hook'
 
 export default function Google() {
   const t = useTranslations('dataValidation')
@@ -33,6 +32,23 @@ export default function Google() {
     loadingType,
     isLoading,
   } = useGoogleForm()
+
+  // Helper to determine badge color based on confirmation level
+  const getConfirmationBadge = (confirmationLevel?: string, fieldName?: keyof FormValuesGoogle) => {
+    if (!confirmationLevel) return null
+
+    if (confirmationLevel !== 'CONFIRMED') {
+      // Check if field has been changed (only check when fieldName is provided)
+      if (fieldName && methods.formState.dirtyFields[fieldName]) {
+        return null // Don't show badge for changed fields
+      } else {
+        return <Badge bg="warning">{t('google.googleCannotVerifyAddress')}</Badge>
+      }
+    }
+
+    // No longer returning null for CONFIRMED cases (empty fragment instead)
+    return null
+  }
 
   if (isLoading) {
     return <Loading />
@@ -129,69 +145,127 @@ export default function Google() {
 
                     <GoogleAddressAutocomplete
                       key={`address-autocomplete-${currentValidation?.id}`}
-                      label={t('streetAddress')}
+                      label={
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">{t('streetAddress')}</span>
+                          {getConfirmationBadge(
+                            differences.streetname?.confirmationLevel,
+                            'streetAddress'
+                          )}
+                        </div>
+                      }
                       name="streetAddress"
                       placeholder={t('streetAddress')}
                       disabled={isSubmitting}
                       onAddressSelect={handleAddressSelect}
+                      className={`form-control-solid ${
+                        getConfirmationBadge(
+                          differences.streetname?.confirmationLevel,
+                          'streetAddress'
+                        )
+                          ? 'border-warning'
+                          : ''
+                      }`}
                     />
 
                     <Row>
                       <Col lg={6}>
                         <ControlledInput
-                          label={t('houseNumber')}
+                          label={
+                            <div className="d-flex justify-content-between align-items-center">
+                              <span className="fw-bold">{t('houseNumber')}</span>
+                              {getConfirmationBadge(
+                                differences.housenumber?.confirmationLevel,
+                                'houseNumber'
+                              )}
+                            </div>
+                          }
                           name="houseNumber"
                           containerClass="mb-3"
-                          className="form-control-solid"
-                          isInvalid={
-                            differences.housenumber &&
-                            differences.housenumber.confirmationLevel !== 'CONFIRMED'
-                          }
+                          className={`form-control-solid ${
+                            getConfirmationBadge(
+                              differences.housenumber?.confirmationLevel,
+                              'houseNumber'
+                            )
+                              ? 'border-warning'
+                              : ''
+                          }`}
                         />
                       </Col>
                       <Col lg={6}>
                         <ControlledInput
-                          label={t('houseNumberExtension')}
+                          label={
+                            <div className="d-flex justify-content-between align-items-center">
+                              <span className="fw-bold">{t('houseNumberExtension')}</span>
+                              {getConfirmationBadge(
+                                differences.housenumberSuffix?.confirmationLevel,
+                                'houseNumberExtension'
+                              )}
+                            </div>
+                          }
                           name="houseNumberExtension"
                           containerClass="mb-3"
-                          className="form-control-solid"
-                          isInvalid={
-                            differences.housenumberSuffix &&
-                            differences.housenumberSuffix.confirmationLevel !== 'CONFIRMED'
-                          }
+                          className={`form-control-solid ${
+                            getConfirmationBadge(
+                              differences.housenumberSuffix?.confirmationLevel,
+                              'houseNumberExtension'
+                            )
+                              ? 'border-warning'
+                              : ''
+                          }`}
                         />
                       </Col>
                     </Row>
 
                     <ControlledInput
-                      label={t('postcode')}
+                      label={
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">{t('postcode')}</span>
+                          {getConfirmationBadge(
+                            differences.postalcode?.confirmationLevel,
+                            'postcode'
+                          )}
+                        </div>
+                      }
                       name="postcode"
                       containerClass="mb-3"
-                      className="form-control-solid"
-                      isInvalid={
-                        differences.postalcode &&
-                        differences.postalcode.confirmationLevel !== 'CONFIRMED'
-                      }
+                      className={`form-control-solid ${
+                        getConfirmationBadge(differences.postalcode?.confirmationLevel, 'postcode')
+                          ? 'border-warning'
+                          : ''
+                      }`}
                     />
 
                     <ControlledInput
-                      label={t('city')}
+                      label={
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">{t('city')}</span>
+                          {getConfirmationBadge(differences.city?.confirmationLevel, 'city')}
+                        </div>
+                      }
                       name="city"
                       containerClass="mb-3"
-                      className="form-control-solid"
-                      isInvalid={
-                        differences.city && differences.city.confirmationLevel !== 'CONFIRMED'
-                      }
+                      className={`form-control-solid ${
+                        getConfirmationBadge(differences.city?.confirmationLevel, 'city')
+                          ? 'border-warning'
+                          : ''
+                      }`}
                     />
 
                     <ControlledInput
-                      label={t('country')}
+                      label={
+                        <div className="d-flex justify-content-between align-items-center">
+                          <span className="fw-bold">{t('country')}</span>
+                          {getConfirmationBadge(differences.country?.confirmationLevel, 'country')}
+                        </div>
+                      }
                       name="country"
                       containerClass="mb-3"
-                      className="form-control-solid"
-                      isInvalid={
-                        differences.country && differences.country.confirmationLevel !== 'CONFIRMED'
-                      }
+                      className={`form-control-solid ${
+                        getConfirmationBadge(differences.country?.confirmationLevel, 'country')
+                          ? 'border-warning'
+                          : ''
+                      }`}
                     />
 
                     <ControlledInput

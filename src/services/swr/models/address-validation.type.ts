@@ -72,19 +72,34 @@ export interface KvkData {
   provider: string
   similarityScore: number
   differences: {
-    scores: {
-      streetName: number
-      houseNumber: number
-      name: number
+    companyname?: {
+      value: string
+      similarityScore: number
     }
-    streetName: string
-    houseNumber: number
-    houseNumberSuffix: string
-    postalCode: string
-    city: string
-    country: string
-    addressId: number
-    companyName: string
+    streetname?: {
+      value: string
+      similarityScore: number
+    }
+    housenumber?: {
+      value: number
+      similarityScore: number
+    }
+    housenumberSuffix?: {
+      value: string
+      similarityScore: number
+    }
+    postalcode?: {
+      value: string
+      similarityScore: number
+    }
+    city?: {
+      value: string
+      similarityScore: number
+    }
+    country?: {
+      value: string
+      similarityScore: number
+    }
   }
   address: {
     id: number

@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useLoading } from '@/hooks/use-loading.hook'
@@ -10,33 +10,29 @@ import { addressValidationApi } from '@/services/api/address-validation-api'
 import { KvkData } from '@/services/swr/models/address-validation.type'
 import { useAddressValidation } from '@/services/swr/use-address-validation'
 import { omitNullAndUndefined } from '@/utils/object'
-import { normalizeString } from '@/utils/string'
 import { InferType } from '@/utils/typescript'
 
 import { schema } from '../_schemas/kvk.schema'
-
-interface FieldDifferences {
-  streetAddress: boolean
-  houseNumber: boolean
-  houseNumberExtension: boolean
-  postcode: boolean
-  city: boolean
-  country: boolean
-}
 
 interface SimilarityStatus {
   status: string
   color: string
 }
 
+// Define form values type
+export type FormValuesKvk = InferType<typeof schema>
+
 export default function useKvkForm() {
   const t = useTranslations('dataValidation')
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [currentPage, setCurrentPage] = useState(1)
   const { showToast, showUnexpectedToast } = useToast()
   const { isLoading: isSubmitting, withLoading } = useLoading()
-  const [loadingType, setLoadingType] = useState<'original' | 'kvk' | null>(null)
   const { data: session } = useSession()
+
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [currentValidation, setCurrentValidation] = useState<KvkData | null>(null)
+  const [loadingType, setLoadingType] = useState<'original' | 'kvk' | null>(null)
+  const previousValidationId = useRef<number | null>(null)
 
   const {
     data: kvkAddress,
@@ -52,24 +48,11 @@ export default function useKvkForm() {
   const perPage = kvkAddress?.perPage || 10
   const lastPage = kvkAddress?.lastPage || 1
 
-  // Create debounce timeout ref outside the debounce function
-  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null)
-
-  // Initialize form once data is loaded
-  useEffect(() => {
-    if (dataItems.length > 0 && currentIndex < dataItems.length) {
-      try {
-        debouncedUpdateForm(dataItems, currentIndex)
-      } catch (error) {
-        console.error('Failed to initialize form with data:', error)
-      }
-    }
-  }, [kvkAddress])
-
-  const methods = useForm<InferType<typeof schema>>({
+  const methods = useForm<FormValuesKvk>({
     resolver: yupResolver(schema),
     // Initial values (will be updated on data load)
-    values: {
+    defaultValues: {
+      // KVK values
       companyName: '',
       streetAddress: '',
       houseNumber: '',
@@ -78,7 +61,7 @@ export default function useKvkForm() {
       city: '',
       country: '',
       kvkNumber: '',
-      validationAction: '',
+      // Original values
       companyNameOriginal: '',
       kvkNumberOriginal: '',
       streetAddressOriginal: '',
@@ -90,73 +73,81 @@ export default function useKvkForm() {
     },
   })
 
-  // Debounce function to prevent too many form updates
-  const debounce = (func: Function, delay: number) => {
-    return (...args: any[]) => {
-      if (debounceTimeoutRef.current) {
-        clearTimeout(debounceTimeoutRef.current)
-      }
-
-      debounceTimeoutRef.current = setTimeout(() => {
-        func(...args)
-      }, delay)
+  // Get the similarity status based on score
+  const getSimilarityStatus = (score: number): SimilarityStatus => {
+    switch (true) {
+      case score === 100:
+        return {
+          status: 'Valid',
+          color: 'success',
+        }
+      case score >= 97 && score < 100:
+        return {
+          status: 'Need to be checked',
+          color: 'light-success',
+        }
+      case score >= 70 && score < 97:
+        return {
+          status: 'Similar',
+          color: 'warning',
+        }
+      default:
+        return {
+          status: 'Invalid',
+          color: 'danger',
+        }
     }
   }
 
-  // Create debounced version of updateFormWithCurrentItem
-  const debouncedUpdateForm = useCallback(
-    debounce((data: any[], index: number) => {
-      updateFormWithCurrentItem(data, index)
-    }, 300),
-    []
-  )
+  // Get the current item's similarity status
+  const currentSimilarityStatus = useMemo(() => {
+    return currentValidation
+      ? getSimilarityStatus(currentValidation.similarityScore)
+      : { status: '', color: '' }
+  }, [currentValidation])
 
-  const updateFormWithCurrentItem = (data: any[], index: number) => {
-    const currentItem = data[index]
-    if (!currentItem) return
+  // Initialize form once data is loaded
+  useEffect(() => {
+    if (!kvkAddress?.data?.[currentIndex]) return
 
-    try {
-      // Get current values to compare
-      const currentFormValues = methods.getValues()
+    const validation = kvkAddress.data[currentIndex] as KvkData
 
-      const formValues = {
-        companyName: currentItem.reference?.companyInfo?.companyname || '',
-        streetAddress: currentItem.differences?.streetName || '',
-        houseNumber: currentItem.differences?.houseNumber?.toString() || '',
-        houseNumberExtension: currentItem.differences?.houseNumberSuffix || '',
-        postcode: currentItem.differences?.postalCode || '',
-        city: currentItem.differences?.city || '',
-        country: currentItem.differences?.country || '',
-        kvkNumber: currentItem.reference?.companyInfo?.chamberOfCommerceId || '',
-        validationAction: currentFormValues.validationAction || '',
-        // Original values
-        companyNameOriginal: currentItem.reference?.companyInfo?.companyname || '',
-        kvkNumberOriginal: currentItem.reference?.companyInfo?.chamberOfCommerceId || '',
-        streetAddressOriginal: currentItem.address?.streetname || '',
-        houseNumberOriginal: currentItem.address?.housenumber || '',
-        houseNumberExtensionOriginal: currentItem.address?.housenumberSuffix || '',
-        postcodeOriginal: currentItem.address?.postalcode || '',
-        cityOriginal: currentItem.address?.city || '',
-        countryOriginal: currentItem.address?.country?.name || '',
-      }
+    // Skip if we've already processed this validation
+    if (previousValidationId.current === validation.id) return
 
-      // Check if values have actually changed before resetting the form
-      const hasChanges = Object.keys(formValues).some(
-        key =>
-          formValues[key as keyof typeof formValues] !==
-          currentFormValues[key as keyof typeof currentFormValues]
-      )
+    // Update ref to prevent unnecessary reruns
+    previousValidationId.current = validation.id
 
-      if (hasChanges) {
-        methods.reset(formValues, {
-          keepDefaultValues: false,
-          keepDirty: false,
-        })
-      }
-    } catch (error) {
-      console.error('Error setting form values:', error)
+    // Update validation state
+    setCurrentValidation(validation)
+
+    // Extract data for form
+    const { address, differences, reference } = validation
+
+    // Reset form with new values
+    const formValues = {
+      // KVK values
+      companyName: differences?.companyname?.value || '',
+      streetAddress: differences?.streetname?.value || '',
+      houseNumber: differences?.housenumber?.value?.toString() || '',
+      houseNumberExtension: differences?.housenumberSuffix?.value || '',
+      postcode: differences?.postalcode?.value || '',
+      city: differences?.city?.value || '',
+      country: differences?.country?.value || '',
+      kvkNumber: reference?.companyInfo?.chamberOfCommerceId || '',
+      // Original values
+      companyNameOriginal: reference?.companyInfo?.companyname || '',
+      kvkNumberOriginal: reference?.companyInfo?.chamberOfCommerceId || '',
+      streetAddressOriginal: address?.streetname || '',
+      houseNumberOriginal: address?.housenumber || '',
+      houseNumberExtensionOriginal: address?.housenumberSuffix || '',
+      postcodeOriginal: address?.postalcode || '',
+      cityOriginal: address?.city || '',
+      countryOriginal: address?.country?.name || '',
     }
-  }
+
+    methods.reset(formValues)
+  }, [kvkAddress, currentIndex])
 
   const goToNext = () => {
     // If at the end of current page data and there are more pages
@@ -194,38 +185,7 @@ export default function useKvkForm() {
     }
   }
 
-  // Get the similarity status based on score
-  const getSimilarityStatus = (score: number): SimilarityStatus => {
-    switch (true) {
-      case score === 100:
-        return {
-          status: 'Valid',
-          color: 'success',
-        }
-      case score >= 97 && score < 100:
-        return {
-          status: 'Need to be checked',
-          color: 'light-success',
-        }
-      case score >= 70 && score < 97:
-        return {
-          status: 'Similar',
-          color: 'warning',
-        }
-      default:
-        return {
-          status: 'Invalid',
-          color: 'light-danger',
-        }
-    }
-  }
-
-  // Get the current item's similarity status
-  const currentSimilarityStatus = dataItems[currentIndex]
-    ? getSimilarityStatus((dataItems[currentIndex] as KvkData).similarityScore)
-    : { status: '', color: '' }
-
-  const validateKvkData = async (data: InferType<typeof schema>, type: 'original' | 'kvk') => {
+  const validateKvkData = async (data: FormValuesKvk, type: 'original' | 'kvk') => {
     if (dataItems.length === 0 || !dataItems[currentIndex]) {
       return
     }
@@ -283,7 +243,7 @@ export default function useKvkForm() {
     }
   }
 
-  const onSubmit = async (data: InferType<typeof schema>) => {
+  const onSubmit = async (data: FormValuesKvk) => {
     const currentFormValues = { ...data }
 
     try {
@@ -309,59 +269,75 @@ export default function useKvkForm() {
 
   const position = calculateOverallPosition()
 
-  // Check if field values are different to highlight differences
-  const getFieldDifferences = (): FieldDifferences => {
-    if (
-      !dataItems[currentIndex] ||
-      !dataItems[currentIndex].differences ||
-      !dataItems[currentIndex].address
-    ) {
-      return {
-        streetAddress: false,
-        houseNumber: false,
-        houseNumberExtension: false,
-        postcode: false,
-        city: false,
-        country: false,
-      }
+  // Get field-level similarity scores for highlighting
+  const getFieldSimilarityScores = () => {
+    if (!dataItems[currentIndex] || !dataItems[currentIndex].differences) {
+      return {}
     }
 
-    const current = dataItems[currentIndex]
+    const current = dataItems[currentIndex].differences
 
     try {
-      const differences = {
-        streetAddress:
-          normalizeString(current.differences?.streetName) !==
-          normalizeString(current.address?.streetname),
-        houseNumber:
-          normalizeString(current.differences?.houseNumber?.toString()) !==
-          normalizeString(current.address?.housenumber),
-        houseNumberExtension:
-          normalizeString(current.differences?.houseNumberSuffix) !==
-          normalizeString(current.address?.housenumberSuffix),
-        postcode:
-          normalizeString(current.differences?.postalCode) !==
-          normalizeString(current.address?.postalcode),
-        city: normalizeString(current.differences?.city) !== normalizeString(current.address?.city),
-        country:
-          normalizeString(current.differences?.country) !==
-          normalizeString(current.address?.country?.name),
-      }
-
-      return differences
-    } catch (error) {
       return {
-        streetAddress: false,
-        houseNumber: false,
-        houseNumberExtension: false,
-        postcode: false,
-        city: false,
-        country: false,
+        companyName: current.companyname?.similarityScore,
+        streetName: current.streetname?.similarityScore,
+        houseNumber: current.housenumber?.similarityScore,
+        houseNumberExtension: current.housenumberSuffix?.similarityScore,
+        postalcode: current.postalcode?.similarityScore,
+        city: current.city?.similarityScore,
+        country: current.country?.similarityScore,
       }
+    } catch (error) {
+      return {}
     }
   }
 
-  const fieldDifferences = getFieldDifferences()
+  // Get status and color for each field based on similarity score
+  const getFieldSimilarityStatuses = () => {
+    if (!dataItems[currentIndex] || !dataItems[currentIndex].differences) {
+      return {}
+    }
+
+    const scores = getFieldSimilarityScores()
+    const result: Record<string, SimilarityStatus | undefined> = {}
+
+    try {
+      // Only add fields that don't have Valid status (score < 100)
+      if (scores.companyName !== undefined && scores.companyName < 100) {
+        result.companyName = getSimilarityStatus(scores.companyName)
+      }
+
+      if (scores.streetName !== undefined && scores.streetName < 100) {
+        result.streetName = getSimilarityStatus(scores.streetName)
+      }
+
+      if (scores.houseNumber !== undefined && scores.houseNumber < 100) {
+        result.houseNumber = getSimilarityStatus(scores.houseNumber)
+      }
+
+      if (scores.houseNumberExtension !== undefined && scores.houseNumberExtension < 100) {
+        result.houseNumberExtension = getSimilarityStatus(scores.houseNumberExtension)
+      }
+
+      if (scores.postalcode !== undefined && scores.postalcode < 100) {
+        result.postalcode = getSimilarityStatus(scores.postalcode)
+      }
+
+      if (scores.city !== undefined && scores.city < 100) {
+        result.city = getSimilarityStatus(scores.city)
+      }
+
+      if (scores.country !== undefined && scores.country < 100) {
+        result.country = getSimilarityStatus(scores.country)
+      }
+
+      return result
+    } catch (error) {
+      return {}
+    }
+  }
+
+  const fieldSimilarityStatuses = getFieldSimilarityStatuses()
 
   return {
     methods,
@@ -382,6 +358,6 @@ export default function useKvkForm() {
     handleAccept,
     similarityStatus: currentSimilarityStatus,
     currentItem: dataItems[currentIndex],
-    fieldDifferences,
+    fieldSimilarityStatuses,
   }
 }
