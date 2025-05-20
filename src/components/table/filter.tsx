@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/button/button'
-import { sanitizeFilterValues } from '@/utils/filter-sanitizer'
 
 import { FilterProps } from './filter.type'
 
@@ -14,11 +13,10 @@ export const Filter = ({ children, onFilter }: FilterProps) => {
 
   // Handler for form submission
   const handleFilterSubmit = (data: Record<string, any>) => {
-    // Sanitize the values to only allow alphanumeric and spaces
-    const sanitizedData = sanitizeFilterValues(data)
+    // const sanitizedData = sanitizeFilterValues(data)
 
     if (onFilter) {
-      onFilter(sanitizedData)
+      onFilter(data)
     }
   }
 
