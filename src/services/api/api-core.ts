@@ -83,6 +83,8 @@ export class ApiCore {
       .replace(/%20/g, '+') // Replace space with + (this is the key difference from encodeURIComponent)
       .replace(/%2C/g, ',') // Keep commas as is (frequently seen in filter values)
       .replace(/%40/g, '@') // Keep @ as is (frequently seen in emails)
+      .replace(/%2B/g, '+') // Keep + as is (frequently seen in filter values)
+      .replace(/%2E/g, '.') // Keep . as is (frequently seen in filter values)
   }
 
   protected getUrl(request: any): string {
