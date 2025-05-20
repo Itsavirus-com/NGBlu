@@ -42,12 +42,32 @@ export default function Kvk() {
 
     switch (similarityStatus) {
       case 'Need to be checked':
-        return <Badge bg="warning">{t('kvk.needsToBeChecked')}</Badge>
+        return (
+          <Badge
+            bg="warning"
+            className="text-wrap"
+            style={{ whiteSpace: 'normal', maxWidth: '100%', fontSize: '8px' }}
+          >
+            {t('kvk.needsToBeChecked')}
+          </Badge>
+        )
       case 'Similar':
-        return <Badge bg="warning">{t('kvk.similarAddress')}</Badge>
+        return (
+          <Badge
+            bg="warning"
+            className="text-wrap"
+            style={{ whiteSpace: 'normal', maxWidth: '100%', fontSize: '8px' }}
+          >
+            {t('kvk.similarAddress')}
+          </Badge>
+        )
       case 'Invalid':
         return (
-          <Badge bg="danger" className="text-white">
+          <Badge
+            bg="danger"
+            className="text-white text-wrap"
+            style={{ whiteSpace: 'normal', maxWidth: '100%', fontSize: '8px' }}
+          >
             {t('kvk.invalidAddress')}
           </Badge>
         )

@@ -42,7 +42,15 @@ export default function Google() {
       if (fieldName && methods.formState.dirtyFields[fieldName]) {
         return null // Don't show badge for changed fields
       } else {
-        return <Badge bg="warning">{t('google.googleCannotVerifyAddress')}</Badge>
+        return (
+          <Badge
+            bg="warning"
+            className="text-wrap"
+            style={{ whiteSpace: 'normal', maxWidth: '100%', fontSize: '8px' }}
+          >
+            {t('google.googleCannotVerifyAddress')}
+          </Badge>
+        )
       }
     }
 
