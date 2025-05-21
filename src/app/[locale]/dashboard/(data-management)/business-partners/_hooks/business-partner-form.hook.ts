@@ -73,7 +73,7 @@ export default function useBusinessPartnerForm(id?: number) {
     resolver: yupResolver(schema),
     values: businessPartner && {
       name: businessPartner?.name ?? '',
-      businesspartnerTypeId: businessPartner?.businessPartnerType?.id ?? 0,
+      businesspartnerTypeId: businessPartner?.businesspartnerType?.id ?? 0,
       companyInfoId: businessPartner?.companyInfo?.id ?? 0,
       enterpriseRootId: businessPartner?.enterpriseRootId ?? 0,
       businesspartnersAddressesId: businessPartner?.businesspartnersAddressesId ?? 0,

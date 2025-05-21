@@ -13,7 +13,7 @@ export const BusinessPartnerContent = ({ data }: ContentProps) => {
     <Tabs defaultActiveKey="companyInfo" id="businessPartnerTabs">
       <Tab eventKey="companyInfo" title={t('companyInfo.companyInfo')}>
         <TextWithLabel label={t('companyInfo.companyName')} value={data.name} className="mt-5" />
-        <TextWithLabel label={t('companyInfo.partnerType')} value={data.businessPartnerType.name} />
+        <TextWithLabel label={t('companyInfo.partnerType')} value={data.businesspartnerType.name} />
         <TextWithLabel
           label={t('companyInfo.companyStatus')}
           value={data.companyInfo?.companyStatus?.status}

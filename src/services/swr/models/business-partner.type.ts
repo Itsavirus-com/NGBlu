@@ -21,7 +21,7 @@ export type BusinessPartner = {
   companyInfoId: number
   companyInfo: Company
   businesspartnerTypeId: number
-  businessPartnerType: BusinessPartnerType
+  businesspartnerType: BusinessPartnerType
   businesspartnersAddressesId: number
   businessPartnerAddressesCount: number
   businessPartnerContactsCount: number

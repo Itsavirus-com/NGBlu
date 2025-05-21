@@ -1,6 +1,6 @@
 import { Breadcrumb } from 'react-bootstrap'
 
-import { generateItemIcon } from '@/app/[locale]/dashboard/(data-validation)/data-hierarchy/components/helper'
+import { generateItemIcon } from '@/app/[locale]/dashboard/(data-validation)/data-hierarchy/_components/helper'
 import { useRouter } from '@/navigation'
 
 import { BreadcrumbItem, BreadcrumbProps } from './breadcrumbs.type'
