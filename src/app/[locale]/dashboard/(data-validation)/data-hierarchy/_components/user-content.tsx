@@ -18,31 +18,31 @@ export const UserContent = ({ data }: ContentProps) => {
         <TextWithLabel
           className="mt-5"
           label={t('user.displayName')}
-          value={data.user.displayName}
+          value={data?.user?.displayName}
         />
-        <TextWithLabel label={t('user.email')} value={data.user.email} />
-        <DateWithLabel label={t('user.lastLogin')} value={data.user?.lastLogin} />
+        <TextWithLabel label={t('user.email')} value={data?.user?.email} />
+        <DateWithLabel label={t('user.lastLogin')} value={data?.user?.lastLogin} />
         <TextWithLabel
           label={t('user.blocked')}
-          value={!!data.user.blockedAt ? tCommon('yes') : tCommon('no')}
+          value={!!data?.user?.blockedAt ? tCommon('yes') : tCommon('no')}
         />
       </Tab>
 
-      {data.person && (
+      {data?.person && (
         <Tab eventKey="profile" title={t('user.profile')}>
-          <PersonDetails person={data.person} />
+          <PersonDetails person={data?.person} />
         </Tab>
       )}
 
       {data?.ouUnit && (
         <Tab eventKey="orgUnit" title={t('orgUnit.title')}>
-          <TextWithLabel className="mt-5" label={t('orgUnit.name')} value={data.ouUnit?.name} />
+          <TextWithLabel className="mt-5" label={t('orgUnit.name')} value={data?.ouUnit?.name} />
         </Tab>
       )}
 
       {data?.ouUnit?.primaryAddress && (
         <Tab eventKey="orgUnitAddress" title={t('orgUnit.orgUnitAddress')}>
-          <AddressDetails address={data.ouUnit?.primaryAddress} />
+          <AddressDetails address={data?.ouUnit?.primaryAddress} />
         </Tab>
       )}
     </Tabs>

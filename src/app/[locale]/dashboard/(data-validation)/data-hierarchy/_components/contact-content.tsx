@@ -13,42 +13,42 @@ export const ContactContent = ({ data }: ContentProps) => {
   return (
     <Tabs defaultActiveKey="profile" id="contactTabs">
       <Tab eventKey="profile" title={t('contact.profile')}>
-        <PersonDetails person={data.person} />
+        <PersonDetails person={data?.person} />
       </Tab>
 
-      {data.responsibility && (
+      {data?.responsibility && (
         <Tab eventKey="responsibility" title={t('contact.responsibility')}>
           <TextWithLabel
             className="mt-5"
             label={t('contact.responsibility')}
-            value={data.responsibility?.responsibility}
+            value={data?.responsibility?.responsibility}
           />
         </Tab>
       )}
 
-      {data.contactInfo && (
+      {data?.contactInfo && (
         <Tab eventKey="contactInfo" title={t('contact.contactInfo')}>
           <TextWithLabel
             className="mt-5"
             label={t('contact.contactInfo')}
-            value={data.contactInfo?.contactInfo}
+            value={data?.contactInfo?.contactInfo}
           />
           <TextWithLabel
             label={t('contact.contactType')}
-            value={data.contactInfo?.contactType?.contactType}
+            value={data?.contactInfo?.contactType?.contactType}
           />
         </Tab>
       )}
 
       {data?.ouUnit && (
         <Tab eventKey="orgUnit" title={t('orgUnit.title')}>
-          <TextWithLabel className="mt-5" label={t('orgUnit.name')} value={data.ouUnit?.name} />
+          <TextWithLabel className="mt-5" label={t('orgUnit.name')} value={data?.ouUnit?.name} />
         </Tab>
       )}
 
       {data?.ouUnit?.primaryAddress && (
         <Tab eventKey="orgUnitAddress" title={t('orgUnit.orgUnitAddress')}>
-          <AddressDetails address={data.ouUnit?.primaryAddress} />
+          <AddressDetails address={data?.ouUnit?.primaryAddress} />
         </Tab>
       )}
     </Tabs>

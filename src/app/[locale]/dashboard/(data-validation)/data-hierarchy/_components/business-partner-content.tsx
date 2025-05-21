@@ -12,40 +12,43 @@ export const BusinessPartnerContent = ({ data }: ContentProps) => {
   return (
     <Tabs defaultActiveKey="companyInfo" id="businessPartnerTabs">
       <Tab eventKey="companyInfo" title={t('companyInfo.companyInfo')}>
-        <TextWithLabel label={t('companyInfo.companyName')} value={data.name} className="mt-5" />
-        <TextWithLabel label={t('companyInfo.partnerType')} value={data.businesspartnerType.name} />
+        <TextWithLabel label={t('companyInfo.companyName')} value={data?.name} className="mt-5" />
+        <TextWithLabel
+          label={t('companyInfo.partnerType')}
+          value={data?.businesspartnerType?.name}
+        />
         <TextWithLabel
           label={t('companyInfo.companyStatus')}
-          value={data.companyInfo?.companyStatus?.status}
+          value={data?.companyInfo?.companyStatus?.status}
         />
-        <TextWithLabel label={t('companyInfo.vatNumber')} value={data.companyInfo.vatNumber} />
+        <TextWithLabel label={t('companyInfo.vatNumber')} value={data?.companyInfo?.vatNumber} />
         <TextWithLabel
           label={t('companyInfo.kvkNumber')}
-          value={data.companyInfo.chamberOfCommerceId}
+          value={data?.companyInfo?.chamberOfCommerceId}
         />
       </Tab>
 
-      {data.companyInfo?.legalAddress && (
+      {data?.companyInfo?.legalAddress && (
         <Tab eventKey="legalAddress" title={t('address.legalAddress')}>
-          <AddressDetails address={data.companyInfo.legalAddress} />
+          <AddressDetails address={data?.companyInfo?.legalAddress} />
         </Tab>
       )}
 
-      {data.companyInfo?.postalAddress && (
+      {data?.companyInfo?.postalAddress && (
         <Tab eventKey="postalAddress" title={t('address.postalAddress')}>
-          <AddressDetails address={data.companyInfo.postalAddress} />
+          <AddressDetails address={data?.companyInfo?.postalAddress} />
         </Tab>
       )}
 
-      {data.companyInfo?.visitAddress && (
+      {data?.companyInfo?.visitAddress && (
         <Tab eventKey="visitAddress" title={t('address.visitAddress')}>
-          <AddressDetails address={data.companyInfo.visitAddress} />
+          <AddressDetails address={data?.companyInfo?.visitAddress} />
         </Tab>
       )}
 
-      {data.companyInfo?.invoiceAddress && (
+      {data?.companyInfo?.invoiceAddress && (
         <Tab eventKey="invoiceAddress" title={t('address.invoiceAddress')}>
-          <AddressDetails address={data.companyInfo.invoiceAddress} />
+          <AddressDetails address={data?.companyInfo?.invoiceAddress} />
         </Tab>
       )}
     </Tabs>

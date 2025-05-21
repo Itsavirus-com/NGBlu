@@ -15,7 +15,7 @@ export const OrgUnitContent = ({ data }: ContentProps) => {
   return (
     <Tabs defaultActiveKey="primaryAddress" id="OrgUnitTabs">
       <Tab eventKey="primaryAddress" title={t('orgUnit.primaryAddress')}>
-        <AddressDetails address={data.primaryAddress} />
+        <AddressDetails address={data?.primaryAddress} />
       </Tab>
     </Tabs>
   )
