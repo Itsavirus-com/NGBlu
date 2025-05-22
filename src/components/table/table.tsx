@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useState } from 'react'
 
-import { Button } from '@/components/button/button'
+import { Button } from '@/components/button/Button'
 
 import { DynamicTableBody } from './dynamic-table-body'
 import { Filter } from './filter'

@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 
 import microsoftIcon from '@/assets/images/brand-logos/microsoft-5.svg'
-import { Button } from '@/components/button/button'
+import { Button } from '@/components/button/Button'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
 import { Link } from '@/navigation'

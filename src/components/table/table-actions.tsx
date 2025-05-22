@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
-import { Button } from '@/components/button/button'
+import { Button } from '@/components/button/Button'
 import { ButtonProps } from '@/components/button/button.type'
 import { useToast } from '@/hooks/use-toast.hook'
 import { generalApi } from '@/services/api/general-api'

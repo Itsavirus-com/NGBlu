@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { Button } from '@/components/button/button'
+import { Button } from '@/components/button/Button'
 
 import { FilterProps } from './filter.type'
 

@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Card, Container, ProgressBar, Spinner } from 'react-bootstrap'
 import { useWatch } from 'react-hook-form'
 
-import { Button } from '@/components/button/button'
+import { Button } from '@/components/button/Button'
 import { FormProvider } from '@/components/forms/form-provider/form-provider'
 import { ControlledInput } from '@/components/forms/input'
 import { KTIcon } from '@/components/kt-icon/kt-icon'

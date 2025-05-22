@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl'
 
-import { Button } from '@/components/button/button'
+import { Button } from '@/components/button/Button'
 import { useRouter } from '@/navigation'
 
 interface FormButtonsProps {
