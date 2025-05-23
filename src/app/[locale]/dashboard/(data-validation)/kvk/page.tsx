@@ -118,15 +118,11 @@ export default function Kvk() {
                     <h4 className="mb-5">{t('kvk.originalAddress')}</h4>
 
                     <ControlledInput
-                      label={
-                        <div className="d-flex justify-content-between align-items-center">
-                          <span className="fw-bold">{t('companyName')}</span>
-                          {getSimilarityFieldStatus(
-                            fieldSimilarityStatuses.companyName?.status,
-                            'companyNameOriginal'
-                          )}
-                        </div>
-                      }
+                      label={t('companyName')}
+                      customLabel={getSimilarityFieldStatus(
+                        fieldSimilarityStatuses.companyName?.status,
+                        'companyNameOriginal'
+                      )}
                       name="companyNameOriginal"
                       containerClass="mb-3"
                       className={`form-control-solid ${
@@ -139,15 +135,11 @@ export default function Kvk() {
                       }`}
                     />
                     <ControlledInput
-                      label={
-                        <div className="d-flex justify-content-between align-items-center">
-                          <span className="fw-bold">{t('kvkNumber')}</span>
-                          {getSimilarityFieldStatus(
-                            fieldSimilarityStatuses.kvkNumber?.status,
-                            'kvkNumberOriginal'
-                          )}
-                        </div>
-                      }
+                      label={t('kvkNumber')}
+                      customLabel={getSimilarityFieldStatus(
+                        fieldSimilarityStatuses.kvkNumber?.status,
+                        'kvkNumberOriginal'
+                      )}
                       name="kvkNumberOriginal"
                       containerClass="mb-3"
                       className={`form-control-solid ${
@@ -160,15 +152,11 @@ export default function Kvk() {
                       }`}
                     />
                     <ControlledInput
-                      label={
-                        <div className="d-flex justify-content-between align-items-center">
-                          <span className="fw-bold">{t('streetAddress')}</span>
-                          {getSimilarityFieldStatus(
-                            fieldSimilarityStatuses.streetName?.status,
-                            'streetAddressOriginal'
-                          )}
-                        </div>
-                      }
+                      label={t('streetAddress')}
+                      customLabel={getSimilarityFieldStatus(
+                        fieldSimilarityStatuses.streetName?.status,
+                        'streetAddressOriginal'
+                      )}
                       name="streetAddressOriginal"
                       containerClass="mb-3"
                       className={`form-control-solid ${
@@ -183,15 +171,11 @@ export default function Kvk() {
                     <Row>
                       <Col lg={6}>
                         <ControlledInput
-                          label={
-                            <div className="d-flex justify-content-between align-items-center">
-                              <span className="fw-bold">{t('houseNumber')}</span>
-                              {getSimilarityFieldStatus(
-                                fieldSimilarityStatuses.houseNumber?.status,
-                                'houseNumberOriginal'
-                              )}
-                            </div>
-                          }
+                          label={t('houseNumber')}
+                          customLabel={getSimilarityFieldStatus(
+                            fieldSimilarityStatuses.houseNumber?.status,
+                            'houseNumberOriginal'
+                          )}
                           name="houseNumberOriginal"
                           containerClass="mb-3"
                           className={`form-control-solid ${
@@ -206,15 +190,11 @@ export default function Kvk() {
                       </Col>
                       <Col lg={6}>
                         <ControlledInput
-                          label={
-                            <div className="d-flex justify-content-between align-items-center">
-                              <span className="fw-bold">{t('houseNumberExtension')}</span>
-                              {getSimilarityFieldStatus(
-                                fieldSimilarityStatuses.houseNumberExtension?.status,
-                                'houseNumberExtensionOriginal'
-                              )}
-                            </div>
-                          }
+                          label={t('houseNumberExtension')}
+                          customLabel={getSimilarityFieldStatus(
+                            fieldSimilarityStatuses.houseNumberExtension?.status,
+                            'houseNumberExtensionOriginal'
+                          )}
                           name="houseNumberExtensionOriginal"
                           containerClass="mb-3"
                           className={`form-control-solid ${
@@ -229,15 +209,11 @@ export default function Kvk() {
                       </Col>
                     </Row>
                     <ControlledInput
-                      label={
-                        <div className="d-flex justify-content-between align-items-center">
-                          <span className="fw-bold">{t('postcode')}</span>
-                          {getSimilarityFieldStatus(
-                            fieldSimilarityStatuses.postalcode?.status,
-                            'postcodeOriginal'
-                          )}
-                        </div>
-                      }
+                      label={t('postcode')}
+                      customLabel={getSimilarityFieldStatus(
+                        fieldSimilarityStatuses.postalcode?.status,
+                        'postcodeOriginal'
+                      )}
                       name="postcodeOriginal"
                       containerClass="mb-3"
                       className={`form-control-solid ${
@@ -250,15 +226,11 @@ export default function Kvk() {
                       }`}
                     />
                     <ControlledInput
-                      label={
-                        <div className="d-flex justify-content-between align-items-center">
-                          <span className="fw-bold">{t('city')}</span>
-                          {getSimilarityFieldStatus(
-                            fieldSimilarityStatuses.city?.status,
-                            'cityOriginal'
-                          )}
-                        </div>
-                      }
+                      label={t('city')}
+                      customLabel={getSimilarityFieldStatus(
+                        fieldSimilarityStatuses.city?.status,
+                        'cityOriginal'
+                      )}
                       name="cityOriginal"
                       containerClass="mb-3"
                       className={`form-control-solid ${
@@ -271,15 +243,11 @@ export default function Kvk() {
                       }`}
                     />
                     <ControlledInput
-                      label={
-                        <div className="d-flex justify-content-between align-items-center">
-                          <span className="fw-bold">{t('country')}</span>
-                          {getSimilarityFieldStatus(
-                            fieldSimilarityStatuses.country?.status,
-                            'countryOriginal'
-                          )}
-                        </div>
-                      }
+                      label={t('country')}
+                      customLabel={getSimilarityFieldStatus(
+                        fieldSimilarityStatuses.country?.status,
+                        'countryOriginal'
+                      )}
                       name="countryOriginal"
                       className={`form-control-solid ${
                         getSimilarityFieldStatus(

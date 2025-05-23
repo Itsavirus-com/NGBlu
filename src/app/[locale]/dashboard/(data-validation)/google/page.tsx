@@ -167,15 +167,11 @@ export default function Google() {
 
                       <GoogleAddressAutocomplete
                         key={`address-autocomplete-${currentValidation?.id}`}
-                        label={
-                          <div className="d-flex justify-content-between align-items-center">
-                            <span className="fw-bold">{t('streetAddress')}</span>
-                            {getConfirmationBadge(
-                              differences.streetname?.confirmationLevel,
-                              'streetAddress'
-                            )}
-                          </div>
-                        }
+                        label={t('streetAddress')}
+                        customLabel={getConfirmationBadge(
+                          differences.streetname?.confirmationLevel,
+                          'streetAddress'
+                        )}
                         name="streetAddress"
                         placeholder={t('streetAddress')}
                         disabled={isSubmitting}
@@ -193,15 +189,11 @@ export default function Google() {
                       <Row>
                         <Col lg={6}>
                           <ControlledInput
-                            label={
-                              <div className="d-flex justify-content-between align-items-center">
-                                <span className="fw-bold">{t('houseNumber')}</span>
-                                {getConfirmationBadge(
-                                  differences.housenumber?.confirmationLevel,
-                                  'houseNumber'
-                                )}
-                              </div>
-                            }
+                            label={t('houseNumber')}
+                            customLabel={getConfirmationBadge(
+                              differences.housenumber?.confirmationLevel,
+                              'houseNumber'
+                            )}
                             name="houseNumber"
                             containerClass="mb-3"
                             className={`form-control-solid ${
@@ -216,15 +208,11 @@ export default function Google() {
                         </Col>
                         <Col lg={6}>
                           <ControlledInput
-                            label={
-                              <div className="d-flex justify-content-between align-items-center">
-                                <span className="fw-bold">{t('houseNumberExtension')}</span>
-                                {getConfirmationBadge(
-                                  differences.housenumberSuffix?.confirmationLevel,
-                                  'houseNumberExtension'
-                                )}
-                              </div>
-                            }
+                            label={t('houseNumberExtension')}
+                            customLabel={getConfirmationBadge(
+                              differences.housenumberSuffix?.confirmationLevel,
+                              'houseNumberExtension'
+                            )}
                             name="houseNumberExtension"
                             containerClass="mb-3"
                             className={`form-control-solid ${
@@ -240,15 +228,11 @@ export default function Google() {
                       </Row>
 
                       <ControlledInput
-                        label={
-                          <div className="d-flex justify-content-between align-items-center">
-                            <span className="fw-bold">{t('postcode')}</span>
-                            {getConfirmationBadge(
-                              differences.postalcode?.confirmationLevel,
-                              'postcode'
-                            )}
-                          </div>
-                        }
+                        label={t('postcode')}
+                        customLabel={getConfirmationBadge(
+                          differences.postalcode?.confirmationLevel,
+                          'postcode'
+                        )}
                         name="postcode"
                         containerClass="mb-3"
                         className={`form-control-solid ${
@@ -262,12 +246,11 @@ export default function Google() {
                       />
 
                       <ControlledInput
-                        label={
-                          <div className="d-flex justify-content-between align-items-center">
-                            <span className="fw-bold">{t('city')}</span>
-                            {getConfirmationBadge(differences.city?.confirmationLevel, 'city')}
-                          </div>
-                        }
+                        label={t('city')}
+                        customLabel={getConfirmationBadge(
+                          differences.city?.confirmationLevel,
+                          'city'
+                        )}
                         name="city"
                         containerClass="mb-3"
                         className={`form-control-solid ${
@@ -278,15 +261,11 @@ export default function Google() {
                       />
 
                       <ControlledInput
-                        label={
-                          <div className="d-flex justify-content-between align-items-center">
-                            <span className="fw-bold">{t('country')}</span>
-                            {getConfirmationBadge(
-                              differences.country?.confirmationLevel,
-                              'country'
-                            )}
-                          </div>
-                        }
+                        label={t('country')}
+                        customLabel={getConfirmationBadge(
+                          differences.country?.confirmationLevel,
+                          'country'
+                        )}
                         name="country"
                         containerClass="mb-3"
                         className={`form-control-solid ${

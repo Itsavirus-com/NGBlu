@@ -30,6 +30,7 @@ interface AddressSuggestion {
 
 type GoogleAddressAutocompleteProps = {
   label?: string | ReactNode
+  customLabel?: ReactNode
   name: string
   containerClass?: string
   placeholder?: string
@@ -41,6 +42,7 @@ type GoogleAddressAutocompleteProps = {
 
 export const GoogleAddressAutocomplete = ({
   label,
+  customLabel,
   name,
   containerClass,
   placeholder = 'Enter an address',
@@ -266,6 +268,8 @@ export const GoogleAddressAutocomplete = ({
         />
 
         {error && <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>}
+
+        {customLabel && customLabel}
 
         {isLoading && (
           <div className="position-absolute end-0 top-50 translate-middle-y me-3">
