@@ -299,7 +299,7 @@ export default function Google() {
                     <Col lg={4} className="d-flex justify-content-end">
                       <Button
                         type="button"
-                        colorClass="success"
+                        colorClass="primary"
                         onClick={() => handleAccept('original')}
                         disabled={isSubmitting || !currentValidation}
                         loading={isSubmitting && loadingType === 'original'}
