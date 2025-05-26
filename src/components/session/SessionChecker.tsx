@@ -22,7 +22,8 @@ export const SessionChecker = () => {
   // Set token expiration time on successful login
   useEffect(() => {
     if (status === 'authenticated' && session && mounted) {
-      // Check if we need to set token expiration (if it doesn't exist yet)
+      // Only set token expiration if it doesn't exist
+      // and don't interfere with the login process
       if (!localStorage.getItem('token_expires_at')) {
         // Set token expiration time 60 minutes from now
         const expiresAt = Date.now() + 60 * 60 * 1000
@@ -47,7 +48,7 @@ export const SessionChecker = () => {
     const checkTokenExpiration = () => {
       // Function to handle logout with toast
       const handleTokenExpiration = (reason: string) => {
-        if (!toastShownRef.current) {
+        if (!toastShownRef.current && status === 'authenticated') {
           showToast({
             variant: 'danger',
             title: t('sessionExpired'),
@@ -59,15 +60,23 @@ export const SessionChecker = () => {
         // Clear localStorage
         localStorage.removeItem('token_expires_at')
 
-        // Delay logout slightly to allow toast to be seen
-        setTimeout(() => {
-          signOut({ redirect: true, callbackUrl: '/auth/login' })
-        }, 1500)
+        // Only sign out if we're still authenticated
+        if (status === 'authenticated') {
+          // Delay logout slightly to allow toast to be seen
+          setTimeout(() => {
+            signOut({ redirect: true, callbackUrl: '/auth/login' })
+          }, 1500)
+        }
       }
 
       // Check token expiration directly by looking at the token's expiresAt property
       const expiresAt = parseInt(localStorage.getItem('token_expires_at') || '0', 10)
-      if (expiresAt && Date.now() > expiresAt) {
+
+      // Only check expiration if:
+      // 1. We have an expiration time
+      // 2. It's actually in the past
+      // 3. We're authenticated (don't try to logout if already logged out)
+      if (expiresAt && Date.now() > expiresAt && status === 'authenticated') {
         handleTokenExpiration('time check')
         return
       }
@@ -76,11 +85,11 @@ export const SessionChecker = () => {
     // Check immediately
     checkTokenExpiration()
 
-    // Set interval to check token expiration every 30 minutes
-    const interval = setInterval(checkTokenExpiration, 30 * 60 * 1000)
+    // Set interval to check token expiration every 7 minutes
+    const interval = setInterval(checkTokenExpiration, 7 * 60 * 1000)
 
     return () => clearInterval(interval)
-  }, [session, router, mounted, showToast, t])
+  }, [mounted, status])
 
   return null
 }

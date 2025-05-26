@@ -15,11 +15,11 @@ export const ProjectContent = ({ data }: ContentProps) => {
         <TextWithLabel
           className="mt-5"
           label={t('project.projectName')}
-          value={data.project?.projectName}
+          value={data?.project?.projectName}
         />
         <TextWithLabel
           label={t('project.projectType')}
-          value={data.project?.projectType?.projectType}
+          value={data?.project?.projectType?.projectType}
         />
         <TextWithLabel
           label={t('project.description')}
@@ -27,21 +27,21 @@ export const ProjectContent = ({ data }: ContentProps) => {
         />
       </Tab>
 
-      {data.project?.address && (
+      {data?.project?.address && (
         <Tab eventKey="location" title={t('project.location')}>
-          <AddressDetails address={data.project.address} />
+          <AddressDetails address={data?.project?.address} />
         </Tab>
       )}
 
       {data?.ouUnit && (
         <Tab eventKey="orgUnit" title={t('orgUnit.title')}>
-          <TextWithLabel className="mt-5" label={t('orgUnit.name')} value={data.ouUnit?.name} />
+          <TextWithLabel className="mt-5" label={t('orgUnit.name')} value={data?.ouUnit?.name} />
         </Tab>
       )}
 
       {data?.ouUnit?.primaryAddress && (
         <Tab eventKey="orgUnitAddress" title={t('orgUnit.orgUnitAddress')}>
-          <AddressDetails address={data.ouUnit?.primaryAddress} />
+          <AddressDetails address={data?.ouUnit?.primaryAddress} />
         </Tab>
       )}
     </Tabs>

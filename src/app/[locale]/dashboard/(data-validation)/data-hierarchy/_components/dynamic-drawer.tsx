@@ -18,13 +18,13 @@ export const DynamicDrawer = ({ item, onBreadcrumbPress }: DynamicDrawerProps) =
   const itemType = useMemo(() => {
     if (!item) return ''
 
-    return generateItemType(item.index as string)
+    return generateItemType(item?.index as string)
   }, [item?.index])
 
   const itemIcon = useMemo(() => {
     if (!item) return ''
 
-    return generateItemIcon(item.index as string)
+    return generateItemIcon(item?.index as string)
   }, [item?.index])
 
   const itemId = useMemo(() => {
@@ -44,34 +44,34 @@ export const DynamicDrawer = ({ item, onBreadcrumbPress }: DynamicDrawerProps) =
 
     switch (itemType) {
       case 'enterprise-root':
-        return <EnterpriseRootContent data={item.data} />
+        return <EnterpriseRootContent data={item?.data} />
       case 'address':
       case 'enterprise-root-address':
       case 'business-partner-address':
-        return <AddressContent data={item.data} />
+        return <AddressContent data={item?.data} />
       case 'business-partner':
       case 'enterprise-root-business-partner':
       case 'business-partner-business-partner':
-        return <BusinessPartnerContent data={item.data} />
+        return <BusinessPartnerContent data={item?.data} />
       case 'contact':
       case 'enterprise-root-contact':
       case 'business-partner-contact':
-        return <ContactContent data={item.data} />
+        return <ContactContent data={item?.data} />
       case 'customer':
       case 'enterprise-root-customer':
       case 'business-partner-customer':
-        return <CustomerContent data={item.data} />
+        return <CustomerContent data={item?.data} />
       case 'enterprise-root-project':
       case 'business-partner-project':
-        return <ProjectContent data={item.data} />
+        return <ProjectContent data={item?.data} />
       case 'project':
       case 'enterprise-root-user':
       case 'business-partner-user':
-        return <UserContent data={item.data} />
+        return <UserContent data={item?.data} />
       case 'organisational-unit':
       case 'enterprise-root-org-unit':
       case 'business-partner-org-unit':
-        return <OrgUnitContent data={item.data} />
+        return <OrgUnitContent data={item?.data} />
       default:
         return null
     }

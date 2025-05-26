@@ -10,6 +10,7 @@ import './input.style.scss'
 
 type InputProps = FormControlProps & {
   label?: string | ReactNode
+  customLabel?: ReactNode
   name: string
   containerClass?: string
   step?: number
@@ -25,6 +26,7 @@ type InputProps = FormControlProps & {
 export const ControlledInput = (props: InputProps) => {
   const {
     label,
+    customLabel,
     name,
     containerClass,
     children,
@@ -106,6 +108,7 @@ export const ControlledInput = (props: InputProps) => {
         <>
           {formControl}
           {error && <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>}
+          {customLabel && customLabel}
         </>
       )}
     </Form.Group>

@@ -12,14 +12,14 @@ export const EnterpriseRootContent = ({ data }: ContentProps) => {
   return (
     <Tabs defaultActiveKey="companyInfo" id="enterpriseRootTabs">
       <Tab eventKey="companyInfo" title={t('companyInfo.companyInfo')}>
-        <TextWithLabel label={t('companyInfo.companyName')} value={data.name} className="mt-5" />
+        <TextWithLabel label={t('companyInfo.companyName')} value={data?.name} className="mt-5" />
       </Tab>
 
-      {data.enterpriseRootAddresses && (
+      {data?.enterpriseRootAddresses && (
         <Tab eventKey="address" title={t('address.address')}>
           <AddressDetails
-            address={data.enterpriseRootAddresses.address}
-            addressType={data.enterpriseRootAddresses.addressType}
+            address={data?.enterpriseRootAddresses?.address}
+            addressType={data?.enterpriseRootAddresses?.addressType}
           />
         </Tab>
       )}
