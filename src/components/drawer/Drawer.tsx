@@ -1,6 +1,6 @@
 import { KTIcon } from '@/components/kt-icon/kt-icon'
 
-import { DrawerProps } from './types'
+import { DrawerProps } from './drawer.type'
 
 export const Drawer = (props: DrawerProps) => {
   const drawerId = `kt_${props.id}`

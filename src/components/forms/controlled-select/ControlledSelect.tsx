@@ -6,9 +6,9 @@ import Select from 'react-select'
 
 import { Option } from '@/utils/format-option.util'
 
-import { SelectLoading } from './select-loading'
-import { useSelect } from './select.hook'
-import './select.scss'
+import { useSelect } from './controlled-select.hook'
+import './ControlledSelect.scss'
+import { SelectLoading } from './ControlledSelectLoading'
 
 type SelectProps<OptionValue> = {
   label?: string

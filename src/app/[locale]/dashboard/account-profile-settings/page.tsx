@@ -2,8 +2,8 @@
 
 import { useTranslations } from 'next-intl'
 
-import { ConfirmationModal } from '@/components/confirmation-modal/confirmation-modal'
-import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
+import { ConfirmationModal } from '@/components/confirmation-modal/ConfirmationModal'
+import { DynamicTabs } from '@/components/dynamic-tabs/DynamicTabs'
 import Loading from '@/components/loading/loading'
 import { Page } from '@/components/page/page'
 

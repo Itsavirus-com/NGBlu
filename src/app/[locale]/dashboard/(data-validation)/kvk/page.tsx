@@ -3,8 +3,8 @@ import { useTranslations } from 'next-intl'
 import { Badge, Card, CardBody, Col, Row } from 'react-bootstrap'
 
 import { Button } from '@/components/button/Button'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
 import { FormProvider } from '@/components/forms/form-provider'
-import { ControlledInput } from '@/components/forms/input'
 import Loading from '@/components/loading/loading'
 import { PageTitle } from '@/components/page-title'
 

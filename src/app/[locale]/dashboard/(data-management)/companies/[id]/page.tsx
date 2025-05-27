@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 
-import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
+import { DynamicTabs } from '@/components/dynamic-tabs/DynamicTabs'
 import { PageTitle } from '@/components/page-title'
 import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import { useCompany } from '@/services/swr/use-company'

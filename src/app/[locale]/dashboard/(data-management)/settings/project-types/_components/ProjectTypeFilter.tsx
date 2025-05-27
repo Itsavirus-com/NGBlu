@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl'
 
-import { ControlledInput } from '@/components/forms/input'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
 
 export const ProjectTypesFilter = () => {
   const t = useTranslations('dataManagement.projects.types')

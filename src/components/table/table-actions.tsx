@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/use-toast.hook'
 import { generalApi } from '@/services/api/general-api'
 
 import { TableActionsHeadProps, TableActionsProps } from './table-actions.type'
-import { ConfirmationModal } from '../confirmation-modal/confirmation-modal'
+import { ConfirmationModal } from '../confirmation-modal/ConfirmationModal'
 
 export const TableActionsHead = ({ actions, customActions }: TableActionsHeadProps) => {
   const t = useTranslations('common.table')

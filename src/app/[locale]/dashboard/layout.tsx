@@ -4,7 +4,7 @@ import { SessionProvider } from 'next-auth/react'
 import { SWRConfig } from 'swr'
 
 import { MasterInit } from '@/components/core/master-init'
-import { Footer } from '@/components/footer/footer'
+import { Footer } from '@/components/footer/Footer'
 import { Header } from '@/components/header'
 import { SessionChecker } from '@/components/session/SessionChecker'
 import { Sidebar } from '@/components/sidebar/sidebar'

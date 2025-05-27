@@ -6,7 +6,7 @@ import { useController, useFormContext } from 'react-hook-form'
 
 import eyePassClosed from '@/assets/images/general/eye-password-closed.png'
 import eyePassOpen from '@/assets/images/general/eye-password-open.png'
-import './input.style.scss'
+import './ControlledInput.style.scss'
 
 type InputProps = FormControlProps & {
   label?: string | ReactNode

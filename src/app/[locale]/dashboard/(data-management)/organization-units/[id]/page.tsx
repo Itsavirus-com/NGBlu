@@ -2,9 +2,9 @@
 
 import { useTranslations } from 'next-intl'
 
-import { Breadcrumbs } from '@/components/breadcrumbs/breadcrumbs'
+import { Breadcrumbs } from '@/components/breadcrumbs/Breadcrumbs'
 import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
-import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
+import { DynamicTabs } from '@/components/dynamic-tabs/DynamicTabs'
 import { PageTitle } from '@/components/page-title'
 import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
 import {

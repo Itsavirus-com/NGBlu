@@ -5,7 +5,7 @@ import { Button } from '../Button'
 // Set up mocks
 createCommonMocks()
 
-describe('Button Component', () => {
+describe('<Button />', () => {
   it('renders button with label correctly', () => {
     // Arrange
     const label = 'Click me'

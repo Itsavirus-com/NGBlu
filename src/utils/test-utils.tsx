@@ -7,6 +7,8 @@ const messages = {
   // Add any translation keys used in your components
   common: {
     loading: 'Loading...',
+    cancel: 'Cancel',
+    yesContinue: 'Yes, continue',
     // Add other common translations
   },
 }
