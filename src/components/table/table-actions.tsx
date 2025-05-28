@@ -26,6 +26,7 @@ export const TableActions = (props: TableActionsProps) => {
     dataId,
     apiPath,
     onDelete,
+    showDeleteConfirmation = true,
     queryParams,
     rowData,
   } = props
@@ -37,15 +38,20 @@ export const TableActions = (props: TableActionsProps) => {
   const [loadingDelete, setLoadingDelete] = useState(false)
 
   const onConfirmDelete = async () => {
-    if (!apiPath) return
     setLoadingDelete(true)
 
     try {
-      const res = await generalApi.deleteItem(`${apiPath}/${dataId}`)
+      // If a custom onDelete callback is provided, use it instead of API call
+      if (onDelete) {
+        await onDelete(rowData, dataId)
+        // showToast({ variant: 'success', body: t('deleteSuccess') })
+      } else if (apiPath) {
+        // Fallback to API-based deletion
+        const res = await generalApi.deleteItem(`${apiPath}/${dataId}`)
 
-      if (res.ok) {
-        onDelete?.()
-        showToast({ variant: 'success', body: t('deleteSuccess') })
+        if (res.ok) {
+          showToast({ variant: 'success', body: t('deleteSuccess') })
+        }
       }
     } catch (error: any) {
       const errorMessage = error.message
@@ -124,7 +130,15 @@ export const TableActions = (props: TableActionsProps) => {
                 activeColorClass="color-danger"
                 iconSize="fs-3"
                 className="me-1"
-                onClick={() => setDeleteConfirmVisible(true)}
+                onClick={() => {
+                  if (onDelete && !showDeleteConfirmation) {
+                    // Call onDelete directly without confirmation modal
+                    onDelete(rowData, dataId)
+                  } else {
+                    // Show confirmation modal
+                    setDeleteConfirmVisible(true)
+                  }
+                }}
               />
             </span>
           </OverlayTrigger>

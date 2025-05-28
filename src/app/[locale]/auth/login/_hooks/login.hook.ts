@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { usePasskey } from '@/hooks/use-passkey.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { loginManualApi } from '@/services/api/login-manual-api'
 import { omitNullAndUndefined } from '@/utils/object'
@@ -16,6 +17,12 @@ export const useLogin = () => {
   const router = useRouter()
   const tError = useTranslations('common.error')
   const toastShownRef = useRef(false)
+  const {
+    isSupported: isPasskeySupported,
+    authenticateWithPasskey,
+    authenticateWithConditionalUI,
+    isAuthenticating: isPasskeyAuthenticating,
+  } = usePasskey()
 
   const { showToast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
@@ -100,6 +107,22 @@ export const useLogin = () => {
     }
   }
 
+  const handlePasskeySignIn = async () => {
+    await authenticateWithPasskey()
+  }
+
+  // Initialize conditional UI for passkey autofill
+  useEffect(() => {
+    if (isPasskeySupported) {
+      // Delay to ensure DOM is fully rendered
+      const timer = setTimeout(() => {
+        authenticateWithConditionalUI()
+      }, 100)
+
+      return () => clearTimeout(timer)
+    }
+  }, [isPasskeySupported])
+
   useEffect(() => {
     // Check for error parameters in the URL
     const error = searchParams?.get('error')
@@ -116,9 +139,14 @@ export const useLogin = () => {
   }, [searchParams, showToast, tError])
 
   return {
+    // state
     methods,
-    onSubmit,
     isLoading,
+    isPasskeySupported,
+    isPasskeyAuthenticating,
+    // actions
+    onSubmit,
     handleMicrosoftSignIn,
+    handlePasskeySignIn,
   }
 }

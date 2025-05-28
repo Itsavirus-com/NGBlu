@@ -2,18 +2,29 @@
 
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
+import { useEffect } from 'react'
 
 import microsoftIcon from '@/assets/images/brand-logos/microsoft-5.svg'
 import { Button } from '@/components/button/button'
 import { FormProvider } from '@/components/forms/form-provider'
 import { ControlledInput } from '@/components/forms/input'
+import { usePasskey } from '@/hooks/use-passkey.hook'
 import { Link } from '@/navigation'
 
 import { useLogin } from './_hooks/login.hook'
 
 export default function Login() {
   const t = useTranslations('auth.login')
-  const { methods, onSubmit, isLoading, handleMicrosoftSignIn } = useLogin()
+  const tPasskey = useTranslations('auth.passkey')
+  const {
+    methods,
+    onSubmit,
+    isLoading,
+    handleMicrosoftSignIn,
+    handlePasskeySignIn,
+    isPasskeySupported,
+    isPasskeyAuthenticating,
+  } = useLogin()
 
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
@@ -22,6 +33,20 @@ export default function Login() {
           <h1 className="text-3xl font-bold mb-2">{t('signIn')}</h1>
           <div className="text-gray-600">{t('signInToInfraOrders')}</div>
         </div>
+
+        {/* Passkey Sign In Button - Show if supported */}
+        {isPasskeySupported && (
+          <Button
+            type="button"
+            onClick={handlePasskeySignIn}
+            label={tPasskey('signInWithPasskey')}
+            icon="fingerprint-scanning"
+            className="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100 mb-4"
+            loading={isPasskeyAuthenticating}
+            disabled={isPasskeyAuthenticating}
+            size="lg"
+          />
+        )}
 
         {/* Microsoft Sign In Button */}
         <div
@@ -38,7 +63,7 @@ export default function Login() {
           <hr className="flex-grow-1 border-2" />
         </div>
 
-        {/* Email Input */}
+        {/* Email Input with conditional UI support */}
         <ControlledInput
           label={t('email')}
           name="email"
@@ -46,6 +71,7 @@ export default function Login() {
           placeholder="mail@example.com"
           containerClass="mb-6"
           isRequired
+          autoComplete="username webauthn"
         />
 
         {/* Password Input */}
@@ -58,7 +84,12 @@ export default function Login() {
               {t('forgotPassword')}
             </Link>
           </div>
-          <ControlledInput name="password" type="password" isRequired />
+          <ControlledInput
+            name="password"
+            type="password"
+            isRequired
+            autoComplete="current-password"
+          />
         </div>
 
         {/* Sign In Button */}
@@ -70,6 +101,16 @@ export default function Login() {
           loading={isLoading}
           disabled={isLoading}
         />
+
+        {/* Passkey info for unsupported browsers */}
+        {!isPasskeySupported && (
+          <div className="mt-4 p-3 bg-light rounded">
+            <div className="text-muted text-center">
+              <i className="bi bi-info-circle me-2"></i>
+              {tPasskey('notSupportedInfo')}
+            </div>
+          </div>
+        )}
       </div>
     </FormProvider>
   )

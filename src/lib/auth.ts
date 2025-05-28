@@ -95,7 +95,6 @@ async function getAccessToken(idToken: string) {
       userData: userData.data,
     }
   } catch (error) {
-    console.log('error in getAccessToken', error)
     return null
   }
 }
@@ -152,6 +151,47 @@ export const authOptions: NextAuthOptions = {
           } as CustomUser
         } catch (error) {
           console.error('Error in authorize callback:', error)
+          return null
+        }
+      },
+    }),
+    CredentialsProvider({
+      id: 'passkey-login',
+      name: 'Passkey Login',
+      credentials: {
+        accessToken: { label: 'Access Token', type: 'text' },
+        clientPrivateKey: { label: 'Client Private Key', type: 'text' },
+        userData: { label: 'User Data', type: 'text' },
+      },
+      async authorize(credentials) {
+        try {
+          if (!credentials?.accessToken || !credentials?.clientPrivateKey) {
+            console.error('Missing passkey credentials:', {
+              hasAccessToken: !!credentials?.accessToken,
+              hasClientPrivateKey: !!credentials?.clientPrivateKey,
+            })
+            return null
+          }
+
+          // Parse userData if it exists
+          let userData = {}
+          if (credentials.userData) {
+            try {
+              userData = JSON.parse(credentials.userData)
+            } catch (e) {
+              console.error('Failed to parse passkey userData:', e)
+            }
+          }
+
+          // Return user object with the tokens and user data
+          return {
+            id: '1', // Required by NextAuth
+            accessToken: credentials.accessToken,
+            clientPrivateKey: credentials.clientPrivateKey,
+            userData,
+          } as CustomUser
+        } catch (error) {
+          console.error('Error in passkey authorize callback:', error)
           return null
         }
       },
@@ -229,6 +269,25 @@ export const authOptions: NextAuthOptions = {
           }
         } else {
           console.error('Invalid credentials in manual login')
+          token.error = 'invalid_credentials'
+        }
+      }
+
+      // This block handles passkey login
+      if (user && account?.provider === 'passkey-login') {
+        const customUser = user as unknown as CustomUser
+
+        if (customUser.accessToken && customUser.clientPrivateKey) {
+          token.accessToken = customUser.accessToken
+          token.clientPrivateKey = customUser.clientPrivateKey
+          token.provider = 'passkey'
+
+          // Handle userData, which might be an object or stringified JSON
+          if (customUser.userData) {
+            token.userData = customUser.userData
+          }
+        } else {
+          console.error('Invalid credentials in passkey login')
           token.error = 'invalid_credentials'
         }
       }
