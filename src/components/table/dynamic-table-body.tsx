@@ -21,6 +21,7 @@ export const DynamicTableBody = <TableValues extends Record<string, any>>(
     filters,
     defaultFilters = {},
     queryParams,
+    onDelete,
   } = props
   const hasActions = !!actions?.length || !!customActions?.length
 
@@ -80,7 +81,7 @@ export const DynamicTableBody = <TableValues extends Record<string, any>>(
                     actionBasePath={actionBasePath}
                     dataId={row.id}
                     apiPath={apiPath}
-                    onDelete={mutate}
+                    onDelete={onDelete}
                     queryParams={processQueryParams(row, queryParams)}
                     rowData={row}
                   />

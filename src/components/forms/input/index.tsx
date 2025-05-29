@@ -21,6 +21,7 @@ type InputProps = FormControlProps & {
   hidePasswordToggle?: boolean
   className?: string
   disabled?: boolean
+  autoComplete?: string
 }
 
 export const ControlledInput = (props: InputProps) => {
@@ -37,6 +38,7 @@ export const ControlledInput = (props: InputProps) => {
     hidePasswordToggle,
     className,
     disabled,
+    autoComplete,
     ...otherProps
   } = props
 
@@ -59,7 +61,7 @@ export const ControlledInput = (props: InputProps) => {
       type={effectiveType}
       {...register(name)}
       {...otherProps}
-      autoComplete={name}
+      autoComplete={autoComplete || name}
       data-test-id={name}
       className={clsx('form-control', { 'is-invalid': invalid }, className)}
       disabled={disabled}
