@@ -5,6 +5,10 @@ import { useTranslations } from 'next-intl'
 import logo from '@/assets/images/logos/ng-blu.png'
 import authBgImage from '@/assets/images/misc/auth-bg.png'
 
+import '@/assets/keenicons/duotone/style.css'
+import '@/assets/keenicons/outline/style.css'
+import '@/assets/keenicons/solid/style.css'
+
 export default function AuthLayout({
   children,
 }: Readonly<{

@@ -7,7 +7,16 @@ import { TableEmpty } from './table-empty'
 export const StaticTableBody = <TableValues extends Record<string, any>>(
   props: StaticTableBodyProps<TableValues>
 ) => {
-  const { columns, data, actions, customActions, actionBasePath, queryParams } = props
+  const {
+    columns,
+    data,
+    actions,
+    customActions,
+    actionBasePath,
+    queryParams,
+    onDelete,
+    showDeleteConfirmation,
+  } = props
   const hasActions = !!actions?.length || !!customActions?.length
 
   if (!columns?.length) return null
@@ -44,6 +53,8 @@ export const StaticTableBody = <TableValues extends Record<string, any>>(
                   dataId={row.id}
                   queryParams={processQueryParams(row, queryParams)}
                   rowData={row}
+                  onDelete={onDelete ? () => onDelete(row) : undefined}
+                  showDeleteConfirmation={showDeleteConfirmation}
                 />
               </tr>
             ))}

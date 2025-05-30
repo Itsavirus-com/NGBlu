@@ -47,7 +47,7 @@ type ColorClass =
 
 export type ButtonProps = {
   icon?: string
-  label?: string
+  label?: string | React.ReactNode
   href?: string
   onClick?: () => void
   size?: Size

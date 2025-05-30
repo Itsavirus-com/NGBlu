@@ -22,4 +22,7 @@ export type TableProps<TableValues> = {
   apiPath?: string
   data?: TableValues[]
   className?: string
-} & TableActionsProps
+  onDelete?: (rowData: TableValues) => void | Promise<void>
+  showDeleteConfirmation?: boolean
+  noPadding?: boolean
+} & Omit<TableActionsProps, 'onDelete' | 'showDeleteConfirmation'>

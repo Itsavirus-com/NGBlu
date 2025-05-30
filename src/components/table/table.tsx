@@ -23,12 +23,22 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
     className,
     queryParams,
     customActions,
+    onDelete,
+    showDeleteConfirmation,
+    noPadding,
   } = props
 
   const [filters, setFilters] = useState<Record<string, any>>({})
 
   return (
-    <div className={`app-container container-fluid ${className}`}>
+    <div
+      className={clsx(
+        {
+          'app-container container-fluid': !noPadding,
+        },
+        className
+      )}
+    >
       <div className="card card-xxl-stretch">
         <div
           className={clsx('card-header border-0', {
@@ -54,6 +64,9 @@ export const Table = <TableValues extends Record<string, any>>(props: TableProps
               actions={actions}
               actionBasePath={actionBasePath}
               queryParams={queryParams}
+              customActions={customActions}
+              onDelete={onDelete}
+              showDeleteConfirmation={showDeleteConfirmation}
             />
           )}
 

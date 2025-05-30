@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Drawer } from '@/components/drawer/Drawer'
+import { Drawer } from '@/components/drawer/drawer'
 
 import { AddressContent } from './address-content'
 import { BusinessPartnerContent } from './business-partner-content'

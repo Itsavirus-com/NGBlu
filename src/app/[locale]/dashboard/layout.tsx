@@ -7,7 +7,7 @@ import { MasterInit } from '@/components/core/master-init'
 import { Footer } from '@/components/footer/Footer'
 import { Header } from '@/components/header'
 import { SessionChecker } from '@/components/session/SessionChecker'
-import { Sidebar } from '@/components/sidebar/sidebar'
+import { Sidebar } from '@/components/sidebar/Sidebar'
 import { fetcher } from '@/services/swr/fetcher'
 
 import '@/assets/keenicons/duotone/style.css'

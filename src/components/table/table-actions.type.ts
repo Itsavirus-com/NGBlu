@@ -11,7 +11,8 @@ export type TableActionsProps = TableActionsHeadProps & {
   actionBasePath?: string
   dataId?: number
   apiPath?: string
-  onDelete?: () => void
+  onDelete?: (rowData?: any, dataId?: number) => void | Promise<void>
+  showDeleteConfirmation?: boolean
   queryParams?: Record<string, string>
   rowData?: any
 }

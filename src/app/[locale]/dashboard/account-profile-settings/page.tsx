@@ -2,13 +2,14 @@
 
 import { useTranslations } from 'next-intl'
 
-import { ConfirmationModal } from '@/components/confirmation-modal/ConfirmationModal'
+import { ConfirmationModal } from '@/components/confirmation-modal/confirmation-modal'
 import { DynamicTabs } from '@/components/dynamic-tabs/DynamicTabs'
 import Loading from '@/components/loading/loading'
 import { Page } from '@/components/page/page'
 
-import { PasswordForm } from './_components/password-form'
-import { ProfileForm } from './_components/profile-form'
+import { PasskeyManagement } from './_components/PasskeyManagement/PasskeyManagement'
+import { PasswordForm } from './_components/PasswordForm'
+import { ProfileForm } from './_components/ProfileForm'
 import useAccountProfileSettings from './_hooks/account-profile-settings.hook'
 
 export default function AccountSettings() {
@@ -54,7 +55,14 @@ export default function AccountSettings() {
     ),
   }
 
-  const tabs = [profileInfoTab, passwordUpdateTab]
+  const passkeyManagementTab = {
+    eventKey: 'passkey-management',
+    title: t('passkeyManagement'),
+    condition: Boolean(userProfile?.authType !== 'microsoft'),
+    content: <PasskeyManagement />,
+  }
+
+  const tabs = [profileInfoTab, passwordUpdateTab, passkeyManagementTab]
 
   return (
     <Page title={t('accountSettings')} description={t('manageYourAccount')}>

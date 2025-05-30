@@ -22,7 +22,6 @@ export const Filter = ({ children, onFilter }: FilterProps) => {
 
   // Add a reset handler to log reset action
   const handleReset = () => {
-    console.log('Filter reset - clearing all values')
     if (onFilter) {
       onFilter({})
     }

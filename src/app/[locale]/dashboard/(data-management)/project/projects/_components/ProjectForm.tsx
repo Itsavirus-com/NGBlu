@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Card, CardBody, Col, Row } from 'react-bootstrap'
 import { UseFormReturn } from 'react-hook-form'
 
-import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
+import { ControlledInput } from '@/components/forms/controlled-input/controlled-input'
 import { ControlledSelect } from '@/components/forms/controlled-select/ControlledSelect'
 import { ControlledSwitch } from '@/components/forms/controlled-switch/ControlledSwitch'
 import { FormButtons } from '@/components/forms/form-buttons/FormButtons'

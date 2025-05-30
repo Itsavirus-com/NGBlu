@@ -2,8 +2,8 @@ import userEvent from '@testing-library/user-event'
 
 import { createCommonMocks, render, screen } from '@/utils/test-utils'
 
+import { ConfirmationModal } from '../confirmation-modal'
 import { ConfirmationModalProps } from '../confirmation-modal.type'
-import { ConfirmationModal } from '../ConfirmationModal'
 
 // Set up mocks
 createCommonMocks()
