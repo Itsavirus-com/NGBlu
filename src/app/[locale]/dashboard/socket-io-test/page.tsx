@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react'
 
-import SocketTest from '@/components/socket-test'
+import SocketTest from '@/components/SocketTest'
 
 export default function SocketTestPage() {
   // Use the useSession hook to get session data

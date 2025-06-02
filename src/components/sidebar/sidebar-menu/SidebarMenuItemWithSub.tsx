@@ -1,8 +1,7 @@
 import clsx from 'clsx'
-import Link from 'next/link'
-import { FC } from 'react'
+import React from 'react'
 
-import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { KTIcon } from '@/components/kt-icon/KtIcon'
 import { usePathname } from '@/navigation'
 import { WithChildren } from '@/types'
 
@@ -16,19 +15,22 @@ type Props = {
   hasBullet?: boolean
 }
 
-const SidebarMenuItem: FC<Props & WithChildren> = ({
-  children,
+const SidebarMenuItemWithSub: React.FC<Props & WithChildren> = ({
   to,
+  children,
   title,
   icon,
-  hasBullet = false,
+  hasBullet,
 }) => {
   const pathname = usePathname()
   const isActive = checkIsActive(pathname, to)
 
   return (
-    <div className="menu-item">
-      <Link className={clsx('menu-link without-sub', { active: isActive })} href={to}>
+    <div
+      className={clsx('menu-item', { 'here show': isActive }, 'menu-accordion')}
+      data-kt-menu-trigger="click"
+    >
+      <span className="menu-link">
         {hasBullet && (
           <span className="menu-bullet">
             <span className="bullet bullet-dot"></span>
@@ -37,16 +39,18 @@ const SidebarMenuItem: FC<Props & WithChildren> = ({
 
         {icon && (
           <span className="menu-icon">
-            {' '}
             <KTIcon iconName={icon} className="fs-2" />
           </span>
         )}
 
         <span className="menu-title">{title}</span>
-      </Link>
-      {children}
+        <span className="menu-arrow"></span>
+      </span>
+      <div className={clsx('menu-sub menu-sub-accordion', { 'menu-active-bg': isActive })}>
+        {children}
+      </div>
     </div>
   )
 }
 
-export { SidebarMenuItem }
+export { SidebarMenuItemWithSub }

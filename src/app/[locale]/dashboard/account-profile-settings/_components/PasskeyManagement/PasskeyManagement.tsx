@@ -1,6 +1,6 @@
 'use client'
 
-import Loading from '@/components/loading/loading'
+import Loading from '@/components/loading/Loading'
 
 import { PasskeyEmptyState } from './PasskeyEmptyState'
 import { PasskeyModals } from './PasskeyModals'

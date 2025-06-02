@@ -2,9 +2,9 @@
 import { useTranslations } from 'next-intl'
 
 import { ButtonProps } from '@/components/button/button.type'
-import { Table } from '@/components/table/table'
+import { Table } from '@/components/table/Table'
 import { TableColumn } from '@/components/table/table.type'
-import { DateTimeView } from '@/components/view/date-time-view/date-time-view'
+import { DateTimeView } from '@/components/view/date-time-view/DateTimeView'
 import { CAPITALIZE_WORD_REGEX, UNDERSCORE_REGEX } from '@/constants/regex'
 import { User } from '@/services/swr/models/user.type'
 import { safeRender } from '@/utils/safeRender'

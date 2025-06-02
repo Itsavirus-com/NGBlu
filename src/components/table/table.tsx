@@ -3,9 +3,9 @@ import { useState } from 'react'
 
 import { Button } from '@/components/button/Button'
 
-import { DynamicTableBody } from './dynamic-table-body'
-import { Filter } from './filter'
-import { StaticTableBody } from './static-table-body'
+import { DynamicTableBody } from './DynamicTableBody'
+import { Filter } from './Filter'
+import { StaticTableBody } from './StaticTableBody'
 import { TableProps } from './table.type'
 
 export const Table = <TableValues extends Record<string, any>>(props: TableProps<TableValues>) => {

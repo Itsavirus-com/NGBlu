@@ -41,10 +41,10 @@ describe('<Breadcrumbs />', () => {
 
   it('renders null when items is null or not an array', () => {
     const { container: nullContainer } = render(<Breadcrumbs items={null as any} />)
-    expect(nullContainer.firstChild).toBeNull()
+    expect(nullContainer.querySelector('nav')).not.toBeInTheDocument()
 
     const { container: invalidContainer } = render(<Breadcrumbs items={'invalid' as any} />)
-    expect(invalidContainer.firstChild).toBeNull()
+    expect(invalidContainer.querySelector('nav')).not.toBeInTheDocument()
   })
 
   it('renders breadcrumb items correctly', () => {

@@ -1,6 +1,6 @@
 import { Breadcrumb } from 'react-bootstrap'
 
-import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { KTIcon } from '@/components/kt-icon/KtIcon'
 import { enterpriseRootApi } from '@/services/api/enterprise-root-api'
 
 import { DrawerBreadcrumbItem, DrawerBreadcrumbProps } from './drawer-breadcrumb.type'

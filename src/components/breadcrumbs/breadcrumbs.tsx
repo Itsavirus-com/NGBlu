@@ -5,7 +5,7 @@ import { useRouter } from '@/navigation'
 
 import { BreadcrumbItem, BreadcrumbProps } from './breadcrumbs.type'
 import { mapApiPathToAppRoute } from './helper'
-import { KTIcon } from '../kt-icon/kt-icon'
+import { KTIcon } from '../kt-icon/KtIcon'
 
 export const Breadcrumbs = <T,>({ items, onBreadcrumbPress }: BreadcrumbProps<T>) => {
   const { push } = useRouter()

@@ -1,8 +1,8 @@
 import { processQueryParams } from '@/utils/queryParams'
 
 import { StaticTableBodyProps } from './static-table-body.type'
-import { TableActions, TableActionsHead } from './table-actions'
-import { TableEmpty } from './table-empty'
+import { TableActions, TableActionsHead } from './TableActions'
+import { TableEmpty } from './TableEmpty'
 
 export const StaticTableBody = <TableValues extends Record<string, any>>(
   props: StaticTableBodyProps<TableValues>

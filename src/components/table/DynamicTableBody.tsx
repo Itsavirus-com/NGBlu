@@ -4,10 +4,10 @@ import { useTableData } from '@/services/swr/use-table-data'
 import { processQueryParams } from '@/utils/queryParams'
 
 import { DynamicTableBodyProps } from './dynamic-table-body.type'
-import { TableActions, TableActionsHead } from './table-actions'
-import { TableEmpty } from './table-empty'
-import { TableLoading } from './table-loading'
-import { TablePagination } from './table-pagination'
+import { TableActions, TableActionsHead } from './TableActions'
+import { TableEmpty } from './TableEmpty'
+import { TableLoading } from './TableLoading'
+import { TablePagination } from './TablePagination'
 
 export const DynamicTableBody = <TableValues extends Record<string, any>>(
   props: DynamicTableBodyProps<TableValues>

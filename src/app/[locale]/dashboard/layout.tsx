@@ -3,9 +3,9 @@
 import { SessionProvider } from 'next-auth/react'
 import { SWRConfig } from 'swr'
 
-import { MasterInit } from '@/components/core/master-init'
+import { MasterInit } from '@/components/core/MasterInit'
 import { Footer } from '@/components/footer/Footer'
-import { Header } from '@/components/header'
+import { Header } from '@/components/header/Header'
 import { SessionChecker } from '@/components/session/SessionChecker'
 import { Sidebar } from '@/components/sidebar/Sidebar'
 import { fetcher } from '@/services/swr/fetcher'

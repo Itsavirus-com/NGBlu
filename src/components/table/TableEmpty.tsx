@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl'
 
-import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { KTIcon } from '@/components/kt-icon/KtIcon'
 
 import { TableEmptyProps } from './table-empty.type'
 

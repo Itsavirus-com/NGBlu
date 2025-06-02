@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { UseFormReturn } from 'react-hook-form'
 
-import { ControlledInput } from '@/components/forms/controlled-input/controlled-input'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
 import { FormButtons } from '@/components/forms/form-buttons/FormButtons'
 import { FormProvider } from '@/components/forms/form-provider/FormProvider'
 

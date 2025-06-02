@@ -6,7 +6,7 @@ import { FC } from 'react'
 
 import avatar from '@/assets/images/avatars/300-3.jpg'
 
-import { Languages } from './languages'
+import { Languages } from './Languages'
 
 const HeaderUserMenu: FC = () => {
   const t = useTranslations('common.navbar')

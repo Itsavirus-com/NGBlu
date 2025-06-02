@@ -5,7 +5,7 @@ import { Col, Form, Pagination, Row } from 'react-bootstrap'
 import { useViewport } from '@/hooks'
 
 import { TablePaginationProps } from './table-pagination.type'
-import { KTIcon } from '../kt-icon/kt-icon'
+import { KTIcon } from '../kt-icon/KtIcon'
 
 export const TablePagination = (props: TablePaginationProps) => {
   const t = useTranslations('common.table')

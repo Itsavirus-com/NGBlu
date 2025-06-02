@@ -1,8 +1,8 @@
 import { useTranslations } from 'next-intl'
 import { Row } from 'react-bootstrap'
 
-import { Page } from '@/components/page/page'
-import { TextView } from '@/components/view/text-view/text-view'
+import { Page } from '@/components/page/Page'
+import { TextView } from '@/components/view/text-view/TextView'
 
 import { FieldTextViewProps } from './field-text-view.type'
 

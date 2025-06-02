@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 
 import { createCommonMocks, render, screen } from '@/utils/test-utils'
 
-import { ControlledInput } from '../controlled-input'
+import { ControlledInput } from '../ControlledInput'
 
 // Set up mocks
 createCommonMocks()

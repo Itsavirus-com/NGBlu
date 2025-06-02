@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 
 import { DynamicTabs } from '@/components/dynamic-tabs/DynamicTabs'
 import { PageTitle } from '@/components/page-title'
-import { Table } from '@/components/table/table'
+import { Table } from '@/components/table/Table'
 import { TableColumn } from '@/components/table/table.type'
 import { useToast } from '@/hooks/use-toast.hook'
 import { useRouter } from '@/navigation'

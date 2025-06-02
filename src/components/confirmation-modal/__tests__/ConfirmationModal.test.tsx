@@ -1,9 +1,20 @@
+// Mock useTranslations before importing the component
+jest.mock('next-intl', () => ({
+  useTranslations: jest.fn(() => (key: string) => {
+    const translations: Record<string, string> = {
+      cancel: 'Cancel',
+      yesContinue: 'Yes, continue',
+    }
+    return translations[key] || key
+  }),
+}))
+
 import userEvent from '@testing-library/user-event'
 
 import { createCommonMocks, render, screen } from '@/utils/test-utils'
 
-import { ConfirmationModal } from '../confirmation-modal'
 import { ConfirmationModalProps } from '../confirmation-modal.type'
+import { ConfirmationModal } from '../ConfirmationModal'
 
 // Set up mocks
 createCommonMocks()

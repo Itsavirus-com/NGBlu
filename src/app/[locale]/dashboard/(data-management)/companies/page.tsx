@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 
-import { Table } from '@/components/table/table'
+import { Table } from '@/components/table/Table'
 import { TableColumn } from '@/components/table/table.type'
 import { Company } from '@/services/swr/models/company.type'
 import { safeRender } from '@/utils/safeRender'

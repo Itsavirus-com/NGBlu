@@ -1,4 +1,4 @@
-import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { KTIcon } from '@/components/kt-icon/KtIcon'
 
 import { DrawerProps } from './drawer.type'
 

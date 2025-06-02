@@ -3,9 +3,9 @@ import { useTranslations } from 'next-intl'
 
 import { useIsSuperAdmin } from '@/hooks/use-auth'
 
-import { SidebarMenuItem } from './sidebar-menu-item'
-import { SidebarMenuItemWithSub } from './sidebar-menu-item-with-sub'
-import { SidebarMenuSeparator } from './sidebar-menu-separator'
+import { SidebarMenuItem } from './SidebarMenuItem'
+import { SidebarMenuItemWithSub } from './SidebarMenuItemWithSub'
+import { SidebarMenuSeparator } from './SidebarMenuSeparator'
 
 const SidebarMenuMain = () => {
   const t = useTranslations('common.sidebar')

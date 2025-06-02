@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl'
 
-import { ControlledInput } from '@/components/forms/controlled-input/controlled-input'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
 
 export const BusinessPartnerContactFilter = () => {
   const t = useTranslations('dataManagement.businessPartners.contacts')

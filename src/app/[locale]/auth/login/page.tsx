@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 
 import microsoftIcon from '@/assets/images/brand-logos/microsoft-5.svg'
 import { Button } from '@/components/button/Button'
-import { ControlledInput } from '@/components/forms/controlled-input/controlled-input'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
 import { FormProvider } from '@/components/forms/form-provider'
 import { Link } from '@/navigation'
 

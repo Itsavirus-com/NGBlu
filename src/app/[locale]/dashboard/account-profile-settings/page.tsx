@@ -2,10 +2,10 @@
 
 import { useTranslations } from 'next-intl'
 
-import { ConfirmationModal } from '@/components/confirmation-modal/confirmation-modal'
+import { ConfirmationModal } from '@/components/confirmation-modal/ConfirmationModal'
 import { DynamicTabs } from '@/components/dynamic-tabs/DynamicTabs'
-import Loading from '@/components/loading/loading'
-import { Page } from '@/components/page/page'
+import Loading from '@/components/loading/Loading'
+import { Page } from '@/components/page/Page'
 
 import { PasskeyManagement } from './_components/PasskeyManagement/PasskeyManagement'
 import { PasswordForm } from './_components/PasswordForm'

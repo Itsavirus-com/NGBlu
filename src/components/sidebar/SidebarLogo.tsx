@@ -5,7 +5,7 @@ import Link from 'next/link'
 import logo from '@/assets/images/logos/ng-blu.png'
 import logoSquare from '@/assets/images/logos/ng-blu.svg'
 
-import { KTIcon } from '../kt-icon/kt-icon'
+import { KTIcon } from '../kt-icon/KtIcon'
 
 const SidebarLogo = () => {
   return (

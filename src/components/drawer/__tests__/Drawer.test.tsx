@@ -1,6 +1,6 @@
 import { createCommonMocks, render, screen } from '@/utils/test-utils'
 
-import { Drawer } from '../drawer'
+import { Drawer } from '../Drawer'
 import { DrawerProps } from '../drawer.type'
 
 // Set up mocks

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 
-import { Toast } from '@/components/toast/toast'
+import { Toast } from '@/components/toast/Toast'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { themeScript } from '@/lib/theme-script'
 

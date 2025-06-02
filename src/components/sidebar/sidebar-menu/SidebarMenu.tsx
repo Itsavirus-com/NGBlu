@@ -1,4 +1,4 @@
-import { SidebarMenuMain } from './sidebar-menu-main'
+import { SidebarMenuMain } from './SidebarMenuMain'
 
 const SidebarMenu = () => {
   return (
