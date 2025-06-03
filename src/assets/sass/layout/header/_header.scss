@@ -134,6 +134,13 @@
   }
 }
 
+// Light mode
+@include color-mode(light) {
+  .app-header {
+    background-color: var(--#{$prefix}white);
+  }
+}
+
 // Dark mode
 @include color-mode(dark) {
   // Desktop mode
