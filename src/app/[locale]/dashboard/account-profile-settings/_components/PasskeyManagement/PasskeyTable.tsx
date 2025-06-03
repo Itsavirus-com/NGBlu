@@ -45,8 +45,8 @@ export const PasskeyTable = ({
           <div className="d-flex align-items-center">
             <KTIcon iconName={getDeviceIcon(deviceInfo)} className="me-2 text-primary fs-3" />
             <div>
-              <div className="fw-medium">{deviceInfo.browser}</div>
-              <div className="text-muted small">{deviceInfo.os}</div>
+              <div className="fw-medium">{safeRender(deviceInfo, 'browser')}</div>
+              <div className="text-muted small">{safeRender(deviceInfo, 'os')}</div>
             </div>
           </div>
         )
