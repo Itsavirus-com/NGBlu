@@ -29,6 +29,12 @@ export const PasskeyManagement = () => {
     handleCancelDelete,
     handleCancelRegister,
     handleRegisterPasskeyNameChange,
+
+    // Utilities
+    parseUserAgent,
+    getDeviceIcon,
+    formatCreatedInfo,
+    formatLastUsedInfo,
   } = usePasskeyManagement()
 
   // Show not supported message
@@ -78,6 +84,10 @@ export const PasskeyManagement = () => {
         onDelete={handleDeleteClick}
         onRegisterClick={handleRegisterClick}
         isRegistering={isRegistering}
+        parseUserAgent={parseUserAgent}
+        getDeviceIcon={getDeviceIcon}
+        formatCreatedInfo={formatCreatedInfo}
+        formatLastUsedInfo={formatLastUsedInfo}
       />
 
       <PasskeyModals
