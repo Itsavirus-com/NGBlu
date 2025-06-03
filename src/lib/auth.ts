@@ -282,9 +282,11 @@ export const authOptions: NextAuthOptions = {
           token.clientPrivateKey = customUser.clientPrivateKey
           token.provider = 'passkey'
 
-          // Handle userData, which might be an object or stringified JSON
+          // Handle userData - extract the user object from the nested structure
           if (customUser.userData) {
-            token.userData = customUser.userData
+            // customUser.userData contains both user object and metadata
+            // Extract just the user object for token.userData
+            token.userData = (customUser.userData as any).user || customUser.userData
           }
         } else {
           console.error('Invalid credentials in passkey login')
