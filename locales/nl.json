@@ -1430,6 +1430,13 @@
       "registerPasskey": "Register Passkey",
       "registrationSuccessMessage": "Your passkey has been registered successfully.",
       "deleteSuccessMessage": "Your passkey has been deleted successfully."
-    }
+    },
+    "verifyPassword": "Verify Password",
+    "verifyPasswordDescription": "For your security, please verify your password to continue",
+    "enterCurrentPasswordToContinue": "Enter your current password to continue",
+    "passwordVerified": "Password Verified",
+    "passwordVerificationSuccess": "Password verified successfully. You can now continue.",
+    "verificationFailed": "Verification Failed",
+    "verificationFailedMessage": "Something went wrong. Please try again."
   }
 }
