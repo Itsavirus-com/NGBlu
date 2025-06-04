@@ -48,6 +48,7 @@ export const useLogin = () => {
       const headers = response.headers as Record<string, string>
       const accessToken = headers['access-token']
       const clientPrivateKey = headers['client-private-key']
+      const accessTokenExpiresAt = headers['access-token-expires-at']
 
       if (response.ok && accessToken && clientPrivateKey && responseData.success) {
         try {
@@ -58,13 +59,10 @@ export const useLogin = () => {
             clientPrivateKey: clientPrivateKey,
             userData: JSON.stringify(responseData.data), // Pass user data to NextAuth
             callbackUrl: '/dashboard',
+            accessTokenExpiresAt: accessTokenExpiresAt,
           })
 
           if (result?.ok) {
-            // Set token expiration time 60 minutes from now
-            const expiresAt = Date.now() + 60 * 60 * 1000
-            localStorage.setItem('token_expires_at', expiresAt.toString())
-
             router.push('/dashboard')
           } else {
             console.error('SignIn failed:', result?.error)
