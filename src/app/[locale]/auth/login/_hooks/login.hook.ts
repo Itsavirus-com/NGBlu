@@ -126,12 +126,23 @@ export const useLogin = () => {
   useEffect(() => {
     // Check for error parameters in the URL
     const error = searchParams?.get('error')
+    const errorDescription = searchParams?.get('error_description')
 
     if (error && !toastShownRef.current) {
+      // For OAUTH_CALLBACK_HANDLER_ERROR, try to extract the actual error message
+      let errorMessage = tError('authErrorMessage') // fallback
+
+      if (error === 'OAuthCallbackError' && errorDescription) {
+        // NextAuth wraps our custom error in error_description
+        errorMessage = decodeURIComponent(errorDescription)
+      } else if (errorDescription) {
+        errorMessage = decodeURIComponent(errorDescription)
+      }
+
       showToast({
         variant: 'danger',
         title: tError('authError'),
-        body: tError('authErrorMessage'),
+        body: errorMessage,
       })
       // Set the ref to true to prevent showing the toast again
       toastShownRef.current = true

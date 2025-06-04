@@ -77,14 +77,25 @@ async function getAccessToken(idToken: string) {
       },
     })
 
-    if (!res.ok) return null
+    if (!res.ok) {
+      // Try to get error details from the response
+      let errorMessage = `HTTP ${res.status}`
+      try {
+        const errorData = await res.json()
+        errorMessage = errorData.message || errorData.error || errorMessage
+      } catch {
+        // If we can't parse the error response, use status text
+        errorMessage = res.statusText || errorMessage
+      }
+      return { error: errorMessage }
+    }
 
     const clientPrivateKey = res.headers.get('client-private-key')
 
     // Check if the key is empty
     if (!clientPrivateKey) {
       console.error('Missing client-private-key in API response')
-      return null
+      return { error: 'Missing client-private-key in API response' }
     }
 
     const userData = await res.json()
@@ -95,7 +106,7 @@ async function getAccessToken(idToken: string) {
       userData: userData.data,
     }
   } catch (error) {
-    return null
+    return { error: error instanceof Error ? error.message : 'Unknown error occurred' }
   }
 }
 
@@ -205,17 +216,28 @@ export const authOptions: NextAuthOptions = {
     async redirect({ baseUrl, url }) {
       // Handle error redirects
       if (url.includes('error=')) {
-        // Parse the URL to extract and clean up query parameters
+        // Parse the URL to extract query parameters
         const parsedUrl = new URL(url, baseUrl)
         const callbackUrl = parsedUrl.searchParams.get('callbackUrl')
+        const error = parsedUrl.searchParams.get('error')
+        const errorDescription = parsedUrl.searchParams.get('error_description')
 
-        // Create a clean URL without the error parameter
+        // Build login URL with preserved error information
+        const loginUrl = new URL('/auth/login', baseUrl)
+
         if (callbackUrl) {
-          return `${baseUrl}/auth/login?callbackUrl=${encodeURIComponent(callbackUrl)}`
+          loginUrl.searchParams.set('callbackUrl', callbackUrl)
         }
 
-        // If no callbackUrl, just return to login without parameters
-        return `${baseUrl}/auth/login`
+        if (error) {
+          loginUrl.searchParams.set('error', error)
+        }
+
+        if (errorDescription) {
+          loginUrl.searchParams.set('error_description', errorDescription)
+        }
+
+        return loginUrl.toString()
       }
 
       // If URL contains callbackUrl parameter, use that
@@ -234,7 +256,7 @@ export const authOptions: NextAuthOptions = {
           // Exchange the Microsoft ID token for backend access token
           const resp = await getAccessToken(account.id_token as string)
 
-          if (resp) {
+          if (resp && !('error' in resp)) {
             // Store the tokens and user data in the JWT
             token.accessToken = resp.accessToken
             token.clientPrivateKey = resp.clientPrivateKey
@@ -242,14 +264,15 @@ export const authOptions: NextAuthOptions = {
             token.userData = resp.userData
           } else {
             // Handle the case where token exchange failed
-            console.error('Token exchange failed')
-            token.error = 'auth_error'
-            throw new Error('auth_error')
+            const errorMessage = resp?.error || 'Token exchange failed'
+            token.error = errorMessage
+            throw new Error(errorMessage)
           }
         } catch (error) {
-          console.error('Auth error:', error)
-          token.error = 'auth_error'
-          throw new Error('auth_error')
+          const errorMessage = error instanceof Error ? error.message : 'Authentication failed'
+          console.error('Auth error:', errorMessage)
+          token.error = errorMessage
+          throw new Error(errorMessage)
         }
       }
 
