@@ -51,7 +51,6 @@ const HeaderUserMenu: FC = () => {
           className="menu-link px-5"
           onClick={() => {
             // Clear token data from localStorage before signing out
-            localStorage.removeItem('token_expires_at')
             signOut()
           }}
         >
