@@ -15,7 +15,6 @@ const HeaderUserMenu: FC = () => {
 
   const handleSignOut = () => {
     // Clear all sensitive data from localStorage before signing out
-    localStorage.removeItem('token_expires_at')
     passwordVerificationUtils.clearVerification()
     signOut()
   }

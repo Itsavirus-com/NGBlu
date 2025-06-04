@@ -193,12 +193,14 @@ export const authenticateWithPasskey = async (): Promise<{
     const headers = verificationResponse.headers as Record<string, string>
     const accessToken = headers['access-token']
     const clientPrivateKey = headers['client-private-key']
+    const accessTokenExpiresAt = headers['access-token-expires-at']
     const userData = verificationResponse.data.data
 
     return {
       success: true,
       authData: {
         accessToken,
+        accessTokenExpiresAt,
         clientPrivateKey,
         userData,
       },
@@ -260,12 +262,14 @@ export const authenticateWithConditionalUI = async (): Promise<{
     const headers = verificationResponse.headers as Record<string, string>
     const accessToken = headers['access-token']
     const clientPrivateKey = headers['client-private-key']
+    const accessTokenExpiresAt = headers['access-token-expires-at']
     const userData = verificationResponse.data.data
 
     return {
       success: true,
       authData: {
         accessToken,
+        accessTokenExpiresAt,
         clientPrivateKey,
         userData,
       },

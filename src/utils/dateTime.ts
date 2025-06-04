@@ -52,3 +52,28 @@ export function setSecondsInTime(time: string, seconds: number): string {
   date.setSeconds(seconds)
   return format(date, 'HH:mm:ss')
 }
+
+/**
+ * Parse access token expiration date from backend format UTC to ISO string
+ *
+ * @param dateString - Date string in format "YYYY-MM-DD HH:mm:ss"
+ * @returns ISO string or empty string if invalid
+ */
+export function parseAccessTokenExpiresAt(dateString: string | null | undefined): string {
+  if (!dateString || typeof dateString !== 'string') {
+    return ''
+  }
+
+  try {
+    const expirationDate = new Date(dateString.replace(' ', 'T') + 'Z')
+
+    if (isNaN(expirationDate.getTime())) {
+      console.error('Invalid date format for access token expiration:', dateString)
+      return ''
+    }
+    return expirationDate.toISOString()
+  } catch (error) {
+    console.error('Failed to parse access token expiration date:', dateString, error)
+    return ''
+  }
+}

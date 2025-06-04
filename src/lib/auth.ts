@@ -2,10 +2,13 @@ import { NextAuthOptions } from 'next-auth'
 import AzureADProvider from 'next-auth/providers/azure-ad'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
+import { parseAccessTokenExpiresAt } from '@/utils/dateTime'
+
 // Define custom user type for credentials provider
 interface CustomUser {
   id: string
   accessToken: string
+  accessTokenExpiresAt: string
   clientPrivateKey: string
   userData?: UserData
 }
@@ -39,6 +42,7 @@ interface Role {
 declare module 'next-auth' {
   interface Session {
     accessToken: string
+    accessTokenExpiresAt: string
     sharedSecret: string
     provider: string
     clientPrivateKey: string
@@ -57,6 +61,7 @@ declare module 'next-auth' {
 declare module 'next-auth/jwt' {
   interface JWT {
     accessToken: string
+    accessTokenExpiresAt: string
     sharedSecret: string
     provider: string
     clientPrivateKey: string
@@ -91,6 +96,7 @@ async function getAccessToken(idToken: string) {
     }
 
     const clientPrivateKey = res.headers.get('client-private-key')
+    const accessTokenExpiresAt = res.headers.get('access-token-expires-at')
 
     // Check if the key is empty
     if (!clientPrivateKey) {
@@ -98,15 +104,38 @@ async function getAccessToken(idToken: string) {
       return { error: 'Missing client-private-key in API response' }
     }
 
+    // Parse the expiration timestamp to ensure it's valid
+    let expiresAtTimestamp = parseAccessTokenExpiresAt(accessTokenExpiresAt)
+
     const userData = await res.json()
 
     return {
       accessToken: res.headers.get('access-token') || '',
+      accessTokenExpiresAt: expiresAtTimestamp,
       clientPrivateKey: clientPrivateKey || '',
       userData: userData.data,
     }
   } catch (error) {
     return { error: error instanceof Error ? error.message : 'Unknown error occurred' }
+  }
+}
+
+// Helper function to check if token is expired
+function isTokenExpired(expiresAt: string): boolean {
+  if (!expiresAt) return false
+
+  try {
+    const expirationTime = new Date(expiresAt)
+    const currentTime = new Date()
+
+    // buffer time to account for clock skew
+    const bufferTime = 5 * 60 * 1000 // 5 minutes in milliseconds
+    const effectiveExpirationTime = new Date(expirationTime.getTime() - bufferTime)
+
+    return currentTime >= effectiveExpirationTime
+  } catch (error) {
+    console.error('Error checking token expiration:', error)
+    return false
   }
 }
 
@@ -130,6 +159,7 @@ export const authOptions: NextAuthOptions = {
       name: 'Manual Login',
       credentials: {
         accessToken: { label: 'Access Token', type: 'text' },
+        accessTokenExpiresAt: { label: 'Access Token Expires At', type: 'text' },
         clientPrivateKey: { label: 'Client Private Key', type: 'text' },
         userData: { label: 'User Data', type: 'text' },
       },
@@ -153,10 +183,14 @@ export const authOptions: NextAuthOptions = {
             }
           }
 
+          // Parse and convert accessTokenExpiresAt to ISO format
+          let parsedExpiresAt = parseAccessTokenExpiresAt(credentials.accessTokenExpiresAt)
+
           // Return user object with the tokens and user data
           return {
             id: '1', // Required by NextAuth
             accessToken: credentials.accessToken,
+            accessTokenExpiresAt: parsedExpiresAt,
             clientPrivateKey: credentials.clientPrivateKey,
             userData,
           } as CustomUser
@@ -171,6 +205,7 @@ export const authOptions: NextAuthOptions = {
       name: 'Passkey Login',
       credentials: {
         accessToken: { label: 'Access Token', type: 'text' },
+        accessTokenExpiresAt: { label: 'Access Token Expires At', type: 'text' },
         clientPrivateKey: { label: 'Client Private Key', type: 'text' },
         userData: { label: 'User Data', type: 'text' },
       },
@@ -194,10 +229,14 @@ export const authOptions: NextAuthOptions = {
             }
           }
 
+          // Parse and convert accessTokenExpiresAt to ISO format
+          let parsedExpiresAt = parseAccessTokenExpiresAt(credentials.accessTokenExpiresAt)
+
           // Return user object with the tokens and user data
           return {
             id: '1', // Required by NextAuth
             accessToken: credentials.accessToken,
+            accessTokenExpiresAt: parsedExpiresAt,
             clientPrivateKey: credentials.clientPrivateKey,
             userData,
           } as CustomUser
@@ -250,6 +289,13 @@ export const authOptions: NextAuthOptions = {
       return `${baseUrl}/dashboard`
     },
     async jwt({ token, account, user }) {
+      // Check if existing token is expired before processing
+      if (token.accessTokenExpiresAt && isTokenExpired(token.accessTokenExpiresAt)) {
+        // Clear the token and throw error to force sign out
+        token.error = 'token_expired'
+        return token
+      }
+
       // This block handles initial sign-in via Azure AD
       if (account && account.provider === 'azure-ad') {
         try {
@@ -259,6 +305,7 @@ export const authOptions: NextAuthOptions = {
           if (resp && !('error' in resp)) {
             // Store the tokens and user data in the JWT
             token.accessToken = resp.accessToken
+            token.accessTokenExpiresAt = resp.accessTokenExpiresAt
             token.clientPrivateKey = resp.clientPrivateKey
             token.provider = 'azure-ad'
             token.userData = resp.userData
@@ -283,6 +330,7 @@ export const authOptions: NextAuthOptions = {
 
         if (customUser.accessToken && customUser.clientPrivateKey) {
           token.accessToken = customUser.accessToken
+          token.accessTokenExpiresAt = customUser.accessTokenExpiresAt
           token.clientPrivateKey = customUser.clientPrivateKey
           token.provider = 'credentials'
 
@@ -302,6 +350,7 @@ export const authOptions: NextAuthOptions = {
 
         if (customUser.accessToken && customUser.clientPrivateKey) {
           token.accessToken = customUser.accessToken
+          token.accessTokenExpiresAt = customUser.accessTokenExpiresAt
           token.clientPrivateKey = customUser.clientPrivateKey
           token.provider = 'passkey'
 
@@ -317,13 +366,33 @@ export const authOptions: NextAuthOptions = {
         }
       }
 
+      // Ensure token always has required base properties to prevent serialization issues
+      if (!token.accessToken) token.accessToken = ''
+      if (!token.accessTokenExpiresAt) token.accessTokenExpiresAt = ''
+      if (!token.clientPrivateKey) token.clientPrivateKey = ''
+      if (!token.provider) token.provider = ''
+
       return token
     },
     async session({ session, token }) {
-      // Ensure session has the required properties from token
-      session.accessToken = token.accessToken
-      session.clientPrivateKey = token.clientPrivateKey
-      session.provider = token.provider
+      // Check for token errors (including expiration)
+      if (token.error === 'token_expired') {
+        console.log('Session token expired, forcing sign out')
+        // Throw error to trigger sign out instead of returning null
+        throw new Error('TokenExpiredError')
+      }
+
+      if (token.error) {
+        console.error('Session error:', token.error)
+        // Throw error to trigger sign out instead of returning null
+        throw new Error(`SessionError: ${token.error}`)
+      }
+
+      // Ensure session has the required properties from token with fallbacks
+      session.accessToken = token.accessToken || ''
+      session.accessTokenExpiresAt = token.accessTokenExpiresAt || ''
+      session.clientPrivateKey = token.clientPrivateKey || ''
+      session.provider = token.provider || ''
 
       // Add user data to the session
       if (token.userData) {
