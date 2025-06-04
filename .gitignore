@@ -3,5 +3,6 @@
 .DS_STORE
 .next
 node_modules
-
+coverage
 .idea/
+.cursor/
