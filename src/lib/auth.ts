@@ -4,6 +4,9 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 
 import { parseAccessTokenExpiresAt } from '@/utils/dateTime'
 
+// Global variable to store backend error (temporary solution for NextAuth limitation)
+let lastBackendError: string | null = null
+
 // Define custom user type for credentials provider
 interface CustomUser {
   id: string
@@ -82,7 +85,31 @@ async function getAccessToken(idToken: string) {
       },
     })
 
-    if (!res.ok) return null
+    if (!res.ok) {
+      // Enhanced error extraction from backend response
+      let errorMessage = `HTTP ${res.status}`
+
+      try {
+        const errorData = await res.json()
+
+        errorMessage =
+          errorData.message ||
+          errorData.error ||
+          errorData.error_description ||
+          errorData.details ||
+          errorMessage
+      } catch {
+        // If we can't parse the error response, use status text
+        errorMessage = res.statusText || errorMessage
+      }
+
+      // Use a consistent error format for backend errors
+      return {
+        error: errorMessage,
+        status: res.status,
+        backendError: true,
+      }
+    }
 
     const clientPrivateKey = res.headers.get('client-private-key')
     const accessTokenExpiresAt = res.headers.get('access-token-expires-at')
@@ -90,7 +117,7 @@ async function getAccessToken(idToken: string) {
     // Check if the key is empty
     if (!clientPrivateKey) {
       console.error('Missing client-private-key in API response')
-      return null
+      return { error: 'Missing client-private-key in API response' }
     }
 
     // Parse the expiration timestamp to ensure it's valid
@@ -105,7 +132,11 @@ async function getAccessToken(idToken: string) {
       userData: userData.data,
     }
   } catch (error) {
-    return null
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
+    return {
+      error: `Network error: ${errorMessage}`,
+      networkError: true,
+    }
   }
 }
 
@@ -242,19 +273,53 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async redirect({ baseUrl, url }) {
-      // Handle error redirects
-      if (url.includes('error=')) {
-        // Parse the URL to extract and clean up query parameters
-        const parsedUrl = new URL(url, baseUrl)
-        const callbackUrl = parsedUrl.searchParams.get('callbackUrl')
+      // If we have a backend error, always redirect to login with it
+      if (lastBackendError) {
+        const loginUrl = new URL('/auth/login', baseUrl)
 
-        // Create a clean URL without the error parameter
-        if (callbackUrl) {
-          return `${baseUrl}/auth/login?callbackUrl=${encodeURIComponent(callbackUrl)}`
+        // Parse the original URL to preserve callbackUrl if available
+        try {
+          const parsedUrl = new URL(url.startsWith('http') ? url : `${baseUrl}${url}`)
+          const callbackUrl = parsedUrl.searchParams.get('callbackUrl')
+          if (callbackUrl) {
+            loginUrl.searchParams.set('callbackUrl', callbackUrl)
+          }
+        } catch (e) {
+          console.error('Failed to parse URL:', url, e)
         }
 
-        // If no callbackUrl, just return to login without parameters
-        return `${baseUrl}/auth/login`
+        // Add the error information - only encode once
+        loginUrl.searchParams.set('error', 'BackendApiError')
+        loginUrl.searchParams.set('backend_error', encodeURIComponent(lastBackendError))
+
+        // Clear the backend error if we're already on the login page
+        // This prevents infinite redirect loops
+        if (url.includes('/auth/login')) {
+          lastBackendError = null
+        }
+
+        return loginUrl.toString()
+      }
+
+      // Check if this is an error redirect from auth/error
+      if (url.includes('/api/auth/error')) {
+        const parsedUrl = new URL(url, baseUrl)
+        const error = parsedUrl.searchParams.get('error')
+
+        // Build login URL with error
+        const loginUrl = new URL('/auth/login', baseUrl)
+
+        // Add callbackUrl if available
+        const callbackUrl = parsedUrl.searchParams.get('callbackUrl')
+        if (callbackUrl) {
+          loginUrl.searchParams.set('callbackUrl', callbackUrl)
+        }
+
+        if (error) {
+          loginUrl.searchParams.set('error', error)
+        }
+
+        return loginUrl.toString()
       }
 
       // If URL contains callbackUrl parameter, use that
@@ -280,7 +345,7 @@ export const authOptions: NextAuthOptions = {
           // Exchange the Microsoft ID token for backend access token
           const resp = await getAccessToken(account.id_token as string)
 
-          if (resp) {
+          if (resp && !('error' in resp)) {
             // Store the tokens and user data in the JWT
             token.accessToken = resp.accessToken
             token.accessTokenExpiresAt = resp.accessTokenExpiresAt
@@ -289,14 +354,36 @@ export const authOptions: NextAuthOptions = {
             token.userData = resp.userData
           } else {
             // Handle the case where token exchange failed
-            console.error('Token exchange failed')
-            token.error = 'auth_error'
-            throw new Error('auth_error')
+            const errorMessage = resp?.error || 'Token exchange failed'
+
+            // Store backend error in global variable for later use in redirect
+            lastBackendError = errorMessage
+
+            // Throw error to completely halt the authentication flow
+            // This will force a redirect to the error page
+            const error = new Error(errorMessage)
+            error.name = 'BackendApiError'
+            throw error
           }
         } catch (error) {
-          console.error('Auth error:', error)
-          token.error = 'auth_error'
-          throw new Error('auth_error')
+          let errorMessage = 'Authentication failed'
+
+          if (error instanceof Error) {
+            // If this is already our BackendApiError, just re-throw it
+            if (error.name === 'BackendApiError') {
+              throw error
+            }
+            errorMessage = error.message
+          } else if (typeof error === 'string') {
+            errorMessage = error
+          }
+
+          // Store error in global variable for later use in redirect
+          lastBackendError = errorMessage
+
+          const newError = new Error(errorMessage)
+          newError.name = 'BackendApiError'
+          throw newError
         }
       }
 

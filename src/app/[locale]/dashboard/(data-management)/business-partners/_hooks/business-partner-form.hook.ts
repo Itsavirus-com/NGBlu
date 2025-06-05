@@ -94,8 +94,8 @@ export default function useBusinessPartnerForm(id?: number) {
         back()
       }
     } catch (error: any) {
-      if (error?.errors?.detail && 'name' in error.errors.detail) {
-        showToast({ variant: 'danger', body: 'Business partner name is already exists' })
+      if (error.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
         return
       }
       showUnexpectedToast()
@@ -114,8 +114,8 @@ export default function useBusinessPartnerForm(id?: number) {
         back()
       }
     } catch (error: any) {
-      if ('name' in error.errors.detail) {
-        showToast({ variant: 'danger', body: 'Business partner name is already exists' })
+      if (error.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
         return
       }
       showUnexpectedToast()

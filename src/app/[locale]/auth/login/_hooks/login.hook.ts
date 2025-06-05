@@ -124,12 +124,53 @@ export const useLogin = () => {
   useEffect(() => {
     // Check for error parameters in the URL
     const error = searchParams?.get('error')
+    const errorDescription = searchParams?.get('error_description')
 
-    if (error && !toastShownRef.current) {
+    // Check for our custom backend error parameter - this is the most reliable source
+    const backendError = searchParams?.get('backend_error')
+
+    // Check if there's a callbackUrl that contains errors
+    const callbackUrl = searchParams?.get('callbackUrl')
+    let callbackError = null
+    let callbackBackendError = null
+
+    // Extract error info from nested callbackUrl
+    if (callbackUrl) {
+      try {
+        const callbackUrlObj = new URL(callbackUrl)
+        callbackError = callbackUrlObj.searchParams.get('error')
+        callbackBackendError = callbackUrlObj.searchParams.get('backend_error')
+      } catch (e) {
+        console.error('Failed to parse callbackUrl:', callbackUrl, e)
+      }
+    }
+
+    // Combine error sources - prioritize direct errors, then check callback errors
+    const finalError = error || callbackError
+    const finalBackendError = backendError || callbackBackendError
+
+    if ((finalError || finalBackendError) && !toastShownRef.current) {
+      let errorMessage = tError('authErrorMessage') // fallback
+
+      // Priority 1: Use our custom backend_error parameter if available
+      if (finalBackendError) {
+        try {
+          // We need to decode it twice because it's double-encoded during redirect
+          let decodedError = decodeURIComponent(finalBackendError)
+          // Check if still contains URL-encoded characters (%)
+          if (decodedError.includes('%')) {
+            decodedError = decodeURIComponent(decodedError)
+          }
+          errorMessage = decodedError
+        } catch (e) {
+          errorMessage = finalBackendError
+        }
+      }
+
       showToast({
         variant: 'danger',
         title: tError('authError'),
-        body: tError('authErrorMessage'),
+        body: errorMessage,
       })
       // Set the ref to true to prevent showing the toast again
       toastShownRef.current = true
