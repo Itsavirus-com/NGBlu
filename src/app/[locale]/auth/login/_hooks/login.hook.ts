@@ -9,6 +9,7 @@ import { usePasskey } from '@/hooks/use-passkey.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { loginManualApi } from '@/services/api/login-manual-api'
 import { omitNullAndUndefined } from '@/utils/object'
+import { logAuthToSentry } from '@/utils/sentry-logger'
 
 import { schema } from '../_schemas/login.schema'
 
@@ -31,7 +32,58 @@ export const useLogin = () => {
 
   // Handler for Microsoft sign-in
   const handleMicrosoftSignIn = async () => {
-    await signIn('azure-ad')
+    try {
+      // Collect browser and network information for debugging
+      const browserInfo = {
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        vendor: navigator.vendor,
+        language: navigator.language,
+        cookiesEnabled: navigator.cookieEnabled,
+        doNotTrack: navigator.doNotTrack,
+        hardwareConcurrency: navigator.hardwareConcurrency,
+        maxTouchPoints: navigator.maxTouchPoints,
+        online: navigator.onLine,
+        connection:
+          'connection' in navigator
+            ? {
+                effectiveType: (navigator as any).connection?.effectiveType,
+                downlink: (navigator as any).connection?.downlink,
+                rtt: (navigator as any).connection?.rtt,
+              }
+            : 'not available',
+        screenInfo: {
+          width: window.screen.width,
+          height: window.screen.height,
+          colorDepth: window.screen.colorDepth,
+          pixelRatio: window.devicePixelRatio,
+        },
+        url: window.location.href,
+        timestamp: new Date().toISOString(),
+      }
+
+      console.log('[AUTH DEBUG] Browser fingerprint before Microsoft sign-in', browserInfo)
+      logAuthToSentry('Microsoft Sign-in Initiated', browserInfo)
+
+      // Store in sessionStorage for analysis if auth fails
+      try {
+        sessionStorage.setItem('auth_browser_info', JSON.stringify(browserInfo))
+      } catch (e) {
+        console.error('[AUTH DEBUG] Failed to store browser info in sessionStorage', e)
+      }
+
+      // Begin signin process - using the standard approach without UI changes
+      await signIn('azure-ad')
+    } catch (error) {
+      console.error('[AUTH DEBUG] Error triggering Microsoft sign-in', error)
+      logAuthToSentry(
+        'Microsoft Sign-in Error',
+        {
+          error: error instanceof Error ? error.message : String(error),
+        },
+        'error'
+      )
+    }
   }
 
   const onSubmit = async (data: any) => {
