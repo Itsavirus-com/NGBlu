@@ -3,6 +3,7 @@ import AzureADProvider from 'next-auth/providers/azure-ad'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 import { parseAccessTokenExpiresAt } from '@/utils/dateTime'
+import { logAuthErrorToSentry, logAuthToSentry } from '@/utils/sentry-logger'
 
 // Global variable to store backend error (temporary solution for NextAuth limitation)
 let lastBackendError: string | null = null
@@ -75,8 +76,28 @@ declare module 'next-auth/jwt' {
 
 async function getAccessToken(idToken: string) {
   try {
+    console.log('[AUTH DEBUG] Starting token exchange', {
+      tokenLength: idToken?.length || 0,
+      timestamp: new Date().toISOString(),
+    })
+
+    logAuthToSentry('Token Exchange Started', {
+      tokenLength: idToken?.length || 0,
+    })
+
     const timestamp = new Date().toISOString()
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login/sso?id_token=${idToken}`
+
+    console.log('[AUTH DEBUG] Request URL details', {
+      urlLength: url.length,
+      apiBaseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+      truncatedUrl: url.substring(0, 100) + '...',
+    })
+
+    logAuthToSentry('API Request Details', {
+      urlLength: url.length,
+      apiBaseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+    })
 
     const res = await fetch(url, {
       method: 'GET',
@@ -85,12 +106,34 @@ async function getAccessToken(idToken: string) {
       },
     })
 
+    console.log('[AUTH DEBUG] Response received', {
+      status: res.status,
+      statusText: res.statusText,
+      ok: res.ok,
+      hasAccessToken: !!res.headers.get('access-token'),
+      hasClientPrivateKey: !!res.headers.get('client-private-key'),
+    })
+
+    logAuthToSentry(
+      'API Response Received',
+      {
+        status: res.status,
+        statusText: res.statusText,
+        ok: res.ok,
+        hasAccessToken: !!res.headers.get('access-token'),
+        hasClientPrivateKey: !!res.headers.get('client-private-key'),
+      },
+      res.ok ? 'info' : 'error'
+    )
+
     if (!res.ok) {
       // Enhanced error extraction from backend response
       let errorMessage = `HTTP ${res.status}`
 
       try {
         const errorData = await res.json()
+        console.log('[AUTH DEBUG] Error response body:', errorData)
+        logAuthToSentry('Error Response Body', errorData, 'error')
 
         errorMessage =
           errorData.message ||
@@ -98,10 +141,15 @@ async function getAccessToken(idToken: string) {
           errorData.error_description ||
           errorData.details ||
           errorMessage
-      } catch {
+      } catch (error) {
+        console.log('[AUTH DEBUG] Failed to parse error response:', error)
+        logAuthErrorToSentry(error, 'Parse Error Response')
         // If we can't parse the error response, use status text
         errorMessage = res.statusText || errorMessage
       }
+
+      console.log('[AUTH DEBUG] Token exchange failed', { errorMessage })
+      logAuthToSentry('Token Exchange Failed', { errorMessage, status: res.status }, 'error')
 
       // Use a consistent error format for backend errors
       return {
@@ -116,14 +164,33 @@ async function getAccessToken(idToken: string) {
 
     // Check if the key is empty
     if (!clientPrivateKey) {
-      console.error('Missing client-private-key in API response')
+      console.error('[AUTH DEBUG] Missing client-private-key in API response')
+      logAuthToSentry('Missing Client Private Key', {}, 'error')
       return { error: 'Missing client-private-key in API response' }
     }
 
     // Parse the expiration timestamp to ensure it's valid
     let expiresAtTimestamp = parseAccessTokenExpiresAt(accessTokenExpiresAt)
+    console.log('[AUTH DEBUG] Parsed token expiration', {
+      originalValue: accessTokenExpiresAt,
+      parsed: expiresAtTimestamp,
+    })
+
+    logAuthToSentry('Token Expiration Parsed', {
+      originalValue: accessTokenExpiresAt,
+      parsed: expiresAtTimestamp,
+    })
 
     const userData = await res.json()
+    console.log('[AUTH DEBUG] User data received', {
+      hasData: !!userData?.data,
+      userId: userData?.data?.id,
+    })
+
+    logAuthToSentry('User Data Received', {
+      hasData: !!userData?.data,
+      userId: userData?.data?.id,
+    })
 
     return {
       accessToken: res.headers.get('access-token') || '',
@@ -132,6 +199,8 @@ async function getAccessToken(idToken: string) {
       userData: userData.data,
     }
   } catch (error) {
+    console.error('[AUTH DEBUG] Exception in getAccessToken', error)
+    logAuthErrorToSentry(error, 'GetAccessToken Exception')
     const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
     return {
       error: `Network error: ${errorMessage}`,
@@ -155,6 +224,7 @@ function isTokenExpired(expiresAt: string): boolean {
     return currentTime >= effectiveExpirationTime
   } catch (error) {
     console.error('Error checking token expiration:', error)
+    logAuthErrorToSentry(error, 'Token Expiration Check Error')
     return false
   }
 }
@@ -171,6 +241,7 @@ export const authOptions: NextAuthOptions = {
         params: {
           prompt: 'select_account',
           scope: 'openid profile email',
+          response_mode: 'form_post',
         },
       },
     }),
@@ -190,6 +261,14 @@ export const authOptions: NextAuthOptions = {
               hasAccessToken: !!credentials?.accessToken,
               hasClientPrivateKey: !!credentials?.clientPrivateKey,
             })
+            logAuthToSentry(
+              'Missing Manual Login Credentials',
+              {
+                hasAccessToken: !!credentials?.accessToken,
+                hasClientPrivateKey: !!credentials?.clientPrivateKey,
+              },
+              'error'
+            )
             return null
           }
 
@@ -200,6 +279,7 @@ export const authOptions: NextAuthOptions = {
               userData = JSON.parse(credentials.userData)
             } catch (e) {
               console.error('Failed to parse userData:', e)
+              logAuthErrorToSentry(e, 'Parse Manual Login UserData')
             }
           }
 
@@ -216,6 +296,7 @@ export const authOptions: NextAuthOptions = {
           } as CustomUser
         } catch (error) {
           console.error('Error in authorize callback:', error)
+          logAuthErrorToSentry(error, 'Manual Login Authorize Error')
           return null
         }
       },
@@ -236,6 +317,14 @@ export const authOptions: NextAuthOptions = {
               hasAccessToken: !!credentials?.accessToken,
               hasClientPrivateKey: !!credentials?.clientPrivateKey,
             })
+            logAuthToSentry(
+              'Missing Passkey Credentials',
+              {
+                hasAccessToken: !!credentials?.accessToken,
+                hasClientPrivateKey: !!credentials?.clientPrivateKey,
+              },
+              'error'
+            )
             return null
           }
 
@@ -246,6 +335,7 @@ export const authOptions: NextAuthOptions = {
               userData = JSON.parse(credentials.userData)
             } catch (e) {
               console.error('Failed to parse passkey userData:', e)
+              logAuthErrorToSentry(e, 'Parse Passkey UserData')
             }
           }
 
@@ -262,6 +352,7 @@ export const authOptions: NextAuthOptions = {
           } as CustomUser
         } catch (error) {
           console.error('Error in passkey authorize callback:', error)
+          logAuthErrorToSentry(error, 'Passkey Authorize Error')
           return null
         }
       },
@@ -273,8 +364,32 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async redirect({ baseUrl, url }) {
+      console.log('[AUTH DEBUG] Processing redirect', {
+        baseUrl,
+        url,
+        hasBackendError: !!lastBackendError,
+      })
+
+      logAuthToSentry('Processing Redirect', {
+        baseUrl,
+        url,
+        hasBackendError: !!lastBackendError,
+      })
+
       // If we have a backend error, always redirect to login with it
       if (lastBackendError) {
+        console.log('[AUTH DEBUG] Redirecting with backend error', {
+          error: lastBackendError,
+        })
+
+        logAuthToSentry(
+          'Redirecting with Backend Error',
+          {
+            error: lastBackendError,
+          },
+          'error'
+        )
+
         const loginUrl = new URL('/auth/login', baseUrl)
 
         // Parse the original URL to preserve callbackUrl if available
@@ -283,18 +398,39 @@ export const authOptions: NextAuthOptions = {
           const callbackUrl = parsedUrl.searchParams.get('callbackUrl')
           if (callbackUrl) {
             loginUrl.searchParams.set('callbackUrl', callbackUrl)
+            console.log('[AUTH DEBUG] Preserving callbackUrl', { callbackUrl })
+            logAuthToSentry('Preserving CallbackUrl', { callbackUrl })
           }
         } catch (e) {
-          console.error('Failed to parse URL:', url, e)
+          console.error('[AUTH DEBUG] Failed to parse URL', { url, error: e })
+          logAuthErrorToSentry(e, 'Parse Redirect URL Error', { url })
         }
 
         // Add the error information - only encode once
         loginUrl.searchParams.set('error', 'BackendApiError')
         loginUrl.searchParams.set('backend_error', encodeURIComponent(lastBackendError))
 
+        console.log('[AUTH DEBUG] Final redirect URL with error', {
+          url: loginUrl.toString(),
+          error: 'BackendApiError',
+          backend_error: lastBackendError,
+        })
+
+        logAuthToSentry(
+          'Final Redirect URL with Error',
+          {
+            url: loginUrl.toString(),
+            error: 'BackendApiError',
+            backend_error: lastBackendError,
+          },
+          'error'
+        )
+
         // Clear the backend error if we're already on the login page
         // This prevents infinite redirect loops
         if (url.includes('/auth/login')) {
+          console.log('[AUTH DEBUG] Clearing backend error to prevent redirect loop')
+          logAuthToSentry('Clearing Backend Error', {}, 'warning')
           lastBackendError = null
         }
 
@@ -303,8 +439,16 @@ export const authOptions: NextAuthOptions = {
 
       // Check if this is an error redirect from auth/error
       if (url.includes('/api/auth/error')) {
+        console.log('[AUTH DEBUG] Handling redirect from /api/auth/error')
+        logAuthToSentry('Handling Error Redirect', { url })
+
         const parsedUrl = new URL(url, baseUrl)
         const error = parsedUrl.searchParams.get('error')
+
+        if (error) {
+          console.log('[AUTH DEBUG] Error in redirect', { error })
+          logAuthToSentry('Error in Redirect', { error }, 'error')
+        }
 
         // Build login URL with error
         const loginUrl = new URL('/auth/login', baseUrl)
@@ -313,11 +457,27 @@ export const authOptions: NextAuthOptions = {
         const callbackUrl = parsedUrl.searchParams.get('callbackUrl')
         if (callbackUrl) {
           loginUrl.searchParams.set('callbackUrl', callbackUrl)
+          console.log('[AUTH DEBUG] Preserving callbackUrl in error redirect', { callbackUrl })
+          logAuthToSentry('Preserving CallbackUrl in Error Redirect', { callbackUrl })
         }
 
         if (error) {
           loginUrl.searchParams.set('error', error)
         }
+
+        console.log('[AUTH DEBUG] Redirecting to login with error', {
+          url: loginUrl.toString(),
+          error,
+        })
+
+        logAuthToSentry(
+          'Redirecting to Login with Error',
+          {
+            url: loginUrl.toString(),
+            error,
+          },
+          'error'
+        )
 
         return loginUrl.toString()
       }
@@ -325,15 +485,23 @@ export const authOptions: NextAuthOptions = {
       // If URL contains callbackUrl parameter, use that
       if (url.includes('callbackUrl=')) {
         const callbackUrl = new URL(url, baseUrl).searchParams.get('callbackUrl')
-        if (callbackUrl) return callbackUrl
+        if (callbackUrl) {
+          console.log('[AUTH DEBUG] Using callbackUrl from URL params', { callbackUrl })
+          logAuthToSentry('Using CallbackUrl from URL Params', { callbackUrl })
+          return callbackUrl
+        }
       }
 
       // Default redirect to dashboard
+      console.log('[AUTH DEBUG] Default redirect to dashboard')
+      logAuthToSentry('Default Redirect to Dashboard', {})
       return `${baseUrl}/dashboard`
     },
     async jwt({ token, account, user }) {
       // Check if existing token is expired before processing
       if (token.accessTokenExpiresAt && isTokenExpired(token.accessTokenExpiresAt)) {
+        console.log('[AUTH DEBUG] Token expired', { expiresAt: token.accessTokenExpiresAt })
+        logAuthToSentry('Token Expired', { expiresAt: token.accessTokenExpiresAt }, 'warning')
         // Clear the token and throw error to force sign out
         token.error = 'token_expired'
         return token
@@ -341,12 +509,30 @@ export const authOptions: NextAuthOptions = {
 
       // This block handles initial sign-in via Azure AD
       if (account && account.provider === 'azure-ad') {
+        console.log('[AUTH DEBUG] Processing Azure AD sign-in', {
+          idTokenLength: account.id_token ? (account.id_token as string).length : 0,
+          provider: account.provider,
+          timestamp: new Date().toISOString(),
+        })
+
+        logAuthToSentry('Azure AD Sign-in Started', {
+          idTokenLength: account.id_token ? (account.id_token as string).length : 0,
+          provider: account.provider,
+        })
+
         try {
           // Exchange the Microsoft ID token for backend access token
+          console.log('[AUTH DEBUG] Starting token exchange')
           const resp = await getAccessToken(account.id_token as string)
+          console.log('[AUTH DEBUG] Token exchange result', {
+            success: !('error' in resp),
+            hasError: 'error' in resp,
+          })
 
           if (resp && !('error' in resp)) {
             // Store the tokens and user data in the JWT
+            console.log('[AUTH DEBUG] Successfully stored tokens in JWT')
+            logAuthToSentry('Tokens Stored in JWT', { success: true })
             token.accessToken = resp.accessToken
             token.accessTokenExpiresAt = resp.accessTokenExpiresAt
             token.clientPrivateKey = resp.clientPrivateKey
@@ -355,9 +541,19 @@ export const authOptions: NextAuthOptions = {
           } else {
             // Handle the case where token exchange failed
             const errorMessage = resp?.error || 'Token exchange failed'
+            console.error('[AUTH DEBUG] Token exchange failed:', errorMessage, resp?.status)
+            logAuthToSentry(
+              'JWT Token Exchange Failed',
+              {
+                errorMessage,
+                status: resp?.status,
+              },
+              'error'
+            )
 
             // Store backend error in global variable for later use in redirect
             lastBackendError = errorMessage
+            console.log('[AUTH DEBUG] Stored backend error for redirect:', errorMessage)
 
             // Throw error to completely halt the authentication flow
             // This will force a redirect to the error page
@@ -366,11 +562,22 @@ export const authOptions: NextAuthOptions = {
             throw error
           }
         } catch (error) {
+          console.error(
+            '[AUTH DEBUG] Exception during Azure AD auth:',
+            error instanceof Error ? error.message : String(error)
+          )
+
+          logAuthErrorToSentry(error, 'Azure AD Authentication Exception', {
+            provider: account.provider,
+            idTokenPresent: !!account.id_token,
+          })
+
           let errorMessage = 'Authentication failed'
 
           if (error instanceof Error) {
             // If this is already our BackendApiError, just re-throw it
             if (error.name === 'BackendApiError') {
+              console.log('[AUTH DEBUG] Re-throwing BackendApiError')
               throw error
             }
             errorMessage = error.message
@@ -380,6 +587,7 @@ export const authOptions: NextAuthOptions = {
 
           // Store error in global variable for later use in redirect
           lastBackendError = errorMessage
+          console.log('[AUTH DEBUG] Stored backend error for redirect:', errorMessage)
 
           const newError = new Error(errorMessage)
           newError.name = 'BackendApiError'
