@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { useSWRConfig } from 'swr'
 
 import { Button } from '@/components/button/button'
 import { ButtonProps } from '@/components/button/button.type'
@@ -34,8 +35,19 @@ export const TableActions = (props: TableActionsProps) => {
   const t = useTranslations('common.table')
 
   const { showToast } = useToast()
+  const { mutate } = useSWRConfig()
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false)
   const [loadingDelete, setLoadingDelete] = useState(false)
+
+  // Helper function to refresh table data
+  const refreshTableData = () => {
+    if (apiPath) {
+      mutate(
+        (key: any) =>
+          typeof key === 'object' && key !== null && 'path' in key && key.path === apiPath
+      )
+    }
+  }
 
   const onConfirmDelete = async () => {
     setLoadingDelete(true)
@@ -53,6 +65,9 @@ export const TableActions = (props: TableActionsProps) => {
           showToast({ variant: 'success', body: t('deleteSuccess') })
         }
       }
+
+      // Refresh table data after successful deletion
+      refreshTableData()
     } catch (error: any) {
       const errorMessage = error.message
 
@@ -70,6 +85,13 @@ export const TableActions = (props: TableActionsProps) => {
       return customActions(rowData)
     }
     return customActions
+  }
+
+  const handleDirectDelete = () => {
+    if (onDelete) {
+      onDelete(rowData, dataId)
+      refreshTableData()
+    }
   }
 
   const customActionsList = getCustomActions()
@@ -132,10 +154,8 @@ export const TableActions = (props: TableActionsProps) => {
                 className="me-1"
                 onClick={() => {
                   if (onDelete && !showDeleteConfirmation) {
-                    // Call onDelete directly without confirmation modal
-                    onDelete(rowData, dataId)
+                    handleDirectDelete()
                   } else {
-                    // Show confirmation modal
                     setDeleteConfirmVisible(true)
                   }
                 }}
