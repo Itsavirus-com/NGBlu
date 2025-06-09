@@ -241,7 +241,6 @@ export const authOptions: NextAuthOptions = {
         params: {
           prompt: 'select_account',
           scope: 'openid profile email',
-          response_mode: 'form_post',
         },
       },
     }),
