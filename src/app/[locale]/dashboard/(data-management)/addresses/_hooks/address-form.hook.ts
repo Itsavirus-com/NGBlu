@@ -142,13 +142,11 @@ export default function useAddressForm(addressId?: number) {
         back()
       }
     } catch (error: any) {
-      if (error?.errors?.detail && 'lat' in error.errors.detail) {
-        return showToast({ variant: 'danger', body: 'Invalid latitude' })
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
       }
-      if (error?.errors?.detail && 'lng' in error.errors.detail) {
-        return showToast({ variant: 'danger', body: 'Invalid longitude' })
-      }
-      showUnexpectedToast()
     }
   }
 
@@ -164,13 +162,11 @@ export default function useAddressForm(addressId?: number) {
         back()
       }
     } catch (error: any) {
-      if (error?.errors?.detail && 'lat' in error.errors.detail) {
-        return showToast({ variant: 'danger', body: 'Invalid latitude' })
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
       }
-      if (error?.errors?.detail && 'lng' in error.errors.detail) {
-        return showToast({ variant: 'danger', body: 'Invalid longitude' })
-      }
-      showUnexpectedToast()
     }
   }
 

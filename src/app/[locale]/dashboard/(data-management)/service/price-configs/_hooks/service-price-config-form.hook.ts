@@ -83,8 +83,12 @@ export default function useServicePriceConfigForm(configId?: number) {
         invalidateCache()
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
@@ -102,8 +106,12 @@ export default function useServicePriceConfigForm(configId?: number) {
         invalidateCache()
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 

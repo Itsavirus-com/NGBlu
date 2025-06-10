@@ -44,8 +44,8 @@ export const useBusinessPartnerContactForm = (businessPartnerId: number, contact
         back()
       }
     } catch (error: any) {
-      if (error?.errors?.detail && 'contactInfoId' in error.errors.detail) {
-        showToast({ variant: 'danger', body: error.errors.detail.contactInfoId })
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
       } else {
         showUnexpectedToast()
       }
@@ -67,8 +67,8 @@ export const useBusinessPartnerContactForm = (businessPartnerId: number, contact
         back()
       }
     } catch (error: any) {
-      if ('contactInfoId' in error?.errors?.detail) {
-        showToast({ variant: 'danger', body: error?.errors?.detail?.contactInfoId })
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
       } else {
         showUnexpectedToast()
       }

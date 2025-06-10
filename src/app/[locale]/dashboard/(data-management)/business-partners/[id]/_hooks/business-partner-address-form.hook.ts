@@ -47,8 +47,8 @@ export default function useBusinessPartnerAddressForm(
         back()
       }
     } catch (error: any) {
-      if (error?.errors?.detail && 'addressId' in error.errors.detail) {
-        showToast({ variant: 'danger', body: error.errors.detail.addressId })
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
       } else {
         showUnexpectedToast()
       }
@@ -69,8 +69,12 @@ export default function useBusinessPartnerAddressForm(
         invalidateCache()
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 

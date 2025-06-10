@@ -47,8 +47,8 @@ export default function useBusinessPartnerCustomerForm(
         back()
       }
     } catch (error: any) {
-      if (error?.errors?.detail && 'endclientId' in error.errors.detail) {
-        showToast({ variant: 'danger', body: error.errors.detail.endclientId })
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
       } else {
         showUnexpectedToast()
       }
@@ -69,8 +69,12 @@ export default function useBusinessPartnerCustomerForm(
         invalidateCache()
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
