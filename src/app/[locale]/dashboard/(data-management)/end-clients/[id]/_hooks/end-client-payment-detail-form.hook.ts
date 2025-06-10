@@ -60,8 +60,8 @@ export default function useEndClientPaymentDetailForm(
         back()
       }
     } catch (error: any) {
-      if (error?.errors?.detail && 'paymentInfoId' in error.errors.detail) {
-        showToast({ variant: 'danger', body: error.errors.detail.paymentInfoId })
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
       } else {
         showUnexpectedToast()
       }
@@ -82,8 +82,12 @@ export default function useEndClientPaymentDetailForm(
         invalidateCache()
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 

@@ -44,8 +44,8 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
         back()
       }
     } catch (error: any) {
-      if (error?.errors?.detail && 'userId' in error.errors.detail) {
-        showToast({ variant: 'danger', body: error.errors.detail.userId })
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
       } else {
         showUnexpectedToast()
       }
@@ -66,8 +66,12 @@ export default function useBusinessPartnerUserForm(businessPartnerId: number, us
         invalidateCache()
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 

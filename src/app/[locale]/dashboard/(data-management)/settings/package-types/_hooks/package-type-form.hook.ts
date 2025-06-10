@@ -40,7 +40,11 @@ export default function usePackageTypeForm(typeId?: number) {
         return
       }
 
-      showUnexpectedToast()
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
@@ -61,7 +65,11 @@ export default function usePackageTypeForm(typeId?: number) {
         return
       }
 
-      showUnexpectedToast()
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
