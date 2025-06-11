@@ -63,6 +63,12 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
       title: t('contacts.person'),
       render: row => `${safeRender(row, 'person.firstname')} ${safeRender(row, 'person.lastname')}`,
     },
+    {
+      id: 'responsibility',
+      title: t('contacts.responsibility'),
+      render: row =>
+        `${safeRender(row, 'responsibilityId')} | ${safeRender(row, 'responsibility.responsibility')}`,
+    },
   ]
 
   const customerColumns: TableColumn<BusinessPartnerCustomer>[] = [
@@ -75,6 +81,12 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
       id: 'endClient',
       title: t('customers.endClient'),
       render: row => `${safeRender(row, 'endclientId')} | ${safeRender(row, 'endclient.name')}`,
+    },
+    {
+      id: 'address',
+      title: t('customers.businessPartnerAddress'),
+      render: row =>
+        `${safeRender(row, 'businesspartnerAddressId')} | ${safeRender(row, 'businesspartnerAddress.addressName')}`,
     },
   ]
 
@@ -102,6 +114,12 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
       title: t('projects.project'),
       render: row => `${safeRender(row, 'projectId')} | ${safeRender(row, 'project.projectName')}`,
     },
+    {
+      id: 'address',
+      title: t('projects.businessPartnerAddress'),
+      render: row =>
+        `${safeRender(row, 'businesspartnerAddressId')} | ${safeRender(row, 'businesspartnerAddress.addressName')}`,
+    },
   ]
 
   const userColumns: TableColumn<BusinessPartnerUser>[] = [
@@ -114,6 +132,17 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
       id: 'user',
       title: t('users.user'),
       render: row => `${safeRender(row, 'user.id')} | ${safeRender(row, 'user.displayName')}`,
+    },
+    {
+      id: 'person',
+      title: t('users.person'),
+      render: row =>
+        `${safeRender(row, 'personId')} | ${safeRender(row, 'person.firstname')} ${safeRender(row, 'person.lastname')}`,
+    },
+    {
+      id: 'personType',
+      title: t('users.personType'),
+      render: row => safeRender(row, 'person.personType.type'),
     },
   ]
 
