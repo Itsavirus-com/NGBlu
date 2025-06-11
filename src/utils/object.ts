@@ -32,7 +32,7 @@ export const omitNullAndUndefined = <T extends Record<string, any>, K extends ke
 ): MakeOptionalExcept<T, K> => {
   return Object.entries(data).reduce<MakeOptionalExcept<T, K>>(
     (cleanedData, [key, value]) => {
-      if (value !== null && value !== undefined && value !== 0 && value !== '') {
+      if (value !== null && value !== undefined && value !== '') {
         // Use `key as keyof MakeOptionalExcept<T, K>` to ensure type safety
         cleanedData[key as keyof MakeOptionalExcept<T, K>] = value
       }
