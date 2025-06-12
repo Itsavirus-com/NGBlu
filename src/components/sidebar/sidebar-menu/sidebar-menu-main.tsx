@@ -77,6 +77,9 @@ const SidebarMenuMain = () => {
       {isSuperAdmin && (
         <SidebarMenuItem to="/dashboard/users" title={t('users')} icon="security-user" />
       )}
+      {isSuperAdmin && (
+        <SidebarMenuItem to="/dashboard/audit-trails" title={t('auditTrails')} icon="tablet-ok" />
+      )}
       {/* End of Data Management */}
 
       {/* Data Management - Settings */}

@@ -38,7 +38,7 @@ export const DynamicTableBody = <TableValues extends Record<string, any>>(
       }
     : { filter: {} }
 
-  const { data, isLoading, pagination, mutate } = useTableData<TableValues>(apiPath, {
+  const { data, isLoading, pagination, meta } = useTableData<TableValues>(apiPath, {
     page,
     limit: perPage,
     filter: {
@@ -46,6 +46,9 @@ export const DynamicTableBody = <TableValues extends Record<string, any>>(
       ...filteredFilters.filter,
     },
   })
+
+  // Use meta if available, otherwise fall back to pagination for backward compatibility
+  const paginationData = meta || pagination
 
   if (!columns?.length) return null
 
@@ -105,7 +108,7 @@ export const DynamicTableBody = <TableValues extends Record<string, any>>(
 
       <TablePagination
         currentPage={page}
-        totalPage={pagination?.lastPage}
+        totalPage={paginationData?.lastPage}
         perPage={perPage}
         onPageChange={setPage}
         onPerPageChange={setPerPage}
