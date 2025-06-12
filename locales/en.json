@@ -1355,6 +1355,7 @@
         "user": "User",
         "userId": "User ID",
         "person": "Person",
+        "personType": "Person Type",
         "organisationalUnit": "Organizational Unit",
         "businessPartnerUser": "Business Partner User",
         "displayName": "Display Name",

@@ -29,11 +29,6 @@ export default function EnterpriseRoots() {
       render: row =>
         `${safeRender(row, 'enterpriseRootAddressesId')} | ${safeRender(row, 'enterpriseRootAddresses.addressName')}`,
     },
-    {
-      id: 'organisationUnitId',
-      title: t('organisationUnit'),
-      render: row => `${safeRender(row, 'ouUnitId')} | ${safeRender(row, 'ouUnit.name')}`,
-    },
   ]
 
   return (
