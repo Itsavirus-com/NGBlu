@@ -47,6 +47,11 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       title: t('addresses.addressType'),
       render: row => safeRender(row, 'addressType.addressType'),
     },
+    {
+      id: 'ouUnit',
+      title: t('organisationUnit'),
+      render: row => `${safeRender(row, 'ouUnitId')} | ${safeRender(row, 'ouUnit.name')}`,
+    },
   ]
 
   const contactColumns: TableColumn<EnterpriseRootContact>[] = [
@@ -67,6 +72,11 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       render: row =>
         `${safeRender(row, 'responsibilityId')} | ${safeRender(row, 'responsibility.responsibility')}`,
     },
+    {
+      id: 'ouUnit',
+      title: t('organisationUnit'),
+      render: row => `${safeRender(row, 'ouUnitId')} | ${safeRender(row, 'ouUnit.name')}`,
+    },
   ]
 
   const projectColumns: TableColumn<EnterpriseRootProject>[] = [
@@ -85,6 +95,11 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       title: t('projects.enterpriseRootAddress'),
       render: row =>
         `${safeRender(row, 'enterpriseRootAddressesId')} | ${safeRender(row, 'enterpriseRootAddresses.addressName')}`,
+    },
+    {
+      id: 'ouUnit',
+      title: t('organisationUnit'),
+      render: row => `${safeRender(row, 'ouUnitId')} | ${safeRender(row, 'ouUnit.name')}`,
     },
   ]
 
@@ -105,18 +120,10 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       render: row =>
         `${safeRender(row, 'enterpriseRootAddressesId')} | ${safeRender(row, 'enterpriseRootAddresses.addressName')}`,
     },
-  ]
-
-  const businessPartnerColumns: TableColumn<BusinessPartnerCustomer>[] = [
     {
-      id: 'id',
-      title: t('businessPartners.id'),
-      render: row => safeRender(row, 'id'),
-    },
-    {
-      id: 'businessPartner',
-      title: t('businessPartners.title'),
-      render: row => `${safeRender(row, 'id')} | ${safeRender(row, 'name')}`,
+      id: 'ouUnit',
+      title: t('organisationUnit'),
+      render: row => `${safeRender(row, 'ouUnitId')} | ${safeRender(row, 'ouUnit.name')}`,
     },
   ]
 
@@ -141,6 +148,24 @@ export default function EnterpriseRootDetails({ params }: { params: { id: number
       id: 'personType',
       title: t('users.personType'),
       render: row => safeRender(row, 'person.personType.type'),
+    },
+    {
+      id: 'ouUnit',
+      title: t('organisationUnit'),
+      render: row => `${safeRender(row, 'ouUnitId')} | ${safeRender(row, 'ouUnit.name')}`,
+    },
+  ]
+
+  const businessPartnerColumns: TableColumn<BusinessPartnerCustomer>[] = [
+    {
+      id: 'id',
+      title: t('businessPartners.id'),
+      render: row => safeRender(row, 'id'),
+    },
+    {
+      id: 'businessPartner',
+      title: t('businessPartners.title'),
+      render: row => `${safeRender(row, 'id')} | ${safeRender(row, 'name')}`,
     },
   ]
 
