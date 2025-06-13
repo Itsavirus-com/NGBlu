@@ -4,3 +4,6 @@
 .next
 node_modules
 .idea/
+coverage
+.vscode
+.cursor/
