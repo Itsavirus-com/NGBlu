@@ -60,4 +60,5 @@ export type ButtonProps = {
   loading?: boolean
   disabled?: boolean
   onlyIconLoading?: boolean
+  iconClassName?: string
 }

@@ -106,10 +106,23 @@
     "cta": "Return Home"
   },
   "auth": {
-    "title": "Snel, efficiënt en productief",
+    "title": "Fast, Efficient and Productive",
     "subtitle": "We are <company>pioneers in broadband solutions</company>, driven by our belief in <vision>universal internet access</vision> as the <br></br> foundation of Cloud adoption. Our mission empowers <partners>partners' digital transformation</partners> through <br></br> <solutions>comprehensive network solutions and customizable services</solutions>, leveraging our expertise to <br></br> <goal>shape the future of the broadband economy</goal>.",
-    "terms": "Voorwaarden",
-    "contact_us": "Contacteer ons",
+    "terms": "Terms",
+    "contact_us": "Contact Us",
+    "login": {
+      "signInToInfraOrders": "Sign in to InfraOrders 2.0",
+      "signInButton": "Sign in with Microsoft",
+      "orContinueWith": "OR CONTINUE WITH",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "signIn": "Sign In",
+      "continue": "Continue",
+      "continueAs": "Continue as",
+      "enterPasswordFor": "Enter password for",
+      "continueWithPassword": "Continue with Password"
+    },
     "requestResetPassword": {
       "title": "Forgot Password",
       "subtitle": "Enter your email address and we'll send you instructions to reset your password.",
@@ -191,7 +204,8 @@
       "sessionCreationFailed": "Failed to create session",
       "invalidAuthResponse": "Invalid authentication response",
       "checkAvailabilityFailed": "Failed to check passkey availability",
-      "deletePasskeyFailed": "Failed to delete passkey"
+      "deletePasskeyFailed": "Failed to delete passkey",
+      "setUpPasskey": "Set up a passkey after signing in for faster, more secure access"
     }
   },
   "dataValidation": {

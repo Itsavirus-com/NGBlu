@@ -21,6 +21,7 @@ export const Button = (props: ButtonProps) => {
     loading = false,
     disabled = false,
     onlyIconLoading = false,
+    iconClassName,
   } = props
 
   const ButtonWrapper = !!href ? Link : 'button'
@@ -42,7 +43,7 @@ export const Button = (props: ButtonProps) => {
         </>
       ) : (
         <>
-          {icon && <KTIcon iconName={icon} className={iconSize} />}
+          {icon && <KTIcon iconName={icon} className={`${iconSize} ${iconClassName}`} />}
           {label && <span className="ms-1">{label}</span>}
         </>
       )}

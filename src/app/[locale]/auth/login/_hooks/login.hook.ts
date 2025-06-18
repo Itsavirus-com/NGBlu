@@ -8,16 +8,25 @@ import { useForm } from 'react-hook-form'
 import { usePasskey } from '@/hooks/use-passkey.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { loginManualApi } from '@/services/api/login-manual-api'
+import { passkeyApi } from '@/services/api/passkey-api'
 import { omitNullAndUndefined } from '@/utils/object'
 import { logAuthToSentry } from '@/utils/sentry-logger'
 
 import { schema } from '../_schemas/login.schema'
+
+export type LoginStep = 'initial' | 'auth-options' | 'password'
 
 export const useLogin = () => {
   const searchParams = useSearchParams()
   const router = useRouter()
   const tError = useTranslations('common.error')
   const toastShownRef = useRef(false)
+
+  // Login step management
+  const [currentStep, setCurrentStep] = useState<LoginStep>('initial')
+  const [userHasPasskey, setUserHasPasskey] = useState(false)
+  const [isCheckingPasskey, setIsCheckingPasskey] = useState(false)
+
   const {
     isSupported: isPasskeySupported,
     authenticateWithPasskey,
@@ -29,6 +38,47 @@ export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const methods = useForm({ resolver: yupResolver(schema) })
+  const emailValue = methods.watch('email')
+
+  // Step navigation handlers
+  const handleEmailContinue = async () => {
+    if (emailValue && emailValue.includes('@')) {
+      setIsCheckingPasskey(true)
+      try {
+        const response = await passkeyApi.checkUserPasskey(emailValue)
+
+        if (response.ok && response.data?.success) {
+          setUserHasPasskey(response.data.data.hasPasskey)
+        } else {
+          // If API call fails, assume no passkey to be safe
+          setUserHasPasskey(false)
+        }
+
+        // Move to auth options step after checking passkey
+        setCurrentStep('auth-options')
+      } catch (error) {
+        console.error('Error checking passkey:', error)
+        // If API call fails, assume no passkey to be safe
+        setUserHasPasskey(false)
+        // Still proceed to auth options step
+        setCurrentStep('auth-options')
+      } finally {
+        setIsCheckingPasskey(false)
+      }
+    }
+  }
+
+  const handlePasswordOption = () => {
+    setCurrentStep('password')
+  }
+
+  const handleBackToEmail = () => {
+    setCurrentStep('initial')
+  }
+
+  const handleBackToOptions = () => {
+    setCurrentStep('auth-options')
+  }
 
   // Handler for Microsoft sign-in
   const handleMicrosoftSignIn = async () => {
@@ -161,18 +211,6 @@ export const useLogin = () => {
     await authenticateWithPasskey()
   }
 
-  // Initialize conditional UI for passkey autofill
-  useEffect(() => {
-    if (isPasskeySupported) {
-      // Delay to ensure DOM is fully rendered
-      const timer = setTimeout(() => {
-        authenticateWithConditionalUI()
-      }, 100)
-
-      return () => clearTimeout(timer)
-    }
-  }, [isPasskeySupported])
-
   useEffect(() => {
     // Check for error parameters in the URL
     const error = searchParams?.get('error')
@@ -230,12 +268,27 @@ export const useLogin = () => {
   }, [searchParams, showToast, tError])
 
   return {
-    // state
+    // Form state
     methods,
+    emailValue,
+
+    // Step state
+    currentStep,
+    userHasPasskey,
+    isCheckingPasskey,
+
+    // Loading states
     isLoading,
     isPasskeySupported,
     isPasskeyAuthenticating,
-    // actions
+
+    // Step navigation
+    handleEmailContinue,
+    handlePasswordOption,
+    handleBackToEmail,
+    handleBackToOptions,
+
+    // Authentication actions
     onSubmit,
     handleMicrosoftSignIn,
     handlePasskeySignIn,
