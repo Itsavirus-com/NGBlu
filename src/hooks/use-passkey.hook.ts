@@ -61,9 +61,6 @@ export const usePasskey = () => {
           body: t('registrationSuccessMessage'),
         })
 
-        // Refresh the passkeys list
-        // await loadUserPasskeys()
-
         return { success: true }
       } else {
         showToast({

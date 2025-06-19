@@ -119,7 +119,11 @@
       "email": "Email",
       "password": "Password",
       "forgotPassword": "Forgot password?",
-      "signIn": "Sign In"
+      "signIn": "Sign In",
+      "continue": "Continue",
+      "continueAs": "Continue as",
+      "enterPasswordFor": "Enter password for",
+      "continueWithPassword": "Continue with Password"
     },
     "requestResetPassword": {
       "title": "Forgot Password",
@@ -202,7 +206,8 @@
       "sessionCreationFailed": "Failed to create session",
       "invalidAuthResponse": "Invalid authentication response",
       "checkAvailabilityFailed": "Failed to check passkey availability",
-      "deletePasskeyFailed": "Failed to delete passkey"
+      "deletePasskeyFailed": "Failed to delete passkey",
+      "setUpPasskey": "Set up a passkey after signing in for faster, more secure access"
     }
   },
   "dataValidation": {

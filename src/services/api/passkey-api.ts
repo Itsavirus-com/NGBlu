@@ -124,6 +124,11 @@ export class PasskeyApi extends ApiCore {
     return await this.post({ path: 'login/passkey/verify', payload })
   }
 
+  // Check if user has passkey by email
+  async checkUserPasskey(email: string) {
+    return await this.post({ path: 'login/passkey/check', payload: { email } })
+  }
+
   // not ready yet
   // Get user's registered passkeys
   async getUserPasskeys() {
