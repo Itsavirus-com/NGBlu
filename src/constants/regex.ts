@@ -5,3 +5,4 @@ export const PHONE_NUMBER_REGEX = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]
 export const UNDERSCORE_REGEX = /_/g
 export const CAPITALIZE_WORD_REGEX = /\b\w/g
 export const WHITESPACE_REGEX = /\s+/g
+export const TOTP_REGEX = /^\d{6}$/
