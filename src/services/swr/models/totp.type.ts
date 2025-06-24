@@ -57,3 +57,15 @@ export interface Verify2faResponse {
     // ... other user fields
   }
 }
+
+export interface Check2faAvailabilityRequest {
+  email: string
+}
+
+export interface Check2faAvailabilityResponse {
+  success: boolean
+  message: string | null
+  data: {
+    hasTotp: boolean
+  }
+}

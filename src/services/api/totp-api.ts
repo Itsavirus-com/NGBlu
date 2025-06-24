@@ -1,7 +1,14 @@
 import { ApiCore } from './api-core'
-import type { Verify2faRequest } from '../swr/models/totp.type'
+import type { Check2faAvailabilityRequest, Verify2faRequest } from '../swr/models/totp.type'
 
 export class TotpApi extends ApiCore {
+  /**
+   * Check if user has 2FA enabled
+   */
+  async check2faAvailability(payload: Check2faAvailabilityRequest) {
+    return await this.post({ path: 'login/check-2fa-availability', payload })
+  }
+
   /**
    * Generate QR code for TOTP setup
    */

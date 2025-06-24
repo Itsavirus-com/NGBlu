@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { useTotpEnforcement } from '@/hooks/use-totp-enforcement.hook'
+
 import { useTotpManagement } from './totp-management.hook'
 
 export function useTotpManagementUI() {
@@ -7,6 +9,7 @@ export function useTotpManagementUI() {
   const [showBackupCodes, setShowBackupCodes] = useState(false)
   const [showDisableConfirm, setShowDisableConfirm] = useState(false)
   const [currentBackupCodes, setCurrentBackupCodes] = useState<string[]>([])
+  const { recheckStatus } = useTotpEnforcement()
 
   const {
     is2faEnabled,
@@ -26,6 +29,7 @@ export function useTotpManagementUI() {
     setCurrentBackupCodes(backupCodes)
     setShowQrSetup(false)
     setShowBackupCodes(true)
+    recheckStatus()
   }
 
   const handleDisable = () => {
@@ -35,6 +39,7 @@ export function useTotpManagementUI() {
   const handleConfirmDisable = async () => {
     setShowDisableConfirm(false)
     await handleDisable2fa()
+    recheckStatus()
   }
 
   const handleCancelDisable = () => {

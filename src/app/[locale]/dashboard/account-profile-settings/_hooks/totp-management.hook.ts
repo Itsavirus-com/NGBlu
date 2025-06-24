@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { triggerTotpStatusRecheck } from '@/hooks/use-totp-enforcement.hook'
 import { totpApi } from '@/services/api/totp-api'
 import { useUserProfile } from '@/services/swr/use-user-profile'
 
@@ -76,6 +77,9 @@ export function useTotpManagement() {
         // Refresh user profile
         await mutateProfile()
 
+        // Trigger banner status recheck
+        triggerTotpStatusRecheck()
+
         showToast({
           variant: 'success',
           title: 'Success',
@@ -115,6 +119,9 @@ export function useTotpManagement() {
 
         // Refresh user profile
         await mutateProfile()
+
+        // Trigger banner status recheck
+        triggerTotpStatusRecheck()
 
         showToast({
           variant: 'success',

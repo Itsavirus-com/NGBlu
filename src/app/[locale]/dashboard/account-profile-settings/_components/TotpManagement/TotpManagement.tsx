@@ -67,7 +67,7 @@ export function TotpManagement() {
                 </div>
               </div>
               <div>
-                <h4 className="text-success mb-1">{t('enabled')}</h4>
+                <h4 className="text-success mb-1 text-dark">{t('enabled')}</h4>
                 <p className="text-muted mb-0">{t('enabledDescription')}</p>
               </div>
             </div>
@@ -90,7 +90,7 @@ export function TotpManagement() {
                 </div>
               </div>
               <div>
-                <h4 className="text-warning mb-1">{t('disabled')}</h4>
+                <h4 className="text-warning mb-1 text-dark">{t('disabled')}</h4>
                 <p className="text-muted mb-0">{t('disabledDescription')}</p>
               </div>
             </div>

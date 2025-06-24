@@ -135,7 +135,47 @@
       "useBackupCode": "Use Backup Code",
       "backToPassword": "Back to Password",
       "twoFactorHelp": "Open your authenticator app and enter the 6-digit code",
-      "backupCodeHelp": "Enter one of your saved backup codes"
+      "backupCodeHelp": "Enter one of your saved backup codes",
+      "mandatory2faSetup": {
+        "title": "Security Setup Required",
+        "description": "To protect your account, you must enable two-factor authentication (2FA) before accessing your dashboard.",
+        "required": {
+          "title": "2FA Required",
+          "message": "This is a mandatory security requirement for all users."
+        },
+        "generateQrCode": "Set up Two-Factor Authentication",
+        "qrCode": {
+          "title": "Scan QR Code",
+          "description": "Use your authenticator app to scan this QR code and set up 2FA.",
+          "continue": "I've Added the Account"
+        },
+        "instructions": {
+          "title": "How to set up 2FA:",
+          "step1": "Install an authenticator app (Google Authenticator, Authy, etc.)",
+          "step2": "Scan the QR code with your authenticator app",
+          "step3": "Enter the 6-digit code to complete setup"
+        },
+        "verification": {
+          "title": "Verify Your Setup",
+          "description": "Enter the 6-digit code from your authenticator app to complete the setup.",
+          "codeLabel": "Authentication Code",
+          "codePlaceholder": "Enter 6-digit code",
+          "verify": "Complete Setup",
+          "error": "Invalid code. Please check your authenticator app and try again."
+        },
+        "success": {
+          "title": "2FA Setup Complete!",
+          "message": "Your account is now secured with two-factor authentication."
+        },
+        "backupCodes": {
+          "title": "Save Your Backup Codes",
+          "description": "Store these backup codes in a safe place. You can use them to access your account if you lose your authenticator device.",
+          "download": "Download Backup Codes",
+          "downloadHeader": "Two-Factor Authentication Backup Codes",
+          "downloadFooter": "Keep these codes safe and secure. Each code can only be used once."
+        },
+        "redirecting": "Taking you to your dashboard..."
+      }
     },
     "requestResetPassword": {
       "title": "Forgot Password",
@@ -220,6 +260,16 @@
       "checkAvailabilityFailed": "Failed to check passkey availability",
       "deletePasskeyFailed": "Failed to delete passkey",
       "setUpPasskey": "Set up a passkey after signing in for faster, more secure access"
+    }
+  },
+  "dashboard": {
+    "security": {
+      "totpEnforcement": {
+        "title": "Security Setup Required",
+        "description": "To protect your account and comply with security policies, you must enable two-factor authentication (2FA).",
+        "subtitle": "This is a mandatory requirement for all users.",
+        "setupButton": "Set up 2FA Now"
+      }
     }
   },
   "dataValidation": {
