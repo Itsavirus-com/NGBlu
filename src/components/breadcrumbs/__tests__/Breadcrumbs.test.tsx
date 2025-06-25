@@ -2,7 +2,7 @@ import userEvent from '@testing-library/user-event'
 
 import { createCommonMocks, render, screen } from '@/utils/test-utils'
 
-import { Breadcrumbs } from '../Breadcrumbs'
+import { Breadcrumbs } from '../breadcrumbs'
 import { BreadcrumbItem } from '../breadcrumbs.type'
 
 // Set up mocks

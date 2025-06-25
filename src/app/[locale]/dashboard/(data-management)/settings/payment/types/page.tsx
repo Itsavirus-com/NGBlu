@@ -1,7 +1,7 @@
 'use client'
 import { useTranslations } from 'next-intl'
 
-import { Table } from '@/components/table/Table'
+import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { PaymentType } from '@/services/swr/models/payment-type.type'
 import { safeRender } from '@/utils/safeRender'

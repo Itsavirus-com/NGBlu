@@ -1,10 +1,10 @@
 import clsx from 'clsx'
 import { useState } from 'react'
 
-import { Button } from '@/components/button/Button'
+import { Button } from '@/components/button/button'
 
 import { DynamicTableBody } from './DynamicTableBody'
-import { Filter } from './Filter'
+import { Filter } from './filter'
 import { StaticTableBody } from './StaticTableBody'
 import { TableProps } from './table.type'
 

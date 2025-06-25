@@ -2,13 +2,16 @@ import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { Button } from '@/components/button/Button'
+import { Button } from '@/components/button/button'
 
 import { FilterProps } from './filter.type'
 
 export const Filter = ({ children, onFilter }: FilterProps) => {
   const t = useTranslations('common.table')
-  const methods = useForm({ defaultValues: {} })
+  const methods = useForm({
+    defaultValues: {},
+    mode: 'onChange',
+  })
   const [isOpen, setIsOpen] = useState(false)
 
   // Handler for form submission
@@ -22,6 +25,17 @@ export const Filter = ({ children, onFilter }: FilterProps) => {
 
   // Add a reset handler to log reset action
   const handleReset = () => {
+    // Get all current form field names and reset them to empty values
+    const currentValues = methods.getValues()
+    const resetValues = Object.keys(currentValues).reduce(
+      (acc, key) => {
+        acc[key] = ''
+        return acc
+      },
+      {} as Record<string, any>
+    )
+
+    methods.reset(resetValues)
     if (onFilter) {
       onFilter({})
     }

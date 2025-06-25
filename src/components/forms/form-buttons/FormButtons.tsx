@@ -1,14 +1,15 @@
 import { useTranslations } from 'next-intl'
 
-import { Button } from '@/components/button/Button'
+import { Button } from '@/components/button/button'
 import { useRouter } from '@/navigation'
 
 interface FormButtonsProps {
   isSubmitting: boolean
   submitText?: string
+  withCancel?: boolean
 }
 
-export const FormButtons = ({ isSubmitting, submitText }: FormButtonsProps) => {
+export const FormButtons = ({ isSubmitting, submitText, withCancel = true }: FormButtonsProps) => {
   const { back } = useRouter()
   const t = useTranslations('common')
 
@@ -23,7 +24,9 @@ export const FormButtons = ({ isSubmitting, submitText }: FormButtonsProps) => {
         icon="check"
         disabled={isSubmitting}
       />
-      <Button type="button" colorClass="danger" onClick={back} label={t('cancel')} icon="cross" />
+      {withCancel && (
+        <Button type="button" colorClass="danger" onClick={back} label={t('cancel')} icon="cross" />
+      )}
     </div>
   )
 }

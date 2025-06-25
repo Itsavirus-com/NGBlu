@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 
-import { Table } from '@/components/table/Table'
+import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { EnterpriseRoot } from '@/services/swr/models/enterprise-root.type'
 import { safeRender } from '@/utils/safeRender'
@@ -28,11 +28,6 @@ export default function EnterpriseRoots() {
       title: t('enterpriseRootAddress'),
       render: row =>
         `${safeRender(row, 'enterpriseRootAddressesId')} | ${safeRender(row, 'enterpriseRootAddresses.addressName')}`,
-    },
-    {
-      id: 'organisationUnitId',
-      title: t('organisationUnit'),
-      render: row => `${safeRender(row, 'ouUnitId')} | ${safeRender(row, 'ouUnit.name')}`,
     },
   ]
 

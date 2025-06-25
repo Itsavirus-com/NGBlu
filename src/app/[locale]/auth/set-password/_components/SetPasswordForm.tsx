@@ -4,11 +4,11 @@ import { useTranslations } from 'next-intl'
 import { Card, Container, ProgressBar, Spinner } from 'react-bootstrap'
 import { useWatch } from 'react-hook-form'
 
-import { Button } from '@/components/button/Button'
+import { Button } from '@/components/button/button'
 import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
 import { FormProvider } from '@/components/forms/form-provider/FormProvider'
 import { KTIcon } from '@/components/kt-icon/KtIcon'
-import { Toast } from '@/components/toast/Toast'
+import { Toast } from '@/components/toast/toast'
 
 import useSetPasswordForm from '../_hooks/set-password.hook'
 

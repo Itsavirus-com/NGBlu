@@ -12,7 +12,6 @@ import { useUser } from '@/services/swr/use-user'
 import { omitNullAndUndefined } from '@/utils/object'
 import { InferType } from '@/utils/typescript'
 
-
 import { schema } from '../_schemas/user-form.schema'
 
 export default function useUserForm(userId?: number) {
@@ -53,8 +52,12 @@ export default function useUserForm(userId?: number) {
       } else {
         showUnexpectedToast()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
@@ -71,8 +74,12 @@ export default function useUserForm(userId?: number) {
       } else {
         showUnexpectedToast()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
@@ -101,8 +108,12 @@ export default function useUserForm(userId?: number) {
       } else {
         showUnexpectedToast()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 
@@ -137,8 +148,12 @@ export default function useUserForm(userId?: number) {
         showUnexpectedToast()
         return false
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
+      }
       return false
     } finally {
       // Always clear loading state when done

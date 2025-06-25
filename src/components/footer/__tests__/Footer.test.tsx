@@ -2,7 +2,7 @@ import React from 'react'
 
 import { createCommonMocks, render, screen } from '@/utils/test-utils'
 
-import { Footer } from '../Footer'
+import { Footer } from '../footer'
 
 // Set up mocks
 createCommonMocks()

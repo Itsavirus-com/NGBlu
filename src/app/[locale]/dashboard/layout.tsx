@@ -4,10 +4,10 @@ import { SessionProvider } from 'next-auth/react'
 import { SWRConfig } from 'swr'
 
 import { MasterInit } from '@/components/core/MasterInit'
-import { Footer } from '@/components/footer/Footer'
-import { Header } from '@/components/header/Header'
+import { Footer } from '@/components/footer/footer'
+import { Header } from '@/components/header/header'
 import { SessionChecker } from '@/components/session/SessionChecker'
-import { Sidebar } from '@/components/sidebar/Sidebar'
+import { Sidebar } from '@/components/sidebar/sidebar'
 import { fetcher } from '@/services/swr/fetcher'
 
 import '@/assets/keenicons/duotone/style.css'

@@ -1,6 +1,6 @@
 import { createCommonMocks, render, screen } from '@/utils/test-utils'
 
-import { Table } from '../Table'
+import { Table } from '../table'
 import { TableColumn } from '../table.type'
 
 // Set up mocks

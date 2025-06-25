@@ -3,6 +3,7 @@
 .DS_STORE
 .next
 node_modules
-coverage
-
 .idea/
+coverage
+.vscode
+.cursor/

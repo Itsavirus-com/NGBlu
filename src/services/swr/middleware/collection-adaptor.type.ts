@@ -2,15 +2,18 @@ import { Middleware } from 'swr'
 
 import { AnyObject } from './model-adaptor.type'
 
+export type Pagination = {
+  perPage: number
+  currentPage: number
+  lastPage: number
+  total: number
+}
+
 export type Collection<K extends string, T extends AnyObject> = {
   [key in K]: T[]
 } & {
-  pagination: {
-    perPage: number
-    currentPage: number
-    lastPage: number
-    total: number
-  }
+  pagination?: Pagination
+  meta?: Pagination
 }
 
 type CollectionAdaptorParams<Model> = {

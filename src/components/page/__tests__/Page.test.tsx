@@ -1,6 +1,6 @@
 import { createCommonMocks, render, screen } from '@/utils/test-utils'
 
-import { Page } from '../Page'
+import { Page } from '../page'
 
 // Set up mocks
 createCommonMocks()

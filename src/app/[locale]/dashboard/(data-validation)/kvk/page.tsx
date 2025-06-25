@@ -2,7 +2,7 @@
 import { useTranslations } from 'next-intl'
 import { Badge, Card, CardBody, Col, Row } from 'react-bootstrap'
 
-import { Button } from '@/components/button/Button'
+import { Button } from '@/components/button/button'
 import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
 import { FormProvider } from '@/components/forms/form-provider'
 import Loading from '@/components/loading/Loading'

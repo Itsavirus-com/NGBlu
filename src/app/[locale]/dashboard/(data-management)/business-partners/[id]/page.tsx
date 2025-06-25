@@ -2,11 +2,11 @@
 
 import { useTranslations } from 'next-intl'
 
-import { Breadcrumbs } from '@/components/breadcrumbs/Breadcrumbs'
+import { Breadcrumbs } from '@/components/breadcrumbs/breadcrumbs'
 import { getBreadcrumbItems } from '@/components/breadcrumbs/helper'
 import { DynamicTabs } from '@/components/dynamic-tabs/DynamicTabs'
 import { PageTitle } from '@/components/page-title'
-import { Table } from '@/components/table/Table'
+import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { FieldTextView } from '@/components/view/field-text-view/FieldTextView'
 import { BusinessPartnerAddress } from '@/services/swr/models/business-partner-address.type'
@@ -50,6 +50,11 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
       render: row =>
         `${safeRender(row, 'addressType.id')} | ${safeRender(row, 'addressType.addressType')}`,
     },
+    {
+      id: 'ouUnit',
+      title: t('organisationalUnit'),
+      render: row => `${safeRender(row, 'ouUnitId')} | ${safeRender(row, 'ouUnit.name')}`,
+    },
   ]
 
   const contactColumns: TableColumn<BusinessPartnerContact>[] = [
@@ -63,6 +68,12 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
       title: t('contacts.person'),
       render: row => `${safeRender(row, 'person.firstname')} ${safeRender(row, 'person.lastname')}`,
     },
+    {
+      id: 'responsibility',
+      title: t('contacts.responsibility'),
+      render: row =>
+        `${safeRender(row, 'responsibilityId')} | ${safeRender(row, 'responsibility.responsibility')}`,
+    },
   ]
 
   const customerColumns: TableColumn<BusinessPartnerCustomer>[] = [
@@ -75,6 +86,17 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
       id: 'endClient',
       title: t('customers.endClient'),
       render: row => `${safeRender(row, 'endclientId')} | ${safeRender(row, 'endclient.name')}`,
+    },
+    {
+      id: 'address',
+      title: t('customers.businessPartnerAddress'),
+      render: row =>
+        `${safeRender(row, 'businesspartnerAddressId')} | ${safeRender(row, 'businesspartnerAddress.addressName')}`,
+    },
+    {
+      id: 'ouUnit',
+      title: t('organisationalUnit'),
+      render: row => `${safeRender(row, 'ouUnitId')} | ${safeRender(row, 'ouUnit.name')}`,
     },
   ]
 
@@ -102,6 +124,17 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
       title: t('projects.project'),
       render: row => `${safeRender(row, 'projectId')} | ${safeRender(row, 'project.projectName')}`,
     },
+    {
+      id: 'address',
+      title: t('projects.businessPartnerAddress'),
+      render: row =>
+        `${safeRender(row, 'businesspartnerAddressId')} | ${safeRender(row, 'businesspartnerAddress.addressName')}`,
+    },
+    {
+      id: 'ouUnit',
+      title: t('organisationalUnit'),
+      render: row => `${safeRender(row, 'ouUnitId')} | ${safeRender(row, 'ouUnit.name')}`,
+    },
   ]
 
   const userColumns: TableColumn<BusinessPartnerUser>[] = [
@@ -114,6 +147,22 @@ export default function BusinessPartnerDetails({ params }: { params: { id: strin
       id: 'user',
       title: t('users.user'),
       render: row => `${safeRender(row, 'user.id')} | ${safeRender(row, 'user.displayName')}`,
+    },
+    {
+      id: 'person',
+      title: t('users.person'),
+      render: row =>
+        `${safeRender(row, 'personId')} | ${safeRender(row, 'person.firstname')} ${safeRender(row, 'person.lastname')}`,
+    },
+    {
+      id: 'personType',
+      title: t('users.personType'),
+      render: row => safeRender(row, 'person.personType.type'),
+    },
+    {
+      id: 'ouUnit',
+      title: t('organisationalUnit'),
+      render: row => `${safeRender(row, 'ouUnitId')} | ${safeRender(row, 'ouUnit.name')}`,
     },
   ]
 

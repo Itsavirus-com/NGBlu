@@ -5,12 +5,19 @@ import { useTranslations } from 'next-intl'
 import { FC } from 'react'
 
 import avatar from '@/assets/images/avatars/300-3.jpg'
+import { passwordVerificationUtils } from '@/utils/password-verification'
 
-import { Languages } from './Languages'
+import { Languages } from './languages'
 
 const HeaderUserMenu: FC = () => {
   const t = useTranslations('common.navbar')
   const { data: session } = useSession()
+
+  const handleSignOut = () => {
+    // Clear all sensitive data from localStorage before signing out
+    passwordVerificationUtils.clearVerification()
+    signOut()
+  }
 
   return (
     <div
@@ -47,14 +54,7 @@ const HeaderUserMenu: FC = () => {
       </div>
 
       <div className="menu-item px-5" data-kt-menu-trigger="click">
-        <div
-          className="menu-link px-5"
-          onClick={() => {
-            // Clear token data from localStorage before signing out
-            localStorage.removeItem('token_expires_at')
-            signOut()
-          }}
-        >
+        <div className="menu-link px-5" onClick={handleSignOut}>
           {t('sign_out')}
         </div>
       </div>

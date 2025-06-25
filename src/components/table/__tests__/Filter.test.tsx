@@ -1,6 +1,6 @@
 import { createCommonMocks, fireEvent, render, screen, waitFor } from '@/utils/test-utils'
 
-import { Filter } from '../Filter'
+import { Filter } from '../filter'
 
 // Set up mocks
 createCommonMocks()

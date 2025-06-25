@@ -8,15 +8,25 @@ import { useForm } from 'react-hook-form'
 import { usePasskey } from '@/hooks/use-passkey.hook'
 import { useToast } from '@/hooks/use-toast.hook'
 import { loginManualApi } from '@/services/api/login-manual-api'
+import { passkeyApi } from '@/services/api/passkey-api'
 import { omitNullAndUndefined } from '@/utils/object'
+import { logAuthToSentry } from '@/utils/sentry-logger'
 
 import { schema } from '../_schemas/login.schema'
+
+export type LoginStep = 'initial' | 'auth-options' | 'password'
 
 export const useLogin = () => {
   const searchParams = useSearchParams()
   const router = useRouter()
   const tError = useTranslations('common.error')
   const toastShownRef = useRef(false)
+
+  // Login step management
+  const [currentStep, setCurrentStep] = useState<LoginStep>('initial')
+  const [userHasPasskey, setUserHasPasskey] = useState(false)
+  const [isCheckingPasskey, setIsCheckingPasskey] = useState(false)
+
   const {
     isSupported: isPasskeySupported,
     authenticateWithPasskey,
@@ -28,10 +38,102 @@ export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const methods = useForm({ resolver: yupResolver(schema) })
+  const emailValue = methods.watch('email')
+
+  // Step navigation handlers
+  const handleEmailContinue = async () => {
+    if (emailValue && emailValue.includes('@')) {
+      setIsCheckingPasskey(true)
+      try {
+        const response = await passkeyApi.checkUserPasskey(emailValue)
+
+        if (response.ok && response.data?.success) {
+          setUserHasPasskey(response.data.data.hasPasskey)
+        } else {
+          // If API call fails, assume no passkey to be safe
+          setUserHasPasskey(false)
+        }
+
+        // Move to auth options step after checking passkey
+        setCurrentStep('auth-options')
+      } catch (error) {
+        console.error('Error checking passkey:', error)
+        // If API call fails, assume no passkey to be safe
+        setUserHasPasskey(false)
+        // Still proceed to auth options step
+        setCurrentStep('auth-options')
+      } finally {
+        setIsCheckingPasskey(false)
+      }
+    }
+  }
+
+  const handlePasswordOption = () => {
+    setCurrentStep('password')
+  }
+
+  const handleBackToEmail = () => {
+    setCurrentStep('initial')
+  }
+
+  const handleBackToOptions = () => {
+    setCurrentStep('auth-options')
+  }
 
   // Handler for Microsoft sign-in
   const handleMicrosoftSignIn = async () => {
-    await signIn('azure-ad')
+    try {
+      // Collect browser and network information for debugging
+      const browserInfo = {
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        vendor: navigator.vendor,
+        language: navigator.language,
+        cookiesEnabled: navigator.cookieEnabled,
+        doNotTrack: navigator.doNotTrack,
+        hardwareConcurrency: navigator.hardwareConcurrency,
+        maxTouchPoints: navigator.maxTouchPoints,
+        online: navigator.onLine,
+        connection:
+          'connection' in navigator
+            ? {
+                effectiveType: (navigator as any).connection?.effectiveType,
+                downlink: (navigator as any).connection?.downlink,
+                rtt: (navigator as any).connection?.rtt,
+              }
+            : 'not available',
+        screenInfo: {
+          width: window.screen.width,
+          height: window.screen.height,
+          colorDepth: window.screen.colorDepth,
+          pixelRatio: window.devicePixelRatio,
+        },
+        url: window.location.href,
+        timestamp: new Date().toISOString(),
+      }
+
+      console.log('[AUTH DEBUG] Browser fingerprint before Microsoft sign-in', browserInfo)
+      logAuthToSentry('Microsoft Sign-in Initiated', browserInfo)
+
+      // Store in sessionStorage for analysis if auth fails
+      try {
+        sessionStorage.setItem('auth_browser_info', JSON.stringify(browserInfo))
+      } catch (e) {
+        console.error('[AUTH DEBUG] Failed to store browser info in sessionStorage', e)
+      }
+
+      // Begin signin process - using the standard approach without UI changes
+      await signIn('azure-ad')
+    } catch (error) {
+      console.error('[AUTH DEBUG] Error triggering Microsoft sign-in', error)
+      logAuthToSentry(
+        'Microsoft Sign-in Error',
+        {
+          error: error instanceof Error ? error.message : String(error),
+        },
+        'error'
+      )
+    }
   }
 
   const onSubmit = async (data: any) => {
@@ -48,6 +150,7 @@ export const useLogin = () => {
       const headers = response.headers as Record<string, string>
       const accessToken = headers['access-token']
       const clientPrivateKey = headers['client-private-key']
+      const accessTokenExpiresAt = headers['access-token-expires-at']
 
       if (response.ok && accessToken && clientPrivateKey && responseData.success) {
         try {
@@ -58,13 +161,10 @@ export const useLogin = () => {
             clientPrivateKey: clientPrivateKey,
             userData: JSON.stringify(responseData.data), // Pass user data to NextAuth
             callbackUrl: '/dashboard',
+            accessTokenExpiresAt: accessTokenExpiresAt,
           })
 
           if (result?.ok) {
-            // Set token expiration time 60 minutes from now
-            const expiresAt = Date.now() + 60 * 60 * 1000
-            localStorage.setItem('token_expires_at', expiresAt.toString())
-
             router.push('/dashboard')
           } else {
             console.error('SignIn failed:', result?.error)
@@ -111,27 +211,56 @@ export const useLogin = () => {
     await authenticateWithPasskey()
   }
 
-  // Initialize conditional UI for passkey autofill
-  useEffect(() => {
-    if (isPasskeySupported) {
-      // Delay to ensure DOM is fully rendered
-      const timer = setTimeout(() => {
-        authenticateWithConditionalUI()
-      }, 100)
-
-      return () => clearTimeout(timer)
-    }
-  }, [isPasskeySupported])
-
   useEffect(() => {
     // Check for error parameters in the URL
     const error = searchParams?.get('error')
+    const errorDescription = searchParams?.get('error_description')
 
-    if (error && !toastShownRef.current) {
+    // Check for our custom backend error parameter - this is the most reliable source
+    const backendError = searchParams?.get('backend_error')
+
+    // Check if there's a callbackUrl that contains errors
+    const callbackUrl = searchParams?.get('callbackUrl')
+    let callbackError = null
+    let callbackBackendError = null
+
+    // Extract error info from nested callbackUrl
+    if (callbackUrl) {
+      try {
+        const callbackUrlObj = new URL(callbackUrl)
+        callbackError = callbackUrlObj.searchParams.get('error')
+        callbackBackendError = callbackUrlObj.searchParams.get('backend_error')
+      } catch (e) {
+        console.error('Failed to parse callbackUrl:', callbackUrl, e)
+      }
+    }
+
+    // Combine error sources - prioritize direct errors, then check callback errors
+    const finalError = error || callbackError
+    const finalBackendError = backendError || callbackBackendError
+
+    if ((finalError || finalBackendError) && !toastShownRef.current) {
+      let errorMessage = tError('authErrorMessage') // fallback
+
+      // Priority 1: Use our custom backend_error parameter if available
+      if (finalBackendError) {
+        try {
+          // We need to decode it twice because it's double-encoded during redirect
+          let decodedError = decodeURIComponent(finalBackendError)
+          // Check if still contains URL-encoded characters (%)
+          if (decodedError.includes('%')) {
+            decodedError = decodeURIComponent(decodedError)
+          }
+          errorMessage = decodedError
+        } catch (e) {
+          errorMessage = finalBackendError
+        }
+      }
+
       showToast({
         variant: 'danger',
         title: tError('authError'),
-        body: tError('authErrorMessage'),
+        body: errorMessage,
       })
       // Set the ref to true to prevent showing the toast again
       toastShownRef.current = true
@@ -139,12 +268,27 @@ export const useLogin = () => {
   }, [searchParams, showToast, tError])
 
   return {
-    // state
+    // Form state
     methods,
+    emailValue,
+
+    // Step state
+    currentStep,
+    userHasPasskey,
+    isCheckingPasskey,
+
+    // Loading states
     isLoading,
     isPasskeySupported,
     isPasskeyAuthenticating,
-    // actions
+
+    // Step navigation
+    handleEmailContinue,
+    handlePasswordOption,
+    handleBackToEmail,
+    handleBackToOptions,
+
+    // Authentication actions
     onSubmit,
     handleMicrosoftSignIn,
     handlePasskeySignIn,

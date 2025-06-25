@@ -61,9 +61,6 @@ export const usePasskey = () => {
           body: t('registrationSuccessMessage'),
         })
 
-        // Refresh the passkeys list
-        // await loadUserPasskeys()
-
         return { success: true }
       } else {
         showToast({
@@ -106,23 +103,20 @@ export const usePasskey = () => {
 
       if (result.success && result.authData) {
         // Extract authentication data from the backend response
-        const { accessToken, clientPrivateKey, userData } = result.authData
+        const { accessToken, accessTokenExpiresAt, clientPrivateKey, userData } = result.authData
 
         if (accessToken && clientPrivateKey) {
           // Use NextAuth signIn to create a session
           const signInResult = await signIn('passkey-login', {
             redirect: false,
             accessToken: accessToken,
+            accessTokenExpiresAt: accessTokenExpiresAt,
             clientPrivateKey: clientPrivateKey,
             userData: JSON.stringify(userData),
             callbackUrl: '/dashboard',
           })
 
           if (signInResult?.ok) {
-            // Set token expiration time 60 minutes from now
-            const expiresAt = Date.now() + 60 * 60 * 1000
-            localStorage.setItem('token_expires_at', expiresAt.toString())
-
             showToast({
               variant: 'success',
               title: t('authenticationSuccess'),
@@ -171,23 +165,20 @@ export const usePasskey = () => {
 
       if (result.success && result.authData) {
         // Extract authentication data from the backend response
-        const { accessToken, clientPrivateKey, userData } = result.authData
+        const { accessToken, accessTokenExpiresAt, clientPrivateKey, userData } = result.authData
 
         if (accessToken && clientPrivateKey) {
           // Use NextAuth signIn to create a session
           const signInResult = await signIn('passkey-login', {
             redirect: false,
             accessToken: accessToken,
+            accessTokenExpiresAt: accessTokenExpiresAt,
             clientPrivateKey: clientPrivateKey,
             userData: JSON.stringify(userData),
             callbackUrl: '/dashboard',
           })
 
           if (signInResult?.ok) {
-            // Set token expiration time 60 minutes from now
-            const expiresAt = Date.now() + 60 * 60 * 1000
-            localStorage.setItem('token_expires_at', expiresAt.toString())
-
             showToast({
               variant: 'success',
               title: t('authenticationSuccess'),

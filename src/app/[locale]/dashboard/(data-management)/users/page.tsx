@@ -2,7 +2,7 @@
 import { useTranslations } from 'next-intl'
 
 import { ButtonProps } from '@/components/button/button.type'
-import { Table } from '@/components/table/Table'
+import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { DateTimeView } from '@/components/view/date-time-view/DateTimeView'
 import { CAPITALIZE_WORD_REGEX, UNDERSCORE_REGEX } from '@/constants/regex'

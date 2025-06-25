@@ -29,7 +29,7 @@ export default function useBusinessPartnerProjectForm(
     resolver: yupResolver(schema),
 
     values: project && {
-      projectId: project?.id ?? 0,
+      projectId: project?.projectId ?? 0,
       ouUnitId: project?.ouUnitId ?? 0,
       businesspartnersAddressesId: project?.businesspartnerAddressId ?? 0,
     },
@@ -48,8 +48,8 @@ export default function useBusinessPartnerProjectForm(
         back()
       }
     } catch (error: any) {
-      if (error?.errors?.detail && 'projectId' in error.errors.detail) {
-        showToast({ variant: 'danger', body: error.errors.detail.projectId })
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
       } else {
         showUnexpectedToast()
       }
@@ -70,8 +70,12 @@ export default function useBusinessPartnerProjectForm(
         invalidateCache()
         back()
       }
-    } catch (error) {
-      showUnexpectedToast()
+    } catch (error: any) {
+      if (error?.message) {
+        showToast({ variant: 'danger', title: 'Error', body: error.message })
+      } else {
+        showUnexpectedToast()
+      }
     }
   }
 

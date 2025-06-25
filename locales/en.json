@@ -65,7 +65,8 @@
       "creditCardTypes": "Credit Card Types",
       "creditCardBrands": "Credit Card Brands",
       "organizationUnits": "Organizational Units",
-      "settings": "Settings"
+      "settings": "Settings",
+      "auditTrails": "Audit Trails"
     },
     "table": {
       "filter": "Filter",
@@ -118,7 +119,11 @@
       "email": "Email",
       "password": "Password",
       "forgotPassword": "Forgot password?",
-      "signIn": "Sign In"
+      "signIn": "Sign In",
+      "continue": "Continue",
+      "continueAs": "Continue as",
+      "enterPasswordFor": "Enter password for",
+      "continueWithPassword": "Continue with Password"
     },
     "requestResetPassword": {
       "title": "Forgot Password",
@@ -201,7 +206,8 @@
       "sessionCreationFailed": "Failed to create session",
       "invalidAuthResponse": "Invalid authentication response",
       "checkAvailabilityFailed": "Failed to check passkey availability",
-      "deletePasskeyFailed": "Failed to delete passkey"
+      "deletePasskeyFailed": "Failed to delete passkey",
+      "setUpPasskey": "Set up a passkey after signing in for faster, more secure access"
     }
   },
   "dataValidation": {
@@ -1354,6 +1360,7 @@
         "user": "User",
         "userId": "User ID",
         "person": "Person",
+        "personType": "Person Type",
         "organisationalUnit": "Organizational Unit",
         "businessPartnerUser": "Business Partner User",
         "displayName": "Display Name",
@@ -1446,6 +1453,59 @@
       "registerPasskey": "Register Passkey",
       "registrationSuccessMessage": "Your passkey has been registered successfully.",
       "deleteSuccessMessage": "Your passkey has been deleted successfully."
-    }
+    },
+    "verifyPassword": "Verify Password",
+    "verifyPasswordDescription": "For your security, please verify your password to continue",
+    "enterCurrentPasswordToContinue": "Enter your current password to continue",
+    "passwordVerified": "Password Verified",
+    "passwordVerificationSuccess": "Password verified successfully. You can now continue.",
+    "verificationFailed": "Verification Failed",
+    "verificationFailedMessage": "Something went wrong. Please try again."
+  },
+  "auditTrails": {
+    "title": "Audit Trails",
+    "id": "ID",
+    "event": "Event",
+    "user": "User",
+    "userId": "User ID",
+    "auditableType": "Record Type",
+    "auditableId": "Record ID",
+    "oldValues": "Old Values",
+    "newValues": "New Values",
+    "url": "URL",
+    "ipAddress": "IP Address",
+    "location": "Location",
+    "userAgent": "User Agent",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "signature": "Signature",
+    "tags": "Tags",
+    "filterByEvent": "Event",
+    "filterByUser": "User ID",
+    "filterByRecordType": "Record Type",
+    "filterByDate": "Date",
+    "fromDate": "From Date",
+    "toDate": "To Date",
+    "allEvents": "All Events",
+    "created": "Created",
+    "updated": "Updated",
+    "deleted": "Deleted",
+    "restored": "Restored",
+    "allUsers": "All Users",
+    "allRecords": "All Records",
+    "noUser": "System",
+    "viewDetails": "View Details",
+    "auditDetails": "Audit Details",
+    "changesPreview": "Changes Preview",
+    "beforeChange": "Before Change",
+    "afterChange": "After Change",
+    "noChanges": "No changes recorded",
+    "field": "Field",
+    "resourceInfo": "Resource Information",
+    "userInfo": "User Information",
+    "requestInfo": "Request Information",
+    "eventInfo": "Event Information",
+    "eventId": "Event ID",
+    "eventType": "Event Type"
   }
 }

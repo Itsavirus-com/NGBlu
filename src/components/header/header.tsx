@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import { Navbar } from './Navbar'
+import { Navbar } from './navbar'
 
 export function Header() {
   return (

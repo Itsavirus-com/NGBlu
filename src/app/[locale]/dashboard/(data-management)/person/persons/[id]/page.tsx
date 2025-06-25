@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 
 import { DynamicTabs } from '@/components/dynamic-tabs/DynamicTabs'
 import { PageTitle } from '@/components/page-title'
-import { Table } from '@/components/table/Table'
+import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { FieldTextView } from '@/components/view/field-text-view/FieldTextView'
 import { Contact } from '@/services/swr/models/contact.type'

@@ -1,6 +1,6 @@
 import { createCommonMocks, fireEvent, render, screen } from '@/utils/test-utils'
 
-import { Button } from '../Button'
+import { Button } from '../button'
 
 // Set up mocks
 createCommonMocks()

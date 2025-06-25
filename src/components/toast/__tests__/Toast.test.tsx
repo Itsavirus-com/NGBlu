@@ -98,7 +98,7 @@ jest.mock('react-bootstrap', () => ({
 createCommonMocks()
 
 // Now import the component after mocking
-import { Toast } from '../Toast'
+import { Toast } from '../toast'
 
 describe('<Toast />', () => {
   let mockHideStackedToast: jest.Mock
