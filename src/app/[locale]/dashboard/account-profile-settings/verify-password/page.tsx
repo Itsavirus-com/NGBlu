@@ -3,15 +3,16 @@
 import { useTranslations } from 'next-intl'
 import { useEffect } from 'react'
 
-import { FormButtons } from '@/components/forms/form-buttons'
-import { FormProvider } from '@/components/forms/form-provider/form-provider'
-import { ControlledInput } from '@/components/forms/input'
-import Loading from '@/components/loading/loading'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
+import { FormButtons } from '@/components/forms/form-buttons/FormButtons'
+import { FormProvider } from '@/components/forms/form-provider/FormProvider'
+import Loading from '@/components/loading/Loading'
 import { Page } from '@/components/page/page'
 import { useRouter } from '@/navigation'
 import { passwordVerificationUtils } from '@/utils/password-verification'
 
 import { usePasswordVerification } from './_hooks/password-verification.hook'
+
 
 export default function VerifyPassword() {
   const t = useTranslations('account')

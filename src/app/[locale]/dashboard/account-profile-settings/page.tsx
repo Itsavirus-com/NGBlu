@@ -3,9 +3,9 @@
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 
-import { ConfirmationModal } from '@/components/confirmation-modal/confirmation-modal'
-import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
-import Loading from '@/components/loading/loading'
+import { ConfirmationModal } from '@/components/confirmation-modal/ConfirmationModal'
+import { DynamicTabs } from '@/components/dynamic-tabs/DynamicTabs'
+import Loading from '@/components/loading/Loading'
 import { Page } from '@/components/page/page'
 import { useRouter } from '@/navigation'
 import { passwordVerificationUtils } from '@/utils/password-verification'

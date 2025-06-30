@@ -1,8 +1,9 @@
 import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/button/button'
-import { ControlledInput } from '@/components/forms/input'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
 import { Link } from '@/navigation'
+
 
 interface PasswordStepProps {
   emailValue: string

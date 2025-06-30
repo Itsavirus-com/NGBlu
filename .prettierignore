@@ -1,3 +1,4 @@
 .eslintrc
 .next
 node_modules
+coverage

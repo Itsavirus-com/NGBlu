@@ -4,9 +4,9 @@ import { useTranslations } from 'next-intl'
 import { Card, CardBody } from 'react-bootstrap'
 import { UseFormReturn } from 'react-hook-form'
 
-import { FormButtons } from '@/components/forms/form-buttons'
+import { ControlledSelect } from '@/components/forms/controlled-select/ControlledSelect'
+import { FormButtons } from '@/components/forms/form-buttons/FormButtons'
 import { FormProvider } from '@/components/forms/form-provider'
-import { ControlledSelect } from '@/components/forms/select'
 import { Package } from '@/services/swr/models/package.type'
 import { Product, ProductPriceConfig } from '@/services/swr/models/product.type'
 

@@ -2,7 +2,7 @@
 import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
-import Loading from '@/components/loading/loading'
+import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 import { AuditTrail } from '@/services/swr/models/audit-trail.type'
 import { useAuditTrail } from '@/services/swr/use-audit-trail'

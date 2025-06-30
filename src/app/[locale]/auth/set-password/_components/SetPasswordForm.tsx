@@ -5,9 +5,9 @@ import { Card, Container, ProgressBar, Spinner } from 'react-bootstrap'
 import { useWatch } from 'react-hook-form'
 
 import { Button } from '@/components/button/button'
-import { FormProvider } from '@/components/forms/form-provider/form-provider'
-import { ControlledInput } from '@/components/forms/input'
-import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
+import { FormProvider } from '@/components/forms/form-provider/FormProvider'
+import { KTIcon } from '@/components/kt-icon/KtIcon'
 import { Toast } from '@/components/toast/toast'
 
 import useSetPasswordForm from '../_hooks/set-password.hook'

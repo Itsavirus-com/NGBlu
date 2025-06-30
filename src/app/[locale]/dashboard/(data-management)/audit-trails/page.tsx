@@ -3,11 +3,12 @@ import { useTranslations } from 'next-intl'
 
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
-import { DateTimeView } from '@/components/view/date-time-view/date-time-view'
+import { DateTimeView } from '@/components/view/date-time-view/DateTimeView'
 import { AuditTrail } from '@/services/swr/models/audit-trail.type'
 import { safeRender } from '@/utils/safeRender'
 
 import { AuditTrailFilter } from './_components/AuditTrailFilter'
+
 
 export default function AuditTrails() {
   const t = useTranslations('auditTrails')

@@ -4,10 +4,10 @@ import { useTranslations } from 'next-intl'
 import { Card, CardBody, Col, Row } from 'react-bootstrap'
 import { UseFormReturn } from 'react-hook-form'
 
-import { FormButtons } from '@/components/forms/form-buttons'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
+import { ControlledSelect } from '@/components/forms/controlled-select/ControlledSelect'
+import { FormButtons } from '@/components/forms/form-buttons/FormButtons'
 import { FormProvider } from '@/components/forms/form-provider'
-import { ControlledInput } from '@/components/forms/input'
-import { ControlledSelect } from '@/components/forms/select'
 import { Gender } from '@/services/swr/models/gender.type'
 import { PersonType } from '@/services/swr/models/person-type.type'
 

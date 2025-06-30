@@ -1,5 +1,5 @@
-import { SidebarLogo } from './sidebar-logo'
-import { SidebarMenu } from './sidebar-menu/sidebar-menu'
+import { SidebarMenu } from './sidebar-menu/SidebarMenu'
+import { SidebarLogo } from './SidebarLogo'
 
 const Sidebar = () => {
   return (

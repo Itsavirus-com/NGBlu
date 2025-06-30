@@ -6,8 +6,8 @@ import { useTranslations } from 'next-intl'
 import { Alert, Button, Card, Container } from 'react-bootstrap'
 
 import emailSentIllustration from '@/assets/images/general/email-sent-illustration.svg'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
 import { FormProvider } from '@/components/forms/form-provider'
-import { ControlledInput } from '@/components/forms/input'
 
 import useResetPassword from './_hooks/request-password-reset.hook'
 

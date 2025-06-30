@@ -7,7 +7,7 @@ import { useSnapshot } from 'valtio'
 import { toastStore } from '@/stores/toast-store'
 import { hideStackedToast } from '@/stores/toast-store.actions'
 
-import { KTIcon } from '../kt-icon/kt-icon'
+import { KTIcon } from '../kt-icon/KtIcon'
 
 export const Toast = () => {
   const { stacked } = useSnapshot(toastStore)

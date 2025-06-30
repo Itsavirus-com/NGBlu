@@ -2,8 +2,8 @@
 import { useTranslations } from 'next-intl'
 import { useFormContext } from 'react-hook-form'
 
-import { ControlledDatetime } from '@/components/forms/datetime'
-import { ControlledInput } from '@/components/forms/input'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
+import { ControlledDatetime } from '@/components/forms/date-time/DateTime'
 
 export const AuditTrailFilter = () => {
   const t = useTranslations('auditTrails')

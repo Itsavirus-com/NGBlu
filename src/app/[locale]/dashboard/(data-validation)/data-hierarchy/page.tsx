@@ -10,7 +10,7 @@ import {
   UncontrolledTreeEnvironment,
 } from 'react-complex-tree'
 
-import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { KTIcon } from '@/components/kt-icon/KtIcon'
 import { PageTitle } from '@/components/page-title'
 import { businessPartnerApi } from '@/services/api/business-partner-api'
 import { enterpriseRootApi } from '@/services/api/enterprise-root-api'

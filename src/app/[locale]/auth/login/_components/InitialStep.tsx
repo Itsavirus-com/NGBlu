@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl'
 
 import microsoftIcon from '@/assets/images/brand-logos/microsoft-5.svg'
 import { Button } from '@/components/button/button'
-import { ControlledInput } from '@/components/forms/input'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
 
 interface InitialStepProps {
   emailValue: string
