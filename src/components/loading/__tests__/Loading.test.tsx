@@ -1,9 +1,8 @@
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import Loading from '../Loading'
 
 // Set up mocks
-createCommonMocks()
 
 // Mock react-bootstrap Spinner
 jest.mock('react-bootstrap', () => ({

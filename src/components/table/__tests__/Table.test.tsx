@@ -1,10 +1,9 @@
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { Table } from '../table'
 import { TableColumn } from '../table.type'
 
 // Set up mocks
-createCommonMocks()
 
 // Mock child components
 jest.mock('../DynamicTableBody', () => ({

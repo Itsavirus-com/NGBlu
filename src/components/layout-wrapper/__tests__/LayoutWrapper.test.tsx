@@ -1,20 +1,18 @@
 import { useTheme } from '@/contexts/ThemeContext'
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { LayoutWrapper } from '../LayoutWrapper'
 
 // Set up mocks
-createCommonMocks()
 
 // Mock ThemeContext
-const mockUseTheme = jest.fn()
 jest.mock('@/contexts/ThemeContext', () => ({
-  useTheme: () => mockUseTheme(),
+  useTheme: jest.fn(),
 }))
 
 describe('<LayoutWrapper />', () => {
   beforeEach(() => {
-    mockUseTheme.mockReturnValue({
+    ;(useTheme as jest.Mock).mockReturnValue({
       themeMode: 'light',
     })
   })
@@ -51,8 +49,7 @@ describe('<LayoutWrapper />', () => {
 
   it('sets layout data attribute based on theme mode', () => {
     // Arrange
-    const mockUseTheme = useTheme as jest.MockedFunction<typeof useTheme>
-    mockUseTheme.mockReturnValue({
+    ;(useTheme as jest.Mock).mockReturnValue({
       mode: 'dark',
       themeMode: 'dark',
       setMode: jest.fn(),
@@ -72,8 +69,7 @@ describe('<LayoutWrapper />', () => {
 
   it('sets layout data attribute for light theme', () => {
     // Arrange
-    const mockUseTheme = useTheme as jest.MockedFunction<typeof useTheme>
-    mockUseTheme.mockReturnValue({
+    ;(useTheme as jest.Mock).mockReturnValue({
       mode: 'light',
       themeMode: 'light',
       setMode: jest.fn(),
@@ -141,8 +137,7 @@ describe('<LayoutWrapper />', () => {
 
   it('updates layout when theme mode changes', () => {
     // Arrange
-    const mockUseTheme = useTheme as jest.MockedFunction<typeof useTheme>
-    mockUseTheme.mockReturnValue({
+    ;(useTheme as jest.Mock).mockReturnValue({
       mode: 'dark',
       themeMode: 'dark',
       setMode: jest.fn(),

@@ -1,9 +1,8 @@
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { Page } from '../page'
 
 // Set up mocks
-createCommonMocks()
 
 // Mock react-bootstrap Button
 jest.mock('react-bootstrap', () => ({

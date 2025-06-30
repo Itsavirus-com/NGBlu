@@ -1,9 +1,8 @@
-import { createCommonMocks, fireEvent, render, screen } from '@/utils/test-utils'
+import { fireEvent, render, screen } from '@/utils/test-utils'
 
 import { KTIcon } from '../KtIcon'
 
 // Set up mocks
-createCommonMocks()
 
 // Mock icons
 jest.mock('../icons', () => ({

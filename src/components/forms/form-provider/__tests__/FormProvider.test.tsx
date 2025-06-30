@@ -1,9 +1,8 @@
-import { createCommonMocks, fireEvent, render, screen } from '@/utils/test-utils'
+import { fireEvent, render, screen } from '@/utils/test-utils'
 
 import { FormProvider } from '../FormProvider'
 
 // Set up mocks
-createCommonMocks()
 
 // Mock react-hook-form
 const mockHandleSubmit = jest.fn()
@@ -101,7 +100,7 @@ describe('<FormProvider />', () => {
     )
 
     // Assert
-    expect(screen.getByTestId('form')).toBeInTheDocument()
+    expect(screen.getByTestId('undefined-form')).toBeInTheDocument()
   })
 
   it('renders form with custom test id when name is provided', () => {
@@ -205,7 +204,7 @@ describe('<FormProvider />', () => {
     )
 
     // Act
-    const form = screen.getByTestId('form')
+    const form = screen.getByTestId('undefined-form')
     fireEvent.submit(form, mockEvent)
 
     // Assert

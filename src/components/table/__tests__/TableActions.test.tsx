@@ -1,10 +1,9 @@
-import { createCommonMocks, fireEvent, render, screen, waitFor } from '@/utils/test-utils'
+import { fireEvent, render, screen, waitFor } from '@/utils/test-utils'
 
 import { Action } from '../table-actions.type'
 import { TableActions, TableActionsHead } from '../TableActions'
 
 // Set up mocks
-createCommonMocks()
 
 // Mock hooks and services
 jest.mock('@/hooks/use-toast.hook', () => ({
@@ -132,8 +131,9 @@ describe('<TableActions />', () => {
       </table>
     )
 
-    // Assert
-    expect(screen.getByText('Edit')).toBeInTheDocument()
+    // Assert - Check for edit link by href since it has no accessible name
+    const editLink = screen.getByRole('link')
+    expect(editLink).toHaveAttribute('href', '/items/123/edit')
   })
 
   it('renders delete action when delete is in actions array', () => {
@@ -220,12 +220,12 @@ describe('<TableActions />', () => {
     })
 
     // Confirm deletion
-    const confirmButton = screen.getByText('Yes, continue')
+    const confirmButton = screen.getByRole('button', { name: 'Confirm' })
     fireEvent.click(confirmButton)
 
     // Assert
     await waitFor(() => {
-      expect(onDelete).toHaveBeenCalledWith(mockRow)
+      expect(onDelete).toHaveBeenCalledWith(mockRow, undefined)
     })
   })
 

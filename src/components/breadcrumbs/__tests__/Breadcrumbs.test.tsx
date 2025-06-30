@@ -1,12 +1,11 @@
 import userEvent from '@testing-library/user-event'
 
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { Breadcrumbs } from '../breadcrumbs'
 import { BreadcrumbItem } from '../breadcrumbs.type'
 
 // Set up mocks
-createCommonMocks()
 
 // Mock the helper functions
 jest.mock('../helper', () => ({

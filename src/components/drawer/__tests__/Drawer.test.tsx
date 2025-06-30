@@ -1,10 +1,9 @@
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { Drawer } from '../Drawer'
 import { DrawerProps } from '../drawer.type'
 
 // Set up mocks
-createCommonMocks()
 
 describe('<Drawer />', () => {
   const defaultProps: DrawerProps = {

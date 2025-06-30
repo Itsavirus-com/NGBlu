@@ -11,13 +11,12 @@ jest.mock('next-intl', () => ({
 
 import userEvent from '@testing-library/user-event'
 
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { ConfirmationModalProps } from '../confirmation-modal.type'
 import { ConfirmationModal } from '../ConfirmationModal'
 
 // Set up mocks
-createCommonMocks()
 
 describe('<ConfirmationModal />', () => {
   const defaultProps: ConfirmationModalProps = {

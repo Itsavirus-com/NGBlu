@@ -2,12 +2,11 @@ import userEvent from '@testing-library/user-event'
 import { ReactNode } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { ControlledInput } from '../ControlledInput'
 
 // Set up mocks
-createCommonMocks()
 
 // Test wrapper component
 const TestWrapper = ({

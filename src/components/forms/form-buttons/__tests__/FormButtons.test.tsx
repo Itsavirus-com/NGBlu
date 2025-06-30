@@ -1,9 +1,8 @@
-import { createCommonMocks, fireEvent, render, screen } from '@/utils/test-utils'
+import { fireEvent, render, screen } from '@/utils/test-utils'
 
 import { FormButtons } from '../FormButtons'
 
 // Set up mocks
-createCommonMocks()
 
 // Mock useRouter
 const mockBack = jest.fn()

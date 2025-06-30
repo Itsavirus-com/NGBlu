@@ -1,5 +1,3 @@
-import { createCommonMocks, fireEvent, render, screen } from '@/utils/test-utils'
-
 // Mock valtio with inline functions
 jest.mock('valtio', () => ({
   useSnapshot: jest.fn(() => ({
@@ -95,9 +93,10 @@ jest.mock('react-bootstrap', () => ({
 }))
 
 // Set up common mocks
-createCommonMocks()
 
 // Now import the component after mocking
+import { fireEvent, render, screen } from '@/utils/test-utils'
+
 import { Toast } from '../toast'
 
 describe('<Toast />', () => {

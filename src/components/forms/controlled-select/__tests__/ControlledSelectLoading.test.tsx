@@ -1,11 +1,10 @@
 import React from 'react'
 
-import { createCommonMocks, render } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { SelectLoading } from '../ControlledSelectLoading'
 
 // Set up mocks
-createCommonMocks()
 
 describe('SelectLoading Component', () => {
   beforeEach(() => {

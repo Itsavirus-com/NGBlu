@@ -1,11 +1,9 @@
 import { ReactNode } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { ControlledSelect } from '../ControlledSelect'
-
-createCommonMocks()
 
 // Mock the hook
 jest.mock('../controlled-select.hook', () => ({

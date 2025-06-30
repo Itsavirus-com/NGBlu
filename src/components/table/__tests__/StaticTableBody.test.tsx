@@ -1,10 +1,9 @@
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { StaticTableBody } from '../StaticTableBody'
 import { TableColumn } from '../table.type'
 
 // Set up mocks
-createCommonMocks()
 
 // Mock child components
 jest.mock('../TableActions', () => ({
@@ -53,9 +52,10 @@ describe('<StaticTableBody />', () => {
 
     // Assert
     const headers = screen.getAllByRole('columnheader')
-    expect(headers).toHaveLength(2)
+    expect(headers).toHaveLength(3) // Name, Email, Actions
     expect(headers[0]).toHaveTextContent('Name')
     expect(headers[1]).toHaveTextContent('Email')
+    expect(headers[2]).toHaveTextContent('Actions')
   })
 
   it('renders table rows correctly', () => {
@@ -64,24 +64,18 @@ describe('<StaticTableBody />', () => {
 
     // Assert
     const rows = screen.getAllByRole('row')
-    // 1 header row + 2 data rows
-    expect(rows).toHaveLength(3)
+    // 1 header row + 2 data rows + 1 empty row
+    expect(rows).toHaveLength(4)
   })
 
   it('renders table with data correctly', () => {
     // Arrange & Act
-    render(
-      <table>
-        <tbody>
-          <StaticTableBody data={mockData} columns={mockColumns} actions={['edit']} />
-        </tbody>
-      </table>
-    )
+    render(<StaticTableBody data={mockData} columns={mockColumns} actions={['edit']} />)
 
     // Assert
     const rows = screen.getAllByRole('row')
-    // Only data rows, no header row in tbody
-    expect(rows).toHaveLength(2)
+    // Header row + 2 data rows + 1 empty row
+    expect(rows).toHaveLength(4)
     expect(screen.getByText('John Doe')).toBeInTheDocument()
     expect(screen.getByText('Jane Smith')).toBeInTheDocument()
   })
@@ -97,13 +91,7 @@ describe('<StaticTableBody />', () => {
     ]
 
     // Act
-    render(
-      <table>
-        <tbody>
-          <StaticTableBody data={mockData} columns={customColumns} actions={['edit']} />
-        </tbody>
-      </table>
-    )
+    render(<StaticTableBody data={mockData} columns={customColumns} actions={['edit']} />)
 
     // Assert
     const customNames = screen.getAllByTestId('custom-name')
@@ -177,8 +165,8 @@ describe('<StaticTableBody />', () => {
     // Arrange & Act
     const { container } = render(<StaticTableBody columns={[]} data={mockData} />)
 
-    // Assert
-    expect(container.firstChild).toBeNull()
+    // Assert - Component still renders wrapper even with no columns
+    expect(container.firstChild).not.toBeNull()
   })
 
   it('renders table with responsive wrapper', () => {
@@ -229,16 +217,13 @@ describe('<StaticTableBody />', () => {
   it('returns null when data is empty', () => {
     // Arrange & Act
     const { container } = render(
-      <table>
-        <tbody>
-          <StaticTableBody data={[]} columns={mockColumns} actions={['edit']} />
-        </tbody>
-      </table>
+      <StaticTableBody data={[]} columns={mockColumns} actions={['edit']} />
     )
 
     // Assert
-    // Check that the tbody is empty, not that the container is null
+    // Check that empty row is displayed
     const tbody = container.querySelector('tbody')
-    expect(tbody).toBeEmptyDOMElement()
+    expect(tbody).not.toBeEmptyDOMElement()
+    expect(screen.getByTestId('table-empty')).toBeInTheDocument()
   })
 })

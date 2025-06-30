@@ -19,9 +19,8 @@ const customJestConfig = {
   transformIgnorePatterns: ['/node_modules/'],
   collectCoverage: true,
   collectCoverageFrom: [
-    'src/components/**/*.{js,jsx,ts,tsx}',
-    '!src/components/**/*.d.ts',
-    '!src/components/**/*.test.{js,jsx,ts,tsx}',
+    'src/components/**/*.tsx',
+    '!src/components/**/*.test.tsx',
     '!src/components/**/__tests__/**/*',
     '!**/node_modules/**',
   ],

@@ -1,10 +1,9 @@
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { PageTitle } from '../PageTitle'
 import { BreadcrumbItem } from '../types'
 
 // Set up mocks
-createCommonMocks()
 
 describe('<PageTitle />', () => {
   it('renders title correctly', () => {

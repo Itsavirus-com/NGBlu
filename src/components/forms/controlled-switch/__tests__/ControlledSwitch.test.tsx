@@ -2,12 +2,9 @@ import userEvent from '@testing-library/user-event'
 import { ReactNode } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { ControlledSwitch } from '../ControlledSwitch'
-
-// Set up mocks
-createCommonMocks()
 
 // Test wrapper component
 const TestWrapper = ({
@@ -17,7 +14,12 @@ const TestWrapper = ({
   children: ReactNode
   defaultValues?: any
 }) => {
-  const methods = useForm({ defaultValues })
+  const methods = useForm({
+    defaultValues: {
+      testSwitch: false, // Always provide a default value
+      ...defaultValues,
+    },
+  })
   return <FormProvider {...methods}>{children}</FormProvider>
 }
 

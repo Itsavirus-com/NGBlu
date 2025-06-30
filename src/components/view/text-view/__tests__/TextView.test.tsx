@@ -1,9 +1,8 @@
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { TextView } from '../TextView'
 
 // Set up mocks
-createCommonMocks()
 
 // Mock react-bootstrap components
 jest.mock('react-bootstrap', () => ({
@@ -164,7 +163,10 @@ describe('<TextView />', () => {
     // Act
     render(<TextView value={multilineText} />)
 
-    // Assert
-    expect(screen.getByText(multilineText)).toBeInTheDocument()
+    // Assert - Check that the paragraph contains the multiline text
+    const paragraph = screen.getByRole('paragraph')
+    expect(paragraph).toHaveTextContent('Line 1')
+    expect(paragraph).toHaveTextContent('Line 2')
+    expect(paragraph).toHaveTextContent('Line 3')
   })
 })

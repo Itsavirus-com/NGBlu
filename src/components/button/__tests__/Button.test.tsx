@@ -1,9 +1,6 @@
-import { createCommonMocks, fireEvent, render, screen } from '@/utils/test-utils'
+import { fireEvent, render, screen } from '@/utils/test-utils'
 
 import { Button } from '../button'
-
-// Set up mocks
-createCommonMocks()
 
 describe('<Button />', () => {
   it('renders button with label correctly', () => {
@@ -83,27 +80,29 @@ describe('<Button />', () => {
 
   it('renders with icon and label', () => {
     // Arrange
-    const icon = 'test-icon'
-    const label = 'With Icon'
+    const label = 'Save'
+    const icon = 'check'
 
     // Act
-    render(<Button icon={icon} label={label} />)
+    render(<Button label={label} icon={icon} />)
 
     // Assert
-    const iconElement = document.querySelector('.ki-outline.ki-test-icon')
-    expect(iconElement).toBeInTheDocument()
     expect(screen.getByText(label)).toBeInTheDocument()
+    const iconElement = document.querySelector('.ki-outline.ki-check')
+    expect(iconElement).toBeInTheDocument()
   })
 
   it('shows only spinner without text in onlyIconLoading mode', () => {
     // Arrange
-    const label = 'Loading Button'
+    const label = 'Save'
 
     // Act
     render(<Button label={label} loading onlyIconLoading />)
 
     // Assert
-    expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
     expect(screen.queryByText(label)).not.toBeInTheDocument()
+    expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
+    const spinner = document.querySelector('.spinner-border')
+    expect(spinner).toBeInTheDocument()
   })
 })

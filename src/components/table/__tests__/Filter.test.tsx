@@ -1,34 +1,6 @@
-import { createCommonMocks, fireEvent, render, screen, waitFor } from '@/utils/test-utils'
+import { fireEvent, render, screen, waitFor } from '@/utils/test-utils'
 
 import { Filter } from '../filter'
-
-// Set up mocks
-createCommonMocks()
-
-// Mock react-hook-form
-jest.mock('react-hook-form', () => ({
-  FormProvider: jest.fn(({ children }) => <div data-testid="form-provider">{children}</div>),
-  useForm: jest.fn(() => ({
-    handleSubmit: jest.fn(fn => (e: React.FormEvent) => {
-      e.preventDefault()
-      fn({ testField: 'test value' })
-    }),
-    reset: jest.fn(),
-  })),
-}))
-
-// Mock useTranslations
-jest.mock('next-intl', () => ({
-  useTranslations: jest.fn(() => (key: string) => {
-    const translations: Record<string, string> = {
-      filter: 'Filter',
-      filterOptions: 'Filter Options',
-      reset: 'Reset',
-      apply: 'Apply',
-    }
-    return translations[key] || key
-  }),
-}))
 
 describe('<Filter />', () => {
   it('renders filter button', () => {
@@ -39,8 +11,9 @@ describe('<Filter />', () => {
       </Filter>
     )
 
-    // Assert
-    expect(screen.getByText('Filter')).toBeInTheDocument()
+    // Assert - find button with filter text
+    const filterButton = screen.getByRole('button', { name: /filter/i })
+    expect(filterButton).toBeInTheDocument()
   })
 
   it('shows filter dropdown when button is clicked', () => {
@@ -52,10 +25,10 @@ describe('<Filter />', () => {
     )
 
     // Act
-    fireEvent.click(screen.getByText('Filter'))
+    fireEvent.click(screen.getByRole('button', { name: /filter/i }))
 
-    // Assert
-    expect(screen.getByText('Filter Options')).toBeInTheDocument()
+    // Assert - check for "filterOptions" as one word (not "filter options")
+    expect(screen.getByText('filterOptions')).toBeInTheDocument()
     expect(screen.getByText('Filter content')).toBeInTheDocument()
   })
 
@@ -68,11 +41,11 @@ describe('<Filter />', () => {
     )
 
     // Act
-    fireEvent.click(screen.getByText('Filter'))
-    fireEvent.click(screen.getByText('Filter'))
+    fireEvent.click(screen.getByRole('button', { name: /filter/i }))
+    fireEvent.click(screen.getByRole('button', { name: /filter/i }))
 
-    // Assert
-    const dropdown = screen.getByText('Filter Options').closest('.menu')
+    // Assert - check dropdown visibility by class
+    const dropdown = screen.getByText('filterOptions').closest('.menu')
     expect(dropdown).not.toHaveClass('show')
   })
 
@@ -86,8 +59,8 @@ describe('<Filter />', () => {
     )
 
     // Act
-    fireEvent.click(screen.getByText('Filter'))
-    fireEvent.click(screen.getByText('Apply'))
+    fireEvent.click(screen.getByRole('button', { name: /filter/i }))
+    fireEvent.click(screen.getByRole('button', { name: /apply/i }))
 
     // Assert
     await waitFor(() => {
@@ -105,8 +78,8 @@ describe('<Filter />', () => {
     )
 
     // Act
-    fireEvent.click(screen.getByText('Filter'))
-    fireEvent.click(screen.getByText('Reset'))
+    fireEvent.click(screen.getByRole('button', { name: /filter/i }))
+    fireEvent.click(screen.getByRole('button', { name: /reset/i }))
 
     // Assert
     expect(onFilterMock).toHaveBeenCalledWith({})
@@ -119,7 +92,7 @@ describe('<Filter />', () => {
     // Act
     render(<Filter onFilter={jest.fn()}>{filterContent}</Filter>)
 
-    fireEvent.click(screen.getByText('Filter'))
+    fireEvent.click(screen.getByRole('button', { name: /filter/i }))
 
     // Assert
     expect(screen.getByTestId('filter-content')).toBeInTheDocument()
@@ -144,11 +117,11 @@ describe('<Filter />', () => {
     )
 
     // Act
-    fireEvent.click(screen.getByText('Filter'))
-    fireEvent.click(screen.getByText('Apply'))
+    fireEvent.click(screen.getByRole('button', { name: /filter/i }))
+    fireEvent.click(screen.getByRole('button', { name: /apply/i }))
 
     // Assert
-    const dropdown = screen.getByText('Filter Options').closest('.menu')
+    const dropdown = screen.getByText('filterOptions').closest('.menu')
     expect(dropdown).not.toHaveClass('show')
   })
 
@@ -161,11 +134,11 @@ describe('<Filter />', () => {
     )
 
     // Act
-    fireEvent.click(screen.getByText('Filter'))
-    fireEvent.click(screen.getByText('Reset'))
+    fireEvent.click(screen.getByRole('button', { name: /filter/i }))
+    fireEvent.click(screen.getByRole('button', { name: /reset/i }))
 
     // Assert
-    const dropdown = screen.getByText('Filter Options').closest('.menu')
+    const dropdown = screen.getByText('filterOptions').closest('.menu')
     expect(dropdown).not.toHaveClass('show')
   })
 })

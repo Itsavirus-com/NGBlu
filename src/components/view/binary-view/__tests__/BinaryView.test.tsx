@@ -1,9 +1,8 @@
-import { createCommonMocks, render, screen } from '@/utils/test-utils'
+import { render, screen } from '@/utils/test-utils'
 
 import { BinaryView } from '../BinaryView'
 
 // Set up mocks
-createCommonMocks()
 
 // Mock useTranslations
 jest.mock('next-intl', () => ({
