@@ -6,21 +6,21 @@ import { useTranslations } from 'next-intl'
 import { Button } from '@/components/button/button'
 import { KTIcon } from '@/components/kt-icon/KtIcon'
 
-interface TotpEnforcementBannerProps {
-  userEmail: string
-  onSetupComplete: () => void
-}
+import './SecurityEnforcementBanner.style.scss'
 
-export function TotpEnforcementBanner({ userEmail, onSetupComplete }: TotpEnforcementBannerProps) {
+export function SecurityEnforcementBanner() {
   const t = useTranslations('dashboard.security')
   const router = useRouter()
 
   const handleStartSetup = () => {
-    router.push('/dashboard/account-profile-settings?tab=two-factor-auth&setup=true')
+    router.push('/dashboard/account-profile-settings')
   }
 
   return (
-    <div className="alert alert-warning d-flex align-items-center mb-4" role="alert">
+    <div
+      className="alert alert-warning d-flex align-items-center mb-4 mt-5 security-banner"
+      role="alert"
+    >
       <KTIcon iconName="shield-cross" className="text-warning fs-2x me-3" />
       <div className="flex-grow-1">
         <h4 className="alert-heading mb-1 text-dark">{t('totpEnforcement.title')}</h4>
@@ -29,8 +29,8 @@ export function TotpEnforcementBanner({ userEmail, onSetupComplete }: TotpEnforc
       </div>
       <Button
         onClick={handleStartSetup}
-        className="ms-3"
-        colorClass="primary"
+        className="ms-3 security-button"
+        colorClass="success"
         label={t('totpEnforcement.setupButton')}
       />
     </div>

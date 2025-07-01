@@ -265,10 +265,10 @@
   "dashboard": {
     "security": {
       "totpEnforcement": {
-        "title": "Security Setup Required",
-        "description": "To protect your account and comply with security policies, you must enable two-factor authentication (2FA).",
-        "subtitle": "This is a mandatory requirement for all users.",
-        "setupButton": "Set up 2FA Now"
+        "title": "Enhanced Security Required",
+        "description": "To protect your account and comply with security policies, you must set up additional authentication (passkey or 2FA).",
+        "subtitle": "Choose from passkey or two-factor authentication to secure your account.",
+        "setupButton": "Secure Account Now"
       }
     }
   },

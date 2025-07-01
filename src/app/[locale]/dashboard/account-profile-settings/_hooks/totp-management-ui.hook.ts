@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { useTotpEnforcement } from '@/hooks/use-totp-enforcement.hook'
+import { useSecurityEnforcement } from '@/hooks/use-security-enforcement.hook'
 
 import { useTotpManagement } from './totp-management.hook'
 
@@ -9,7 +9,7 @@ export function useTotpManagementUI() {
   const [showBackupCodes, setShowBackupCodes] = useState(false)
   const [showDisableConfirm, setShowDisableConfirm] = useState(false)
   const [currentBackupCodes, setCurrentBackupCodes] = useState<string[]>([])
-  const { recheckStatus } = useTotpEnforcement()
+  const { recheckStatus } = useSecurityEnforcement()
 
   const {
     is2faEnabled,

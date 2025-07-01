@@ -3,8 +3,8 @@ import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { triggerSecurityStatusRecheck } from '@/hooks/use-security-enforcement.hook'
 import { useToast } from '@/hooks/use-toast.hook'
-import { triggerTotpStatusRecheck } from '@/hooks/use-totp-enforcement.hook'
 import { totpApi } from '@/services/api/totp-api'
 import { useUserProfile } from '@/services/swr/use-user-profile'
 
@@ -78,7 +78,7 @@ export function useTotpManagement() {
         await mutateProfile()
 
         // Trigger banner status recheck
-        triggerTotpStatusRecheck()
+        triggerSecurityStatusRecheck()
 
         showToast({
           variant: 'success',
@@ -121,7 +121,7 @@ export function useTotpManagement() {
         await mutateProfile()
 
         // Trigger banner status recheck
-        triggerTotpStatusRecheck()
+        triggerSecurityStatusRecheck()
 
         showToast({
           variant: 'success',

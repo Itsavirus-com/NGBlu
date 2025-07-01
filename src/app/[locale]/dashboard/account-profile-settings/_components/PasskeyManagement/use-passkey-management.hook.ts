@@ -2,6 +2,7 @@ import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 
 import { usePasskey } from '@/hooks/use-passkey.hook'
+import { useSecurityEnforcement } from '@/hooks/use-security-enforcement.hook'
 
 interface Passkey {
   id: number
@@ -34,6 +35,7 @@ export const usePasskeyManagement = () => {
     loadUserPasskeys,
     deletePasskey,
   } = usePasskey()
+  const { recheckStatus } = useSecurityEnforcement()
 
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [passkeyToDelete, setPasskeyToDelete] = useState<Passkey | null>(null)
@@ -139,6 +141,7 @@ export const usePasskeyManagement = () => {
       setShowRegisterModal(false)
       setRegisterPasskeyName('')
       await loadUserPasskeys() // Refresh the list
+      recheckStatus()
     }
   }
 
@@ -154,6 +157,11 @@ export const usePasskeyManagement = () => {
         setShowDeleteModal(false)
         setPasskeyToDelete(null)
         await loadUserPasskeys() // Refresh the list
+
+        // Only recheck security status if this was the last passkey
+        if (userPasskeys.length === 1) {
+          recheckStatus()
+        }
       }
     }
   }
