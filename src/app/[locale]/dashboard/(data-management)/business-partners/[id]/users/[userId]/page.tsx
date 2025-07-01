@@ -3,10 +3,10 @@
 import dayjs from 'dayjs'
 import { useTranslations } from 'next-intl'
 
-import { DynamicTabs } from '@/components/dynamic-tabs/dynamic-tabs'
+import { DynamicTabs } from '@/components/dynamic-tabs/DynamicTabs'
 import { PageTitle } from '@/components/page-title'
 import { dateTimeFormats } from '@/components/view/date-time-view/date-time-view.type'
-import { FieldTextView } from '@/components/view/field-text-view/field-text-view'
+import { FieldTextView } from '@/components/view/field-text-view/FieldTextView'
 import { useBusinessPartnerUser } from '@/services/swr/use-business-partner-user'
 import { safeRender } from '@/utils/safeRender'
 

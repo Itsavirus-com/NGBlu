@@ -6,8 +6,8 @@ import { Modal } from 'react-bootstrap'
 import { FormProvider } from 'react-hook-form'
 
 import { Button } from '@/components/button/button'
-import { ControlledInput } from '@/components/forms/input'
-import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
+import { KTIcon } from '@/components/kt-icon/KtIcon'
 
 import { useQrCodeSetup } from '../../_hooks/qr-code-setup.hook'
 

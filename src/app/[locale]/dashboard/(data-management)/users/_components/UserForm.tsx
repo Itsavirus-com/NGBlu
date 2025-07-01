@@ -4,11 +4,11 @@ import { useTranslations } from 'next-intl'
 import { Card, CardBody, FormLabel } from 'react-bootstrap'
 import { UseFormReturn } from 'react-hook-form'
 
-import { ControlledSwitch } from '@/components/forms/checkbox'
-import { FormButtons } from '@/components/forms/form-buttons'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
+import { ControlledSelect } from '@/components/forms/controlled-select/ControlledSelect'
+import { ControlledSwitch } from '@/components/forms/controlled-switch/ControlledSwitch'
+import { FormButtons } from '@/components/forms/form-buttons/FormButtons'
 import { FormProvider } from '@/components/forms/form-provider'
-import { ControlledInput } from '@/components/forms/input'
-import { ControlledSelect } from '@/components/forms/select'
 
 interface UserFormProps {
   methods: UseFormReturn<any>

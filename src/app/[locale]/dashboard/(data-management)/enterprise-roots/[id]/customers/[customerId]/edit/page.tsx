@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 
-import Loading from '@/components/loading/loading'
+import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 
 import { EnterpriseRootCustomerForm } from '../../../_components/EnterpriseRootCustomerForm'

@@ -3,8 +3,8 @@
 import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/button/button'
-import { ConfirmationModal } from '@/components/confirmation-modal/confirmation-modal'
-import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { ConfirmationModal } from '@/components/confirmation-modal/ConfirmationModal'
+import { KTIcon } from '@/components/kt-icon/KtIcon'
 
 import { BackupCodesModal } from './BackupCodesModal'
 import { QrCodeSetup } from './QrCodeSetup'

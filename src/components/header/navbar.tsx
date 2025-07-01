@@ -3,8 +3,8 @@ import Image from 'next/image'
 
 import avatar from '@/assets/images/avatars/300-3.jpg'
 
-import { HeaderUserMenu } from './partials/header-user-menu'
-import { ThemeModeSwitcher } from './partials/theme-mode-switcher'
+import { HeaderUserMenu } from './partials/HeaderUserMenu'
+import { ThemeModeSwitcher } from './partials/ThemeModeSwitcher'
 
 const Navbar = () => {
   return (

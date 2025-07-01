@@ -1,6 +1,6 @@
 import { Spinner } from 'react-bootstrap'
 
-import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { KTIcon } from '@/components/kt-icon/KtIcon'
 import { Link } from '@/navigation'
 
 import { ButtonProps } from './button.type'

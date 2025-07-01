@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl'
 
-import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { KTIcon } from '@/components/kt-icon/KtIcon'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 import { safeRender } from '@/utils/safeRender'

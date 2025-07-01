@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Controller, useFormContext } from 'react-hook-form'
 
 import { Button } from '@/components/button/button'
-import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { KTIcon } from '@/components/kt-icon/KtIcon'
 
 interface TotpVerificationStepProps {
   email: string

@@ -3,9 +3,9 @@
 import { useTranslations } from 'next-intl'
 import { UseFormReturn } from 'react-hook-form'
 
-import { FormButtons } from '@/components/forms/form-buttons'
-import { FormProvider } from '@/components/forms/form-provider/form-provider'
-import { ControlledInput } from '@/components/forms/input'
+import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
+import { FormButtons } from '@/components/forms/form-buttons/FormButtons'
+import { FormProvider } from '@/components/forms/form-provider/FormProvider'
 
 import { PasswordFormType } from '../_schemas/password.schema'
 

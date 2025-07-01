@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl'
 import { Button, Modal } from 'react-bootstrap'
 
-import { ConfirmationModal } from '@/components/confirmation-modal/confirmation-modal'
+import { ConfirmationModal } from '@/components/confirmation-modal/ConfirmationModal'
 
 import { Passkey } from './use-passkey-management.hook'
 

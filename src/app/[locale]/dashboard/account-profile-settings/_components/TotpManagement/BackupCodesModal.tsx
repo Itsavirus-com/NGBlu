@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 
 import { Button } from '@/components/button/button'
-import { KTIcon } from '@/components/kt-icon/kt-icon'
+import { KTIcon } from '@/components/kt-icon/KtIcon'
 
 interface BackupCodesModalProps {
   show: boolean

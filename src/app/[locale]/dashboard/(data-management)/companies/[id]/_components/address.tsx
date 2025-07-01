@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl'
 import { Row } from 'react-bootstrap'
 
 import { Page } from '@/components/page/page'
-import { TextView } from '@/components/view/text-view/text-view'
+import { TextView } from '@/components/view/text-view/TextView'
 
 import { AddressProps } from './address.type'
 
