@@ -1,0 +1,15 @@
+.form-check-input.thick-checkbox {
+  border-width: 2px !important;
+}
+.form-check-input.thick-checkbox:checked {
+  border-width: 2px !important;
+  background-size: 85%;
+}
+.form-switch .form-check-input.thick-checkbox {
+  border-width: 2px !important;
+  height: 1.5em;
+}
+.form-check-input.thick-checkbox:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
