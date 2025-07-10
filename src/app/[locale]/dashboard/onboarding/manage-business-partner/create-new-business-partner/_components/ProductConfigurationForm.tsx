@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { Col, Row } from 'react-bootstrap'
 
 import { ControlledSwitch } from '@/components/forms/controlled-switch/ControlledSwitch'
@@ -7,6 +8,7 @@ import { ControlledSwitch } from '@/components/forms/controlled-switch/Controlle
 import { useProductConfiguration } from '../_hooks/product-configuration-form.hook'
 
 export const ProductConfigurationForm = () => {
+  const t = useTranslations('dataManagement.createBusinessPartner.productConfiguration')
   const { layer3, whiteLabel, direct, layer2, voice, ipTelephony } = useProductConfiguration()
 
   return (
@@ -21,8 +23,8 @@ export const ProductConfigurationForm = () => {
           </div>
         </div>
         <div>
-          <h2 className="fw-bold text-dark mb-1">Product Configuration</h2>
-          <div className="text-muted">Configure products for this business partner</div>
+          <h2 className="fw-bold text-dark mb-1">{t('title')}</h2>
+          <div className="text-muted">{t('description')}</div>
         </div>
       </div>
 
@@ -30,7 +32,7 @@ export const ProductConfigurationForm = () => {
       <div className="card bg-light mb-8">
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center mb-5">
-            <h4 className="mb-0">Layer 3 Data Products</h4>
+            <h4 className="mb-0">{t('layer3')}</h4>
             <ControlledSwitch name="layer3" />
           </div>
 
@@ -39,7 +41,7 @@ export const ProductConfigurationForm = () => {
               {/* White Label price model */}
               <div className="mb-8">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h5 className="fw-semibold">White Label Price Model</h5>
+                  <h5 className="fw-semibold">{t('whiteLabelPriceModel')}</h5>
                   <ControlledSwitch name="whiteLabel" />
                 </div>
 
@@ -50,7 +52,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="whiteLabelInternet"
-                          label="Internet"
+                          label={t('whiteLabelInternet')}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -58,7 +60,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="whiteLabelIPVPN"
-                          label="IPVPN"
+                          label={t('whiteLabelIPVPN')}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -68,7 +70,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="whiteLabelMobileData"
-                          label="4G/5G Data"
+                          label={t('whiteLabelMobileData')}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -76,7 +78,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="whiteLabelSDWAN"
-                          label="SDWAN"
+                          label={t('whiteLabelSDWAN')}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -88,7 +90,7 @@ export const ProductConfigurationForm = () => {
               {/* Direct price model */}
               <div className="mb-4">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h5 className="fw-semibold">Direct Price Model</h5>
+                  <h5 className="fw-semibold">{t('directPriceModel')}</h5>
                   <ControlledSwitch name="direct" />
                 </div>
 
@@ -99,7 +101,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="directInternet"
-                          label="Internet"
+                          label={t('directInternet')}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -107,7 +109,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="directIPVPN"
-                          label="IPVPN"
+                          label={t('directIPVPN')}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -117,7 +119,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="directMobileData"
-                          label="4G/5G Data"
+                          label={t('directMobileData')}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -125,7 +127,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="directSDWAN"
-                          label="SDWAN"
+                          label={t('directSDWAN')}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -142,7 +144,7 @@ export const ProductConfigurationForm = () => {
       <div className="card bg-light mb-8">
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center mb-5">
-            <h4 className="mb-0">Layer 2 Data Products</h4>
+            <h4 className="mb-0">{t('layer2')}</h4>
             <ControlledSwitch name="layer2" />
           </div>
 
@@ -153,7 +155,7 @@ export const ProductConfigurationForm = () => {
                   <ControlledSwitch
                     type="checkbox"
                     name="deltaAccessLayer2"
-                    label="Delta Access Layer 2"
+                    label={t('deltaAccessLayer2')}
                     containerClass="mb-3"
                   />
                 </Col>
@@ -167,7 +169,7 @@ export const ProductConfigurationForm = () => {
       <div className="card bg-light mb-8">
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center mb-5">
-            <h4 className="mb-0">Voice Products</h4>
+            <h4 className="mb-0">{t('voice')}</h4>
             <ControlledSwitch name="voice" />
           </div>
 
@@ -175,14 +177,14 @@ export const ProductConfigurationForm = () => {
             <>
               <div className="mb-6">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h5 className="fw-semibold ps-5 ms-3">Traditional Telephony</h5>
+                  <h5 className="fw-semibold ps-5 ms-3">{t('traditionalTelephony')}</h5>
                   <ControlledSwitch name="traditionalTelephony" />
                 </div>
               </div>
 
               <div className="mb-6">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h5 className="fw-semibold ps-5 ms-3">IP Telephony</h5>
+                  <h5 className="fw-semibold ps-5 ms-3">{t('ipTelephony')}</h5>
                   <ControlledSwitch name="ipTelephony" />
                 </div>
 
@@ -193,7 +195,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="xelion"
-                          label="Xelion"
+                          label={t('xelion')}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -201,7 +203,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="hostedTelephony"
-                          label="Hosted Telephony"
+                          label={t('hostedTelephony')}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -211,7 +213,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="sipTrunking"
-                          label="SIP Trunking"
+                          label={t('sipTrunking')}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -219,7 +221,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="oneSpace"
-                          label="OneSpace"
+                          label={t('oneSpace')}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -230,7 +232,7 @@ export const ProductConfigurationForm = () => {
 
               <div className="mb-4">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h5 className="fw-semibold ps-5 ms-3">Fixed Mobile Integration</h5>
+                  <h5 className="fw-semibold ps-5 ms-3">{t('fixedMobileIntegration')}</h5>
                   <ControlledSwitch name="fixedMobileIntegration" />
                 </div>
               </div>

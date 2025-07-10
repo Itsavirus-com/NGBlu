@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { Alert, Col, Row } from 'react-bootstrap'
 
 import { KTIcon } from '@/components/kt-icon/KtIcon'
@@ -7,8 +8,19 @@ import { KTIcon } from '@/components/kt-icon/KtIcon'
 import { useReviewForm } from '../_hooks/review-form.hook'
 
 export const ReviewForm = () => {
-  const { formValues, formatBooleanValue, formatFileValue, getApprovalRequirements } =
-    useReviewForm()
+  const t = useTranslations('dataManagement.createBusinessPartner.review')
+  const tCommon = useTranslations('common')
+  const {
+    formValues,
+    formatBooleanValue,
+    formatFileValue,
+    getPartnerManagerDetails,
+    openFileInNewTab,
+    getApprovalRequirements,
+  } = useReviewForm()
+
+  // Get partner manager details
+  const partnerManager = getPartnerManagerDetails(formValues.partnerManagerId)
 
   return (
     <div>
@@ -19,230 +31,434 @@ export const ReviewForm = () => {
           </div>
         </div>
         <div>
-          <h2 className="fw-bold text-dark mb-1">Review</h2>
-          <div className="text-muted">Review and confirm business partner details</div>
+          <h2 className="fw-bold text-dark mb-1">{t('title')}</h2>
+          <div className="text-muted">{t('description')}</div>
         </div>
       </div>
 
-      <ReviewSection title="Business Profile">
-        <div className="mb-5">
-          <h6 className="fw-bold mb-3">Company Information</h6>
-          <Row>
-            <Col md={6}>
-              <ReviewItem label="KVK Number" value={formValues.kvkNumber || 'Not provided'} />
-              <ReviewItem label="Company Name" value={formValues.companyName} />
-            </Col>
-          </Row>
-        </div>
+      {/* Business Profile Section */}
+      <div className="card bg-light mb-6">
+        <div className="card-body">
+          <h4 className="fw-bold text-primary mb-5">{t('businessProfile')}</h4>
 
-        <div className="separator my-5"></div>
-
-        <div className="mb-5">
-          <h6 className="fw-bold mb-3">Company Address</h6>
-          <Row>
-            <Col md={6}>
-              <ReviewItem label="Street Name" value={formValues.streetName} />
-              <ReviewItem label="House Number" value={formValues.houseNumber} />
-              <ReviewItem label="Postal Code" value={formValues.postalCode} />
-            </Col>
-            <Col md={6}>
-              <ReviewItem label="City" value={formValues.city} />
-              <ReviewItem label="Country" value={formValues.country} />
-            </Col>
-          </Row>
-        </div>
-
-        <div className="separator my-5"></div>
-
-        <div>
-          <h6 className="fw-bold mb-3">Primary Contact</h6>
-          <Row>
-            <Col md={6}>
-              <ReviewItem label="Name" value={`${formValues.firstName} ${formValues.lastName}`} />
-              <ReviewItem label="Phone" value={formValues.phoneNumber} />
-            </Col>
-            <Col md={6}>
-              <ReviewItem label="Email" value={formValues.emailAddress} />
-            </Col>
-          </Row>
-        </div>
-      </ReviewSection>
-
-      <div className="separator my-10"></div>
-
-      <ReviewSection title="Business Settings">
-        <div className="mb-5">
-          <h6 className="fw-bold mb-3">Partner Manager</h6>
-          <Row>
-            <Col md={6}>
-              <ReviewItem
-                label="Partner Manager"
-                value={formValues.partnerManagerId?.toString() || 'Not assigned'}
-              />
-            </Col>
-          </Row>
-        </div>
-
-        <div className="separator my-5"></div>
-
-        <div>
-          <h6 className="fw-bold mb-3">Contract</h6>
-          <Row>
-            <Col md={6}>
-              <ReviewItem
-                label="Signed Contract"
-                value={formatFileValue(formValues.signedContractFile as File)}
-              />
-            </Col>
-          </Row>
-        </div>
-      </ReviewSection>
-
-      <div className="separator my-10"></div>
-
-      <ReviewSection title="Product Configuration">
-        <div className="mb-5">
-          <h6 className="fw-bold mb-3">Layer 3 Data Products</h6>
-          <Row>
-            <Col md={6}>
-              <ReviewItem label="Layer 3 Enabled" value={formatBooleanValue(formValues.layer3)} />
-              <ReviewItem label="White Label" value={formatBooleanValue(formValues.whiteLabel)} />
-              <ReviewItem
-                label="White Label Internet"
-                value={formatBooleanValue(formValues.whiteLabelInternet)}
-              />
-              <ReviewItem
-                label="White Label IPVPN"
-                value={formatBooleanValue(formValues.whiteLabelIPVPN)}
-              />
-            </Col>
-            <Col md={6}>
-              <ReviewItem
-                label="White Label Mobile Data"
-                value={formatBooleanValue(formValues.whiteLabelMobileData)}
-              />
-              <ReviewItem
-                label="White Label SDWAN"
-                value={formatBooleanValue(formValues.whiteLabelSDWAN)}
-              />
-              <ReviewItem label="Direct" value={formatBooleanValue(formValues.direct)} />
-              <ReviewItem
-                label="Direct Internet"
-                value={formatBooleanValue(formValues.directInternet)}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6}>
-              <ReviewItem label="Direct IPVPN" value={formatBooleanValue(formValues.directIPVPN)} />
-              <ReviewItem
-                label="Direct Mobile Data"
-                value={formatBooleanValue(formValues.directMobileData)}
-              />
-            </Col>
-            <Col md={6}>
-              <ReviewItem label="Direct SDWAN" value={formatBooleanValue(formValues.directSDWAN)} />
-            </Col>
-          </Row>
-        </div>
-
-        <div className="separator my-5"></div>
-
-        <div className="mb-5">
-          <h6 className="fw-bold mb-3">Layer 2 Data Products</h6>
-          <Row>
-            <Col md={6}>
-              <ReviewItem label="Layer 2 Enabled" value={formatBooleanValue(formValues.layer2)} />
-            </Col>
-            <Col md={6}>
-              <ReviewItem
-                label="Delta Access Layer 2"
-                value={formatBooleanValue(formValues.deltaAccessLayer2)}
-              />
-            </Col>
-          </Row>
-        </div>
-
-        <div className="separator my-5"></div>
-
-        <div>
-          <h6 className="fw-bold mb-3">Voice Products</h6>
-          <Row>
-            <Col md={6}>
-              <ReviewItem label="Voice Enabled" value={formatBooleanValue(formValues.voice)} />
-              <ReviewItem
-                label="Traditional Telephony"
-                value={formatBooleanValue(formValues.traditionalTelephony)}
-              />
-              <ReviewItem label="IP Telephony" value={formatBooleanValue(formValues.ipTelephony)} />
-              <ReviewItem label="Xelion" value={formatBooleanValue(formValues.xelion)} />
-            </Col>
-            <Col md={6}>
-              <ReviewItem
-                label="Hosted Telephony"
-                value={formatBooleanValue(formValues.hostedTelephony)}
-              />
-              <ReviewItem label="SIP Trunking" value={formatBooleanValue(formValues.sipTrunking)} />
-              <ReviewItem label="OneSpace" value={formatBooleanValue(formValues.oneSpace)} />
-              <ReviewItem
-                label="Fixed Mobile Integration"
-                value={formatBooleanValue(formValues.fixedMobileIntegration)}
-              />
-            </Col>
-          </Row>
-        </div>
-
-        {/* Approval Requirements Section */}
-        {getApprovalRequirements().length > 0 && (
-          <>
-            <div className="separator my-5"></div>
-            <div className="mb-5">
-              <h6 className="fw-bold mb-3">Approval Requirements</h6>
-              <Alert variant="warning">
-                <div className="d-flex align-items-center mb-2">
-                  <span className="svg-icon svg-icon-2hx svg-icon-warning me-3">
-                    <KTIcon
-                      iconType="duotone"
-                      iconName="information"
-                      className="fs-1 text-warning"
-                    />
-                  </span>
-                  <div className="fw-bold">Configuration requires approval</div>
+          <Row className="g-6">
+            {/* Company Information */}
+            <Col lg={4}>
+              <div className="mb-4">
+                <h6 className="fw-semibold text-gray-800 mb-3">{t('companyInformation')}</h6>
+                <div className="mb-3">
+                  <span className="text-muted fs-7">{t('kvkNumber')}</span>
+                  <div className="fw-bold">{formValues.kvkNumber || tCommon('notProvided')}</div>
                 </div>
-                <ul className="list-unstyled ms-8">
-                  {getApprovalRequirements().map((requirement, index) => (
-                    <li key={index} className="mb-1">
-                      <strong>{requirement.rule}:</strong> {requirement.message}
-                    </li>
-                  ))}
-                </ul>
-              </Alert>
-            </div>
-          </>
-        )}
-      </ReviewSection>
-    </div>
-  )
-}
+                <div className="mb-3">
+                  <span className="text-muted fs-7">{t('companyName')}</span>
+                  <div className="fw-bold">{formValues.companyName || tCommon('notProvided')}</div>
+                </div>
+              </div>
+            </Col>
 
-// Helper component for sections
-const ReviewSection = ({ title, children }: { title: string; children: React.ReactNode }) => {
-  return (
-    <div className="card bg-light">
-      <div className="card-header">
-        <h4 className="card-title">{title}</h4>
+            {/* Company Address */}
+            <Col lg={4}>
+              <div className="mb-4">
+                <h6 className="fw-semibold text-gray-800 mb-3">{t('companyAddress')}</h6>
+                <div className="mb-3">
+                  <span className="text-muted fs-7">{t('streetName')}</span>
+                  <div className="fw-bold">{formValues.streetName || tCommon('notProvided')}</div>
+                </div>
+                <div className="mb-3">
+                  <span className="text-muted fs-7">{t('houseNumber')}</span>
+                  <div className="fw-bold">{formValues.houseNumber || tCommon('notProvided')}</div>
+                </div>
+                <div className="mb-3">
+                  <span className="text-muted fs-7">{t('postalCode')}</span>
+                  <div className="fw-bold">{formValues.postalCode || tCommon('notProvided')}</div>
+                </div>
+                <div className="mb-3">
+                  <span className="text-muted fs-7">{t('city')}</span>
+                  <div className="fw-bold">{formValues.city || tCommon('notProvided')}</div>
+                </div>
+                <div className="mb-3">
+                  <span className="text-muted fs-7">{t('country')}</span>
+                  <div className="fw-bold">{formValues.country || tCommon('notProvided')}</div>
+                </div>
+              </div>
+            </Col>
+
+            {/* Primary Contact */}
+            <Col lg={4}>
+              <div className="mb-4">
+                <h6 className="fw-semibold text-gray-800 mb-3">{t('primaryContact')}</h6>
+                <div className="mb-3">
+                  <span className="text-muted fs-7">{t('name')}</span>
+                  <div className="fw-bold">
+                    {[formValues.firstName, formValues.lastName].filter(Boolean).join(' ') ||
+                      tCommon('notProvided')}
+                  </div>
+                </div>
+                <div className="mb-3">
+                  <span className="text-muted fs-7">{t('phone')}</span>
+                  <div className="fw-bold">{formValues.phoneNumber || tCommon('notProvided')}</div>
+                </div>
+                <div className="mb-3">
+                  <span className="text-muted fs-7">{t('email')}</span>
+                  <div className="fw-bold">{formValues.emailAddress || tCommon('notProvided')}</div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </div>
       </div>
-      <div className="card-body">{children}</div>
+
+      {/* Business Settings Section */}
+      <div className="card bg-light mb-6">
+        <div className="card-body">
+          <h4 className="fw-bold text-primary mb-5">{t('businessSettings')}</h4>
+
+          <Row className="g-6">
+            <Col lg={6}>
+              <div className="mb-3">
+                <span className="text-muted fs-7">{t('partnerManager')}</span>
+                <div className="fw-bold">
+                  {partnerManager
+                    ? `${partnerManager.name} (${partnerManager.role})`
+                    : tCommon('notAssigned')}
+                </div>
+              </div>
+            </Col>
+            <Col lg={6}>
+              <div className="mb-3">
+                <span className="text-muted fs-7">{t('signedContract')}</span>
+                <div className="fw-bold">
+                  {(() => {
+                    const fileInfo = formatFileValue(formValues.signedContractFile as File)
+                    return (
+                      <FileReviewItem
+                        fileInfo={fileInfo}
+                        onFileClick={() => openFileInNewTab(formValues.signedContractFile as File)}
+                      />
+                    )
+                  })()}
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      </div>
+
+      {/* Product Configuration Section */}
+      <Row className="g-6 mt-4">
+        <Col lg={12}>
+          <div className="card bg-light">
+            <div className="card-body">
+              <h4 className="fw-bold text-primary mb-6">{t('productConfiguration')}</h4>
+
+              <Row className="g-4">
+                {/* Layer 3 Data Products - Left Column */}
+                <Col lg={6}>
+                  <div className="border rounded p-4 bg-white h-100">
+                    <h6 className="fw-semibold text-gray-800 mb-4">{t('layer3DataProducts')}</h6>
+
+                    <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded mb-3">
+                      <span className="text-muted fs-7">{t('layer3Enabled')}</span>
+                      <span
+                        className={`badge badge-light-${formValues.layer3 ? 'success' : 'secondary'}`}
+                      >
+                        {formatBooleanValue(formValues.layer3)}
+                      </span>
+                    </div>
+
+                    {formValues.layer3 && (
+                      <>
+                        <div className="mb-4">
+                          <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded mb-2">
+                            <span className="text-muted fs-7">{t('whiteLabel')}</span>
+                            <span
+                              className={`badge badge-light-${formValues.whiteLabel ? 'success' : 'secondary'}`}
+                            >
+                              {formatBooleanValue(formValues.whiteLabel)}
+                            </span>
+                          </div>
+                          {formValues.whiteLabel && (
+                            <div className="mt-2 ps-3">
+                              <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded mb-1">
+                                <span className="text-muted fs-8">{t('whiteLabelInternet')}</span>
+                                <span
+                                  className={`badge badge-sm badge-light-${formValues.whiteLabelInternet ? 'success' : 'secondary'}`}
+                                >
+                                  {formatBooleanValue(formValues.whiteLabelInternet)}
+                                </span>
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded mb-1">
+                                <span className="text-muted fs-8">{t('whiteLabelIPVPN')}</span>
+                                <span
+                                  className={`badge badge-sm badge-light-${formValues.whiteLabelIPVPN ? 'success' : 'secondary'}`}
+                                >
+                                  {formatBooleanValue(formValues.whiteLabelIPVPN)}
+                                </span>
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded mb-1">
+                                <span className="text-muted fs-8">{t('whiteLabelMobileData')}</span>
+                                <span
+                                  className={`badge badge-sm badge-light-${formValues.whiteLabelMobileData ? 'success' : 'secondary'}`}
+                                >
+                                  {formatBooleanValue(formValues.whiteLabelMobileData)}
+                                </span>
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded">
+                                <span className="text-muted fs-8">{t('whiteLabelSDWAN')}</span>
+                                <span
+                                  className={`badge badge-sm badge-light-${formValues.whiteLabelSDWAN ? 'success' : 'secondary'}`}
+                                >
+                                  {formatBooleanValue(formValues.whiteLabelSDWAN)}
+                                </span>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="mb-3">
+                          <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded mb-2">
+                            <span className="text-muted fs-7">{t('direct')}</span>
+                            <span
+                              className={`badge badge-light-${formValues.direct ? 'success' : 'secondary'}`}
+                            >
+                              {formatBooleanValue(formValues.direct)}
+                            </span>
+                          </div>
+                          {formValues.direct && (
+                            <div className="mt-2 ps-3">
+                              <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded mb-1">
+                                <span className="text-muted fs-8">{t('directInternet')}</span>
+                                <span
+                                  className={`badge badge-sm badge-light-${formValues.directInternet ? 'success' : 'secondary'}`}
+                                >
+                                  {formatBooleanValue(formValues.directInternet)}
+                                </span>
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded mb-1">
+                                <span className="text-muted fs-8">{t('directIPVPN')}</span>
+                                <span
+                                  className={`badge badge-sm badge-light-${formValues.directIPVPN ? 'success' : 'secondary'}`}
+                                >
+                                  {formatBooleanValue(formValues.directIPVPN)}
+                                </span>
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded mb-1">
+                                <span className="text-muted fs-8">{t('directMobileData')}</span>
+                                <span
+                                  className={`badge badge-sm badge-light-${formValues.directMobileData ? 'success' : 'secondary'}`}
+                                >
+                                  {formatBooleanValue(formValues.directMobileData)}
+                                </span>
+                              </div>
+                              <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded">
+                                <span className="text-muted fs-8">{t('directSDWAN')}</span>
+                                <span
+                                  className={`badge badge-sm badge-light-${formValues.directSDWAN ? 'success' : 'secondary'}`}
+                                >
+                                  {formatBooleanValue(formValues.directSDWAN)}
+                                </span>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </Col>
+
+                {/* Layer 2 and Voice Products - Right Column */}
+                <Col lg={6}>
+                  <div className="d-flex flex-column gap-4 h-100">
+                    {/* Layer 2 Data Products */}
+                    <div className="border rounded p-4 bg-white">
+                      <h6 className="fw-semibold text-gray-800 mb-4">{t('layer2DataProducts')}</h6>
+
+                      <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded mb-3">
+                        <span className="text-muted fs-7">{t('layer2Enabled')}</span>
+                        <span
+                          className={`badge badge-light-${formValues.layer2 ? 'success' : 'secondary'}`}
+                        >
+                          {formatBooleanValue(formValues.layer2)}
+                        </span>
+                      </div>
+
+                      {formValues.layer2 && (
+                        <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded mb-3">
+                          <span className="text-muted fs-7">{t('deltaAccessLayer2')}</span>
+                          <span
+                            className={`badge badge-light-${formValues.deltaAccessLayer2 ? 'success' : 'secondary'}`}
+                          >
+                            {formatBooleanValue(formValues.deltaAccessLayer2)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Voice Products */}
+                    <div className="border rounded p-4 bg-white">
+                      <h6 className="fw-semibold text-gray-800 mb-4">{t('voiceProducts')}</h6>
+
+                      <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded mb-3">
+                        <span className="text-muted fs-7">{t('voiceEnabled')}</span>
+                        <span
+                          className={`badge badge-light-${formValues.voice ? 'success' : 'secondary'}`}
+                        >
+                          {formatBooleanValue(formValues.voice)}
+                        </span>
+                      </div>
+
+                      {formValues.voice && (
+                        <>
+                          {/* Traditional and IP Telephony */}
+                          <div className="mb-4">
+                            <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded mb-2">
+                              <span className="text-muted fs-8">{t('traditionalTelephony')}</span>
+                              <span
+                                className={`badge badge-sm badge-light-${formValues.traditionalTelephony ? 'success' : 'secondary'}`}
+                              >
+                                {formatBooleanValue(formValues.traditionalTelephony)}
+                              </span>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded">
+                              <span className="text-muted fs-8">{t('ipTelephony')}</span>
+                              <span
+                                className={`badge badge-sm badge-light-${formValues.ipTelephony ? 'success' : 'secondary'}`}
+                              >
+                                {formatBooleanValue(formValues.ipTelephony)}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* IP Telephony Sub-options Grid */}
+                          {formValues.ipTelephony && (
+                            <div className="mb-4">
+                              <div className="text-muted fs-8 mb-2">IP Telephony Services:</div>
+                              <div className="row g-1">
+                                <div className="col-6">
+                                  <div className="d-flex flex-column align-items-center p-2 bg-light rounded">
+                                    <span className="text-muted fs-9">{t('xelion')}</span>
+                                    <span
+                                      className={`badge badge-xs badge-light-${formValues.xelion ? 'success' : 'secondary'}`}
+                                    >
+                                      {formatBooleanValue(formValues.xelion)}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="col-6">
+                                  <div className="d-flex flex-column align-items-center p-2 bg-light rounded">
+                                    <span className="text-muted fs-9">{t('hostedTelephony')}</span>
+                                    <span
+                                      className={`badge badge-xs badge-light-${formValues.hostedTelephony ? 'success' : 'secondary'}`}
+                                    >
+                                      {formatBooleanValue(formValues.hostedTelephony)}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="col-6">
+                                  <div className="d-flex flex-column align-items-center p-2 bg-light rounded">
+                                    <span className="text-muted fs-9">{t('sipTrunking')}</span>
+                                    <span
+                                      className={`badge badge-xs badge-light-${formValues.sipTrunking ? 'success' : 'secondary'}`}
+                                    >
+                                      {formatBooleanValue(formValues.sipTrunking)}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="col-6">
+                                  <div className="d-flex flex-column align-items-center p-2 bg-light rounded">
+                                    <span className="text-muted fs-9">{t('oneSpace')}</span>
+                                    <span
+                                      className={`badge badge-xs badge-light-${formValues.oneSpace ? 'success' : 'secondary'}`}
+                                    >
+                                      {formatBooleanValue(formValues.oneSpace)}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Fixed Mobile Integration */}
+                          <div className="d-flex justify-content-between align-items-center p-2 bg-light rounded">
+                            <span className="text-muted fs-8">{t('fixedMobileIntegration')}</span>
+                            <span
+                              className={`badge badge-sm badge-light-${formValues.fixedMobileIntegration ? 'success' : 'secondary'}`}
+                            >
+                              {formatBooleanValue(formValues.fixedMobileIntegration)}
+                            </span>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+          </div>
+        </Col>
+      </Row>
+
+      {/* Approval Requirements */}
+      {getApprovalRequirements().length > 0 && (
+        <Alert variant="warning" className="mt-6 text-dark">
+          <div className="d-flex align-items-center">
+            <KTIcon
+              iconType="duotone"
+              iconName="information-5"
+              className="fs-2x text-warning me-3"
+            />
+            <div>
+              <h5 className="mb-2">{t('approvalRequirements')}</h5>
+              <p className="mb-2">{t('configRequiresApproval')}</p>
+              <ul className="mb-0">
+                {getApprovalRequirements().map((requirement, index) => (
+                  <li key={index}>{requirement.rule}</li>
+                ))}
+              </ul>
+              <p className="mb-0 mt-2 fw-bold">{t('salesManagerApproval')}</p>
+            </div>
+          </div>
+        </Alert>
+      )}
     </div>
   )
 }
 
-// Helper component for individual review items
-const ReviewItem = ({ label, value }: { label: string; value: string }) => {
+// Helper component for file display
+const FileReviewItem = ({
+  fileInfo,
+  onFileClick,
+}: {
+  fileInfo: {
+    hasFile: boolean
+    displayText: string
+    fileName: string
+    fileSize: string
+    fileUrl: string | null
+  }
+  onFileClick: () => void
+}) => {
+  const tCommon = useTranslations('common')
+
+  if (!fileInfo.hasFile) {
+    return <span>{tCommon('noFileUploaded')}</span>
+  }
+
   return (
-    <div className="d-flex mb-2">
-      <span className="text-muted me-2">{label}:</span>
-      <span className="fw-bold">{value}</span>
-    </div>
+    <span
+      className="text-primary cursor-pointer text-decoration-underline"
+      onClick={onFileClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          onFileClick()
+        }
+      }}
+    >
+      {fileInfo.displayText}
+    </span>
   )
 }

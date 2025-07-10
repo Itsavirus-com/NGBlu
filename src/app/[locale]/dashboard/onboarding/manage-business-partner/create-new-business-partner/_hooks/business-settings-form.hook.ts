@@ -14,7 +14,7 @@ export const MOCK_PARTNER_MANAGERS = [
 ]
 
 export const useBusinessSettings = () => {
-  const t = useTranslations('businessPartner.businessSettings')
+  const t = useTranslations('dataManagement.createBusinessPartner.businessSettings')
   const {
     control,
     setValue,

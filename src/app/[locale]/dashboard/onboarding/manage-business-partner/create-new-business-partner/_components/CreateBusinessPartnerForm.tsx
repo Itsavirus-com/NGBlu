@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { Col, Row } from 'react-bootstrap'
 
 import { Breadcrumbs } from '@/components/breadcrumbs/breadcrumbs'
@@ -12,39 +13,25 @@ import { BusinessProfileForm } from './BusinessProfileForm'
 import { BusinessSettingsForm } from './BusinessSettingsForm'
 import { ProductConfigurationForm } from './ProductConfigurationForm'
 import { ReviewForm } from './ReviewForm'
-import { useBusinessPartnerForm } from '../_hooks/business-partner.hook'
-import { CreateBusinessPartnerFormData } from '../_schemas/business-partner.schema'
+import { useCreateBusinessPartnerForm } from '../_hooks/business-partner-form.hook'
 
 export const CreateBusinessPartnerForm = () => {
+  const t = useTranslations('dataManagement.createBusinessPartner')
+  const tCommon = useTranslations('common')
   const {
     methods,
     currentStep,
     isSubmitting,
     isSuccess,
-    visitedSteps,
     validationError,
-    createBusinessPartner,
     handleNext,
     handleBack,
     handleStepClick,
-  } = useBusinessPartnerForm()
-
-  const breadcrumbItems = [
-    {
-      name: 'Manage Business Partner',
-      path: '/dashboard/onboarding/manage-business-partner',
-      type: 'manage',
-    },
-    {
-      name: 'Create a New Business Partner',
-      path: '/dashboard/onboarding/manage-business-partner/create-new-business-partner',
-      type: 'create',
-    },
-  ]
-
-  const onSubmit = async (data: CreateBusinessPartnerFormData) => {
-    await createBusinessPartner(data)
-  }
+    breadcrumbItems,
+    onSubmit,
+    getSubmitButtonText,
+    isSubmitButtonDisabled,
+  } = useCreateBusinessPartnerForm()
 
   const renderCurrentStepForm = () => {
     switch (currentStep) {
@@ -62,11 +49,7 @@ export const CreateBusinessPartnerForm = () => {
   }
 
   return (
-    <Page
-      title="Create a New Business Partner"
-      description="Setup Business Partner Profile"
-      className="pb-5"
-    >
+    <Page title={t('title')} description={t('description')} className="pb-5">
       <Breadcrumbs items={breadcrumbItems} />
 
       <FormProvider methods={methods} onSubmit={onSubmit} name="create-business-partner">
@@ -91,7 +74,7 @@ export const CreateBusinessPartnerForm = () => {
                       className="fs-2hx text-danger me-4"
                     />
                     <div className="d-flex flex-column">
-                      <h4 className="mb-1 text-danger">Validation Error</h4>
+                      <h4 className="mb-1 text-danger">{tCommon('validationError')}</h4>
                       <span>{validationError}</span>
                     </div>
                   </div>
@@ -106,11 +89,10 @@ export const CreateBusinessPartnerForm = () => {
                       className="fs-2hx text-success me-4"
                     />
                     <div className="d-flex flex-column">
-                      <h4 className="mb-1 text-success">Business Partner Created Successfully!</h4>
-                      <span>
-                        The business partner has been created successfully. You can now view it in
-                        the business partners list.
-                      </span>
+                      <h4 className="mb-1 text-success">
+                        {t('messages.businessPartnerCreatedSuccessfully')}
+                      </h4>
+                      <span>{t('messages.businessPartnerCreatedMessage')}</span>
                     </div>
                   </div>
                 )}
@@ -120,7 +102,7 @@ export const CreateBusinessPartnerForm = () => {
                   <div>
                     {currentStep > 1 && (
                       <button type="button" className="btn btn-secondary" onClick={handleBack}>
-                        Back
+                        {tCommon('back')}
                       </button>
                     )}
                   </div>
@@ -128,19 +110,15 @@ export const CreateBusinessPartnerForm = () => {
                   <div className="d-flex gap-3">
                     {currentStep < 4 ? (
                       <button type="button" className="btn btn-primary" onClick={handleNext}>
-                        Continue
+                        {tCommon('continue')}
                       </button>
                     ) : (
                       <button
                         type="submit"
                         className="btn btn-primary"
-                        disabled={isSubmitting || isSuccess}
+                        disabled={isSubmitButtonDisabled()}
                       >
-                        {isSubmitting
-                          ? 'Creating...'
-                          : isSuccess
-                            ? 'Created Successfully'
-                            : 'Create Business Partner'}
+                        {getSubmitButtonText()}
                       </button>
                     )}
                   </div>

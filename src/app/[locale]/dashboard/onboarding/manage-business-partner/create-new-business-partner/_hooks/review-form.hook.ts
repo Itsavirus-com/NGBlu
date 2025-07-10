@@ -4,6 +4,15 @@ import { useFormContext } from 'react-hook-form'
 
 import { CreateBusinessPartnerFormData } from '../_schemas/business-partner.schema'
 
+// Import partner managers data
+const MOCK_PARTNER_MANAGERS = [
+  { id: 1, name: 'John Doe', email: 'john.doe@example.com', role: 'NGBLU Sales-RBAC' },
+  { id: 2, name: 'Jane Smith', email: 'jane.smith@example.com', role: 'NGBLU Sales-RBAC' },
+  { id: 3, name: 'Mark Johnson', email: 'mark.johnson@example.com', role: 'NGBLU Sales-RBAC' },
+  { id: 4, name: 'Sarah Williams', email: 'sarah.williams@example.com', role: 'NGBLU Sales-RBAC' },
+  { id: 5, name: 'Robert Brown', email: 'robert.brown@example.com', role: 'NGBLU Sales-RBAC' },
+]
+
 export const useReviewForm = () => {
   const { getValues } = useFormContext<CreateBusinessPartnerFormData>()
   const formValues = getValues()
@@ -13,9 +22,56 @@ export const useReviewForm = () => {
     return value ? 'Yes' : 'No'
   }
 
-  // Format file values for display
-  const formatFileValue = (value: File | undefined): string => {
-    return value ? value.name : 'No file uploaded'
+  // Format file values for display with clickable link functionality
+  const formatFileValue = (value: File | undefined) => {
+    if (!value) {
+      return {
+        hasFile: false,
+        displayText: 'No file uploaded',
+        fileName: '',
+        fileSize: '',
+        fileUrl: null,
+      }
+    }
+
+    const fileSize = (value.size / 1024).toFixed(0) + 'kB'
+    const fileUrl = URL.createObjectURL(value)
+
+    return {
+      hasFile: true,
+      displayText: `${value.name} (${fileSize})`,
+      fileName: value.name,
+      fileSize,
+      fileUrl,
+    }
+  }
+
+  // Get partner manager details by ID
+  const getPartnerManagerDetails = (id: number | undefined) => {
+    if (!id) {
+      return null
+    }
+
+    const manager = MOCK_PARTNER_MANAGERS.find(manager => manager.id === id)
+    return manager || null
+  }
+
+  // Function to open file in new tab
+  const openFileInNewTab = (file: File) => {
+    const fileUrl = URL.createObjectURL(file)
+    const newWindow = window.open(fileUrl, '_blank')
+
+    // Clean up the URL after a delay to prevent memory leaks
+    if (newWindow) {
+      newWindow.onload = () => {
+        setTimeout(() => {
+          URL.revokeObjectURL(fileUrl)
+        }, 1000)
+      }
+    } else {
+      // Fallback: clean up immediately if window couldn't be opened
+      URL.revokeObjectURL(fileUrl)
+    }
   }
 
   // Check if approval is needed based on product configuration
@@ -47,6 +103,8 @@ export const useReviewForm = () => {
     formValues,
     formatBooleanValue,
     formatFileValue,
+    getPartnerManagerDetails,
+    openFileInNewTab,
     getApprovalRequirements,
   }
 }

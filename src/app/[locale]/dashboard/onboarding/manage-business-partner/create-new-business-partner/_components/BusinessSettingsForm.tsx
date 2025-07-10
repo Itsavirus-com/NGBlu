@@ -29,7 +29,7 @@ export const BusinessSettingsForm = () => {
         </div>
         <div>
           <h2 className="fw-bold text-dark mb-1">{t('title')}</h2>
-          <div className="text-muted">Configure manager and documentation</div>
+          <div className="text-muted">{t('description')}</div>
         </div>
       </div>
 

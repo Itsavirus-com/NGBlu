@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { Col, Row } from 'react-bootstrap'
 
 import { Button } from '@/components/button/button'
@@ -11,6 +12,7 @@ import { KTIcon } from '@/components/kt-icon/KtIcon'
 import { useBusinessProfileForm } from '../_hooks/business-profile-form.hook'
 
 export const BusinessProfileForm = () => {
+  const t = useTranslations('dataManagement.createBusinessPartner.businessProfile')
   const {
     kvkNumber,
     postalCodeHouse,
@@ -38,28 +40,28 @@ export const BusinessProfileForm = () => {
           </div>
         </div>
         <div>
-          <h2 className="fw-bold text-dark mb-1">Business Profile</h2>
-          <div className="text-muted">Setup Business Partner Profile</div>
+          <h2 className="fw-bold text-dark mb-1">{t('title')}</h2>
+          <div className="text-muted">{t('description')}</div>
         </div>
       </div>
 
       {/* KVK Section */}
       <div className="card bg-light mb-8">
         <div className="card-body">
-          <h4 className="mb-5">Company Information</h4>
+          <h4 className="mb-5">{t('companyInformation')}</h4>
           <Row>
             <Col md={6}>
               <ControlledInput
                 name="kvkNumber"
-                label="KVK number"
-                placeholder="Enter KVK number (e.g., 12345678)"
+                label={t('kvkNumber')}
+                placeholder={t('kvkNumberPlaceholder')}
                 containerClass="mb-5"
               />
             </Col>
             <Col md={6} className="d-flex align-items-end">
               <Button
                 type="button"
-                label="Retrieve Company"
+                label={t('retrieveCompany')}
                 colorClass="primary"
                 onClick={handleKvkValidation}
                 loading={isValidatingKvk}
@@ -85,8 +87,8 @@ export const BusinessProfileForm = () => {
             <Col md={12}>
               <ControlledInput
                 name="companyName"
-                label="Company Name"
-                placeholder="Enter Company Name"
+                label={t('companyName')}
+                placeholder={t('companyNamePlaceholder')}
                 containerClass="mb-5"
                 isRequired
               />
@@ -98,32 +100,30 @@ export const BusinessProfileForm = () => {
       {/* Address Section - Always visible */}
       <div className="card bg-light mb-8">
         <div className="card-body">
-          <h4 className="mb-5">Company Address</h4>
+          <h4 className="mb-5">{t('companyAddress')}</h4>
 
           {/* Show postal code + house number lookup when KVK validation is not successful */}
           {!kvkValidationData?.success && (
             <>
               {kvkValidationData?.success === false && (
                 <div className="mb-5">
-                  <h5 className="text-primary">Try lookup by Postal Code and House Number</h5>
-                  <p className="text-muted">
-                    Enter a postal code and house number to retrieve address details
-                  </p>
+                  <h5 className="text-primary">{t('lookupByPostalCode')}</h5>
+                  <p className="text-muted">{t('lookupByPostalCodeDesc')}</p>
                 </div>
               )}
               <Row>
                 <Col md={6}>
                   <ControlledInput
                     name="postalCodeHouse"
-                    label="Postal Code + House Number (optional for lookup)"
-                    placeholder="Try: 1012LG 45 or 1234AB 5"
+                    label={t('postalCodeHouse')}
+                    placeholder={t('postalCodeHousePlaceholder')}
                     containerClass="mb-5"
                   />
                 </Col>
                 <Col md={6} className="d-flex align-items-end">
                   <Button
                     type="button"
-                    label="Lookup Address"
+                    label={t('lookupAddress')}
                     colorClass="primary"
                     onClick={handleAddressLookup}
                     loading={isLookingUpAddress}
@@ -142,7 +142,7 @@ export const BusinessProfileForm = () => {
                   <KTIcon iconType="duotone" iconName="shield-tick" className="fs-1 text-success" />
                 </span>
                 <div>
-                  <span className="fw-bold">Address retrieved from KVK:</span>{' '}
+                  <span className="fw-bold">{t('addressRetrievedKvk')}</span>{' '}
                   {kvkValidationData.data[0].streetName} {kvkValidationData.data[0].houseNumber},{' '}
                   {kvkValidationData.data[0].postalCode} {kvkValidationData.data[0].city}
                 </div>
@@ -157,7 +157,7 @@ export const BusinessProfileForm = () => {
                   <KTIcon iconType="duotone" iconName="shield-tick" className="fs-1 text-success" />
                 </span>
                 <div>
-                  <span className="fw-bold">Address found:</span>{' '}
+                  <span className="fw-bold">{t('addressFound')}</span>{' '}
                   {addressLookupData.data[0].streetName} {addressLookupData.data[0].houseNumber},{' '}
                   {postalCodeHouse?.split(' ')?.[0] || ''} {addressLookupData.data[0].city}
                 </div>
@@ -169,8 +169,8 @@ export const BusinessProfileForm = () => {
             <Col md={6}>
               <ControlledInput
                 name="streetName"
-                label="Street Name"
-                placeholder="Street"
+                label={t('streetName')}
+                placeholder={t('streetNamePlaceholder')}
                 containerClass="mb-5"
                 isRequired
               />
@@ -178,8 +178,8 @@ export const BusinessProfileForm = () => {
             <Col md={6}>
               <ControlledInput
                 name="houseNumber"
-                label="House Number"
-                placeholder="123"
+                label={t('houseNumber')}
+                placeholder={t('houseNumberPlaceholder')}
                 containerClass="mb-5"
                 isRequired
               />
@@ -190,8 +190,8 @@ export const BusinessProfileForm = () => {
             <Col md={6}>
               <ControlledInput
                 name="postalCode"
-                label="Postal Code"
-                placeholder="12345"
+                label={t('postalCode')}
+                placeholder={t('postalCodePlaceholder')}
                 containerClass="mb-5"
                 isRequired
               />
@@ -199,8 +199,8 @@ export const BusinessProfileForm = () => {
             <Col md={6}>
               <ControlledInput
                 name="city"
-                label="City"
-                placeholder="City Name"
+                label={t('city')}
+                placeholder={t('cityPlaceholder')}
                 containerClass="mb-5"
                 isRequired
               />
@@ -211,8 +211,8 @@ export const BusinessProfileForm = () => {
             <Col md={12}>
               <ControlledInput
                 name="country"
-                label="Country"
-                placeholder="Country name"
+                label={t('country')}
+                placeholder={t('countryPlaceholder')}
                 containerClass="mb-5"
                 isRequired
               />
@@ -224,7 +224,7 @@ export const BusinessProfileForm = () => {
       {/* Maps Overview - Show if we have address data */}
       {(kvkValidationData?.success || addressLookupData?.success) && (
         <div className="mb-8">
-          <label className="form-label fw-bold">Maps Overview</label>
+          <label className="form-label fw-bold">{t('mapsOverview')}</label>
           <div
             className="bg-light border rounded p-0"
             style={{ height: '400px', position: 'relative' }}
@@ -246,7 +246,7 @@ export const BusinessProfileForm = () => {
                     iconName="geolocation"
                     className="text-muted fs-3x mb-3"
                   />
-                  <div className="text-muted">Enter a complete address to display the map</div>
+                  <div className="text-muted">{t('enterAddressForMap')}</div>
                 </div>
               </div>
             )}
@@ -259,21 +259,21 @@ export const BusinessProfileForm = () => {
 
       <div className="card bg-light mb-8">
         <div className="card-body">
-          <h4 className="fw-bold text-dark mb-5">Primary Contact Information</h4>
+          <h4 className="fw-bold text-dark mb-5">{t('primaryContact')}</h4>
 
           <Row>
             <Col md={6}>
               <ControlledInput
                 name="firstName"
-                label="First Name"
-                placeholder="First Name"
+                label={t('firstName')}
+                placeholder={t('firstNamePlaceholder')}
                 containerClass="mb-5"
                 isRequired
               />
               <ControlledInput
                 name="phoneNumber"
-                label="Phone Number"
-                placeholder="+31"
+                label={t('phoneNumber')}
+                placeholder={t('phoneNumberPlaceholder')}
                 containerClass="mb-5"
                 isRequired
               />
@@ -281,16 +281,16 @@ export const BusinessProfileForm = () => {
             <Col md={6}>
               <ControlledInput
                 name="lastName"
-                label="Last Name"
-                placeholder="Last Name"
+                label={t('lastName')}
+                placeholder={t('lastNamePlaceholder')}
                 containerClass="mb-5"
                 isRequired
               />
               <ControlledInput
                 name="emailAddress"
-                label="Email Address"
+                label={t('emailAddress')}
                 type="email"
-                placeholder="contact@company.com"
+                placeholder={t('emailAddressPlaceholder')}
                 containerClass="mb-5"
                 isRequired
               />

@@ -1,17 +1,16 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { Col, Row } from 'react-bootstrap'
 
 import { Page } from '@/components/page/page'
 import { Link } from '@/navigation'
 
 export default function ManageBusinessPartnerPage() {
+  const t = useTranslations('dataManagement.businessPartners.manageBusinessPartner')
+
   return (
-    <Page
-      title="Manage Business Partner"
-      description="Create and manage your business partner profiles"
-      className="pb-5"
-    >
+    <Page title={t('title')} description={t('description')} className="pb-5">
       <Row>
         <Col lg={6} md={6} className="mb-6">
           <div className="card card-bordered h-100">
@@ -25,15 +24,13 @@ export default function ManageBusinessPartnerPage() {
                   </i>
                 </div>
               </div>
-              <h3 className="fw-bold text-dark mb-3">Create a New Business Partner</h3>
-              <p className="text-muted mb-5 flex-grow-1">
-                Start the process of adding a new business partner to your system.
-              </p>
+              <h3 className="fw-bold text-dark mb-3">{t('createNewPartner.title')}</h3>
+              <p className="text-muted mb-5 flex-grow-1">{t('createNewPartner.description')}</p>
               <Link
                 href="/dashboard/onboarding/manage-business-partner/create-new-business-partner"
                 className="btn btn-primary"
               >
-                Create New Partner
+                {t('createNewPartner.button')}
               </Link>
             </div>
           </div>
@@ -52,12 +49,10 @@ export default function ManageBusinessPartnerPage() {
                   </i>
                 </div>
               </div>
-              <h3 className="fw-bold text-dark mb-3">View Existing Partners</h3>
-              <p className="text-muted mb-5 flex-grow-1">
-                Browse and manage your existing business partner database.
-              </p>
+              <h3 className="fw-bold text-dark mb-3">{t('viewExistingPartners.title')}</h3>
+              <p className="text-muted mb-5 flex-grow-1">{t('viewExistingPartners.description')}</p>
               <button className="btn btn-light-info" disabled>
-                Coming Soon
+                {t('viewExistingPartners.button')}
               </button>
             </div>
           </div>
