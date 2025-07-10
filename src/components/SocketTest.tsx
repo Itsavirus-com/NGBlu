@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import useSocket from '@/hooks/use-socket'
 
 interface SocketTestProps {
-  userId: string
+  userId: number
   fullname: string
   namespace?: string
   roomName: string

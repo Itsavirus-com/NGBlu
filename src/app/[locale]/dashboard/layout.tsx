@@ -6,6 +6,7 @@ import { SWRConfig } from 'swr'
 import { MasterInit } from '@/components/core/MasterInit'
 import { Footer } from '@/components/footer/footer'
 import { Header } from '@/components/header/header'
+import { SessionInvalidationListener } from '@/components/session/GlobalSocketListener'
 import { SessionChecker } from '@/components/session/SessionChecker'
 import { Sidebar } from '@/components/sidebar/sidebar'
 import { fetcher } from '@/services/swr/fetcher'
@@ -23,6 +24,7 @@ export default function DashboardLayout({
     <SWRConfig value={{ fetcher: fetcher }}>
       <SessionProvider>
         <SessionChecker />
+        <SessionInvalidationListener />
         <div className="d-flex flex-column flex-root app-root" id="kt_app_root">
           <div className="app-page flex-column flex-column-fluid" id="kt_app_page">
             <Header />

@@ -12,7 +12,7 @@ export default function SocketTestPage() {
   // Note: Adjust 'accessToken' if your session object uses a different key
   const apiToken = session?.accessToken as string | undefined
   // Keep using test credentials for now, or fetch real ones if needed
-  const testUserId = 'test-user-123'
+  const testUserId = session?.user?.id as number
   const testFullname = 'Test User'
 
   // Handle loading state while session is being fetched
