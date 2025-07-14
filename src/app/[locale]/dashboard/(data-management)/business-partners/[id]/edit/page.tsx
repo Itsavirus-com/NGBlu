@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl'
 
-import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 
 import { BusinessPartnerForm } from '../../_components/BusinessPartnerForm'
@@ -11,22 +10,19 @@ import useBusinessPartnerForm from '../../_hooks/business-partner-form.hook'
 export default function UpdateBusinessPartner({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.businessPartners')
 
-  const { methods, onSubmit, isLoading, enterpriseRootIdValue, isSubmitting } =
-    useBusinessPartnerForm(Number(params.id))
+  const { methods, onSubmit, enterpriseRootIdValue, isSubmitting } = useBusinessPartnerForm(
+    Number(params.id)
+  )
 
   return (
     <>
       <PageTitle title={t('updateBusinessPartner')} />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <BusinessPartnerForm
-          methods={methods}
-          onSubmit={onSubmit}
-          enterpriseRootIdValue={enterpriseRootIdValue}
-          isSubmitting={isSubmitting}
-        />
-      )}
+      <BusinessPartnerForm
+        methods={methods}
+        onSubmit={onSubmit}
+        enterpriseRootIdValue={enterpriseRootIdValue}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }

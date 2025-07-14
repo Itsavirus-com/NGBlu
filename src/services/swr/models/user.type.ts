@@ -18,4 +18,5 @@ export type User = {
   authType: string
   status: string
   stateUser: string
+  is2FaEnabled: boolean
 }

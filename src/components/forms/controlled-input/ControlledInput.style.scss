@@ -18,3 +18,23 @@
   color: var(--bs-gray-600) !important;
   cursor: not-allowed;
 }
+
+/* Ensure form controls have visible borders */
+.form-control {
+  border: 1px solid var(--bs-gray-300) !important;
+
+  &:focus {
+    border-color: var(--bs-primary) !important;
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25) !important;
+  }
+
+  &.is-invalid {
+    border-color: var(--bs-danger) !important;
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-danger-rgb), 0.25) !important;
+  }
+
+  &.is-valid {
+    border-color: var(--bs-success) !important;
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-success-rgb), 0.25) !important;
+  }
+}

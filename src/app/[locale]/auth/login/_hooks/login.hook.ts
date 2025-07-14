@@ -14,7 +14,7 @@ import { logAuthToSentry } from '@/utils/sentry-logger'
 
 import { schema } from '../_schemas/login.schema'
 
-export type LoginStep = 'initial' | 'auth-options' | 'password'
+export type LoginStep = 'initial' | 'auth-options' | 'password' | 'totp-verification'
 
 export const useLogin = () => {
   const searchParams = useSearchParams()
@@ -26,6 +26,10 @@ export const useLogin = () => {
   const [currentStep, setCurrentStep] = useState<LoginStep>('initial')
   const [userHasPasskey, setUserHasPasskey] = useState(false)
   const [isCheckingPasskey, setIsCheckingPasskey] = useState(false)
+
+  // 2FA state
+  const [tempToken, setTempToken] = useState<string>('')
+  const [userEmail, setUserEmail] = useState<string>('')
 
   const {
     isSupported: isPasskeySupported,
@@ -78,6 +82,10 @@ export const useLogin = () => {
 
   const handleBackToOptions = () => {
     setCurrentStep('auth-options')
+  }
+
+  const handleBackToPassword = () => {
+    setCurrentStep('password')
   }
 
   // Handler for Microsoft sign-in
@@ -152,35 +160,43 @@ export const useLogin = () => {
       const clientPrivateKey = headers['client-private-key']
       const accessTokenExpiresAt = headers['access-token-expires-at']
 
-      if (response.ok && accessToken && clientPrivateKey && responseData.success) {
-        try {
-          // Use NextAuth signIn to create a session
-          const result = await signIn('manual-login', {
-            redirect: false,
-            accessToken: accessToken,
-            clientPrivateKey: clientPrivateKey,
-            userData: JSON.stringify(responseData.data), // Pass user data to NextAuth
-            callbackUrl: '/dashboard',
-            accessTokenExpiresAt: accessTokenExpiresAt,
-          })
+      if (response.ok && responseData.success) {
+        // Check if response includes temp_two_factor_token (2FA required)
+        if (responseData.data?.tempTwoFactorToken) {
+          setTempToken(responseData.data.tempTwoFactorToken)
+          setUserEmail(submitData.email)
+          setCurrentStep('totp-verification')
+        } else if (accessToken && clientPrivateKey) {
+          // Standard login flow without 2FA
+          try {
+            // Use NextAuth signIn to create a session
+            const result = await signIn('manual-login', {
+              redirect: false,
+              accessToken: accessToken,
+              clientPrivateKey: clientPrivateKey,
+              userData: JSON.stringify(responseData.data), // Pass user data to NextAuth
+              callbackUrl: '/dashboard',
+              accessTokenExpiresAt: accessTokenExpiresAt,
+            })
 
-          if (result?.ok) {
-            router.push('/dashboard')
-          } else {
-            console.error('SignIn failed:', result?.error)
+            if (result?.ok) {
+              router.push('/dashboard')
+            } else {
+              console.error('SignIn failed:', result?.error)
+              showToast({
+                variant: 'danger',
+                title: tError('authError'),
+                body: tError('authErrorMessage'),
+              })
+            }
+          } catch (secretError) {
+            console.error('Error generating shared secret:', secretError)
             showToast({
               variant: 'danger',
               title: tError('authError'),
-              body: tError('authErrorMessage'),
+              body: 'Error generating security credentials',
             })
           }
-        } catch (secretError) {
-          console.error('Error generating shared secret:', secretError)
-          showToast({
-            variant: 'danger',
-            title: tError('authError'),
-            body: 'Error generating security credentials',
-          })
         }
       } else {
         console.error('Login failed or missing required data:', {
@@ -287,6 +303,11 @@ export const useLogin = () => {
     handlePasswordOption,
     handleBackToEmail,
     handleBackToOptions,
+    handleBackToPassword,
+
+    // 2FA state
+    tempToken,
+    userEmail,
 
     // Authentication actions
     onSubmit,

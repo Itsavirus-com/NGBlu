@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl'
 
-import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 
 import EndClientForm from '../../_components/EndClientForm'
@@ -11,29 +10,19 @@ import useEndClientForm from '../../_hooks/end-client-form.hook'
 export default function UpdateEndClient({ params }: { params: { id: string } }) {
   const t = useTranslations('dataManagement.endClients')
 
-  const {
-    methods,
-    onSubmit,
-    isLoading,
-    isDisplayCompanyInfo,
-    setIsDisplayCompanyInfo,
-    isSubmitting,
-  } = useEndClientForm(Number(params.id))
+  const { methods, onSubmit, isDisplayCompanyInfo, setIsDisplayCompanyInfo, isSubmitting } =
+    useEndClientForm(Number(params.id))
 
   return (
     <>
       <PageTitle title={t('updateEndClient')} />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <EndClientForm
-          methods={methods}
-          onSubmit={onSubmit}
-          isDisplayCompanyInfo={isDisplayCompanyInfo}
-          setIsDisplayCompanyInfo={setIsDisplayCompanyInfo}
-          isSubmitting={isSubmitting}
-        />
-      )}
+      <EndClientForm
+        methods={methods}
+        onSubmit={onSubmit}
+        isDisplayCompanyInfo={isDisplayCompanyInfo}
+        setIsDisplayCompanyInfo={setIsDisplayCompanyInfo}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }

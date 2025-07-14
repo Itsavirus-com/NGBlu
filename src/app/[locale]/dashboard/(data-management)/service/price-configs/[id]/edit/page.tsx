@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl'
 
-import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 
 import { ServicePriceConfigForm } from '../../_components/ServicePriceConfigForm'
@@ -19,7 +18,6 @@ export default function UpdateServicePriceConfig({ params }: { params: { id: str
     handleChange,
     setFormDateValue,
     onSubmit,
-    isLoading,
     errorMessageInputType,
     isSubmitting,
   } = useServicePriceConfigForm(Number(params.id))
@@ -28,21 +26,17 @@ export default function UpdateServicePriceConfig({ params }: { params: { id: str
     <>
       <PageTitle title={t('updatePriceConfig')} />
 
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <ServicePriceConfigForm
-          methods={methods}
-          onSubmit={onSubmit}
-          handleChange={handleChange}
-          formDateValue={formDateValue}
-          setFormDateValue={setFormDateValue}
-          errorMessageInputType={errorMessageInputType}
-          businessPartnerId={businessPartnerId}
-          enterpriseRootId={enterpriseRootId}
-          isSubmitting={isSubmitting}
-        />
-      )}
+      <ServicePriceConfigForm
+        methods={methods}
+        onSubmit={onSubmit}
+        handleChange={handleChange}
+        formDateValue={formDateValue}
+        setFormDateValue={setFormDateValue}
+        errorMessageInputType={errorMessageInputType}
+        businessPartnerId={businessPartnerId}
+        enterpriseRootId={enterpriseRootId}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }
