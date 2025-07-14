@@ -163,7 +163,7 @@ export class ApiCore {
 
   constructor() {
     this.api = create({
-      timeout: 10000,
+      timeout: 120000,
       baseURL: this.baseURL,
       headers: {
         Accept: 'application/json',
