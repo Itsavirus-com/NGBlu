@@ -7,4 +7,6 @@ export type PageProps = {
   title?: string
   description?: string
   toolbars?: ButtonProps[]
+  isSticky?: boolean
+  stickyTop?: string
 }

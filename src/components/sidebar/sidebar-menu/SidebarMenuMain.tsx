@@ -24,6 +24,11 @@ const SidebarMenuMain = () => {
           title={t('manageBusinessPartner')}
           hasBullet
         />
+        <SidebarMenuItem
+          to="/dashboard/onboarding/profile-completion"
+          title={t('profileCompletion')}
+          hasBullet
+        />
       </SidebarMenuItemWithSub>
       {/* End of Onboarding */}
 

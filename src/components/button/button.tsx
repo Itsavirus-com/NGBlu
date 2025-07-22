@@ -33,7 +33,7 @@ export const Button = (props: ButtonProps) => {
       onClick={onClick}
       type={!href ? type : undefined}
       disabled={disabled}
-      className={`btn btn-${size} d-flex justify-content-center ${className} ${btnIconClass} btn-${colorClass} btn-active-${activeColorClass}`}
+      className={`btn btn-${size} d-flex justify-content-center ${className} ${btnIconClass} btn-${colorClass} btn-active-${activeColorClass} ${disabled ? 'btn-disabled' : ''} ${disabled ? 'pointer-events-none' : ''}`}
       {...extraProps}
     >
       {loading ? (

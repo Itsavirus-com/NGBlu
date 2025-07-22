@@ -23,6 +23,7 @@
       "dashboard": "Dashboard",
       "onboarding": "Onboarding",
       "manageBusinessPartner": "Manage Business Partner",
+      "profileCompletion": "Profile Completion",
       "dataValidation": "Data Validation",
       "kvk": "KVK",
       "google": "Google",
@@ -1653,6 +1654,60 @@
     "passwordVerificationSuccess": "Password verified successfully. You can now continue.",
     "verificationFailed": "Verification Failed",
     "verificationFailedMessage": "Something went wrong. Please try again."
+  },
+  "fileUpload": {
+    "dropFile": "Drop your file here",
+    "dropOrClick": "Drop your logo here or click to browse",
+    "supports": "Supports",
+    "filesUpTo": "files up to",
+    "max": "Max",
+    "logoPreview": "Logo Preview",
+    "removeFile": "Remove file",
+    "fileSizeTooLarge": "File size must be less than",
+    "invalidFileType": "Only {types} files are allowed",
+    "bytes": "bytes",
+    "kb": "KB",
+    "mb": "MB"
+  },
+  "profileCompletion": {
+    "logoUpload": {
+      "title": "Logo Upload",
+      "subtitle": "Upload your company logo (optional)",
+      "companyLogo": "Company Logo",
+      "companyLogoDescription": "Upload your company logo for professional presentation",
+      "optionalStep": "Optional Step:",
+      "optionalStepDescription": "You can upload your company logo now or skip this step and add it later.",
+      "brandIdentityNote": "A professional logo helps establish your brand identity in business communications.",
+      "logoDesignTips": "Logo Design Tips",
+      "highContrast": "High Contrast",
+      "highContrastTip": "Use high contrast colors for better visibility across different backgrounds.",
+      "simpleDesign": "Simple Design",
+      "simpleDesignTip": "Keep your logo simple and clean for professional appearance.",
+      "brandConsistent": "Brand Consistent",
+      "brandConsistentTip": "Ensure your logo matches your brand identity and colors.",
+      "previous": "Previous",
+      "skipThisStep": "Skip This Step",
+      "completeProfile": "Complete Profile",
+      "next": "Next"
+    },
+    "page": {
+      "title": "Business Partner Profile Completion",
+      "description": "Complete the business partner profile setup process",
+      "steps": {
+        "generalInfo": {
+          "title": "General Information",
+          "description": "Basic business information"
+        },
+        "contactDetails": {
+          "title": "Contact Details",
+          "description": "Essential contact persons"
+        },
+        "logoUpload": {
+          "title": "Logo Upload",
+          "description": "Upload company logo (optional)"
+        }
+      }
+    }
   },
   "auditTrails": {
     "title": "Audit Trails",
