@@ -20,7 +20,8 @@ interface CustomUser {
 // Define user data interface based on BE login manual response
 interface UserData {
   id: number
-  displayName: string
+  firstname: string
+  lastname: string
   email: string
   blockedAt: string | null
   accountActivatedAt: string
@@ -667,10 +668,24 @@ export const authOptions: NextAuthOptions = {
 
       // Add user data to the session
       if (token.userData) {
+        // Construct name from firstname and lastname
+        const firstName = token.userData.firstname || ''
+        const lastName = token.userData.lastname || ''
+
+        let fullName = ''
+        if (firstName || lastName) {
+          fullName = `${firstName} ${lastName}`.trim()
+        }
+
+        // If no name could be constructed, try fallbacks
+        if (!fullName) {
+          fullName = session.user?.name || ''
+        }
+
         // If we have userData from token, use it as the primary source
         session.user = {
           id: token.userData.id,
-          name: token.userData.displayName || session.user?.name || '',
+          name: fullName,
           email: token.userData.email || session.user?.email || '',
           roles: token.userData.roles || [],
           personId: token.userData.personId,
