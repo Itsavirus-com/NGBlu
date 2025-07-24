@@ -26,6 +26,7 @@ export default function UpdatePayment({ params }: { params: { id: number } }) {
           handleChange={handleChange}
           selectedPayment={selectedPayment}
           isSubmitting={isSubmitting}
+          isUpdate={true}
         />
       )}
     </>
