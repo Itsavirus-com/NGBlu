@@ -9,6 +9,7 @@
     "dismiss": "Dismiss",
     "submit": "Submit",
     "retrievingData": "Gegevens ophalen, even geduld...",
+    "loading": "Laden",
     "navbar": {
       "language": "Taal",
       "account_settings": "Account & Profile Settings",

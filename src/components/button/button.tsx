@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Spinner } from 'react-bootstrap'
 
 import { KTIcon } from '@/components/kt-icon/KtIcon'
@@ -26,6 +27,7 @@ export const Button = (props: ButtonProps) => {
 
   const ButtonWrapper = !!href ? Link : 'button'
   const btnIconClass = !label ? 'btn-icon' : 'd-flex align-items-center'
+  const t = useTranslations('common')
 
   return (
     <ButtonWrapper
@@ -39,7 +41,7 @@ export const Button = (props: ButtonProps) => {
       {loading ? (
         <>
           <Spinner size="sm" animation="border" />
-          {!onlyIconLoading && <span className="ms-1"> Loading...</span>}
+          {!onlyIconLoading && <span className="ms-1">{t('loading')}</span>}
         </>
       ) : (
         <>

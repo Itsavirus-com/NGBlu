@@ -9,6 +9,7 @@
     "dismiss": "Dismiss",
     "submit": "Submit",
     "retrievingData": "Retrieving data, please wait...",
+    "loading": "Loading",
     "navbar": {
       "language": "Language",
       "account_settings": "Account & Profile Settings",
