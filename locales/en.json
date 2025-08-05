@@ -8,6 +8,7 @@
     "yesContinue": "Yes, continue",
     "dismiss": "Dismiss",
     "submit": "Submit",
+    "retrievingData": "Retrieving data, please wait...",
     "navbar": {
       "language": "Language",
       "account_settings": "Account & Profile Settings",
@@ -89,6 +90,8 @@
       "delete": "Delete"
     },
     "error": {
+      "title": "Error",
+      "fetchData": "An error occurred while fetching data",
       "unexpectedErrorTitle": "Unexpected Error!",
       "unexpectedErrorDesc": "An unexpected error occurred. Please try again later.",
       "authErrorMessage": "An authentication error occurred. Please try again later.",

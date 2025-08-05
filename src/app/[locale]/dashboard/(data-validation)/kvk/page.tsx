@@ -5,7 +5,6 @@ import { Badge, Card, CardBody, Col, Row } from 'react-bootstrap'
 import { Button } from '@/components/button/button'
 import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
 import { FormProvider } from '@/components/forms/form-provider'
-import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 
 import useKvkForm, { FormValuesKvk } from './_hooks/kvk.hook'
@@ -74,10 +73,6 @@ export default function Kvk() {
       default:
         return null
     }
-  }
-
-  if (isLoading) {
-    return <Loading />
   }
 
   return (
