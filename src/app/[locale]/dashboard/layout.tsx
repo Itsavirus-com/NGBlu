@@ -10,6 +10,7 @@ import { SessionInvalidationListener } from '@/components/session/GlobalSocketLi
 import { SessionChecker } from '@/components/session/SessionChecker'
 import { Sidebar } from '@/components/sidebar/sidebar'
 import { fetcher } from '@/services/swr/fetcher'
+import { loadingMiddleware } from '@/services/swr/middleware/loading-middleware'
 
 import '@/assets/keenicons/duotone/style.css'
 import '@/assets/keenicons/outline/style.css'
@@ -21,7 +22,17 @@ export default function DashboardLayout({
   children: React.ReactNode
 }>) {
   return (
-    <SWRConfig value={{ fetcher: fetcher }}>
+    <SWRConfig
+      value={{
+        fetcher: fetcher,
+        use: [loadingMiddleware('api')],
+        // Disable retries on errors to prevent infinite loading
+        errorRetryCount: 0,
+        errorRetryInterval: 0,
+        // Disable automatic revalidation on focus
+        revalidateOnFocus: false,
+      }}
+    >
       <SessionProvider>
         <SessionChecker />
         <SessionInvalidationListener />

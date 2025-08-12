@@ -1,7 +1,5 @@
 'use client'
 
-import Loading from '@/components/loading/Loading'
-
 import { PasskeyEmptyState } from './PasskeyEmptyState'
 import { PasskeyModals } from './PasskeyModals'
 import { PasskeyNotSupported } from './PasskeyNotSupported'
@@ -15,7 +13,6 @@ export const PasskeyManagement = () => {
     isPlatformAuthenticatorAvailable,
     isRegistering,
     userPasskeys,
-    isLoadingPasskeys,
     showDeleteModal,
     passkeyToDelete,
     showRegisterModal,
@@ -40,15 +37,6 @@ export const PasskeyManagement = () => {
   // Show not supported message
   if (!isSupported) {
     return <PasskeyNotSupported />
-  }
-
-  // Show loading state
-  if (isLoadingPasskeys) {
-    return (
-      <div className="text-center py-4">
-        <Loading />
-      </div>
-    )
   }
 
   // Show empty state

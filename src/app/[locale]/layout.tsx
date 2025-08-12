@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 
+import LoadingOverlay from '@/components/loading/LoadingOverlay'
 import { Toast } from '@/components/toast/toast'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { themeScript } from '@/lib/theme-script'
@@ -41,6 +42,7 @@ export default function LocaleLayout({
             <LayoutWrapper>
               {children}
               <Toast />
+              <LoadingOverlay />
             </LayoutWrapper>
           </NextIntlClientProvider>
         </ThemeProvider>

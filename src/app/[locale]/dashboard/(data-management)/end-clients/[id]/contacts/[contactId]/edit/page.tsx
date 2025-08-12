@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl'
 
-import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 
 import EndClientContactForm from '../../../_components/EndClientContactForm'
@@ -15,7 +14,7 @@ export default function UpdateEndClientContact({
 }) {
   const t = useTranslations('dataManagement.endClients.contacts')
 
-  const { methods, onSubmit, isLoading, isSubmitting } = useEndClientContactForm(
+  const { methods, onSubmit, isSubmitting } = useEndClientContactForm(
     Number(params.id),
     Number(params.contactId)
   )
@@ -23,11 +22,7 @@ export default function UpdateEndClientContact({
   return (
     <>
       <PageTitle title={t('updateContact')} />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <EndClientContactForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
-      )}
+      <EndClientContactForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

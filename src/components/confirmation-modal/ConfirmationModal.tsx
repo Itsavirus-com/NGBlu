@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
-import React from 'react'
 import { Button, Modal, Spinner } from 'react-bootstrap'
 
 import { ConfirmationModalProps } from './confirmation-modal.type'
@@ -36,7 +35,7 @@ export const ConfirmationModal = (props: ConfirmationModalProps) => {
           {isLoading ? (
             <>
               {' '}
-              <Spinner size="sm" /> Loading...
+              <Spinner size="sm" /> {t('loading')}
             </>
           ) : (
             confirmLabel

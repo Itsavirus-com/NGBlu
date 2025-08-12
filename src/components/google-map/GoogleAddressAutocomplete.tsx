@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { useTranslations } from 'next-intl'
 import { ReactNode, useEffect, useRef, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useController, useFormContext } from 'react-hook-form'
@@ -63,7 +64,7 @@ export const GoogleAddressAutocomplete = ({
   const [isLoading, setIsLoading] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const suggestionsRef = useRef<HTMLDivElement>(null)
-
+  const t = useTranslations('common')
   // Session token to group autocomplete requests with place details
   const [sessionToken, setSessionToken] = useState<string>('')
 
@@ -274,7 +275,7 @@ export const GoogleAddressAutocomplete = ({
         {isLoading && (
           <div className="position-absolute end-0 top-50 translate-middle-y me-3">
             <div className="spinner-border spinner-border-sm text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
+              <span className="visually-hidden">{t('loading')}</span>
             </div>
           </div>
         )}
