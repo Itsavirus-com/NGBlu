@@ -2,34 +2,19 @@
 import { useParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
-import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 import { AuditTrail } from '@/services/swr/models/audit-trail.type'
 import { useAuditTrail } from '@/services/swr/use-audit-trail'
 
-import {
-  ChangesPreviewCard,
-  ErrorState,
-  EventInfoCard,
-  RequestInfoCard,
-  UserInfoCard,
-} from './_components'
+import { ChangesPreviewCard, EventInfoCard, RequestInfoCard, UserInfoCard } from './_components'
 
 export default function AuditTrailDetail() {
   const t = useTranslations('auditTrails')
   const params = useParams()
   const id = params.id as string
 
-  const { data, isLoading } = useAuditTrail(id)
+  const { data } = useAuditTrail(id)
   const auditTrail = data as AuditTrail
-
-  if (isLoading) {
-    return <Loading />
-  }
-
-  if (!auditTrail) {
-    return <ErrorState />
-  }
 
   const hasChanges = auditTrail.oldValues || auditTrail.newValues
 

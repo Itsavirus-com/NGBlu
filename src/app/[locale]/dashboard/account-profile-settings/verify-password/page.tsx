@@ -6,7 +6,6 @@ import { useEffect } from 'react'
 import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
 import { FormButtons } from '@/components/forms/form-buttons/FormButtons'
 import { FormProvider } from '@/components/forms/form-provider/FormProvider'
-import Loading from '@/components/loading/Loading'
 import { Page } from '@/components/page/page'
 import { useRouter } from '@/navigation'
 import { passwordVerificationUtils } from '@/utils/password-verification'
@@ -16,8 +15,7 @@ import { usePasswordVerification } from './_hooks/password-verification.hook'
 export default function VerifyPassword() {
   const t = useTranslations('account')
   const router = useRouter()
-  const { methods, onSubmit, isSubmitting, isLoading, userProfile, isVerified } =
-    usePasswordVerification()
+  const { methods, onSubmit, isSubmitting, userProfile, isVerified } = usePasswordVerification()
 
   // Redirect to account settings if already verified
   useEffect(() => {
@@ -32,14 +30,6 @@ export default function VerifyPassword() {
       router.push('/dashboard/account-profile-settings')
     }
   }, [userProfile, router])
-
-  if (isLoading) {
-    return (
-      <Page title={t('verifyPassword')}>
-        <Loading />
-      </Page>
-    )
-  }
 
   return (
     <Page title={t('verifyPassword')} description={t('verifyPasswordDescription')}>

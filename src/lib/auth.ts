@@ -20,7 +20,8 @@ interface CustomUser {
 // Define user data interface based on BE login manual response
 interface UserData {
   id: number
-  displayName: string
+  firstname: string
+  lastname: string
   email: string
   blockedAt: string | null
   accountActivatedAt: string
@@ -76,11 +77,6 @@ declare module 'next-auth/jwt' {
 
 async function getAccessToken(idToken: string) {
   try {
-    console.log('[AUTH DEBUG] Starting token exchange', {
-      tokenLength: idToken?.length || 0,
-      timestamp: new Date().toISOString(),
-    })
-
     logAuthToSentry('Token Exchange Started', {
       tokenLength: idToken?.length || 0,
     })
@@ -147,7 +143,6 @@ async function getAccessToken(idToken: string) {
 
     // Check if the key is empty
     if (!clientPrivateKey) {
-      console.error('[AUTH DEBUG] Missing client-private-key in API response')
       logAuthToSentry('Missing Client Private Key', {}, 'error')
       return { error: 'Missing client-private-key in API response' }
     }
@@ -296,7 +291,6 @@ export const authOptions: NextAuthOptions = {
             try {
               userData = JSON.parse(credentials.userData)
             } catch (e) {
-              console.error('Failed to parse passkey userData:', e)
               logAuthErrorToSentry(e, 'Parse Passkey UserData')
             }
           }
@@ -352,7 +346,6 @@ export const authOptions: NextAuthOptions = {
             logAuthToSentry('Preserving CallbackUrl', { callbackUrl })
           }
         } catch (e) {
-          console.error('[AUTH DEBUG] Failed to parse URL', { url, error: e })
           logAuthErrorToSentry(e, 'Parse Redirect URL Error', { url })
         }
 
@@ -461,7 +454,6 @@ export const authOptions: NextAuthOptions = {
           } else {
             // Handle the case where token exchange failed
             const errorMessage = resp?.error || 'Token exchange failed'
-            console.error('[AUTH DEBUG] Token exchange failed:', errorMessage, resp?.status)
             logAuthToSentry(
               'JWT Token Exchange Failed',
               {
@@ -576,10 +568,24 @@ export const authOptions: NextAuthOptions = {
 
       // Add user data to the session
       if (token.userData) {
+        // Construct name from firstname and lastname
+        const firstName = token.userData.firstname || ''
+        const lastName = token.userData.lastname || ''
+
+        let fullName = ''
+        if (firstName || lastName) {
+          fullName = `${firstName} ${lastName}`.trim()
+        }
+
+        // If no name could be constructed, try fallbacks
+        if (!fullName) {
+          fullName = session.user?.name || ''
+        }
+
         // If we have userData from token, use it as the primary source
         session.user = {
           id: token.userData.id,
-          name: token.userData.displayName || session.user?.name || '',
+          name: fullName,
           email: token.userData.email || session.user?.email || '',
           roles: token.userData.roles || [],
           personId: token.userData.personId,

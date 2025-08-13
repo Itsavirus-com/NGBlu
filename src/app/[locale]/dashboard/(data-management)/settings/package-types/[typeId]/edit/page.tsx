@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl'
 
-import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 
 import PackageTypeForm from '../../_components/PackageTypeForm'
@@ -10,16 +9,12 @@ import usePackageTypeForm from '../../_hooks/package-type-form.hook'
 
 export default function UpdatePackageType({ params }: { params: { typeId: number } }) {
   const t = useTranslations('dataManagement.packages.types')
-  const { methods, onSubmit, isSubmitting, isLoading } = usePackageTypeForm(Number(params.typeId))
+  const { methods, onSubmit, isSubmitting } = usePackageTypeForm(Number(params.typeId))
 
   return (
     <>
       <PageTitle title={t('updatePackageType')} />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <PackageTypeForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
-      )}
+      <PackageTypeForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

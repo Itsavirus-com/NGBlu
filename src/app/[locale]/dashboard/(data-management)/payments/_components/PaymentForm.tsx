@@ -25,6 +25,7 @@ interface PaymentFormProps {
   handleChange: (value: number) => void
   selectedPayment: number
   isSubmitting: boolean
+  isUpdate?: boolean
 }
 
 export default function PaymentForm({
@@ -33,6 +34,7 @@ export default function PaymentForm({
   handleChange,
   selectedPayment,
   isSubmitting,
+  isUpdate = false,
 }: PaymentFormProps) {
   const t = useTranslations('dataManagement.payments')
 
@@ -51,6 +53,7 @@ export default function PaymentForm({
                 onChange={() => {
                   handleChange(1)
                 }}
+                disabled={isUpdate}
               />
               <ControlledSwitch
                 type="radio"
@@ -61,6 +64,7 @@ export default function PaymentForm({
                 onChange={() => {
                   handleChange(2)
                 }}
+                disabled={isUpdate}
               />
             </div>
             <ControlledSelect<Person>

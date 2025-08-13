@@ -1187,7 +1187,7 @@ export default function Validation() {
                     >
                       <div className="text-center">
                         <div className="spinner-border text-primary mb-2" role="status">
-                          <span className="visually-hidden">Loading...</span>
+                          <span className="visually-hidden">{t('loading')}</span>
                         </div>
                         <div className="text-primary">{t('loading')}...</div>
                       </div>

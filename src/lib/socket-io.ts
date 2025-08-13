@@ -1,7 +1,7 @@
 import { Socket, io } from 'socket.io-client'
 
 type SocketOptions = {
-  user_id: string
+  user_id: number
   fullname: string
   namespace?: string
   apiToken: string

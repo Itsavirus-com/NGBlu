@@ -30,7 +30,6 @@ export default function AddressForm({
   handleAddressSelect,
 }: AddressFormProps) {
   const t = useTranslations('dataManagement.addresses')
-
   return (
     <GoogleMapsProvider>
       <FormProvider methods={methods} onSubmit={onSubmit}>
@@ -51,6 +50,7 @@ export default function AddressForm({
                       name="streetname"
                       disabled={isSubmitting}
                       onAddressSelect={handleAddressSelect}
+                      isRequired
                     />
                   </Col>
                   <Row>

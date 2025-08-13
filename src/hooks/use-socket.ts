@@ -19,8 +19,6 @@ const authorizeChannel = async (
   // Call the Next.js proxy route
   const authEndpoint = '/api/broadcast-auth'
 
-  console.log(`Attempting authorization for ${channelName} via proxy ${authEndpoint}`)
-
   try {
     const response = await fetch(authEndpoint, {
       method: 'POST',
@@ -52,7 +50,7 @@ const authorizeChannel = async (
 }
 
 interface UseSocketOptions {
-  user_id: string
+  user_id: number
   fullname: string
   namespace?: string
   autoConnect?: boolean
@@ -66,7 +64,7 @@ interface SocketMessage {
 
 interface ClientInfo {
   fullname: string
-  user_id: string
+  user_id: number
   socket_id: string
 }
 
@@ -77,7 +75,6 @@ export const useSocket = ({
   autoConnect = true,
   apiToken, // Destructure apiToken
 }: UseSocketOptions) => {
-  console.log('apiToken masukk', apiToken)
   const [isConnected, setIsConnected] = useState(false)
   const [messages, setMessages] = useState<SocketMessage[]>([])
   const [clients, setClients] = useState<ClientInfo[]>([])
@@ -133,12 +130,10 @@ export const useSocket = ({
       let canJoin = true
       // Only authorize if marked as private
       if (isPrivate) {
-        console.log(`Authorizing channel: ${roomName}...`)
         canJoin = await authorizeChannel(roomName, apiToken)
       }
 
       if (canJoin) {
-        console.log(`Joining Socket.IO room: ${roomName}`)
         socketRef.current.emit('join', roomName)
         // Consider adding state to track joined rooms if needed
       } else {
