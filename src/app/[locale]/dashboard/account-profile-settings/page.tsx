@@ -1,5 +1,6 @@
 'use client'
 
+import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 
@@ -13,12 +14,16 @@ import { passwordVerificationUtils } from '@/utils/password-verification'
 import { PasskeyManagement } from './_components/PasskeyManagement/PasskeyManagement'
 import { PasswordForm } from './_components/PasswordForm'
 import { ProfileForm } from './_components/ProfileForm'
+import { TotpManagement } from './_components/TotpManagement/TotpManagement'
 import useAccountProfileSettings from './_hooks/account-profile-settings.hook'
 
 export default function AccountSettings() {
   const t = useTranslations('account')
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [isCheckingVerification, setIsCheckingVerification] = useState(true)
+  const [activeTab, setActiveTab] = useState('profile-info')
+
   const {
     profileMethods,
     passwordMethods,
@@ -34,6 +39,16 @@ export default function AccountSettings() {
     emailUpdatesRemaining,
     maxEmailUpdatesPerDay,
   } = useAccountProfileSettings()
+
+  // Handle URL parameters for direct navigation to specific tabs
+  useEffect(() => {
+    const tab = searchParams?.get('tab')
+    const setup = searchParams?.get('setup')
+
+    if (tab === 'two-factor-auth') {
+      setActiveTab('two-factor-auth')
+    }
+  }, [searchParams])
 
   // Check password verification status once user profile is loaded
   useEffect(() => {
@@ -89,13 +104,20 @@ export default function AccountSettings() {
     content: <PasskeyManagement />,
   }
 
-  const tabs = [profileInfoTab, passwordUpdateTab, passkeyManagementTab]
+  const twoFactorAuthTab = {
+    eventKey: 'two-factor-auth',
+    title: t('twoFactorAuthentication'),
+    condition: Boolean(userProfile?.authType !== 'microsoft'),
+    content: <TotpManagement />,
+  }
+
+  const tabs = [profileInfoTab, passwordUpdateTab, passkeyManagementTab, twoFactorAuthTab]
 
   return (
     <Page title={t('accountSettings')} description={t('manageYourAccount')}>
       <div className="row">
         <div className="col-lg-12">
-          <DynamicTabs tabs={tabs} defaultActiveKey="profile-info" />
+          <DynamicTabs tabs={tabs} defaultActiveKey={activeTab} />
         </div>
       </div>
 

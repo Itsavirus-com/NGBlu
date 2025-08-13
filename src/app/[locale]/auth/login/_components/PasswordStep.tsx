@@ -4,7 +4,6 @@ import { Button } from '@/components/button/button'
 import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
 import { Link } from '@/navigation'
 
-
 interface PasswordStepProps {
   emailValue: string
   isLoading: boolean

@@ -556,7 +556,6 @@ export const authOptions: NextAuthOptions = {
       }
 
       if (token.error) {
-        console.error('Session error:', token.error)
         // Throw error to trigger sign out instead of returning null
         throw new Error(`SessionError: ${token.error}`)
       }

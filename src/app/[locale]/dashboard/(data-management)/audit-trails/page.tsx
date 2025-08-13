@@ -9,7 +9,6 @@ import { safeRender } from '@/utils/safeRender'
 
 import { AuditTrailFilter } from './_components/AuditTrailFilter'
 
-
 export default function AuditTrails() {
   const t = useTranslations('auditTrails')
 
