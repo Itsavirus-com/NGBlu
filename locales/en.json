@@ -18,7 +18,7 @@
     "sidebar": {
       "dashboard": "Dashboard",
       "dataValidation": "Data Validation",
-      "kvk": "KVK",
+      "kvk": "Chambers of Commerce",
       "google": "Google",
       "hierarchy": "Data Hierarchy",
       "dataManagement": "Data Management",
@@ -284,7 +284,7 @@
     "unconfirmed": "Unconfirmed",
     "counter": "Counter {start} out of {end}",
     "companyName": "Company Name",
-    "kvkNumber": "KVK Number",
+    "kvkNumber": "Chambers of Commerce Number",
     "streetAddress": "Street Address",
     "houseNumber": "House Number",
     "addressAccepted": "Address Accepted Successfully",
