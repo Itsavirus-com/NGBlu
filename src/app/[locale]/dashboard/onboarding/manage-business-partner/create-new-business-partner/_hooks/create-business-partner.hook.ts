@@ -35,6 +35,8 @@ export const useCreateBusinessPartnerForm = () => {
 
   const methods = useForm<CreateBusinessPartnerFormData>({
     resolver: yupResolver(createBusinessPartnerSchema),
+    mode: 'onTouched',
+    reValidateMode: 'onChange',
     defaultValues: {
       // Business Partner Info
       name: '',
@@ -512,7 +514,7 @@ export const useCreateBusinessPartnerForm = () => {
     // Validate based on the step
     switch (stepToValidate) {
       case 1:
-        // Business Profile step - validate required fields
+        // Business Profile step - validate all fields in the step
         isStepValid = await methods.trigger([
           'name',
           'address.streetname',

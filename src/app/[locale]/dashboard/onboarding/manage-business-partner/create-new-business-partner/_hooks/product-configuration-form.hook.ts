@@ -369,7 +369,6 @@ export const useProductConfiguration = () => {
     // Category data from API
     categoryHierarchy,
     categoryError,
-    isCategoryLoading,
     isCategorySuccess,
 
     // Dynamic labels

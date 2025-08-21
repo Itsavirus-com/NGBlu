@@ -3,25 +3,12 @@
 import { Col, Row } from 'react-bootstrap'
 
 import { ControlledSwitch } from '@/components/forms/controlled-switch/ControlledSwitch'
-import Loading from '@/components/loading/Loading'
 
 import { useProductConfiguration } from '../_hooks/product-configuration-form.hook'
 
 export const ProductConfigurationForm = () => {
-  const {
-    layer3,
-    whiteLabel,
-    direct,
-    layer2,
-    voice,
-    ipTelephony,
-    dynamicLabels,
-    isCategoryLoading,
-  } = useProductConfiguration()
-
-  if (isCategoryLoading) {
-    return <Loading />
-  }
+  const { layer3, whiteLabel, direct, layer2, voice, ipTelephony, dynamicLabels } =
+    useProductConfiguration()
 
   return (
     <div>
