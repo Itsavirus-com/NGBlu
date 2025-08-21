@@ -1478,7 +1478,17 @@
         "phoneNumber": "Phone Number",
         "phoneNumberPlaceholder": "+31",
         "emailAddress": "Email Address",
-        "emailAddressPlaceholder": "contact@company.com"
+        "emailAddressPlaceholder": "contact@company.com",
+        "selectCompanyName": "Select company name from KVK",
+        "fromKvk": "From KVK",
+        "selectFromKvkNames": "Select from available KVK trade names",
+        "orChooseCustom": "or choose custom",
+        "customCompanyName": "Custom Company Name",
+        "enterCustomCompanyName": "Enter your custom company name",
+        "noTradeNamesFound": "No trade names found in KVK data. Please enter the company name manually.",
+        "addressLookupSuccess": "Address found and populated from Google Places",
+        "addressLookupError": "Address not found. Please check the postal code and house number.",
+        "addressLookupFailed": "Error looking up address. Please try again."
       },
       "productConfiguration": {
         "title": "Product Configuration",
@@ -1515,6 +1525,10 @@
         "description": "Configure manager and documentation",
         "partnerManager": "Partner Manager Assignment",
         "selectPartnerManager": "Select Partner Manager",
+        "businessPartnerType": "Business Partner Type",
+        "selectBusinessPartnerType": "Select Business Partner Type",
+        "enterpriseRoot": "Enterprise Root",
+        "selectEnterpriseRoot": "Select Enterprise Root",
         "contract": "Contract",
         "signedContract": "Signed Contract",
         "dragAndDrop": "Drop files here or click to upload",
@@ -1529,7 +1543,12 @@
           "tooLarge": "File size exceeds maximum allowed (10MB)",
           "uploadFailed": "File upload failed. Please try again."
         },
-        "onlyPdfAllowed": "Only PDF files are allowed (max 10MB)"
+        "onlyPdfAllowed": "Only PDF files are allowed (max 10MB)",
+        "paymentSettings": "Payment Settings",
+        "automaticDebit": "Automatic Debit Collection",
+        "automaticDebitTerms": "By enabling automatic debit collection, you agree to authorize NGBLU to automatically collect payments from your provided IBAN account.",
+        "termsAccepted": "I accept the Terms and Conditions for automatic debit collection",
+        "termsRequired": "You must accept the terms and conditions to continue"
       },
       "review": {
         "title": "Review",

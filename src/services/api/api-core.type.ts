@@ -6,8 +6,8 @@ export type Payload = Record<string, any>
 
 export interface ApiParams {
   path: string
-
-  payload?: Payload
+  payload?: Payload | FormData
+  headers?: Record<string, string>
 }
 
 export interface ApiSuccessResult<Data = any> {

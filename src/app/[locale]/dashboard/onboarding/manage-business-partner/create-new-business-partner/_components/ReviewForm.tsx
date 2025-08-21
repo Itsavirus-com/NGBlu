@@ -15,12 +15,13 @@ export const ReviewForm = () => {
     formatBooleanValue,
     formatFileValue,
     getPartnerManagerDetails,
+    getCountryName,
     openFileInNewTab,
     getApprovalRequirements,
   } = useReviewForm()
 
   // Get partner manager details
-  const partnerManager = getPartnerManagerDetails(formValues.partnerManagerId)
+  const partnerManager = getPartnerManagerDetails(formValues.managerId)
 
   return (
     <div>
@@ -48,11 +49,13 @@ export const ReviewForm = () => {
                 <h6 className="fw-semibold text-gray-800 mb-3">{t('companyInformation')}</h6>
                 <div className="mb-3">
                   <span className="text-muted fs-7">{t('kvkNumber')}</span>
-                  <div className="fw-bold">{formValues.kvkNumber || tCommon('notProvided')}</div>
+                  <div className="fw-bold">
+                    {formValues.chamberOfCommerceId || tCommon('notProvided')}
+                  </div>
                 </div>
                 <div className="mb-3">
                   <span className="text-muted fs-7">{t('companyName')}</span>
-                  <div className="fw-bold">{formValues.companyName || tCommon('notProvided')}</div>
+                  <div className="fw-bold">{formValues.name || tCommon('notProvided')}</div>
                 </div>
               </div>
             </Col>
@@ -63,23 +66,33 @@ export const ReviewForm = () => {
                 <h6 className="fw-semibold text-gray-800 mb-3">{t('companyAddress')}</h6>
                 <div className="mb-3">
                   <span className="text-muted fs-7">{t('streetName')}</span>
-                  <div className="fw-bold">{formValues.streetName || tCommon('notProvided')}</div>
+                  <div className="fw-bold">
+                    {formValues.address?.streetname || tCommon('notProvided')}
+                  </div>
                 </div>
                 <div className="mb-3">
                   <span className="text-muted fs-7">{t('houseNumber')}</span>
-                  <div className="fw-bold">{formValues.houseNumber || tCommon('notProvided')}</div>
+                  <div className="fw-bold">
+                    {formValues.address?.housenumber || tCommon('notProvided')}
+                  </div>
                 </div>
                 <div className="mb-3">
                   <span className="text-muted fs-7">{t('postalCode')}</span>
-                  <div className="fw-bold">{formValues.postalCode || tCommon('notProvided')}</div>
+                  <div className="fw-bold">
+                    {formValues.address?.postalcode || tCommon('notProvided')}
+                  </div>
                 </div>
                 <div className="mb-3">
                   <span className="text-muted fs-7">{t('city')}</span>
-                  <div className="fw-bold">{formValues.city || tCommon('notProvided')}</div>
+                  <div className="fw-bold">
+                    {formValues.address?.city || tCommon('notProvided')}
+                  </div>
                 </div>
                 <div className="mb-3">
                   <span className="text-muted fs-7">{t('country')}</span>
-                  <div className="fw-bold">{formValues.country || tCommon('notProvided')}</div>
+                  <div className="fw-bold">
+                    {getCountryName(formValues.address?.countryId) || tCommon('notProvided')}
+                  </div>
                 </div>
               </div>
             </Col>
@@ -91,17 +104,22 @@ export const ReviewForm = () => {
                 <div className="mb-3">
                   <span className="text-muted fs-7">{t('name')}</span>
                   <div className="fw-bold">
-                    {[formValues.firstName, formValues.lastName].filter(Boolean).join(' ') ||
-                      tCommon('notProvided')}
+                    {[formValues.contactInfo?.firstname, formValues.contactInfo?.lastname]
+                      .filter(Boolean)
+                      .join(' ') || tCommon('notProvided')}
                   </div>
                 </div>
                 <div className="mb-3">
                   <span className="text-muted fs-7">{t('phone')}</span>
-                  <div className="fw-bold">{formValues.phoneNumber || tCommon('notProvided')}</div>
+                  <div className="fw-bold">
+                    {formValues.contactInfo?.phoneNumber || tCommon('notProvided')}
+                  </div>
                 </div>
                 <div className="mb-3">
                   <span className="text-muted fs-7">{t('email')}</span>
-                  <div className="fw-bold">{formValues.emailAddress || tCommon('notProvided')}</div>
+                  <div className="fw-bold">
+                    {formValues.contactInfo?.email || tCommon('notProvided')}
+                  </div>
                 </div>
               </div>
             </Col>
@@ -130,11 +148,11 @@ export const ReviewForm = () => {
                 <span className="text-muted fs-7">{t('signedContract')}</span>
                 <div className="fw-bold">
                   {(() => {
-                    const fileInfo = formatFileValue(formValues.signedContractFile as File)
+                    const fileInfo = formatFileValue(formValues.contract as File)
                     return (
                       <FileReviewItem
                         fileInfo={fileInfo}
-                        onFileClick={() => openFileInNewTab(formValues.signedContractFile as File)}
+                        onFileClick={() => openFileInNewTab(formValues.contract as File)}
                       />
                     )
                   })()}

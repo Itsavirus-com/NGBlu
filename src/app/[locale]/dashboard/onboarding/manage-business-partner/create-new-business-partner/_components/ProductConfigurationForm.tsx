@@ -1,15 +1,27 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
 import { Col, Row } from 'react-bootstrap'
 
 import { ControlledSwitch } from '@/components/forms/controlled-switch/ControlledSwitch'
+import Loading from '@/components/loading/Loading'
 
 import { useProductConfiguration } from '../_hooks/product-configuration-form.hook'
 
 export const ProductConfigurationForm = () => {
-  const t = useTranslations('dataManagement.createBusinessPartner.productConfiguration')
-  const { layer3, whiteLabel, direct, layer2, voice, ipTelephony } = useProductConfiguration()
+  const {
+    layer3,
+    whiteLabel,
+    direct,
+    layer2,
+    voice,
+    ipTelephony,
+    dynamicLabels,
+    isCategoryLoading,
+  } = useProductConfiguration()
+
+  if (isCategoryLoading) {
+    return <Loading />
+  }
 
   return (
     <div>
@@ -23,8 +35,8 @@ export const ProductConfigurationForm = () => {
           </div>
         </div>
         <div>
-          <h2 className="fw-bold text-dark mb-1">{t('title')}</h2>
-          <div className="text-muted">{t('description')}</div>
+          <h2 className="fw-bold text-dark mb-1">Product Configuration</h2>
+          <div className="text-muted">Configure products for this business partner</div>
         </div>
       </div>
 
@@ -32,7 +44,7 @@ export const ProductConfigurationForm = () => {
       <div className="card bg-light mb-8">
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center mb-5">
-            <h4 className="mb-0">{t('layer3')}</h4>
+            <h4 className="mb-0">{dynamicLabels['Layer 3 Data Products']}</h4>
             <ControlledSwitch name="layer3" />
           </div>
 
@@ -41,7 +53,7 @@ export const ProductConfigurationForm = () => {
               {/* White Label price model */}
               <div className="mb-8">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h5 className="fw-semibold">{t('whiteLabelPriceModel')}</h5>
+                  <h5 className="fw-semibold">{dynamicLabels['White Label Price Model']}</h5>
                   <ControlledSwitch name="whiteLabel" />
                 </div>
 
@@ -52,7 +64,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="whiteLabelInternet"
-                          label={t('whiteLabelInternet')}
+                          label={dynamicLabels['Internet']}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -60,7 +72,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="whiteLabelIPVPN"
-                          label={t('whiteLabelIPVPN')}
+                          label={dynamicLabels['IPVPN']}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -70,7 +82,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="whiteLabelMobileData"
-                          label={t('whiteLabelMobileData')}
+                          label={dynamicLabels['4G/5G Data']}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -78,7 +90,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="whiteLabelSDWAN"
-                          label={t('whiteLabelSDWAN')}
+                          label={dynamicLabels['SDWAN']}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -90,7 +102,7 @@ export const ProductConfigurationForm = () => {
               {/* Direct price model */}
               <div className="mb-4">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h5 className="fw-semibold">{t('directPriceModel')}</h5>
+                  <h5 className="fw-semibold">{dynamicLabels['Data Direct Price Model']}</h5>
                   <ControlledSwitch name="direct" />
                 </div>
 
@@ -101,7 +113,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="directInternet"
-                          label={t('directInternet')}
+                          label={dynamicLabels['Internet']}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -109,7 +121,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="directIPVPN"
-                          label={t('directIPVPN')}
+                          label={dynamicLabels['IPVPN']}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -119,7 +131,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="directMobileData"
-                          label={t('directMobileData')}
+                          label={dynamicLabels['4G/5G Data']}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -127,7 +139,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="directSDWAN"
-                          label={t('directSDWAN')}
+                          label={dynamicLabels['SDWAN']}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -144,7 +156,7 @@ export const ProductConfigurationForm = () => {
       <div className="card bg-light mb-8">
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center mb-5">
-            <h4 className="mb-0">{t('layer2')}</h4>
+            <h4 className="mb-0">{dynamicLabels['Layer 2 Data Products']}</h4>
             <ControlledSwitch name="layer2" />
           </div>
 
@@ -155,7 +167,7 @@ export const ProductConfigurationForm = () => {
                   <ControlledSwitch
                     type="checkbox"
                     name="deltaAccessLayer2"
-                    label={t('deltaAccessLayer2')}
+                    label={dynamicLabels['Data Layer 2 Price Model']}
                     containerClass="mb-3"
                   />
                 </Col>
@@ -169,7 +181,7 @@ export const ProductConfigurationForm = () => {
       <div className="card bg-light mb-8">
         <div className="card-body">
           <div className="d-flex justify-content-between align-items-center mb-5">
-            <h4 className="mb-0">{t('voice')}</h4>
+            <h4 className="mb-0">{dynamicLabels['Voice Products']}</h4>
             <ControlledSwitch name="voice" />
           </div>
 
@@ -177,14 +189,16 @@ export const ProductConfigurationForm = () => {
             <>
               <div className="mb-6">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h5 className="fw-semibold ps-5 ms-3">{t('traditionalTelephony')}</h5>
+                  <h5 className="fw-semibold ps-5 ms-3">
+                    {dynamicLabels['Traditional Telephony']}
+                  </h5>
                   <ControlledSwitch name="traditionalTelephony" />
                 </div>
               </div>
 
               <div className="mb-6">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h5 className="fw-semibold ps-5 ms-3">{t('ipTelephony')}</h5>
+                  <h5 className="fw-semibold ps-5 ms-3">{dynamicLabels['IP Telephony']}</h5>
                   <ControlledSwitch name="ipTelephony" />
                 </div>
 
@@ -195,7 +209,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="xelion"
-                          label={t('xelion')}
+                          label={dynamicLabels['Xelion']}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -203,7 +217,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="hostedTelephony"
-                          label={t('hostedTelephony')}
+                          label={dynamicLabels['Hosted Telephony']}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -213,7 +227,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="sipTrunking"
-                          label={t('sipTrunking')}
+                          label={dynamicLabels['SIP Trunking']}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -221,7 +235,7 @@ export const ProductConfigurationForm = () => {
                         <ControlledSwitch
                           type="checkbox"
                           name="oneSpace"
-                          label={t('oneSpace')}
+                          label={dynamicLabels['OneSpace']}
                           containerClass="mb-3"
                         />
                       </Col>
@@ -232,7 +246,9 @@ export const ProductConfigurationForm = () => {
 
               <div className="mb-4">
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h5 className="fw-semibold ps-5 ms-3">{t('fixedMobileIntegration')}</h5>
+                  <h5 className="fw-semibold ps-5 ms-3">
+                    {dynamicLabels['Fixed/Mobile Integration']}
+                  </h5>
                   <ControlledSwitch name="fixedMobileIntegration" />
                 </div>
               </div>

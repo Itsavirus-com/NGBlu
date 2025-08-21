@@ -1463,7 +1463,17 @@
           "phoneNumber": "Phone Number",
           "phoneNumberPlaceholder": "+31",
           "emailAddress": "Email Address",
-          "emailAddressPlaceholder": "contact@company.com"
+          "emailAddressPlaceholder": "contact@company.com",
+          "selectCompanyName": "Selecteer bedrijfsnaam uit KVK",
+          "fromKvk": "Van KVK",
+          "selectFromKvkNames": "Selecteer uit beschikbare KVK handelsnamen",
+          "orChooseCustom": "of kies aangepast",
+          "customCompanyName": "Aangepaste bedrijfsnaam",
+          "enterCustomCompanyName": "Voer uw aangepaste bedrijfsnaam in",
+          "noTradeNamesFound": "Geen handelsnamen gevonden in KVK gegevens. Voer de bedrijfsnaam handmatig in.",
+          "addressLookupSuccess": "Adres gevonden en ingevuld vanuit Google Places",
+          "addressLookupError": "Adres niet gevonden. Controleer de postcode en het huisnummer.",
+          "addressLookupFailed": "Fout bij het opzoeken van het adres. Probeer het opnieuw."
         },
         "productConfiguration": {
           "title": "Product Configuration",
@@ -1500,6 +1510,10 @@
           "description": "Configure manager and documentation",
           "partnerManager": "Partner Manager Assignment",
           "selectPartnerManager": "Select Partner Manager",
+          "businessPartnerType": "Business Partner Type",
+          "selectBusinessPartnerType": "Select Business Partner Type",
+          "enterpriseRoot": "Enterprise Root",
+          "selectEnterpriseRoot": "Select Enterprise Root",
           "contract": "Contract",
           "signedContract": "Signed Contract",
           "dragAndDrop": "Drop files here or click to upload",
@@ -1514,7 +1528,12 @@
             "tooLarge": "File size exceeds maximum allowed (10MB)",
             "uploadFailed": "File upload failed. Please try again."
           },
-          "onlyPdfAllowed": "Only PDF files are allowed (max 10MB)"
+          "onlyPdfAllowed": "Only PDF files are allowed (max 10MB)",
+          "paymentSettings": "Betalingsinstellingen",
+          "automaticDebit": "Automatische Incasso",
+          "automaticDebitTerms": "Door automatische incasso in te schakelen, geeft u NGBLU toestemming om automatisch betalingen te incasseren van uw opgegeven IBAN-rekening.",
+          "termsAccepted": "Ik accepteer de Algemene Voorwaarden voor automatische incasso",
+          "termsRequired": "U moet de algemene voorwaarden accepteren om door te gaan"
         },
         "review": {
           "title": "Review",

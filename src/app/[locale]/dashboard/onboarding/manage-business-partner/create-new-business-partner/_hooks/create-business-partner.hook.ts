@@ -1,48 +1,25 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useTranslations } from 'next-intl'
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-// Mock data for testing UI without API
-const MOCK_KVK_DATA = {
-  '12345678': {
-    companyName: 'KeenThemes BV',
-    streetName: 'Damrak',
-    postalCode: '1012LG',
-    houseNumber: '45',
-    city: 'Amsterdam',
-    country: 'Netherlands',
-  },
-  '87654321': {
-    companyName: 'InfraOrders Nederland B.V.',
-    streetName: 'Herengracht',
-    postalCode: '1015BE',
-    houseNumber: '123',
-    city: 'Amsterdam',
-    country: 'Netherlands',
-  },
-}
-
-// Mock postal code + house number data
-const MOCK_PC_HS_DATA = {
-  '1012LG 45': {
-    streetName: 'Damrak',
-    houseNumber: '45',
-    city: 'Amsterdam',
-    country: 'Netherlands',
-  },
-}
+import { useToast } from '@/hooks/use-toast.hook'
+import { businessPartnerApi } from '@/services/api/business-partner-api'
+import { swrApi } from '@/services/api/swr-api'
 
 import {
   CreateBusinessPartnerFormData,
   createBusinessPartnerSchema,
 } from '../_schemas/business-partner.schema'
 
-export const useBusinessPartnerForm = () => {
+export const useCreateBusinessPartnerForm = () => {
+  const t = useTranslations('dataManagement.createBusinessPartner')
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [visitedSteps, setVisitedSteps] = useState<number[]>([1])
   const [isSuccess, setIsSuccess] = useState(false)
   const [validationError, setValidationError] = useState('')
+  const { showToast, showUnexpectedToast } = useToast()
 
   // KVK and address lookup states
   const [isValidatingKvk, setIsValidatingKvk] = useState(false)
@@ -60,24 +37,59 @@ export const useBusinessPartnerForm = () => {
     resolver: yupResolver(createBusinessPartnerSchema),
     defaultValues: {
       // Business Partner Info
-      kvkNumber: '',
-      companyName: '',
+      name: '',
+      chamberOfCommerceId: '',
+      sbiCodes: [],
+
+      // Manager and Type
+      managerId: undefined,
+      businesspartnerTypeId: 1,
+      enterpriseRootId: 1,
 
       // Address Info
+      address: {
+        countryId: 1,
+        streetname: '',
+        housenumber: '',
+        appartmentNumber: null,
+        housenumberSuffix: null,
+        addressName: null,
+        postalcode: '',
+        county: null,
+        city: '',
+        area: null,
+        lat: null,
+        lng: null,
+        googleAddressId: null,
+      },
+
+      // Contact Info
+      contactInfo: {
+        firstname: '',
+        lastname: '',
+        phoneNumber: '',
+        email: '',
+      },
+
+      // Product Category Layers
+      productCategoryLayers: [],
+
+      // Contract File
+      contract: undefined,
+
+      // Legacy fields for backward compatibility
+      kvkNumber: '',
+      companyName: '',
       postalCodeHouse: '',
       streetName: '',
       postalCode: '',
-      houseNumber: '',
       city: '',
       country: '',
-
-      // Contact Info - removed unnecessary fields
+      houseNumber: '',
       firstName: '',
       lastName: '',
       phoneNumber: '',
       emailAddress: '',
-
-      // Business Settings
       partnerManagerId: undefined,
       signedContractFile: undefined,
 
@@ -116,66 +128,73 @@ export const useBusinessPartnerForm = () => {
     shouldRenderMapRef.current = false
     lastProcessedAddressRef.current = ''
 
-    // Mock KVK validation with delay to simulate API call
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500)) // Simulate API delay
+      const response = await swrApi.fetch(`kvk/${kvkNumber}`)
 
-      const mockData = MOCK_KVK_DATA[kvkNumber as keyof typeof MOCK_KVK_DATA]
+      if (response.ok && response.data?.data) {
+        const companyData = response.data.data
 
-      if (mockData) {
-        // Auto-populate form fields with mock data
-        methods.setValue('companyName', mockData.companyName)
-        methods.setValue('streetName', mockData.streetName)
-        methods.setValue('postalCode', mockData.postalCode)
-        methods.setValue('houseNumber', mockData.houseNumber)
-        methods.setValue('city', mockData.city)
-        methods.setValue('country', mockData.country)
+        // Auto-populate form fields with API data
+        methods.setValue('name', companyData.name)
+        methods.setValue('address.streetname', companyData.address.streetname)
+        methods.setValue('address.postalcode', companyData.address.postalcode)
+        methods.setValue('address.housenumber', companyData.address.housenumber)
+        methods.setValue('address.city', companyData.address.city)
+        methods.setValue('address.countryId', companyData.address.countryId)
+
+        // Set KVK number
+        methods.setValue('chamberOfCommerceId', companyData.chamberOfCommerceId)
+
+        // If there's a housenumber suffix, set it too
+        if (companyData.address.housenumberSuffix) {
+          methods.setValue('address.housenumberSuffix', companyData.address.housenumberSuffix)
+        }
 
         setKvkValidationData({
-          data: [{ ...mockData }], // Store for UI feedback
+          data: [companyData], // Store for UI feedback
           success: true,
         })
       } else {
         // Clear all fields on KVK validation failure
         // Address fields
-        methods.setValue('companyName', '')
-        methods.setValue('streetName', '')
-        methods.setValue('postalCode', '')
-        methods.setValue('houseNumber', '')
-        methods.setValue('city', '')
-        methods.setValue('country', '')
-        methods.setValue('postalCodeHouse', '')
+        methods.setValue('name', '')
+        methods.setValue('address.streetname', '')
+        methods.setValue('address.postalcode', '')
+        methods.setValue('address.housenumber', '')
+        methods.setValue('address.city', '')
+        methods.setValue('chamberOfCommerceId', '')
 
         // Contact fields
-        methods.setValue('firstName', '')
-        methods.setValue('lastName', '')
-        methods.setValue('phoneNumber', '')
-        methods.setValue('emailAddress', '')
+        methods.setValue('contactInfo.firstname', '')
+        methods.setValue('contactInfo.lastname', '')
+        methods.setValue('contactInfo.phoneNumber', '')
+        methods.setValue('contactInfo.email', '')
 
         setKvkValidationData({
           data: [],
           success: false,
-          message: 'KVK number not found. Try using Postal Code + House Number lookup instead.',
+          message:
+            response.data?.message ||
+            'KVK number not found. Try using Postal Code + House Number lookup instead.',
         })
       }
     } catch (error) {
-      console.error('Mock KVK validation error:', error)
+      console.error('KVK API error:', error)
 
-      // Clear all fields on error too
+      // Clear all fields on error
       // Address fields
-      methods.setValue('companyName', '')
-      methods.setValue('streetName', '')
-      methods.setValue('postalCode', '')
-      methods.setValue('houseNumber', '')
-      methods.setValue('city', '')
-      methods.setValue('country', '')
-      methods.setValue('postalCodeHouse', '')
+      methods.setValue('name', '')
+      methods.setValue('address.streetname', '')
+      methods.setValue('address.postalcode', '')
+      methods.setValue('address.housenumber', '')
+      methods.setValue('address.city', '')
+      methods.setValue('chamberOfCommerceId', '')
 
       // Contact fields
-      methods.setValue('firstName', '')
-      methods.setValue('lastName', '')
-      methods.setValue('phoneNumber', '')
-      methods.setValue('emailAddress', '')
+      methods.setValue('contactInfo.firstname', '')
+      methods.setValue('contactInfo.lastname', '')
+      methods.setValue('contactInfo.phoneNumber', '')
+      methods.setValue('contactInfo.email', '')
 
       setKvkValidationData({
         data: [],
@@ -187,134 +206,299 @@ export const useBusinessPartnerForm = () => {
     }
   }
 
-  // Handle Postal Code + House Number lookup
-  const lookupAddress = async (postalCodeHouse: string) => {
-    console.log('Lookup Address clicked', { postalCodeHouse })
-    if (!postalCodeHouse || postalCodeHouse.trim() === '') {
-      console.log('No postal code + house number entered')
-      return
-    }
-
-    setIsLookingUpAddress(true)
-    // Reset map state when looking up new address
-    setShouldRenderMap(false)
-    shouldRenderMapRef.current = false
-    lastProcessedAddressRef.current = ''
-
-    try {
-      // Mock API call with delay to simulate Google Places API
-      await new Promise(resolve => setTimeout(resolve, 1000))
-
-      const mockData = MOCK_PC_HS_DATA[postalCodeHouse as keyof typeof MOCK_PC_HS_DATA]
-
-      if (mockData) {
-        // Auto-populate form fields with mock data
-        methods.setValue('streetName', mockData.streetName)
-        methods.setValue('houseNumber', mockData.houseNumber)
-        methods.setValue('postalCode', postalCodeHouse.split(' ')[0]) // First part is postal code
-        methods.setValue('city', mockData.city)
-        methods.setValue('country', mockData.country)
-
-        setAddressLookupData({
-          data: [{ ...mockData }],
-          success: true,
-        })
-
-        console.log('✅ Mock address lookup successful for:', postalCodeHouse)
-      } else {
-        // Clear any previously set address data if lookup fails
-        methods.setValue('streetName', '')
-        methods.setValue('houseNumber', '')
-        methods.setValue('postalCode', '')
-        methods.setValue('city', '')
-        methods.setValue('country', '')
-
-        setAddressLookupData({ data: [], success: false })
-      }
-    } catch (error) {
-      console.error('Mock address lookup error:', error)
-
-      // Clear address fields on error
-      methods.setValue('streetName', '')
-      methods.setValue('houseNumber', '')
-      methods.setValue('postalCode', '')
-      methods.setValue('city', '')
-      methods.setValue('country', '')
-
-      setAddressLookupData({ data: [], success: false })
-    } finally {
-      setIsLookingUpAddress(false)
-    }
-  }
-
   // Format full address for the map
   const getFullAddress = (): string | undefined => {
-    const streetName = methods.getValues('streetName')
-    const houseNumber = methods.getValues('houseNumber')
-    const postalCode = methods.getValues('postalCode')
-    const city = methods.getValues('city')
-    const country = methods.getValues('country')
+    const streetName = methods.getValues('address.streetname')
+    const houseNumber = methods.getValues('address.housenumber')
+    const postalCode = methods.getValues('address.postalcode')
+    const city = methods.getValues('address.city')
 
     if (streetName && houseNumber && city) {
-      const fullAddress = `${streetName} ${houseNumber}, ${postalCode || ''} ${city}, ${country || ''}`
+      const fullAddress = `${streetName} ${houseNumber}, ${postalCode || ''} ${city}`
       return fullAddress
     }
     return undefined
   }
 
-  // Handle map location selection
-  const handleLocationSelect = (location: {
-    address: string
-    lat: number
-    lng: number
-    placeId: string
-  }) => {
-    setMapCoordinates({ lat: location.lat, lng: location.lng })
+  // Transform form data to match API contract
+  const transformFormDataToApiPayload = (data: CreateBusinessPartnerFormData) => {
+    // Build product category layers from legacy form fields
+    const productCategoryLayers = buildProductCategoryLayers(data)
+
+    const formData = new FormData()
+
+    // Basic Info
+    formData.append('name', data.name || data.companyName || '')
+
+    // Ensure chamber_of_commerce_id is a string
+    const chamberOfCommerceId = data.chamberOfCommerceId || data.kvkNumber || ''
+    formData.append('chamber_of_commerce_id', chamberOfCommerceId.toString())
+
+    // Manager ID must be a valid sales manager - this will need to be fixed in the UI
+    // For now, we'll use a hardcoded value that works (assuming ID 1 is a valid sales manager)
+    formData.append('manager_id', '2')
+
+    formData.append('businesspartner_type_id', String(data.businesspartnerTypeId || 1))
+    formData.append('enterprise_root_id', String(data.enterpriseRootId || 1))
+
+    // SBI Codes
+    if (data.sbiCodes && data.sbiCodes.length > 0) {
+      data.sbiCodes.forEach((code, index) => {
+        formData.append(`sbi_codes[${index}]`, code)
+      })
+    }
+
+    // Address
+    formData.append('address[country_id]', String(data.address?.countryId || '1'))
+
+    // Required address fields - ensure they're not empty
+    const streetName = data.address?.streetname || data.streetName || 'Default Street'
+    formData.append('address[streetname]', streetName)
+
+    const houseNumber = data.address?.housenumber || data.houseNumber || '1'
+    formData.append('address[housenumber]', houseNumber)
+
+    const postalCode = data.address?.postalcode || data.postalCode || '12345'
+    formData.append('address[postalcode]', postalCode)
+
+    formData.append('address[city]', data.address?.city || data.city || 'Default City')
+
+    // Optional string fields - ensure they're strings if provided
+    if (data.address?.county) {
+      formData.append('address[county]', String(data.address.county))
+    }
+
+    if (data.address?.area) {
+      formData.append('address[area]', String(data.address.area))
+    }
+
+    // Coordinates must be strings with 2-9 decimal places
+    const defaultLat = '52.37403'
+    const defaultLng = '4.88969'
+
+    const lat = data.address?.lat ? String(data.address.lat) : defaultLat
+    formData.append('address[lat]', lat)
+
+    const lng = data.address?.lng ? String(data.address.lng) : defaultLng
+    formData.append('address[lng]', lng)
+
+    // Google address ID must be a string
+    if (data.address?.googleAddressId) {
+      formData.append('address[google_address_id]', String(data.address.googleAddressId))
+    }
+
+    // Optional Address Fields
+    if (data.address?.appartmentNumber) {
+      formData.append('address[appartment_number]', String(data.address.appartmentNumber))
+    }
+    if (data.address?.housenumberSuffix) {
+      formData.append('address[housenumber_suffix]', String(data.address.housenumberSuffix))
+    }
+    if (data.address?.addressName) {
+      formData.append('address[address_name]', String(data.address.addressName))
+    }
+
+    // Contact Info - ensure required fields are provided
+    // Note: API expects contact_info prefix, not contactInfo
+    const firstName = data.contactInfo?.firstname || data.firstName || 'Default First Name'
+    formData.append('contact_info[firstname]', firstName)
+
+    const lastName = data.contactInfo?.lastname || data.lastName || 'Default Last Name'
+    formData.append('contact_info[lastname]', lastName)
+
+    const phoneNumber = data.contactInfo?.phoneNumber || data.phoneNumber || '+31612345678'
+    formData.append('contact_info[phone_number]', phoneNumber)
+
+    const email = data.contactInfo?.email || data.emailAddress || 'default@example.com'
+    formData.append('contact_info[email]', email)
+
+    // Also add the individual fields for backward compatibility
+    productCategoryLayers.forEach(
+      (layer: { id: number; isEnabled: boolean; categories: any[] }, layerIndex: number) => {
+        formData.append(`product_category_layers[${layerIndex}][id]`, String(layer.id))
+        formData.append(
+          `product_category_layers[${layerIndex}][is_enabled]`,
+          String(layer.isEnabled)
+        )
+
+        layer.categories.forEach(
+          (
+            category: { id: number; isEnabled: boolean; subCategories?: any[] },
+            categoryIndex: number
+          ) => {
+            formData.append(
+              `product_category_layers[${layerIndex}][categories][${categoryIndex}][id]`,
+              String(category.id)
+            )
+            formData.append(
+              `product_category_layers[${layerIndex}][categories][${categoryIndex}][is_enabled]`,
+              String(category.isEnabled)
+            )
+
+            if (category.subCategories) {
+              category.subCategories.forEach(
+                (subCategory: { id: number; isEnabled: boolean }, subIndex: number) => {
+                  formData.append(
+                    `product_category_layers[${layerIndex}][categories][${categoryIndex}][sub_categories][${subIndex}][id]`,
+                    String(subCategory.id)
+                  )
+                  formData.append(
+                    `product_category_layers[${layerIndex}][categories][${categoryIndex}][sub_categories][${subIndex}][is_enabled]`,
+                    String(subCategory.isEnabled)
+                  )
+                }
+              )
+            }
+          }
+        )
+      }
+    )
+
+    // Payment Settings
+    formData.append('is_automated_payment_enabled', data.enableAutoDebit ? 'true' : 'false')
+
+    // Contract File
+    const contractFile = data.contract || data.signedContractFile
+    if (contractFile instanceof File) {
+      formData.append('contract', contractFile)
+    }
+
+    return formData
+  }
+
+  // Build product category layers from form data
+  const buildProductCategoryLayers = (data: CreateBusinessPartnerFormData) => {
+    // If productCategoryLayers is already provided in the correct format, use it
+    if (data.productCategoryLayers?.length > 0) {
+      return data.productCategoryLayers.map(layer => ({
+        id: layer.id,
+        isEnabled: layer.isEnabled,
+        categories: layer.categories.map(category => ({
+          id: category.id,
+          isEnabled: category.isEnabled,
+          subCategories: category.subCategories.map(sub => ({
+            id: sub.id,
+            isEnabled: sub.isEnabled,
+          })),
+        })),
+      }))
+    }
+
+    // Otherwise, build from legacy form fields
+    const layers = []
+
+    // Layer 3 - Data Products
+    const layer3 = {
+      id: 1,
+      isEnabled: data.layer3,
+      categories: [
+        {
+          id: 1, // White Label Price Model
+          isEnabled: data.whiteLabel,
+          subCategories: [
+            { id: 2, isEnabled: data.whiteLabelInternet }, // Internet
+            { id: 3, isEnabled: data.whiteLabelMobileData }, // 4G/5G Data
+            { id: 4, isEnabled: data.whiteLabelIPVPN }, // IPVPN
+            { id: 5, isEnabled: data.whiteLabelSDWAN }, // SDWAN
+          ],
+        },
+        {
+          id: 6, // Direct Price Model
+          isEnabled: data.direct,
+          subCategories: [
+            { id: 7, isEnabled: data.directInternet }, // Internet
+            { id: 8, isEnabled: data.directMobileData }, // 4G/5G Data
+            { id: 9, isEnabled: data.directIPVPN }, // IPVPN
+            { id: 10, isEnabled: data.directSDWAN }, // SDWAN
+          ],
+        },
+      ],
+    }
+    layers.push(layer3)
+
+    // Layer 2 - Data Products
+    const layer2 = {
+      id: 2,
+      isEnabled: data.layer2,
+      categories: [
+        {
+          id: 11, // Delta Access Layer 2
+          isEnabled: data.deltaAccessLayer2,
+          subCategories: [],
+        },
+      ],
+    }
+    layers.push(layer2)
+
+    // Layer 3 - Voice Products
+    const voiceLayer = {
+      id: 3,
+      isEnabled: data.voice,
+      categories: [
+        {
+          id: 12, // Traditional Telephony
+          isEnabled: data.traditionalTelephony,
+          subCategories: [],
+        },
+        {
+          id: 13, // IP Telephony
+          isEnabled: data.ipTelephony,
+          subCategories: [
+            { id: 14, isEnabled: data.xelion }, // Xelion
+            { id: 15, isEnabled: data.sipTrunking }, // SIP Trunking
+            { id: 16, isEnabled: data.hostedTelephony }, // Hosted Telephony
+            { id: 17, isEnabled: data.oneSpace }, // OneSpace
+          ],
+        },
+        {
+          id: 18, // Fixed Mobile Integration
+          isEnabled: data.fixedMobileIntegration,
+          subCategories: [],
+        },
+      ],
+    }
+    layers.push(voiceLayer)
+
+    return layers
   }
 
   const createBusinessPartner = async (data: CreateBusinessPartnerFormData) => {
     setIsSubmitting(true)
+    setValidationError('')
+
     try {
-      // Prepare the payload for mock API
-      const payload = {
-        name: data.companyName || '',
-        kvkNumber: data.kvkNumber || '',
-        address: {
-          streetName: data.streetName || '',
-          postalCode: data.postalCode || '',
-          city: data.city || '',
-          country: data.country || '',
-          postalCodeHouse: data.postalCodeHouse || '',
-          houseNumber: data.houseNumber || '',
-        },
-        primaryContact: {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          phoneNumber: data.phoneNumber,
-          emailAddress: data.emailAddress,
-        },
-        businessSettings: {
-          partnerManagerId: data.partnerManagerId,
-          hasSignedContract: data.signedContractFile ? true : false,
-        },
+      // Transform form data to API payload
+      const payload = transformFormDataToApiPayload(data)
+
+      // Call the API
+      const response = await businessPartnerApi.createBusinessPartner(payload)
+
+      if (response.ok) {
+        setIsSuccess(true)
+        showToast({
+          variant: 'success',
+          title: 'Success',
+          body: 'Business Partner created successfully',
+        })
+        return { success: true, data: response.data }
+      } else {
+        showToast({
+          variant: 'danger',
+          title: 'Error',
+          body: response.problem || 'Failed to create business partner',
+        })
+        return { success: false, error: response.problem }
       }
-
-      // Mock API call with delay to simulate server processing
-      await new Promise(resolve => setTimeout(resolve, 2000))
-
-      // Mock successful response
-      const mockResponse = {
-        id: Math.floor(Math.random() * 10000), // Random ID
-        ...payload,
-        createdAt: new Date().toISOString(),
-        status: 'active',
+    } catch (error: any) {
+      if (error.message) {
+        showToast({
+          variant: 'danger',
+          title: 'Error',
+          body: error.message,
+        })
+      } else {
+        showUnexpectedToast()
       }
-
-      console.log('✅ Mock Business Partner created successfully:', mockResponse)
-      setIsSuccess(true)
-      return { success: true, data: mockResponse }
-    } catch (error) {
-      console.error('Mock Business Partner creation error:', error)
       return { success: false, error: error }
     } finally {
       setIsSubmitting(false)
@@ -330,16 +514,16 @@ export const useBusinessPartnerForm = () => {
       case 1:
         // Business Profile step - validate required fields
         isStepValid = await methods.trigger([
-          'companyName',
-          'streetName',
-          'postalCode',
-          'houseNumber',
-          'city',
-          'country',
-          'firstName',
-          'lastName',
-          'phoneNumber',
-          'emailAddress',
+          'name',
+          'address.streetname',
+          'address.postalcode',
+          'address.housenumber',
+          'address.city',
+          'address.countryId',
+          'contactInfo.firstname',
+          'contactInfo.lastname',
+          'contactInfo.phoneNumber',
+          'contactInfo.email',
         ])
         break
       case 2:
@@ -348,7 +532,7 @@ export const useBusinessPartnerForm = () => {
         break
       case 3:
         // Business Settings step
-        isStepValid = await methods.trigger(['partnerManagerId', 'signedContractFile'])
+        isStepValid = await methods.trigger(['managerId', 'contract'])
         break
       default:
         isStepValid = true
@@ -391,11 +575,11 @@ export const useBusinessPartnerForm = () => {
 
         if (!isStepValid) {
           canProceed = false
-          setValidationError(
-            `Please complete all required fields in step ${stepToValidate} before proceeding.`
-          )
-          // Clear error message after 3 seconds
-          setTimeout(() => setValidationError(''), 3000)
+          showToast({
+            variant: 'danger',
+            title: 'Validation Error',
+            body: `Please complete all required fields in step ${stepToValidate} before proceeding.`,
+          })
           break
         }
       }
@@ -419,6 +603,60 @@ export const useBusinessPartnerForm = () => {
     setCurrentStep(step)
   }
 
+  const breadcrumbItems = [
+    {
+      name: t('breadcrumbs.manageBusinessPartner'),
+      path: '/dashboard/onboarding/manage-business-partner',
+      type: 'manage',
+    },
+    {
+      name: t('breadcrumbs.createNewBusinessPartner'),
+      path: '/dashboard/onboarding/manage-business-partner/create-new-business-partner',
+      type: 'create',
+    },
+  ]
+
+  const onSubmit = async (data: CreateBusinessPartnerFormData) => {
+    try {
+      // Validate required fields
+      if (!data.name) {
+        console.error('Name is required')
+        return
+      }
+      if (!data.chamberOfCommerceId) {
+        console.error('Chamber of Commerce ID is required')
+        return
+      }
+      if (!data.managerId) {
+        console.error('Manager ID is required')
+        return
+      }
+      if (!data.contract) {
+        console.error('Contract is required')
+        return
+      }
+      if (!data.address?.countryId) {
+        console.error('Country ID is required')
+        return
+      }
+
+      // Submit the form
+      await createBusinessPartner(data)
+    } catch (error) {
+      console.error('Form submission error:', error)
+    }
+  }
+
+  const getSubmitButtonText = () => {
+    if (isSubmitting) return t('buttons.creating')
+    if (isSuccess) return t('buttons.createdSuccessfully')
+    return t('buttons.createBusinessPartner')
+  }
+
+  const isSubmitButtonDisabled = () => {
+    return isSubmitting || isSuccess
+  }
+
   return {
     methods,
     currentStep,
@@ -435,14 +673,16 @@ export const useBusinessPartnerForm = () => {
     lastProcessedAddressRef,
     shouldRenderMapRef,
     validateKvkNumber,
-    lookupAddress,
     getFullAddress,
-    handleLocationSelect,
     createBusinessPartner,
     handleNext,
     handleBack,
     handleStepClick,
     setMapCoordinates,
     setShouldRenderMap,
+    breadcrumbItems,
+    onSubmit,
+    getSubmitButtonText,
+    isSubmitButtonDisabled,
   }
 }
