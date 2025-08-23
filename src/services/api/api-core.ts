@@ -140,6 +140,11 @@ export class ApiCore {
 
   protected addPayloadTransformer() {
     this.api.addRequestTransform(request => {
+      // Skip transforming if already FormData (preserve the original FormData)
+      if (request.data instanceof FormData) {
+        return
+      }
+
       const data = this.payloadWrapper ? { [this.payloadWrapper]: request.data } : request.data
 
       if (this.multipart) {
@@ -200,15 +205,22 @@ export class ApiCore {
     return Promise.resolve(response)
   }
 
-  protected async callApi(method: RequestMethod, { path, payload }: ApiParams) {
+  protected async callApi(method: RequestMethod, { path, payload, headers }: ApiParams) {
     try {
-      const response: ApiResponse<any> = await this.api[method](path, payload, {
+      const config: any = {
         baseURL: this.baseURL,
-      })
+      }
+
+      if (headers) {
+        config.headers = headers
+      }
+
+      const response: ApiResponse<any> = await this.api[method](path, payload, config)
 
       return await this.processResult(response)
     } catch (error) {
       // Capture any unexpected errors during API calls
+      console.error(`ApiCore.callApi error for ${method} ${path}:`, error)
       Sentry.captureException(error, {
         extra: {
           method,

@@ -26,6 +26,7 @@ type SelectProps<OptionValue> = {
   isSelectedIdWithParams?: boolean
   haveDetailOptions?: boolean
   isMulti?: boolean
+  options?: any[]
 }
 
 export const ControlledSelect = <OptionValue extends Record<string, any>>(
@@ -46,6 +47,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     isSelectedIdWithParams,
     haveDetailOptions,
     isMulti,
+    options: directOptions,
   } = props
 
   const {
@@ -67,6 +69,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     apiPathSelected,
     haveDetailOptions,
     isMulti,
+    directOptions,
   })
 
   if (isHidden && options.length <= 1) {
