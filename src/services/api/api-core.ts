@@ -116,6 +116,14 @@ export class ApiCore {
         request.headers.Authorization = `Bearer ${session.accessToken}`
       }
 
+      // Add workspace context header if available
+      if (typeof window !== 'undefined') {
+        const workspaceContext = sessionStorage.getItem('workspaceContext')
+        if (workspaceContext) {
+          request.headers['X-Workspace-Context'] = workspaceContext
+        }
+      }
+
       if (this.multipart) {
         request.headers['Content-Type'] = 'multipart/form-data'
       }

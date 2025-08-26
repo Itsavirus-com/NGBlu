@@ -2,17 +2,9 @@ import { NextRequest } from 'next/server'
 import { withAuth } from 'next-auth/middleware'
 import createIntlMiddleware from 'next-intl/middleware'
 
+import { PUBLIC_PAGES } from './constants/page'
 import { defaultLocale, localePrefix, locales } from './navigation'
 import { logAuthToSentry } from './utils/sentry-logger'
-
-const publicPages = [
-  '/',
-  '/auth/login',
-  '/auth/request-password-reset',
-  '/auth/verify-email',
-  '/auth/password-reset',
-  '/auth/set-password',
-]
 
 const intlMiddleware = createIntlMiddleware({
   defaultLocale,
@@ -112,9 +104,9 @@ export default function middleware(req: NextRequest) {
   debugAuth(req)
 
   const publicPathnameRegex = RegExp(
-    `^(/(${locales.join('|')}))?(${publicPages
-      .flatMap(p => (p === '/' ? ['', '/'] : p))
-      .join('|')})/?$`,
+    `^(/(${locales.join('|')}))?(${PUBLIC_PAGES.flatMap(p => (p === '/' ? ['', '/'] : p)).join(
+      '|'
+    )})/?$`,
     'i'
   )
   const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname)

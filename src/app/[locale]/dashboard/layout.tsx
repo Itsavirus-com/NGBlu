@@ -1,18 +1,14 @@
 'use client'
 
 import { SessionProvider } from 'next-auth/react'
-import { SWRConfig } from 'swr'
 
 import { MasterInit } from '@/components/core/MasterInit'
 import { Footer } from '@/components/footer/footer'
 import { Header } from '@/components/header/header'
 import { SecurityEnforcementBanner } from '@/components/security-enforcement-banner/SecurityEnforcementBanner'
 import { SessionInvalidationListener } from '@/components/session/GlobalSocketListener'
-import { SessionChecker } from '@/components/session/SessionChecker'
 import { Sidebar } from '@/components/sidebar/sidebar'
 import { useSecurityEnforcement } from '@/hooks/use-security-enforcement.hook'
-import { fetcher } from '@/services/swr/fetcher'
-import { loadingMiddleware } from '@/services/swr/middleware/loading-middleware'
 
 import '@/assets/keenicons/duotone/style.css'
 import '@/assets/keenicons/outline/style.css'
@@ -52,23 +48,10 @@ export default function DashboardLayout({
   children: React.ReactNode
 }>) {
   return (
-    <SWRConfig
-      value={{
-        fetcher: fetcher,
-        use: [loadingMiddleware('api')],
-        // Disable retries on errors to prevent infinite loading
-        errorRetryCount: 0,
-        errorRetryInterval: 0,
-        // Disable automatic revalidation on focus
-        revalidateOnFocus: false,
-      }}
-    >
-      <SessionProvider>
-        <SessionChecker />
-        <SessionInvalidationListener />
-        <DashboardContent>{children}</DashboardContent>
-        <MasterInit />
-      </SessionProvider>
-    </SWRConfig>
+    <SessionProvider>
+      <SessionInvalidationListener />
+      <DashboardContent>{children}</DashboardContent>
+      <MasterInit />
+    </SessionProvider>
   )
 }

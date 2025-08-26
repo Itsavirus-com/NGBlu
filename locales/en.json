@@ -1579,6 +1579,7 @@
     "verificationFailed": "Verification Failed",
     "verificationFailedMessage": "Something went wrong. Please try again."
   },
+
   "auditTrails": {
     "title": "Audit Trails",
     "id": "ID",
@@ -1624,5 +1625,17 @@
     "eventInfo": "Event Information",
     "eventId": "Event ID",
     "eventType": "Event Type"
+  },
+  "workspace": {
+    "selectWorkspace": "Select Workspace",
+    "selectWorkspaceDescription": "Choose the workspace you want to access",
+    "continue": "Continue",
+    "noWorkspaces": "No Workspaces Available",
+    "noWorkspacesMessage": "You don't have access to any workspaces. Please contact your administrator.",
+    "workspaceSelected": "Workspace Selected",
+    "workspaceSelectedMessage": "You have successfully selected {workspace} workspace.",
+    "switchWorkspace": "Switch Workspace",
+    "error": "Error",
+    "errorMessage": "An error occurred. Please try again."
   }
 }

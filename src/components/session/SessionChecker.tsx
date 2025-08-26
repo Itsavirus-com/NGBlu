@@ -1,10 +1,11 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 
+import { PUBLIC_PAGES } from '@/constants/page'
 import { useToast } from '@/hooks/use-toast.hook'
 
 export const SessionChecker = () => {
@@ -13,6 +14,7 @@ export const SessionChecker = () => {
   const { showToast } = useToast()
   const t = useTranslations('common.error')
   const router = useRouter()
+  const pathname = usePathname()
 
   // Ref to track if we've already shown expiration notification
   const expiredToastShownRef = useRef(false)
@@ -43,9 +45,17 @@ export const SessionChecker = () => {
       // Add a small delay to prevent potential routing conflicts
       setTimeout(() => {
         router.push('/auth/login')
-      }, 1000)
+      }, 500)
     }
   }, [mounted, status])
+
+  // Check if current page is public - do this after all hooks
+  const isPublicPage = PUBLIC_PAGES.some(page => pathname?.includes(page))
+
+  // Skip session checking on public pages
+  if (isPublicPage) {
+    return null
+  }
 
   return null
 }

@@ -1575,8 +1575,9 @@
     "passwordVerified": "Wachtwoord geverifieerd",
     "passwordVerificationSuccess": "Wachtwoord succesvol geverifieerd. U kunt nu doorgaan.",
     "verificationFailed": "Verificatie mislukt",
-    "verificationFailedMessage": "Er is iets misgegaan. Probeer het opnieuw. Audit Trails"
+    "verificationFailedMessage": "Er is iets misgegaan. Probeer het opnieuw."
   },
+
   "auditTrails": {
     "title": "Audit Trails",
     "id": "ID",
@@ -1622,5 +1623,17 @@
     "eventInfo": "Gebeurtenis-informatie",
     "eventId": "Gebeurtenis-ID",
     "eventType": "Gebeurtenistype"
+  },
+  "workspace": {
+    "selectWorkspace": "Werkruimte selecteren",
+    "selectWorkspaceDescription": "Kies de werkruimte waartoe u toegang wilt hebben",
+    "continue": "Doorgaan",
+    "noWorkspaces": "Geen werkruimten beschikbaar",
+    "noWorkspacesMessage": "U heeft geen toegang tot werkruimten. Neem contact op met uw beheerder.",
+    "workspaceSelected": "Werkruimte geselecteerd",
+    "workspaceSelectedMessage": "U heeft succesvol de {workspace} werkruimte geselecteerd.",
+    "switchWorkspace": "Werkruimte wisselen",
+    "error": "Fout",
+    "errorMessage": "Er is een fout opgetreden. Probeer het opnieuw."
   }
 }
