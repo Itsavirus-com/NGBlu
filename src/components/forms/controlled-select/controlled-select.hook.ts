@@ -14,6 +14,7 @@ interface UseSelectProps<OptionValue> {
   isSelectedIdWithParams?: boolean
   haveDetailOptions?: boolean
   isMulti?: boolean
+  directOptions?: any[]
 }
 
 export const useSelect = <OptionValue extends Record<string, any>>({
@@ -26,6 +27,7 @@ export const useSelect = <OptionValue extends Record<string, any>>({
   isSelectedIdWithParams,
   haveDetailOptions = true,
   isMulti = false,
+  directOptions,
 }: UseSelectProps<OptionValue>) => {
   const { control } = useFormContext()
   const {
@@ -37,11 +39,13 @@ export const useSelect = <OptionValue extends Record<string, any>>({
   const [allData, setAllData] = useState<OptionValue[]>([])
   const [isLoadingInfinity, setIsLoadingInfinity] = useState<boolean>(false)
 
+  const shouldFetchFromApi = !directOptions && apiPath
+
   const {
     data,
     pagination,
     isLoading: isLoadingOptions,
-  } = useOptionData<OptionValue>(apiPath, {
+  } = useOptionData<OptionValue>(shouldFetchFromApi ? apiPath : '', {
     page,
     limit: 10,
     filter: {
@@ -50,19 +54,25 @@ export const useSelect = <OptionValue extends Record<string, any>>({
   })
 
   const { data: detailData } = useOptionDataById<OptionValue>(
-    haveDetailOptions ? (apiPathSelected ? apiPathSelected : apiPath) : undefined,
+    !directOptions && haveDetailOptions ? (apiPathSelected ? apiPathSelected : apiPath) : undefined,
     field.value,
     isSelectedIdWithParams,
     { ...filter, id: field.value }
   )
 
   useEffect(() => {
-    if (data) {
+    if (directOptions) {
+      setAllData(directOptions as OptionValue[])
+    }
+  }, [directOptions])
+
+  useEffect(() => {
+    if (data && !directOptions) {
       if (page === 1) setAllData(data)
       else setAllData(prevData => [...prevData, ...data])
       setIsLoadingInfinity(false)
     }
-  }, [data, page])
+  }, [data, page, directOptions])
 
   const options = useMemo(
     () => [
@@ -70,12 +80,12 @@ export const useSelect = <OptionValue extends Record<string, any>>({
       ...(allData?.length
         ? allData.map((item, index) => ({
             value: String(option.value(item)),
-            label: `${item.id ? item.id : index + 1} | ${option.label(item)}`,
+            label: `${directOptions ? '' : `${item.id ? item.id : index + 1} | `}${option.label(item)}`,
             data: item,
           }))
         : []),
     ],
-    [allData, option, isMulti]
+    [allData, option, isMulti, directOptions]
   )
 
   const selectedOption = useMemo(
@@ -84,7 +94,7 @@ export const useSelect = <OptionValue extends Record<string, any>>({
   )
 
   const handleScrollBottom = () => {
-    if (pagination && page < pagination.lastPage && !isLoadingInfinity) {
+    if (!directOptions && pagination && page < pagination.lastPage && !isLoadingInfinity) {
       setIsLoadingInfinity(true)
       setPage(prev => prev + 1)
     }
@@ -107,7 +117,7 @@ export const useSelect = <OptionValue extends Record<string, any>>({
   return {
     options,
     selectedOption,
-    isLoading: isLoadingOptions,
+    isLoading: isLoadingOptions && !directOptions,
     isLoadingInfinity,
     invalid,
     error,

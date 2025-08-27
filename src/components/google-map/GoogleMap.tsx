@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
 type MapProps = {
-  lat: number
-  lng: number
+  lat: number | null
+  lng: number | null
   address?: string
   onLocationSelect?: (location: {
     address: string
@@ -31,11 +31,13 @@ export const GoogleMap = ({ lat, lng, address, onLocationSelect }: MapProps) => 
   }, [])
 
   useEffect(() => {
-    if (!ref.current || !isLoaded) return
+    if (!ref.current || !isLoaded || lat === null || lng === null) return
 
     try {
+      // Initialize geocoder first
       geocoderRef.current = new window.google.maps.Geocoder()
 
+      // Initialize map
       mapRef.current = new window.google.maps.Map(ref.current, {
         center: { lat, lng },
         zoom: 20,
@@ -55,7 +57,7 @@ export const GoogleMap = ({ lat, lng, address, onLocationSelect }: MapProps) => 
 
   // Update marker position when center changes
   useEffect(() => {
-    if (!isLoaded) return
+    if (!isLoaded || lat === null || lng === null) return
     if (markerRef.current) {
       markerRef.current.position = { lat, lng }
     }
@@ -66,35 +68,47 @@ export const GoogleMap = ({ lat, lng, address, onLocationSelect }: MapProps) => 
 
   // Handle address changes
   useEffect(() => {
-    if (!address || !geocoderRef.current || !isLoaded) return
+    if (!address || !isLoaded) return
 
-    geocoderRef.current
-      .geocode({ address })
-      .then(response => {
-        if (response.results[0]) {
-          const location = response.results[0].geometry.location
-          const newPosition = {
-            lat: location.lat(),
-            lng: location.lng(),
-          }
+    // Small delay to ensure geocoder is fully initialized
+    const timeoutId = setTimeout(() => {
+      // Ensure geocoder is available
+      if (!geocoderRef.current) {
+        console.warn('Geocoder not initialized, skipping address geocoding')
+        return
+      }
 
-          if (mapRef.current) {
-            mapRef.current.panTo(newPosition)
-          }
-          if (markerRef.current) {
-            markerRef.current.position = newPosition
-          }
+      geocoderRef.current
+        .geocode({ address })
+        .then(response => {
+          if (response.results[0]) {
+            const location = response.results[0].geometry.location
+            const newPosition = {
+              lat: location.lat(),
+              lng: location.lng(),
+            }
 
-          if (onLocationSelect) {
-            onLocationSelect({
-              address: response.results[0].formatted_address,
-              ...newPosition,
-              placeId: response.results[0].place_id || '',
-            })
+            if (mapRef.current) {
+              mapRef.current.panTo(newPosition)
+            }
+            if (markerRef.current) {
+              markerRef.current.position = newPosition
+            }
+
+            if (onLocationSelect) {
+              onLocationSelect({
+                address: response.results[0].formatted_address,
+                ...newPosition,
+                placeId: response.results[0].place_id || '',
+              })
+            }
           }
-        }
-      })
-      .catch(error => console.error('Geocoding error:', error))
+        })
+        .catch(error => console.error('Geocoding error:', error))
+    }, 100) // 100ms delay
+
+    // Cleanup timeout on unmount or dependency change
+    return () => clearTimeout(timeoutId)
   }, [address, onLocationSelect, isLoaded])
 
   if (!isLoaded) {

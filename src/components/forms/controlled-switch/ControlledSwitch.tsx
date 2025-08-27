@@ -1,11 +1,11 @@
-import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { FormCheckInputProps } from 'react-bootstrap/esm/FormCheckInput'
 import { useController, useFormContext } from 'react-hook-form'
+import './ControlledSwitch.scss'
 
 type SwitchProps = FormCheckInputProps & {
-  label?: string
+  label?: string | React.ReactNode
   name: string
   containerClass?: string
   step?: number
@@ -58,16 +58,9 @@ export const ControlledSwitch = (props: SwitchProps) => {
           autoComplete={name}
           data-test-id={name}
           value={value}
+          className="thick-checkbox"
         />
-        {label && (
-          <Form.Check.Label
-            className={clsx('fw-bold ms-3', {
-              'text-dark': isChecked,
-            })}
-          >
-            {label}
-          </Form.Check.Label>
-        )}
+        {label && <Form.Check.Label className="fw-bold ms-3 text-dark">{label}</Form.Check.Label>}
       </div>
 
       {error && <Form.Control.Feedback type="invalid">{error.message}</Form.Control.Feedback>}

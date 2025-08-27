@@ -16,6 +16,17 @@ const SidebarMenuMain = () => {
       {/* Dashboard */}
       <SidebarMenuItem to="/dashboard" icon="element-11" title={t('dashboard')} />
 
+      {/* Onboarding */}
+      <SidebarMenuSeparator title={t('onboarding')} />
+      <SidebarMenuItemWithSub to="/dashboard/onboarding" title={t('onboarding')} icon="user-tick">
+        <SidebarMenuItem
+          to="/dashboard/onboarding/manage-business-partner"
+          title={t('manageBusinessPartner')}
+          hasBullet
+        />
+      </SidebarMenuItemWithSub>
+      {/* End of Onboarding */}
+
       {/* Data Validation */}
       <SidebarMenuSeparator title={t('dataValidation')} />
       <SidebarMenuItem to="/dashboard/kvk" title={t('kvk')} icon="shield" />
