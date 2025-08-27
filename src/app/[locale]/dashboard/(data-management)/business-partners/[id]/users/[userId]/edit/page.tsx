@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl'
 
-import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 
 import BusinessPartnerUserForm from '../../../_components/BusinessPartnerUserForm'
@@ -15,7 +14,7 @@ export default function UpdateBusinessPartnerUser({
 }) {
   const t = useTranslations('dataManagement.businessPartners.users')
 
-  const { methods, onSubmit, isLoading, isSubmitting } = useBusinessPartnerUserForm(
+  const { methods, onSubmit, isSubmitting } = useBusinessPartnerUserForm(
     Number(params.id),
     Number(params.userId)
   )
@@ -23,16 +22,12 @@ export default function UpdateBusinessPartnerUser({
   return (
     <>
       <PageTitle title={t('updateUser')} />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <BusinessPartnerUserForm
-          methods={methods}
-          onSubmit={onSubmit}
-          id={Number(params.id)}
-          isSubmitting={isSubmitting}
-        />
-      )}
+      <BusinessPartnerUserForm
+        methods={methods}
+        onSubmit={onSubmit}
+        id={Number(params.id)}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }

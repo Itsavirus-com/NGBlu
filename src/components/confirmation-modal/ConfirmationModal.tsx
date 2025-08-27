@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
-import React from 'react'
 import { Button, Modal, Spinner } from 'react-bootstrap'
 
 import { ConfirmationModalProps } from './confirmation-modal.type'
@@ -23,7 +22,7 @@ export const ConfirmationModal = (props: ConfirmationModalProps) => {
   return (
     <Modal show={visible} onHide={onCancel} centered backdrop="static">
       <Modal.Header onHide={onCancel} className={clsx('text-white', `bg-${variant}`)}>
-        <h4 className="modal-title mt-0">
+        <h4 className="modal-title mt-0 text-white">
           <i className="mdi mdi-exclamation-thick me-2" />
           {title}
         </h4>
@@ -36,7 +35,7 @@ export const ConfirmationModal = (props: ConfirmationModalProps) => {
           {isLoading ? (
             <>
               {' '}
-              <Spinner size="sm" /> Loading...
+              <Spinner size="sm" /> {t('loading')}
             </>
           ) : (
             confirmLabel

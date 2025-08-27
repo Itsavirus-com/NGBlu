@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl'
 
-import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 
 import { EnterpriseRootContactFormFields } from '../../../_components/EnterpriseRootContactForm'
@@ -15,23 +14,17 @@ export default function UpdateEnterpriseRootContact({
 }) {
   const t = useTranslations('dataManagement.enterpriseRoots.contacts')
 
-  const { methods, onSubmit, isLoading, isSubmitting } = useEnterpriseRootContactForm(
-    Number(params.contactId)
-  )
+  const { methods, onSubmit, isSubmitting } = useEnterpriseRootContactForm(Number(params.contactId))
 
   return (
     <>
       <PageTitle title={t('updateContact')} />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <EnterpriseRootContactFormFields
-          methods={methods}
-          enterpriseRootId={params.id}
-          onSubmit={onSubmit}
-          isSubmitting={isSubmitting}
-        />
-      )}
+      <EnterpriseRootContactFormFields
+        methods={methods}
+        enterpriseRootId={params.id}
+        onSubmit={onSubmit}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }

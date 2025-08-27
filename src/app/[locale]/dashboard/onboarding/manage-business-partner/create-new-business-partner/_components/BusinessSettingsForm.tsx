@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Alert, Col, Row } from 'react-bootstrap'
 
 import { ControlledSelect } from '@/components/forms/controlled-select/ControlledSelect'
+import { ControlledSwitch } from '@/components/forms/controlled-switch/ControlledSwitch'
 import { KTIcon } from '@/components/kt-icon/KtIcon'
 
 import { useBusinessSettings } from '../_hooks/business-settings-form.hook'
@@ -12,7 +13,6 @@ export const BusinessSettingsForm = () => {
   const t = useTranslations('dataManagement.createBusinessPartner.businessSettings')
   const {
     selectedFile,
-    partnerManagers,
     fileError,
     handleFileChange,
     handlePartnerManagerChange,
@@ -39,14 +39,14 @@ export const BusinessSettingsForm = () => {
           <Row>
             <Col md={12}>
               <ControlledSelect
-                name="partnerManagerId"
+                name="managerId"
                 label={t('selectPartnerManager')}
                 containerClass="mb-5"
+                apiPath="partner-managers"
                 option={{
                   value: (item: any) => item.id,
-                  label: (item: any) => `${item.name} (${item.role})`,
+                  label: (item: any) => `${item.firstname} ${item.lastname} (${item.role})`,
                 }}
-                options={partnerManagers}
                 isRequired
                 onChange={handlePartnerManagerChange}
               />
@@ -78,6 +78,7 @@ export const BusinessSettingsForm = () => {
               </div>
 
               <input
+                name="contract"
                 type="file"
                 id="contract-file"
                 accept=".pdf"
@@ -159,6 +160,78 @@ export const BusinessSettingsForm = () => {
               </button>
             </div>
           )}
+        </div>
+      </div>
+
+      <div className="card bg-light mb-8">
+        <div className="card-body">
+          <h4 className="fw-bold mb-0">{t('paymentSettings')}</h4>
+
+          <Row className="mb-5">
+            <Col md={12}>
+              <div className="d-flex align-items-center justify-content-between bg-light-secondary rounded p-4 mb-3">
+                <div>
+                  <h5 className="fw-semibold mb-1">{t('automaticDebit')}</h5>
+                  <p className="text-muted mb-0 fs-7">
+                    Enable automatic payment collection from your account
+                  </p>
+                </div>
+                <div className="form-check form-switch form-check-custom form-check-solid">
+                  <ControlledSwitch name="enableAutoDebit" label="" />
+                </div>
+              </div>
+
+              {/* Conditional Terms and Conditions */}
+
+              <div className="mt-5">
+                <div className="notice d-flex bg-light-primary rounded border-primary border border-dashed p-6">
+                  <KTIcon
+                    iconName="information-5"
+                    className="fs-2tx text-primary me-4"
+                    iconType="duotone"
+                  />
+                  <div className="d-flex flex-stack flex-grow-1">
+                    <div className="fw-semibold">
+                      <div className="text-gray-700 fs-6 mb-4">
+                        <strong>{t('automaticDebit')}:</strong> {t('automaticDebitTerms')}
+                      </div>
+
+                      {/* Add back in when we have a terms and conditions page or when needed in the future */}
+
+                      {/* <ControlledSwitch
+                          type="checkbox"
+                          name="termsAccepted"
+                          label={
+                            <span className="fs-6 fw-semibold text-gray-700">
+                              {t('termsAccepted').split('Terms and Conditions')[0]}
+                              <a
+                                href="https://ngblu.nl/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="fw-bold text-primary text-hover-primary"
+                              >
+                                Terms and Conditions
+                              </a>
+                              {t('termsAccepted').split('Terms and Conditions')[1]}
+                            </span>
+                          }
+                        />
+                      {watch('enableAutoDebit') && (
+                            <div
+                              className="text-danger fs-7 mt-2"
+                              style={{ visibility: !watch('termsAccepted') ? 'visible' : 'hidden' }}
+                            >
+                              <KTIcon iconName="warning-2" className="fs-6 me-1" iconType="duotone" />
+                              {t('termsRequired')}
+                            </div>
+                          )}
+                      */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </div>
       </div>
     </div>

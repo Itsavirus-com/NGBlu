@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl'
 
-import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 
 import { EnterpriseRootUserForm } from '../../../_components/EnterpriseRootUserForm'
@@ -15,21 +14,17 @@ export default function UpdateEnterpriseRootUser({
 }) {
   const t = useTranslations('dataManagement.enterpriseRoots.users')
 
-  const { methods, onSubmit, isLoading, isSubmitting } = useEnterpriseRootUserForm(params.userId)
+  const { methods, onSubmit, isSubmitting } = useEnterpriseRootUserForm(params.userId)
 
   return (
     <>
       <PageTitle title={t('updateUser')} />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <EnterpriseRootUserForm
-          enterpriseRootId={params.id}
-          methods={methods}
-          onSubmit={onSubmit}
-          isSubmitting={isSubmitting}
-        />
-      )}
+      <EnterpriseRootUserForm
+        enterpriseRootId={params.id}
+        methods={methods}
+        onSubmit={onSubmit}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }

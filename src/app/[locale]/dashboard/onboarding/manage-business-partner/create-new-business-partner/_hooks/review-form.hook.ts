@@ -13,6 +13,15 @@ const MOCK_PARTNER_MANAGERS = [
   { id: 5, name: 'Robert Brown', email: 'robert.brown@example.com', role: 'NGBLU Sales-RBAC' },
 ]
 
+// Mock countries data
+const MOCK_COUNTRIES = [
+  { id: 1, name: 'Netherlands', code: 'NL' },
+  { id: 2, name: 'Belgium', code: 'BE' },
+  { id: 3, name: 'Germany', code: 'DE' },
+  { id: 4, name: 'France', code: 'FR' },
+  { id: 5, name: 'United Kingdom', code: 'GB' },
+]
+
 export const useReviewForm = () => {
   const { getValues } = useFormContext<CreateBusinessPartnerFormData>()
   const formValues = getValues()
@@ -54,6 +63,16 @@ export const useReviewForm = () => {
 
     const manager = MOCK_PARTNER_MANAGERS.find(manager => manager.id === id)
     return manager || null
+  }
+
+  // Get country name by ID
+  const getCountryName = (id: number | undefined) => {
+    if (!id) {
+      return null
+    }
+
+    const country = MOCK_COUNTRIES.find(country => country.id === id)
+    return country?.name || null
   }
 
   // Function to open file in new tab
@@ -104,6 +123,7 @@ export const useReviewForm = () => {
     formatBooleanValue,
     formatFileValue,
     getPartnerManagerDetails,
+    getCountryName,
     openFileInNewTab,
     getApprovalRequirements,
   }

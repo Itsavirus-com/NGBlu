@@ -8,7 +8,6 @@ import { FormProvider } from '@/components/forms/form-provider'
 import { GoogleAddressAutocomplete } from '@/components/google-map/GoogleAddressAutocomplete'
 import { GoogleMap } from '@/components/google-map/GoogleMap'
 import { GoogleMapsProvider } from '@/components/google-map/GoogleMapsProvider'
-import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 
 import useGoogleForm, { FormValuesGoogle } from './_hooks/google.hook'
@@ -30,7 +29,6 @@ export default function Google() {
     differences,
     isSubmitting,
     loadingType,
-    isLoading,
   } = useGoogleForm()
 
   // Helper to determine badge color based on confirmation level
@@ -56,10 +54,6 @@ export default function Google() {
 
     // No longer returning null for CONFIRMED cases (empty fragment instead)
     return null
-  }
-
-  if (isLoading) {
-    return <Loading />
   }
 
   return (

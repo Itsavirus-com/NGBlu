@@ -3,7 +3,6 @@ import { useTranslations } from 'next-intl'
 import { DateTimeView } from '@/components/view/date-time-view/DateTimeView'
 import { AuditTrail } from '@/services/swr/models/audit-trail.type'
 
-
 interface EventInfoCardProps {
   auditTrail: AuditTrail
 }

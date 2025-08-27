@@ -61,6 +61,30 @@ export class BusinessPartnerApi extends ApiCore {
     return await this.post({ path: 'business-partners', payload })
   }
 
+  async createBusinessPartner(payload: FormData) {
+    // Enable multipart form data for file uploads
+    this.multipart = true
+
+    try {
+      // Use the standard post method but with explicit Content-Type header
+      const result = await this.post({
+        path: 'business-partners/register',
+        payload,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+
+      return result
+    } catch (error) {
+      console.error('Error in createBusinessPartner API call:', error)
+      throw error
+    } finally {
+      // Reset multipart flag after request
+      this.multipart = false
+    }
+  }
+
   async update(id: number, payload: Record<string, any>) {
     return await this.put({ path: `business-partners/${id}`, payload })
   }

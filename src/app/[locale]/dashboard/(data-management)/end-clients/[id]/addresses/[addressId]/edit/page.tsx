@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl'
 
-import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 
 import EndClientAddressForm from '../../../_components/EndClientAddressForm'
@@ -15,7 +14,7 @@ export default function UpdateEndClientAddress({
 }) {
   const t = useTranslations('dataManagement.endClients.addresses')
 
-  const { methods, onSubmit, isLoading, isSubmitting } = useEndClientAddressForm(
+  const { methods, onSubmit, isSubmitting } = useEndClientAddressForm(
     Number(params.id),
     Number(params.addressId)
   )
@@ -23,11 +22,7 @@ export default function UpdateEndClientAddress({
   return (
     <>
       <PageTitle title={t('updateAddress')} />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <EndClientAddressForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
-      )}
+      <EndClientAddressForm methods={methods} onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </>
   )
 }

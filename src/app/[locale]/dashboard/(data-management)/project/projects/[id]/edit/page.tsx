@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl'
 
-import Loading from '@/components/loading/Loading'
 import { PageTitle } from '@/components/page-title'
 
 import ProjectForm from '../../_components/ProjectForm'
@@ -15,7 +14,6 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
     handleChange,
     onSubmit,
     handleFilterOrganizationUnit,
-    isLoading,
     errorMessageInputType,
     isSubmitting,
   } = useProjectForm(Number(params.id))
@@ -23,18 +21,14 @@ export default function UpdateProjectType({ params }: { params: { id: number } }
   return (
     <>
       <PageTitle title={t('updateProject')} />
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <ProjectForm
-          methods={methods}
-          onSubmit={onSubmit}
-          handleChange={handleChange}
-          handleFilterOrganizationUnit={handleFilterOrganizationUnit}
-          errorMessageInputType={errorMessageInputType}
-          isSubmitting={isSubmitting}
-        />
-      )}
+      <ProjectForm
+        methods={methods}
+        onSubmit={onSubmit}
+        handleChange={handleChange}
+        handleFilterOrganizationUnit={handleFilterOrganizationUnit}
+        errorMessageInputType={errorMessageInputType}
+        isSubmitting={isSubmitting}
+      />
     </>
   )
 }

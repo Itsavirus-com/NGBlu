@@ -4,15 +4,6 @@ import { useFormContext, useWatch } from 'react-hook-form'
 
 import { CreateBusinessPartnerFormData } from '../_schemas/business-partner.schema'
 
-// Mock Partner Manager users with NGBLU Sales-RBAC role
-export const MOCK_PARTNER_MANAGERS = [
-  { id: 1, name: 'John Doe', email: 'john.doe@example.com', role: 'NGBLU Sales-RBAC' },
-  { id: 2, name: 'Jane Smith', email: 'jane.smith@example.com', role: 'NGBLU Sales-RBAC' },
-  { id: 3, name: 'Mark Johnson', email: 'mark.johnson@example.com', role: 'NGBLU Sales-RBAC' },
-  { id: 4, name: 'Sarah Williams', email: 'sarah.williams@example.com', role: 'NGBLU Sales-RBAC' },
-  { id: 5, name: 'Robert Brown', email: 'robert.brown@example.com', role: 'NGBLU Sales-RBAC' },
-]
-
 export const useBusinessSettings = () => {
   const t = useTranslations('dataManagement.createBusinessPartner.businessSettings')
   const {
@@ -26,18 +17,20 @@ export const useBusinessSettings = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [fileError, setFileError] = useState<string | null>(null)
 
-  // Watch the partner manager ID value
-  const partnerManagerId = useWatch({ control, name: 'partnerManagerId' })
-  const signedContractFile = useWatch({ control, name: 'signedContractFile' })
+  // Watch the form values
+  const managerId = useWatch({ control, name: 'managerId' })
+  const contract = useWatch({ control, name: 'contract' })
+  const enableAutoDebit = useWatch({ control, name: 'enableAutoDebit' })
+  const termsAccepted = useWatch({ control, name: 'termsAccepted' })
 
   // Monitor form errors and clear them when file is present
   useEffect(() => {
-    if (selectedFile && errors.signedContractFile) {
+    if (selectedFile && errors.contract) {
       // Clear the error if we have a valid file
-      clearErrors('signedContractFile')
+      clearErrors('contract')
       setFileError(null)
-    } else if (errors.signedContractFile && !selectedFile) {
-      const errorMessage = errors.signedContractFile.message as string
+    } else if (errors.contract && !selectedFile) {
+      const errorMessage = errors.contract.message as string
 
       if (errorMessage && errorMessage.startsWith('fileUploadErrors.')) {
         setFileError(t('fileUploadErrors.required'))
@@ -49,23 +42,23 @@ export const useBusinessSettings = () => {
 
   // Initialize selectedFile state from form values when component mounts
   useEffect(() => {
-    const existingFile = getValues('signedContractFile')
+    const existingFile = getValues('contract')
     if (existingFile && !selectedFile) {
       setSelectedFile(existingFile as any)
     }
   }, [getValues, selectedFile])
 
-  // Update selectedFile when signedContractFile changes
+  // Update selectedFile when contract changes
   useEffect(() => {
-    if (signedContractFile && signedContractFile !== '') {
-      setSelectedFile(signedContractFile as any)
+    if (contract && contract !== '') {
+      setSelectedFile(contract as any)
       setFileError(null)
       // Clear any existing errors
-      clearErrors('signedContractFile')
-    } else if (signedContractFile === '') {
+      clearErrors('contract')
+    } else if (contract === '') {
       setSelectedFile(null)
     }
-  }, [signedContractFile, clearErrors])
+  }, [contract, clearErrors])
 
   // Handle file upload
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,12 +83,12 @@ export const useBusinessSettings = () => {
 
       // File is valid
       setSelectedFile(file)
-      setValue('signedContractFile', file)
+      setValue('contract', file)
 
       // Clear any existing errors and trigger validation
-      clearErrors('signedContractFile')
+      clearErrors('contract')
       setFileError(null)
-      trigger('signedContractFile')
+      trigger('contract')
     }
   }
 
@@ -104,35 +97,36 @@ export const useBusinessSettings = () => {
     // Convert string ID to number and set it directly
     if (value && value !== '0') {
       const numericId = Number(value)
-      setValue('partnerManagerId', numericId)
+      setValue('managerId', numericId)
 
       // Trigger validation to clear any previous errors
-      trigger('partnerManagerId')
+      trigger('managerId')
     }
   }
 
   // Handle file removal
   const handleFileRemove = () => {
     setSelectedFile(null)
-    setValue('signedContractFile', null as any)
+    setValue('contract', null as any)
 
     // Set error message immediately for better UX
     setFileError(t('fileUploadErrors.required'))
 
     // Trigger validation to update form state
     setTimeout(() => {
-      trigger('signedContractFile')
+      trigger('contract')
     }, 100)
   }
 
   // Only show error if there's no file and there's a validation error
-  const shouldShowError = !selectedFile && (fileError || errors.signedContractFile)
+  const shouldShowError = !selectedFile && (fileError || errors.contract)
 
   return {
-    partnerManagerId,
+    managerId,
     selectedFile,
-    partnerManagers: MOCK_PARTNER_MANAGERS,
     fileError: shouldShowError ? fileError || t('fileUploadErrors.required') : null,
+    enableAutoDebit,
+    termsAccepted,
     handleFileChange,
     handlePartnerManagerChange,
     handleFileRemove,

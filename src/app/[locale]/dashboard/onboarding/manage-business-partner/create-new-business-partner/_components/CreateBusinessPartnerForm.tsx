@@ -13,7 +13,7 @@ import { BusinessProfileForm } from './BusinessProfileForm'
 import { BusinessSettingsForm } from './BusinessSettingsForm'
 import { ProductConfigurationForm } from './ProductConfigurationForm'
 import { ReviewForm } from './ReviewForm'
-import { useCreateBusinessPartnerForm } from '../_hooks/business-partner-form.hook'
+import { useCreateBusinessPartnerForm } from '../_hooks/create-business-partner.hook'
 
 export const CreateBusinessPartnerForm = () => {
   const t = useTranslations('dataManagement.createBusinessPartner')
@@ -21,8 +21,6 @@ export const CreateBusinessPartnerForm = () => {
   const {
     methods,
     currentStep,
-    isSubmitting,
-    isSuccess,
     validationError,
     handleNext,
     handleBack,
@@ -52,7 +50,7 @@ export const CreateBusinessPartnerForm = () => {
     <Page title={t('title')} description={t('description')} className="pb-5">
       <Breadcrumbs items={breadcrumbItems} />
 
-      <FormProvider methods={methods} onSubmit={onSubmit} name="create-business-partner">
+      <FormProvider methods={methods} onSubmit={() => {}} name="create-business-partner">
         <Row>
           {/* Left Sidebar - Steps */}
           <Col md={3}>
@@ -65,7 +63,7 @@ export const CreateBusinessPartnerForm = () => {
               <div className="card-body p-8">
                 {renderCurrentStepForm()}
 
-                {/* Validation Error Message */}
+                {/* Validation Error Message - Only shown for form validation issues */}
                 {validationError && (
                   <div className="alert alert-danger d-flex align-items-center p-5 mb-8">
                     <KTIcon
@@ -80,22 +78,7 @@ export const CreateBusinessPartnerForm = () => {
                   </div>
                 )}
 
-                {/* Success Message */}
-                {isSuccess && (
-                  <div className="alert alert-success d-flex align-items-center p-5 mb-8">
-                    <KTIcon
-                      iconType="duotone"
-                      iconName="shield-tick"
-                      className="fs-2hx text-success me-4"
-                    />
-                    <div className="d-flex flex-column">
-                      <h4 className="mb-1 text-success">
-                        {t('messages.businessPartnerCreatedSuccessfully')}
-                      </h4>
-                      <span>{t('messages.businessPartnerCreatedMessage')}</span>
-                    </div>
-                  </div>
-                )}
+                {/* Success Message - Now handled by toast */}
 
                 {/* Navigation Buttons */}
                 <div className="d-flex justify-content-between mt-8">
@@ -114,9 +97,10 @@ export const CreateBusinessPartnerForm = () => {
                       </button>
                     ) : (
                       <button
-                        type="submit"
+                        type="button"
                         className="btn btn-primary"
                         disabled={isSubmitButtonDisabled()}
+                        onClick={() => onSubmit(methods.getValues())}
                       >
                         {getSubmitButtonText()}
                       </button>

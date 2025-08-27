@@ -5,10 +5,13 @@ import { Col, Row } from 'react-bootstrap'
 
 import { Button } from '@/components/button/button'
 import { ControlledInput } from '@/components/forms/controlled-input/ControlledInput'
+import { ControlledSelect } from '@/components/forms/controlled-select/ControlledSelect'
 import { GoogleMap } from '@/components/google-map/GoogleMap'
 import { GoogleMapsProvider } from '@/components/google-map/GoogleMapsProvider'
 import { KTIcon } from '@/components/kt-icon/KtIcon'
+import { Country } from '@/services/swr/models/country.type'
 
+import { CompanyNameSelector } from './CompanyNameSelector'
 import { useBusinessProfileForm } from '../_hooks/business-profile-form.hook'
 
 export const BusinessProfileForm = () => {
@@ -19,6 +22,8 @@ export const BusinessProfileForm = () => {
     streetName,
     houseNumber,
     city,
+    kvkTradeNames,
+    isKvkSuccess,
     isValidatingKvk,
     isLookingUpAddress,
     kvkValidationData,
@@ -52,7 +57,7 @@ export const BusinessProfileForm = () => {
           <Row>
             <Col md={6}>
               <ControlledInput
-                name="kvkNumber"
+                name="chamberOfCommerceId"
                 label={t('kvkNumber')}
                 placeholder={t('kvkNumberPlaceholder')}
                 containerClass="mb-5"
@@ -83,17 +88,7 @@ export const BusinessProfileForm = () => {
             </div>
           )}
 
-          <Row>
-            <Col md={12}>
-              <ControlledInput
-                name="companyName"
-                label={t('companyName')}
-                placeholder={t('companyNamePlaceholder')}
-                containerClass="mb-5"
-                isRequired
-              />
-            </Col>
-          </Row>
+          <CompanyNameSelector kvkTradeNames={kvkTradeNames} isKvkSuccess={isKvkSuccess} />
         </div>
       </div>
 
@@ -142,9 +137,7 @@ export const BusinessProfileForm = () => {
                   <KTIcon iconType="duotone" iconName="shield-tick" className="fs-1 text-success" />
                 </span>
                 <div>
-                  <span className="fw-bold">{t('addressRetrievedKvk')}</span>{' '}
-                  {kvkValidationData.data[0].streetName} {kvkValidationData.data[0].houseNumber},{' '}
-                  {kvkValidationData.data[0].postalCode} {kvkValidationData.data[0].city}
+                  <span className="fw-bold">{t('addressRetrievedKvk')}</span>
                 </div>
               </div>
             </div>
@@ -168,7 +161,7 @@ export const BusinessProfileForm = () => {
           <Row>
             <Col md={6}>
               <ControlledInput
-                name="streetName"
+                name="address.streetname"
                 label={t('streetName')}
                 placeholder={t('streetNamePlaceholder')}
                 containerClass="mb-5"
@@ -177,7 +170,7 @@ export const BusinessProfileForm = () => {
             </Col>
             <Col md={6}>
               <ControlledInput
-                name="houseNumber"
+                name="address.housenumber"
                 label={t('houseNumber')}
                 placeholder={t('houseNumberPlaceholder')}
                 containerClass="mb-5"
@@ -189,7 +182,7 @@ export const BusinessProfileForm = () => {
           <Row>
             <Col md={6}>
               <ControlledInput
-                name="postalCode"
+                name="address.postalcode"
                 label={t('postalCode')}
                 placeholder={t('postalCodePlaceholder')}
                 containerClass="mb-5"
@@ -198,7 +191,7 @@ export const BusinessProfileForm = () => {
             </Col>
             <Col md={6}>
               <ControlledInput
-                name="city"
+                name="address.city"
                 label={t('city')}
                 placeholder={t('cityPlaceholder')}
                 containerClass="mb-5"
@@ -209,11 +202,12 @@ export const BusinessProfileForm = () => {
 
           <Row>
             <Col md={12}>
-              <ControlledInput
-                name="country"
+              <ControlledSelect<Country>
                 label={t('country')}
-                placeholder={t('countryPlaceholder')}
-                containerClass="mb-5"
+                name="address.countryId"
+                containerClass="mb-3"
+                apiPath="countries"
+                option={{ label: row => row.name, value: row => row.id }}
                 isRequired
               />
             </Col>
@@ -232,8 +226,8 @@ export const BusinessProfileForm = () => {
             {shouldRenderMap && streetName && houseNumber && city ? (
               <GoogleMapsProvider>
                 <GoogleMap
-                  lat={mapCoordinates?.lat || 52.3676} // Default to Amsterdam if no coordinates
-                  lng={mapCoordinates?.lng || 4.9041}
+                  lat={mapCoordinates?.lat || null} // Default to Amsterdam if no coordinates
+                  lng={mapCoordinates?.lng || null}
                   address={lastProcessedAddressRef.current}
                   onLocationSelect={handleLocationSelect}
                 />
@@ -264,14 +258,14 @@ export const BusinessProfileForm = () => {
           <Row>
             <Col md={6}>
               <ControlledInput
-                name="firstName"
+                name="contactInfo.firstname"
                 label={t('firstName')}
                 placeholder={t('firstNamePlaceholder')}
                 containerClass="mb-5"
                 isRequired
               />
               <ControlledInput
-                name="phoneNumber"
+                name="contactInfo.phoneNumber"
                 label={t('phoneNumber')}
                 placeholder={t('phoneNumberPlaceholder')}
                 containerClass="mb-5"
@@ -280,14 +274,14 @@ export const BusinessProfileForm = () => {
             </Col>
             <Col md={6}>
               <ControlledInput
-                name="lastName"
+                name="contactInfo.lastname"
                 label={t('lastName')}
                 placeholder={t('lastNamePlaceholder')}
                 containerClass="mb-5"
                 isRequired
               />
               <ControlledInput
-                name="emailAddress"
+                name="contactInfo.email"
                 label={t('emailAddress')}
                 type="email"
                 placeholder={t('emailAddressPlaceholder')}
