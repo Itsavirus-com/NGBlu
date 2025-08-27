@@ -15,9 +15,14 @@ export const useWorkspaces = () => {
         }
       : null
 
-  const { data, mutate, isLoading } = useSWR<Workspace[]>(swrKey, {
-    use: [modelAdaptor(() => derive({}), 'data')],
-  })
+  const { data, mutate, isLoading } = useSWR<Workspace[]>(
+    {
+      path: 'workspaces/available',
+    },
+    {
+      use: [modelAdaptor(() => derive({}), 'data')],
+    }
+  )
 
   return { data, mutate, isLoading }
 }

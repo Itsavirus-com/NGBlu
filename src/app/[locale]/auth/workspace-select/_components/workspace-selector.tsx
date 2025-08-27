@@ -1,42 +1,27 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { useState } from 'react'
 
 import { Button } from '@/components/button/button'
 import { KTIcon } from '@/components/kt-icon/KtIcon'
 import { Workspace } from '@/services/swr/models/workspace.type'
 
-interface WorkspaceSelectorProps {
+export interface WorkspaceSelectorProps {
   workspaces: Workspace[]
-  onWorkspaceSelect: (workspace: Workspace) => void
+  selectedWorkspaceId: string
+  onWorkspaceSelect: (workspaceId: string) => void
+  onContinue: () => void
   isLoading?: boolean
 }
 
-export function WorkspaceSelector({ workspaces, onWorkspaceSelect }: WorkspaceSelectorProps) {
+export function WorkspaceSelector({
+  workspaces,
+  selectedWorkspaceId,
+  onWorkspaceSelect,
+  onContinue,
+  isLoading,
+}: WorkspaceSelectorProps) {
   const t = useTranslations('workspace')
-  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string>('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const handleWorkspaceSelect = (workspaceId: string) => {
-    setSelectedWorkspaceId(workspaceId)
-  }
-
-  const handleContinue = async () => {
-    if (!selectedWorkspaceId) return
-
-    setIsSubmitting(true)
-    try {
-      const selectedWorkspace = workspaces.find(w => w.id === selectedWorkspaceId)
-      if (selectedWorkspace) {
-        onWorkspaceSelect(selectedWorkspace)
-      }
-    } catch (error) {
-      console.error('Error selecting workspace:', error)
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
 
   return (
     <div className="d-flex flex-column flex-root" id="kt_app_root">
@@ -62,7 +47,7 @@ export function WorkspaceSelector({ workspaces, onWorkspaceSelect }: WorkspaceSe
                         ? 'border-primary bg-light-primary'
                         : 'border-light hover-border-primary'
                     }`}
-                    onClick={() => handleWorkspaceSelect(workspace.id)}
+                    onClick={() => onWorkspaceSelect(workspace.id)}
                     style={{ cursor: 'pointer' }}
                   >
                     <div className="card-body p-6">
@@ -74,7 +59,7 @@ export function WorkspaceSelector({ workspaces, onWorkspaceSelect }: WorkspaceSe
                             name="workspace"
                             id={workspace.id}
                             checked={selectedWorkspaceId === workspace.id}
-                            onChange={() => handleWorkspaceSelect(workspace.id)}
+                            onChange={() => onWorkspaceSelect(workspace.id)}
                           />
                         </div>
                         <div className="text-start flex-grow-1">
@@ -94,9 +79,9 @@ export function WorkspaceSelector({ workspaces, onWorkspaceSelect }: WorkspaceSe
 
               {/* Continue Button */}
               <Button
-                onClick={handleContinue}
-                disabled={!selectedWorkspaceId || isSubmitting}
-                loading={isSubmitting}
+                onClick={onContinue}
+                disabled={!selectedWorkspaceId || isLoading}
+                loading={isLoading}
                 label={t('continue')}
                 className="w-100 btn-primary"
                 size="lg"
