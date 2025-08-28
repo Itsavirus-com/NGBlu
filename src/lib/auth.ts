@@ -419,9 +419,9 @@ export const authOptions: NextAuthOptions = {
         }
       }
 
-      // Default redirect to dashboard
-      logAuthToSentry('Default Redirect to Dashboard', {})
-      return `${baseUrl}/dashboard`
+      // Default redirect to workspace select (will be handled by workspace logic)
+      logAuthToSentry('Default Redirect to Workspace Select', {})
+      return `${baseUrl}/auth/workspace-select`
     },
     async jwt({ token, account, user }) {
       // Check if existing token is expired before processing
