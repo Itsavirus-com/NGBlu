@@ -1,6 +1,6 @@
 'use client'
 
-import { KTIcon } from '@/components/kt-icon/KtIcon'
+import { Stepper, StepperStep } from '@/components/stepper'
 
 import { useBusinessPartnerSteps } from '../_hooks/business-partner-steps.hook'
 
@@ -12,35 +12,22 @@ type BusinessPartnerStepsProps = {
 export const BusinessPartnerSteps = ({ currentStep, onStepClick }: BusinessPartnerStepsProps) => {
   const { steps, getStepStatusClass, isStepClickable } = useBusinessPartnerSteps(currentStep)
 
+  // Convert steps to StepperStep format
+  const stepperSteps: StepperStep[] = steps.map(step => ({
+    number: step.number,
+    title: step.title,
+    description: step.description,
+    status: getStepStatusClass(step.number) as 'completed' | 'current' | 'pending',
+  }))
+
   return (
-    <div className="card">
-      <div className="card-body p-6">
-        <div className="stepper stepper-pills stepper-column d-flex flex-column">
-          {steps.map((step, index) => (
-            <div
-              key={step.number}
-              className={`stepper-item ${getStepStatusClass(step.number)}`}
-              onClick={() => isStepClickable(step.number) && onStepClick(step.number)}
-              style={{
-                cursor: isStepClickable(step.number) ? 'pointer' : 'not-allowed',
-                opacity: isStepClickable(step.number) ? 1 : 0.7,
-              }}
-            >
-              <div className="stepper-line h-40px"></div>
-
-              <div className="stepper-icon">
-                <KTIcon iconName="check" className="stepper-check text-success fs-1" />
-                <span className="stepper-number">{step.number}</span>
-              </div>
-
-              <div className="stepper-label">
-                <div className="stepper-title fs-5 fw-bold text-dark">{step.title}</div>
-                <div className="stepper-desc fw-semibold text-muted">{step.description}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+    <Stepper
+      steps={stepperSteps}
+      currentStep={currentStep}
+      onStepClick={onStepClick}
+      isStepClickable={isStepClickable}
+      sticky={true}
+      stickyTop="20px"
+    />
   )
 }

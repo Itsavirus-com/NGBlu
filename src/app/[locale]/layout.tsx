@@ -5,6 +5,7 @@ import { NextIntlClientProvider, useMessages } from 'next-intl'
 import LoadingOverlay from '@/components/loading/LoadingOverlay'
 import { Toast } from '@/components/toast/toast'
 import { ThemeProvider } from '@/contexts/ThemeContext'
+import { WorkspaceProvider } from '@/contexts/WorkspaceContext'
 import { themeScript } from '@/lib/theme-script'
 
 import { LayoutWrapper } from '../../components/layout-wrapper/LayoutWrapper'
@@ -39,11 +40,13 @@ export default function LocaleLayout({
       <body className={inter.className}>
         <ThemeProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <LayoutWrapper>
-              {children}
-              <Toast />
-              <LoadingOverlay />
-            </LayoutWrapper>
+            <WorkspaceProvider>
+              <LayoutWrapper>
+                {children}
+                <Toast />
+                <LoadingOverlay />
+              </LayoutWrapper>
+            </WorkspaceProvider>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

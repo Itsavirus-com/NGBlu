@@ -25,8 +25,9 @@
       "dashboard": "Dashboard",
       "onboarding": "Onboarding",
       "manageBusinessPartner": "Beheer Zakelijke Partner",
+      "profileCompletion": "Profiel Completien",
+      "dataValidation": "Data Validation",
       "kvk": "KVK",
-      "dataValidation": "Gegevensvalidatie",
       "google": "Google",
       "hierarchy": "Gegevenshiërarchie",
       "dataManagement": "Gegevensbeheer",
@@ -1718,8 +1719,130 @@
     "passwordVerified": "Wachtwoord geverifieerd",
     "passwordVerificationSuccess": "Wachtwoord succesvol geverifieerd. U kunt nu doorgaan.",
     "verificationFailed": "Verificatie mislukt",
-    "verificationFailedMessage": "Er is iets misgegaan. Probeer het opnieuw. Audit Trails"
+    "verificationFailedMessage": "Er is iets misgegaan. Probeer het opnieuw."
   },
+  "fileUpload": {
+    "dropFile": "Drop your file here",
+    "dropOrClick": "Drop your logo here or click to browse",
+    "supports": "Supports",
+    "filesUpTo": "files up to",
+    "max": "Max",
+    "logoPreview": "Logo Preview",
+    "removeFile": "Remove file",
+    "fileSizeTooLarge": "File size must be less than",
+    "invalidFileType": "Only {types} files are allowed",
+    "bytes": "bytes",
+    "kb": "KB",
+    "mb": "MB"
+  },
+  "profileCompletion": {
+    "generalInfo": {
+      "title": "Bedrijfsprofiel",
+      "subtitle": "Vul alle vereiste profiel velden in om door te gaan",
+      "basicInformation": "Basisinformatie",
+      "basicInformationDescription": "Algemene bedrijfscontactgegevens",
+      "generalEmailAddress": "Algemeen e-mailadres",
+      "generalEmailPlaceholder": "Voer algemeen e-mailadres in",
+      "officePhoneNumber": "Kantoor telefoonnummer",
+      "officePhonePlaceholder": "Voer kantoor telefoonnummer in",
+      "addressInformation": "Adresinformatie",
+      "addressInformationDescription": "Kies tussen postbus of algemeen adres",
+      "addressType": "Adrestype",
+      "poBox": "Postbus",
+      "generalAddress": "Algemeen adres",
+      "poBoxNumber": "Postbusnummer",
+      "poBoxNumberPlaceholder": "Voer postbusnummer in",
+      "country": "Land",
+      "streetName": "Straatnaam",
+      "streetNamePlaceholder": "Voer straatnaam in",
+      "houseNumber": "Huisnummer",
+      "houseNumberPlaceholder": "Voer huisnummer in",
+      "houseNumberSuffix": "Huisnummertoevoeging",
+      "houseNumberSuffixPlaceholder": "bijv. A, B, 1",
+      "city": "Plaats",
+      "cityPlaceholder": "Voer plaats in",
+      "postalCode": "Postcode",
+      "postalCodePlaceholder": "Voer postcode in",
+      "financialInformation": "Financiële informatie",
+      "financialInformationDescription": "Facturerings- en betalingsgegevens",
+      "invoiceEmailAddress": "Factuur e-mailadres",
+      "invoiceEmailPlaceholder": "Voer factuur e-mailadres in",
+      "vatBtwNumber": "BTW-nummer",
+      "vatBtwNumberPlaceholder": "Voer BTW-nummer in",
+      "ibanNumber": "IBAN-nummer",
+      "ibanNumberPlaceholder": "Voer IBAN-nummer in",
+      "bankBicSwiftCode": "Bank BIC/SWIFT-code",
+      "bankBicSwiftCodePlaceholder": "Voer BIC/SWIFT-code in",
+      "accountHolderName": "Rekeninghouder naam",
+      "accountHolderNamePlaceholder": "Voer rekeninghouder naam in",
+      "poNumber": "PO-nummer toevoegen (uw referentie op NGBLU-facturen)",
+      "poNumberPlaceholder": "Voer PO-nummer in",
+      "continue": "Doorgaan"
+    },
+    "contactDetails": {
+      "title": "Contactgegevens",
+      "subtitle": "Essentiële contactpersonen voor bedrijfsactiviteiten",
+      "requiredContacts": "Vereiste contactpersonen",
+      "requiredContactsDescription": "Essentiële contactpersonen voor bedrijfsactiviteiten",
+      "financialContact": "Financieel contact",
+      "supportContact": "Ondersteuningscontact",
+      "additionalContacts": "Aanvullende contactpersonen",
+      "additionalContactsDescription": "Optionele contacten om bedrijfscommunicatie te verbeteren",
+      "commercialMarketingContact": "Commercieel/Marketing contact",
+      "deliveryContact": "Bezorgcontact",
+      "outOfHoursSupportContact": "24/7 ondersteuningscontact",
+      "firstName": "Voornaam",
+      "firstNamePlaceholder": "Voer voornaam in",
+      "lastName": "Achternaam",
+      "lastNamePlaceholder": "Voer achternaam in",
+      "email": "E-mail",
+      "emailPlaceholder": "Voer e-mailadres in",
+      "phoneNumber": "Telefoonnummer",
+      "phoneNumberPlaceholder": "Voer telefoonnummer in",
+      "previous": "Vorige",
+      "next": "Volgende",
+      "completeProfile": "Profiel voltooien"
+    },
+    "logoUpload": {
+      "title": "Logo upload",
+      "subtitle": "Upload uw bedrijfslogo (optioneel)",
+      "companyLogo": "Bedrijfslogo",
+      "companyLogoDescription": "Upload uw bedrijfslogo voor professionele presentatie",
+      "optionalStep": "Optionele stap:",
+      "optionalStepDescription": "U kunt nu uw bedrijfslogo uploaden of deze stap overslaan en het later toevoegen.",
+      "brandIdentityNote": "Een professioneel logo helpt bij het vestigen van uw merkidentiteit in zakelijke communicatie.",
+      "logoDesignTips": "Logo ontwerp tips",
+      "highContrast": "Hoog contrast",
+      "highContrastTip": "Gebruik kleuren met hoog contrast voor betere zichtbaarheid op verschillende achtergronden.",
+      "simpleDesign": "Eenvoudig ontwerp",
+      "simpleDesignTip": "Houd uw logo eenvoudig en schoon voor een professionele uitstraling.",
+      "brandConsistent": "Merkconsistent",
+      "brandConsistentTip": "Zorg ervoor dat uw logo past bij uw merkidentiteit en kleuren.",
+      "previous": "Vorige",
+      "skipThisStep": "Deze stap overslaan",
+      "completeProfile": "Profiel voltooien",
+      "next": "Volgende"
+    },
+    "page": {
+      "title": "Zakelijke partner profiel voltooiing",
+      "description": "Voltooi het profiel instellingsproces voor de zakelijke partner",
+      "steps": {
+        "generalInfo": {
+          "title": "Algemene informatie",
+          "description": "Basis bedrijfsinformatie"
+        },
+        "contactDetails": {
+          "title": "Contactgegevens",
+          "description": "Essentiële contactpersonen"
+        },
+        "logoUpload": {
+          "title": "Logo upload",
+          "description": "Upload bedrijfslogo (optioneel)"
+        }
+      }
+    }
+  },
+
   "auditTrails": {
     "title": "Audit Trails",
     "id": "ID",
@@ -1765,5 +1888,17 @@
     "eventInfo": "Gebeurtenis-informatie",
     "eventId": "Gebeurtenis-ID",
     "eventType": "Gebeurtenistype"
+  },
+  "workspace": {
+    "selectWorkspace": "Werkruimte selecteren",
+    "selectWorkspaceDescription": "Kies de werkruimte waartoe u toegang wilt hebben",
+    "continue": "Doorgaan",
+    "noWorkspaces": "Geen werkruimten beschikbaar",
+    "noWorkspacesMessage": "U heeft geen toegang tot werkruimten. Neem contact op met uw beheerder.",
+    "workspaceSelected": "Werkruimte geselecteerd",
+    "workspaceSelectedMessage": "U heeft succesvol de {workspace} werkruimte geselecteerd.",
+    "switchWorkspace": "Werkruimte wisselen",
+    "error": "Fout",
+    "errorMessage": "Er is een fout opgetreden. Probeer het opnieuw."
   }
 }

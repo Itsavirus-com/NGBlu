@@ -100,6 +100,7 @@
 
 // Switch
 .form-switch {
+  padding-left: 0;
   &.form-check-custom {
     .form-check-input {
       height: $form-switch-height;

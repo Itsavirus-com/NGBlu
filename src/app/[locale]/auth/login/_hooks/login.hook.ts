@@ -175,12 +175,14 @@ export const useLogin = () => {
               accessToken: accessToken,
               clientPrivateKey: clientPrivateKey,
               userData: JSON.stringify(responseData.data), // Pass user data to NextAuth
-              callbackUrl: '/dashboard',
+              callbackUrl: '/auth/workspace-select', // Default to workspace select, will be overridden if needed
               accessTokenExpiresAt: accessTokenExpiresAt,
             })
 
             if (result?.ok) {
-              router.push('/dashboard')
+              // After successful login, redirect to workspace select
+              // The workspace select page will handle workspace logic and auto-redirect if needed
+              router.push('/auth/workspace-select')
             } else {
               console.error('SignIn failed:', result?.error)
               showToast({

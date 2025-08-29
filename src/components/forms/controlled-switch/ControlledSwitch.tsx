@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { FormCheckInputProps } from 'react-bootstrap/esm/FormCheckInput'
 import { useController, useFormContext } from 'react-hook-form'
 import './ControlledSwitch.scss'
 
 type SwitchProps = FormCheckInputProps & {
-  label?: string | React.ReactNode
+  label?: string | ReactNode
   name: string
   containerClass?: string
   step?: number

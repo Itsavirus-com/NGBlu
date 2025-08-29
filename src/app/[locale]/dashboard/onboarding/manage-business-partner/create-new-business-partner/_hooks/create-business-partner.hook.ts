@@ -625,10 +625,7 @@ export const useCreateBusinessPartnerForm = () => {
         console.error('Name is required')
         return
       }
-      if (!data.chamberOfCommerceId) {
-        console.error('Chamber of Commerce ID is required')
-        return
-      }
+
       if (!data.managerId) {
         console.error('Manager ID is required')
         return
