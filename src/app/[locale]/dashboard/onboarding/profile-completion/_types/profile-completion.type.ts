@@ -5,12 +5,28 @@ export interface ProfileCompletionData {
   invoiceEmail: string
   vatNumber: string
   iban: string
-  enableAutoDebit: boolean
-  termsAccepted: boolean
 
   // Step 0: General Info - Optional fields
-  postalAddress: string
+
+  // Additional financial fields
+  bankBic: string
+  accountHolderName: string
   poNumber: string
+
+  // Address Information
+  addressType: 'po_box' | 'general_address'
+  poBox: {
+    number: string
+    countryId: string
+  }
+  generalAddress: {
+    streetName: string
+    houseNumber: string
+    houseNumberSuffix: string
+    city: string
+    postalCode: string
+    countryId: string
+  }
 
   // Step 1: Contact Details - Required contacts
   financialContact: {

@@ -8,7 +8,6 @@ export const createBusinessPartnerSchema = yup.object({
     .max(255, 'Company Name must be less than 255 characters'),
   chamberOfCommerceId: yup
     .string()
-    // .required('Chamber of Commerce ID is required')
     .max(50, 'Chamber of Commerce ID must be less than 50 characters')
     .nullable(),
   sbiCodes: yup.array().optional(),

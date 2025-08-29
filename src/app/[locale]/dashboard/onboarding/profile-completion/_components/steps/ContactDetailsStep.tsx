@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { Card, Col, Row } from 'react-bootstrap'
 
 import { Button } from '@/components/button/button'
@@ -15,12 +16,13 @@ export function ContactDetailsStep({
   isLast,
   isValid,
 }: StepComponentProps) {
+  const t = useTranslations('profileCompletion.contactDetails')
   return (
     <div className="stepper-content">
       <div className="w-100">
         <div className="pb-8 pb-lg-10 sticky-header">
-          <h2 className="fw-bold text-dark">Contact Details</h2>
-          <div className="text-muted fs-6">Essential contact persons for business operations</div>
+          <h2 className="fw-bold text-dark">{t('title')}</h2>
+          <div className="text-muted fs-6">{t('subtitle')}</div>
         </div>
 
         {/* Required Contacts Card */}
@@ -33,10 +35,8 @@ export function ContactDetailsStep({
                 </div>
               </div>
               <div>
-                <h3 className="fw-bold m-0 text-gray-800">Required Contacts</h3>
-                <p className="text-muted fs-7 m-0">
-                  Essential contact persons for business operations
-                </p>
+                <h3 className="fw-bold m-0 text-gray-800">{t('requiredContacts')}</h3>
+                <p className="text-muted fs-7 m-0">{t('requiredContactsDescription')}</p>
               </div>
             </Card.Title>
           </Card.Header>
@@ -49,42 +49,42 @@ export function ContactDetailsStep({
                     <KTIcon iconName="financial-schedule" className="fs-4" />
                   </div>
                 </div>
-                <h4 className="fw-semibold text-gray-800 m-0">Financial Contact</h4>
+                <h4 className="fw-semibold text-gray-800 m-0">{t('financialContact')}</h4>
               </div>
               <Row className="g-6">
                 <Col md={6}>
                   <ControlledInput
                     name="financialContact.firstName"
-                    label="First Name"
+                    label={t('firstName')}
                     type="text"
-                    placeholder="Enter first name"
+                    placeholder={t('firstNamePlaceholder')}
                     isRequired
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="financialContact.lastName"
-                    label="Last Name"
+                    label={t('lastName')}
                     type="text"
-                    placeholder="Enter last name"
+                    placeholder={t('lastNamePlaceholder')}
                     isRequired
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="financialContact.email"
-                    label="E-mail"
+                    label={t('email')}
                     type="email"
-                    placeholder="Enter email address"
+                    placeholder={t('emailPlaceholder')}
                     isRequired
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="financialContact.phone"
-                    label="Phone Number"
+                    label={t('phoneNumber')}
                     type="tel"
-                    placeholder="Enter phone number"
+                    placeholder={t('phoneNumberPlaceholder')}
                     isRequired
                   />
                 </Col>
@@ -99,42 +99,42 @@ export function ContactDetailsStep({
                     <KTIcon iconName="people" className="fs-4" />
                   </div>
                 </div>
-                <h4 className="fw-semibold text-gray-800 m-0">Support Contact</h4>
+                <h4 className="fw-semibold text-gray-800 m-0">{t('supportContact')}</h4>
               </div>
               <Row className="g-6">
                 <Col md={6}>
                   <ControlledInput
                     name="supportContact.firstName"
-                    label="First Name"
+                    label={t('firstName')}
                     type="text"
-                    placeholder="Enter first name"
+                    placeholder={t('firstNamePlaceholder')}
                     isRequired
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="supportContact.lastName"
-                    label="Last Name"
+                    label={t('lastName')}
                     type="text"
-                    placeholder="Enter last name"
+                    placeholder={t('lastNamePlaceholder')}
                     isRequired
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="supportContact.email"
-                    label="E-mail"
+                    label={t('email')}
                     type="email"
-                    placeholder="Enter email address"
+                    placeholder={t('emailPlaceholder')}
                     isRequired
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="supportContact.phone"
-                    label="Phone Number"
+                    label={t('phoneNumber')}
                     type="tel"
-                    placeholder="Enter phone number"
+                    placeholder={t('phoneNumberPlaceholder')}
                     isRequired
                   />
                 </Col>
@@ -153,10 +153,8 @@ export function ContactDetailsStep({
                 </div>
               </div>
               <div>
-                <h3 className="fw-bold m-0 text-gray-800">Additional Contacts</h3>
-                <p className="text-muted fs-7 m-0">
-                  Optional contacts to enhance business communication
-                </p>
+                <h3 className="fw-bold m-0 text-gray-800">{t('additionalContacts')}</h3>
+                <p className="text-muted fs-7 m-0">{t('additionalContactsDescription')}</p>
               </div>
             </Card.Title>
           </Card.Header>
@@ -169,39 +167,39 @@ export function ContactDetailsStep({
                     <KTIcon iconName="chart-line" className="fs-5" />
                   </div>
                 </div>
-                <h4 className="fw-semibold text-gray-700 m-0">Commercial/Marketing Contact</h4>
+                <h4 className="fw-semibold text-gray-700 m-0">{t('commercialMarketingContact')}</h4>
               </div>
               <Row className="g-6">
                 <Col md={6}>
                   <ControlledInput
                     name="commercialContact.firstName"
-                    label="First Name"
+                    label={t('firstName')}
                     type="text"
-                    placeholder="Enter first name"
+                    placeholder={t('firstNamePlaceholder')}
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="commercialContact.lastName"
-                    label="Last Name"
+                    label={t('lastName')}
                     type="text"
-                    placeholder="Enter last name"
+                    placeholder={t('lastNamePlaceholder')}
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="commercialContact.email"
-                    label="E-mail"
+                    label={t('email')}
                     type="email"
-                    placeholder="Enter email address"
+                    placeholder={t('emailPlaceholder')}
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="commercialContact.phone"
-                    label="Phone Number"
+                    label={t('phoneNumber')}
                     type="tel"
-                    placeholder="Enter phone number"
+                    placeholder={t('phoneNumberPlaceholder')}
                   />
                 </Col>
               </Row>
@@ -215,39 +213,39 @@ export function ContactDetailsStep({
                     <KTIcon iconName="delivery" className="fs-5" />
                   </div>
                 </div>
-                <h4 className="fw-semibold text-gray-700 m-0">Delivery Contact</h4>
+                <h4 className="fw-semibold text-gray-700 m-0">{t('deliveryContact')}</h4>
               </div>
               <Row className="g-6">
                 <Col md={6}>
                   <ControlledInput
                     name="deliveryContact.firstName"
-                    label="First Name"
+                    label={t('firstName')}
                     type="text"
-                    placeholder="Enter first name"
+                    placeholder={t('firstNamePlaceholder')}
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="deliveryContact.lastName"
-                    label="Last Name"
+                    label={t('lastName')}
                     type="text"
-                    placeholder="Enter last name"
+                    placeholder={t('lastNamePlaceholder')}
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="deliveryContact.email"
-                    label="E-mail"
+                    label={t('email')}
                     type="email"
-                    placeholder="Enter email address"
+                    placeholder={t('emailPlaceholder')}
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="deliveryContact.phone"
-                    label="Phone Number"
+                    label={t('phoneNumber')}
                     type="tel"
-                    placeholder="Enter phone number"
+                    placeholder={t('phoneNumberPlaceholder')}
                   />
                 </Col>
               </Row>
@@ -261,39 +259,39 @@ export function ContactDetailsStep({
                     <KTIcon iconName="night-day" className="fs-5" />
                   </div>
                 </div>
-                <h4 className="fw-semibold text-gray-700 m-0">Out of Hours Support Contact</h4>
+                <h4 className="fw-semibold text-gray-700 m-0">{t('outOfHoursSupportContact')}</h4>
               </div>
               <Row className="g-6">
                 <Col md={6}>
                   <ControlledInput
                     name="outOfHoursContact.firstName"
-                    label="First Name"
+                    label={t('firstName')}
                     type="text"
-                    placeholder="Enter first name"
+                    placeholder={t('firstNamePlaceholder')}
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="outOfHoursContact.lastName"
-                    label="Last Name"
+                    label={t('lastName')}
                     type="text"
-                    placeholder="Enter last name"
+                    placeholder={t('lastNamePlaceholder')}
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="outOfHoursContact.email"
-                    label="E-mail"
+                    label={t('email')}
                     type="email"
-                    placeholder="Enter email address"
+                    placeholder={t('emailPlaceholder')}
                   />
                 </Col>
                 <Col md={6}>
                   <ControlledInput
                     name="outOfHoursContact.phone"
-                    label="Phone Number"
+                    label={t('phoneNumber')}
                     type="tel"
-                    placeholder="Enter phone number"
+                    placeholder={t('phoneNumberPlaceholder')}
                   />
                 </Col>
               </Row>
@@ -308,7 +306,7 @@ export function ContactDetailsStep({
             <Button
               colorClass="light"
               activeColorClass="light-primary"
-              label="Previous"
+              label={t('previous')}
               onClick={onPrevious}
             />
           )}
@@ -317,7 +315,7 @@ export function ContactDetailsStep({
           <Button
             colorClass="primary"
             activeColorClass="primary"
-            label={isLast ? 'Complete Profile' : 'Next'}
+            label={isLast ? t('completeProfile') : t('next')}
             onClick={onNext}
             disabled={!isValid}
           />

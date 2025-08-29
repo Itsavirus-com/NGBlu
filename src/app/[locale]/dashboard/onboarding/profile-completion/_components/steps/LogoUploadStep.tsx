@@ -162,6 +162,7 @@ export function LogoUploadStep({
               label={isLast ? t('completeProfile') : t('next')}
               onClick={onNext}
               disabled={!isValid}
+              type="submit"
             />
           </div>
         </div>

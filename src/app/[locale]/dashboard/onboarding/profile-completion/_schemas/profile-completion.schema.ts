@@ -37,30 +37,76 @@ const supportContactSchema = Yup.object()
 
 export const profileCompletionSchema = Yup.object().shape({
   // Step 0: General Info - Required fields
-  generalEmail: emailValidation,
-  officePhone: phoneValidation,
-  invoiceEmail: emailValidation,
-  vatNumber: Yup.string().required('This field is required'),
-  iban: Yup.string().required('This field is required'),
-  enableAutoDebit: Yup.boolean().optional(),
-  termsAccepted: Yup.boolean().when('enableAutoDebit', {
-    is: true,
-    then: schema =>
-      schema.oneOf([true], 'You must accept the terms and conditions for automatic collection'),
-    otherwise: schema => schema.optional(),
+  generalEmail: Yup.string().email('Invalid email format').required('General email is required'),
+  officePhone: Yup.string().required('Office phone is required'),
+  financialContact: Yup.object().shape({
+    firstName: Yup.string().required('Financial contact name is required'),
+    lastName: Yup.string().required('Financial contact name is required'),
+    email: Yup.string()
+      .email('Invalid email format')
+      .required('Financial contact email is required'),
+    phone: Yup.string().required('Financial contact phone is required'),
   }),
-  postalAddress: Yup.string().optional(),
-  poNumber: Yup.string().optional(),
+  supportContact: Yup.object().shape({
+    firstName: Yup.string().required('Support contact name is required'),
+    lastName: Yup.string().required('Support contact name is required'),
+    email: Yup.string().email('Invalid email format').required('Support contact email is required'),
+    phone: Yup.string().required('Support contact phone is required'),
+  }),
 
-  // Step 1: Contact Details
-  financialContact: financialContactSchema,
-  supportContact: supportContactSchema,
-  commercialContact: optionalContactInfoSchema.optional(),
-  deliveryContact: optionalContactInfoSchema.optional(),
-  outOfHoursContact: optionalContactInfoSchema.optional(),
+  // Step 0: General Info - Optional fields
+  postalAddress: Yup.string(),
+  poNumber: Yup.string(),
+  commercialContact: Yup.object().shape({
+    firstName: Yup.string(),
+    lastName: Yup.string(),
+    email: Yup.string().email('Invalid email format'),
+    phone: Yup.string(),
+  }),
+  deliveryContact: Yup.object().shape({
+    firstName: Yup.string(),
+    lastName: Yup.string(),
+    email: Yup.string().email('Invalid email format'),
+    phone: Yup.string(),
+  }),
+  outOfHoursContact: Yup.object().shape({
+    firstName: Yup.string(),
+    lastName: Yup.string(),
+    email: Yup.string().email('Invalid email format'),
+    phone: Yup.string(),
+  }),
+
+  // Step 1: Legal Confirmation
+  legalConfirmation: Yup.boolean().oneOf([true], 'You must accept the legal terms to continue'),
 
   // Step 2: Logo Upload
-  logo: Yup.mixed().optional(),
+  logo: Yup.mixed().nullable(),
+
+  // VAT and financial settings
+  vatNumber: Yup.string(),
+  iban: Yup.string(),
+  invoiceEmail: Yup.string().email('Invalid email format'),
+
+  // Additional financial fields
+  bankBic: Yup.string().required('Bank BIC is required'),
+  accountHolderName: Yup.string().required('Account holder name is required'),
+
+  // Address Information
+  addressType: Yup.string()
+    .oneOf(['po_box', 'general_address'])
+    .required('Address type is required'),
+  poBox: Yup.object().shape({
+    number: Yup.string(),
+    countryId: Yup.string(),
+  }),
+  generalAddress: Yup.object().shape({
+    streetName: Yup.string(),
+    houseNumber: Yup.string(),
+    houseNumberSuffix: Yup.string(),
+    city: Yup.string(),
+    postalCode: Yup.string(),
+    countryId: Yup.string(),
+  }),
 })
 
 // Step-specific validation schemas
@@ -71,15 +117,25 @@ export const step1Schema = Yup.object().shape({
   invoiceEmail: emailValidation,
   vatNumber: Yup.string().required('VAT/BTW number is required'),
   iban: Yup.string().required('IBAN number is required'),
-  enableAutoDebit: Yup.boolean().optional(),
-  termsAccepted: Yup.boolean().when('enableAutoDebit', {
-    is: true,
-    then: schema =>
-      schema.oneOf([true], 'You must accept the terms and conditions for automatic collection'),
-    otherwise: schema => schema.optional(),
+  bankBic: Yup.string().required('Bank BIC is required'),
+  accountHolderName: Yup.string().required('Account holder name is required'),
+
+  // Address Information
+  addressType: Yup.string()
+    .oneOf(['po_box', 'general_address'])
+    .required('Address type is required'),
+  poBox: Yup.object().shape({
+    number: Yup.string(),
+    countryId: Yup.string(),
   }),
-  postalAddress: Yup.string().optional(),
-  poNumber: Yup.string().optional(),
+  generalAddress: Yup.object().shape({
+    streetName: Yup.string(),
+    houseNumber: Yup.string(),
+    houseNumberSuffix: Yup.string(),
+    city: Yup.string(),
+    postalCode: Yup.string(),
+    countryId: Yup.string(),
+  }),
 })
 
 export const step2Schema = Yup.object().shape({

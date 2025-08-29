@@ -6,8 +6,9 @@ import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { businessPartnerApi } from '@/services/api/business-partner-api'
 
-import { stepSchemas } from '../_schemas/profile-completion.schema'
+import { profileCompletionSchema , stepSchemas } from '../_schemas/profile-completion.schema'
 import { ProfileCompletionData } from '../_types/profile-completion.type'
 
 export function useProfileCompletion() {
@@ -21,12 +22,28 @@ export function useProfileCompletion() {
     invoiceEmail: '',
     vatNumber: '',
     iban: '',
-    enableAutoDebit: true,
-    termsAccepted: true,
 
     // Step 0: General Info - Optional fields
-    postalAddress: '',
+
+    // Additional financial fields
+    bankBic: '',
+    accountHolderName: '',
     poNumber: '',
+
+    // Address Information
+    addressType: 'po_box',
+    poBox: {
+      number: '',
+      countryId: '1',
+    },
+    generalAddress: {
+      streetName: '',
+      houseNumber: '',
+      houseNumberSuffix: '',
+      city: '',
+      postalCode: '',
+      countryId: '1',
+    },
 
     // Step 1: Contact Details - Required contacts
     financialContact: {
@@ -83,14 +100,7 @@ export function useProfileCompletion() {
 
       // Additional validation for step 0 (General Info)
       if (stepIndex === 0) {
-        // Check if auto debit is enabled but terms not accepted
-        if (formValues.enableAutoDebit && !formValues.termsAccepted) {
-          form.setError('termsAccepted', {
-            type: 'manual',
-            message: 'You must accept the terms and conditions for automatic collection',
-          })
-          return false
-        }
+        // No additional validation needed
       }
 
       await stepSchema.validate(formValues, { abortEarly: false })
@@ -157,13 +167,120 @@ export function useProfileCompletion() {
     [validateStep]
   )
 
+  // Transform form data to match API contract
+  const transformFormDataToApiPayload = (data: ProfileCompletionData): FormData => {
+    const formData = new FormData()
+
+    // General Info
+    formData.append('general_email', data.generalEmail)
+    formData.append('office_phone_number', data.officePhone)
+    formData.append('invoice_email', data.invoiceEmail)
+    formData.append('vat_number', data.vatNumber)
+    formData.append('bank_iban', data.iban)
+
+    // Address Information
+    if (data.addressType === 'po_box') {
+      formData.append('po_box[number]', data.poBox.number)
+      formData.append('po_box[country_id]', data.poBox.countryId)
+    } else if (data.addressType === 'general_address') {
+      formData.append('postal_address[streetname]', data.generalAddress.streetName)
+      formData.append('postal_address[housenumber]', data.generalAddress.houseNumber)
+      if (data.generalAddress.houseNumberSuffix) {
+        formData.append('postal_address[housenumber_suffix]', data.generalAddress.houseNumberSuffix)
+      }
+      formData.append('postal_address[city]', data.generalAddress.city)
+      formData.append('postal_address[postalcode]', data.generalAddress.postalCode)
+      formData.append('postal_address[country_id]', data.generalAddress.countryId)
+    }
+
+    // Bank BIC
+    formData.append('bank_bic', data.bankBic)
+
+    // Account holder name
+    formData.append('account_holder_name', data.accountHolderName)
+
+    // PO Number (optional)
+    if (data.poNumber) {
+      formData.append('po_number', data.poNumber)
+    }
+
+    // Financial Contact
+    formData.append('financial_contact[first_name]', data.financialContact.firstName)
+    formData.append('financial_contact[last_name]', data.financialContact.lastName)
+    formData.append('financial_contact[email]', data.financialContact.email)
+    formData.append('financial_contact[phone_number]', data.financialContact.phone)
+
+    // Support Contact
+    formData.append('support_contact[first_name]', data.supportContact.firstName)
+    formData.append('support_contact[last_name]', data.supportContact.lastName)
+    formData.append('support_contact[email]', data.supportContact.email)
+    formData.append('support_contact[phone_number]', data.supportContact.phone)
+
+    // Commercial Contact (if provided)
+    if (data.commercialContact.firstName && data.commercialContact.lastName) {
+      formData.append('marketing_contact[first_name]', data.commercialContact.firstName)
+      formData.append('marketing_contact[last_name]', data.commercialContact.lastName)
+      formData.append('marketing_contact[email]', data.commercialContact.email)
+      formData.append('marketing_contact[phone_number]', data.commercialContact.phone)
+    }
+
+    // Delivery Contact (if provided)
+    if (data.deliveryContact.firstName && data.deliveryContact.lastName) {
+      formData.append('delivery_contact[first_name]', data.deliveryContact.firstName)
+      formData.append('delivery_contact[last_name]', data.deliveryContact.lastName)
+      formData.append('delivery_contact[email]', data.deliveryContact.email)
+      formData.append('delivery_contact[phone_number]', data.deliveryContact.phone)
+    }
+
+    // Out of Hours Contact (if provided)
+    if (data.outOfHoursContact.firstName && data.outOfHoursContact.lastName) {
+      formData.append('out_of_hours_support_contact[first_name]', data.outOfHoursContact.firstName)
+      formData.append('out_of_hours_support_contact[last_name]', data.outOfHoursContact.lastName)
+      formData.append('out_of_hours_support_contact[email]', data.outOfHoursContact.email)
+      formData.append('out_of_hours_support_contact[phone_number]', data.outOfHoursContact.phone)
+    }
+
+    // Logo file
+    if (data.logo instanceof File) {
+      formData.append('logo', data.logo)
+    }
+    formData.append('_method', 'PUT')
+
+    return formData
+  }
+
   const onSubmit = async (data: ProfileCompletionData) => {
-    console.log('Form submitted with data:', data)
-    showToast({
-      variant: 'success',
-      title: 'Success',
-      body: 'Profile completion submitted successfully!',
-    })
+    try {
+      // Transform form data to API payload
+      const payload = transformFormDataToApiPayload(data)
+
+      // Call the API
+      const response = await businessPartnerApi.updateBusinessPartnerProfile(payload)
+
+      if (response.ok) {
+        showToast({
+          variant: 'success',
+          title: 'Success',
+          body: 'Business partner profile updated successfully!',
+        })
+        return { success: true, data: response.data }
+      } else {
+        showToast({
+          variant: 'danger',
+          title: 'Error',
+          body: response.problem || 'Failed to update business partner profile',
+        })
+        return { success: false, error: response.problem }
+      }
+    } catch (error: any) {
+      console.error('Profile update error:', error)
+      showToast({
+        variant: 'danger',
+        title: 'Error',
+        body: error.message || 'An unexpected error occurred',
+      })
+      return { success: false, error: error }
+    }
   }
 
   return {
@@ -178,57 +295,3 @@ export function useProfileCompletion() {
   }
 }
 
-// Create a comprehensive schema for all steps
-const profileCompletionSchema = Yup.object().shape({
-  // Step 0: General Info - Required fields
-  generalEmail: Yup.string().email('Invalid email format').required('General email is required'),
-  officePhone: Yup.string().required('Office phone is required'),
-  financialContact: Yup.object().shape({
-    firstName: Yup.string().required('Financial contact name is required'),
-    lastName: Yup.string().required('Financial contact name is required'),
-    email: Yup.string()
-      .email('Invalid email format')
-      .required('Financial contact email is required'),
-    phone: Yup.string().required('Financial contact phone is required'),
-  }),
-  supportContact: Yup.object().shape({
-    firstName: Yup.string().required('Support contact name is required'),
-    lastName: Yup.string().required('Support contact name is required'),
-    email: Yup.string().email('Invalid email format').required('Support contact email is required'),
-    phone: Yup.string().required('Support contact phone is required'),
-  }),
-
-  // Step 0: General Info - Optional fields
-  postalAddress: Yup.string(),
-  poNumber: Yup.string(),
-  commercialContact: Yup.object().shape({
-    firstName: Yup.string(),
-    lastName: Yup.string(),
-    email: Yup.string().email('Invalid email format'),
-    phone: Yup.string(),
-  }),
-  deliveryContact: Yup.object().shape({
-    firstName: Yup.string(),
-    lastName: Yup.string(),
-    email: Yup.string().email('Invalid email format'),
-    phone: Yup.string(),
-  }),
-  outOfHoursContact: Yup.object().shape({
-    firstName: Yup.string(),
-    lastName: Yup.string(),
-    email: Yup.string().email('Invalid email format'),
-    phone: Yup.string(),
-  }),
-
-  // Step 1: Legal Confirmation
-  legalConfirmation: Yup.boolean().oneOf([true], 'You must accept the legal terms to continue'),
-
-  // Step 2: Logo Upload
-  logo: Yup.mixed().nullable(),
-
-  // VAT and financial settings
-  vatNumber: Yup.string(),
-  iban: Yup.string(),
-  enableAutoDebit: Yup.boolean(),
-  invoiceEmail: Yup.string().email('Invalid email format'),
-})
