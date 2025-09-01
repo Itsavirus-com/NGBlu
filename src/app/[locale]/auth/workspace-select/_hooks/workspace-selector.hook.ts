@@ -10,7 +10,7 @@ import { Workspace } from '@/services/swr/models/workspace.type'
 export const useWorkspaceSelector = () => {
   const router = useRouter()
   const { showToast } = useToast()
-  const { setWorkspaceContextId, setCurrentWorkspace } = useWorkspaceContext()
+  const { setWorkspace } = useWorkspaceContext()
   const { withLoading, isLoading: isSubmitting } = useLoading()
 
   // Component state
@@ -38,8 +38,7 @@ export const useWorkspaceSelector = () => {
             setSelectedWorkspaceId(singleWorkspace.id)
 
             // Set workspace context locally (no API call needed)
-            setWorkspaceContextId(singleWorkspace.id)
-            setCurrentWorkspace(singleWorkspace)
+            setWorkspace(singleWorkspace)
 
             // Redirect to dashboard
             router.push('/dashboard')
@@ -86,8 +85,7 @@ export const useWorkspaceSelector = () => {
         const selectedWorkspace = workspaces.find(w => w.id === selectedWorkspaceId)
         if (selectedWorkspace) {
           // Set workspace context locally (no API call needed)
-          setWorkspaceContextId(selectedWorkspace.id)
-          setCurrentWorkspace(selectedWorkspace)
+          setWorkspace(selectedWorkspace)
 
           showToast({
             variant: 'success',
