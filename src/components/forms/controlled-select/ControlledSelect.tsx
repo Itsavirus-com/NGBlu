@@ -27,6 +27,7 @@ type SelectProps<OptionValue> = {
   haveDetailOptions?: boolean
   isMulti?: boolean
   options?: any[]
+  fetchDetailData?: boolean
 }
 
 export const ControlledSelect = <OptionValue extends Record<string, any>>(
@@ -48,6 +49,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     haveDetailOptions,
     isMulti,
     options: directOptions,
+    fetchDetailData,
   } = props
 
   const {
@@ -70,6 +72,7 @@ export const ControlledSelect = <OptionValue extends Record<string, any>>(
     haveDetailOptions,
     isMulti,
     directOptions,
+    fetchDetailData,
   })
 
   if (isHidden && options.length <= 1) {

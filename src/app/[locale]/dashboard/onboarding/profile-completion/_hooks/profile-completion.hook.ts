@@ -1,6 +1,7 @@
 'use client'
 
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
@@ -8,10 +9,11 @@ import * as Yup from 'yup'
 import { useToast } from '@/hooks/use-toast.hook'
 import { businessPartnerApi } from '@/services/api/business-partner-api'
 
-import { profileCompletionSchema , stepSchemas } from '../_schemas/profile-completion.schema'
+import { profileCompletionSchema, stepSchemas } from '../_schemas/profile-completion.schema'
 import { ProfileCompletionData } from '../_types/profile-completion.type'
 
 export function useProfileCompletion() {
+  const { push } = useRouter()
   const { showToast } = useToast()
   const [currentStep, setCurrentStep] = useState(0)
 
@@ -263,6 +265,7 @@ export function useProfileCompletion() {
           title: 'Success',
           body: 'Business partner profile updated successfully!',
         })
+        push('/dashboard')
         return { success: true, data: response.data }
       } else {
         showToast({
@@ -294,4 +297,3 @@ export function useProfileCompletion() {
     onSubmit,
   }
 }
-
