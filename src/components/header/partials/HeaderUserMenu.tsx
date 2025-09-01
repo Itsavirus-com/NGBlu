@@ -16,7 +16,7 @@ const HeaderUserMenu: FC = () => {
   const handleSignOut = () => {
     // Clear all sensitive data from localStorage before signing out
     passwordVerificationUtils.clearVerification()
-    signOut()
+    signOut({ callbackUrl: '/auth/login' })
   }
 
   return (
