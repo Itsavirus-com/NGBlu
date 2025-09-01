@@ -34,7 +34,15 @@ export const useWorkspaceSelector = () => {
 
           // If user has only one workspace, auto-select it and redirect to dashboard
           if (workspaceData.length === 1) {
-            handleWorkspaceSelect(workspaceData[0].id)
+            const singleWorkspace = workspaceData[0]
+            setSelectedWorkspaceId(singleWorkspace.id)
+
+            // Set workspace context locally (no API call needed)
+            setWorkspaceContextId(singleWorkspace.id)
+            setCurrentWorkspace(singleWorkspace)
+
+            // Redirect to dashboard
+            router.push('/dashboard')
             return
           }
 
@@ -65,6 +73,8 @@ export const useWorkspaceSelector = () => {
 
   const handleWorkspaceSelect = (workspaceId: string) => {
     setSelectedWorkspaceId(workspaceId)
+    // Redirect to dashboard
+    router.push('/dashboard')
   }
 
   const handleContinue = async () => {
