@@ -15,6 +15,7 @@ interface UseSelectProps<OptionValue> {
   haveDetailOptions?: boolean
   isMulti?: boolean
   directOptions?: any[]
+  fetchDetailData?: boolean
 }
 
 export const useSelect = <OptionValue extends Record<string, any>>({
@@ -28,6 +29,7 @@ export const useSelect = <OptionValue extends Record<string, any>>({
   haveDetailOptions = true,
   isMulti = false,
   directOptions,
+  fetchDetailData = false,
 }: UseSelectProps<OptionValue>) => {
   const { control } = useFormContext()
   const {
@@ -54,7 +56,11 @@ export const useSelect = <OptionValue extends Record<string, any>>({
   })
 
   const { data: detailData } = useOptionDataById<OptionValue>(
-    !directOptions && haveDetailOptions ? (apiPathSelected ? apiPathSelected : apiPath) : undefined,
+    !directOptions && haveDetailOptions && fetchDetailData && field.value && field.value !== '0'
+      ? apiPathSelected
+        ? apiPathSelected
+        : apiPath
+      : undefined,
     field.value,
     isSelectedIdWithParams,
     { ...filter, id: field.value }

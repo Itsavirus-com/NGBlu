@@ -34,6 +34,16 @@ export const SessionChecker = () => {
 
     // unauthenticated users show toast and redirect to login
     if (status === 'unauthenticated') {
+      // Check if this was an intentional logout
+      const isIntentionalLogout = sessionStorage.getItem('intentional_logout')
+
+      if (isIntentionalLogout) {
+        // Clear the flag and don't show error toast for intentional logout
+        sessionStorage.removeItem('intentional_logout')
+        return
+      }
+
+      // Only show session expired toast for actual session expiration
       showToast({
         variant: 'danger',
         title: t('sessionExpired'),

@@ -161,7 +161,7 @@ const useAccountProfileSettings = () => {
     // Handle too many attempts error
     if (error.message === 'Too many reset attempts. Please try again later.') {
       setTimeout(() => {
-        signOut()
+        signOut({ callbackUrl: '/auth/login' })
       }, 2000)
     }
   }

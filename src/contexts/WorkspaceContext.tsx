@@ -9,6 +9,7 @@ interface WorkspaceContextType {
   setCurrentWorkspace: (workspace: Workspace | null) => void
   workspaceContextId: string | null
   setWorkspaceContextId: (id: string | null) => void
+  setWorkspace: (workspace: Workspace) => void
 }
 
 const WorkspaceContext = createContext<WorkspaceContextType | undefined>(undefined)
@@ -40,6 +41,11 @@ export function WorkspaceProvider({ children }: { children: React.ReactNode }) {
         sessionStorage.removeItem('workspaceContext')
         console.log('Workspace context removed')
       }
+    },
+    setWorkspace: (workspace: Workspace) => {
+      setCurrentWorkspace(workspace)
+      setWorkspaceContextId(workspace.id)
+      sessionStorage.setItem('workspaceContext', workspace.id)
     },
   }
 
