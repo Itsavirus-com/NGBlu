@@ -3,7 +3,6 @@
 import { useTranslations } from 'next-intl'
 import { Col, Row } from 'react-bootstrap'
 
-import { Breadcrumbs } from '@/components/breadcrumbs/breadcrumbs'
 import { FormProvider } from '@/components/forms/form-provider/FormProvider'
 import { KTIcon } from '@/components/kt-icon/KtIcon'
 import { Page } from '@/components/page/page'
@@ -25,7 +24,6 @@ export const CreateBusinessPartnerForm = () => {
     handleNext,
     handleBack,
     handleStepClick,
-    breadcrumbItems,
     onSubmit,
     getSubmitButtonText,
     isSubmitButtonDisabled,
@@ -48,8 +46,6 @@ export const CreateBusinessPartnerForm = () => {
 
   return (
     <Page title={t('title')} description={t('description')} className="pb-5">
-      <Breadcrumbs items={breadcrumbItems} />
-
       <FormProvider methods={methods} onSubmit={() => {}} name="create-business-partner">
         <Row>
           {/* Left Sidebar - Steps */}
