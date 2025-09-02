@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { signOut, useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { FC } from 'react'
@@ -10,13 +11,17 @@ import { passwordVerificationUtils } from '@/utils/password-verification'
 import { Languages } from './languages'
 
 const HeaderUserMenu: FC = () => {
+  const router = useRouter()
   const t = useTranslations('common.navbar')
   const { data: session } = useSession()
 
   const handleSignOut = () => {
     // Clear all sensitive data from localStorage before signing out
     passwordVerificationUtils.clearVerification()
-    signOut()
+    // Set a flag to indicate intentional logout
+    sessionStorage.setItem('intentional_logout', 'true')
+    signOut({ redirect: false })
+    router.push('/auth/login')
   }
 
   return (

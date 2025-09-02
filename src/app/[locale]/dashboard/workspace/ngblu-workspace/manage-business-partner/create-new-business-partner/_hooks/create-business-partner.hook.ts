@@ -14,7 +14,6 @@ import {
 } from '../_schemas/business-partner.schema'
 
 export const useCreateBusinessPartnerForm = () => {
-  const { push } = useRouter()
   const t = useTranslations('dataManagement.createBusinessPartner')
   const [currentStep, setCurrentStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -22,7 +21,7 @@ export const useCreateBusinessPartnerForm = () => {
   const [isSuccess, setIsSuccess] = useState(false)
   const [validationError, setValidationError] = useState('')
   const { showToast, showUnexpectedToast } = useToast()
-
+  const { push } = useRouter()
   // KVK and address lookup states
   const [isValidatingKvk, setIsValidatingKvk] = useState(false)
   const [isLookingUpAddress, setIsLookingUpAddress] = useState(false)
@@ -47,8 +46,8 @@ export const useCreateBusinessPartnerForm = () => {
 
       // Manager and Type
       managerId: undefined,
-      businesspartnerTypeId: 1,
-      enterpriseRootId: 1,
+      businesspartnerTypeId: undefined,
+      enterpriseRootId: undefined,
 
       // Address Info
       address: {
@@ -82,7 +81,6 @@ export const useCreateBusinessPartnerForm = () => {
       contract: undefined,
 
       // Legacy fields for backward compatibility
-      kvkNumber: '',
       companyName: '',
       postalCodeHouse: '',
       streetName: '',
@@ -236,11 +234,11 @@ export const useCreateBusinessPartnerForm = () => {
 
     // Ensure chamber_of_commerce_id is a string
     const chamberOfCommerceId = data.chamberOfCommerceId || data.kvkNumber || ''
-    formData.append('chamber_of_commerce_id', chamberOfCommerceId.toString())
+    if (chamberOfCommerceId) {
+      formData.append('chamber_of_commerce_id', chamberOfCommerceId.toString())
+    }
 
-    // Manager ID must be a valid sales manager - this will need to be fixed in the UI
-    // For now, we'll use a hardcoded value that works (assuming ID 1 is a valid sales manager)
-    formData.append('manager_id', '2')
+    formData.append('manager_id', String(data.managerId))
 
     formData.append('businesspartner_type_id', String(data.businesspartnerTypeId || 1))
     formData.append('enterprise_root_id', String(data.enterpriseRootId || 1))
