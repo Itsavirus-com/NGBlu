@@ -2,9 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
-import { Nav, Tab } from 'react-bootstrap'
 
-import { Button } from '@/components/button/button'
 import { Table } from '@/components/table/table'
 import { TableColumn } from '@/components/table/table.type'
 
@@ -137,70 +135,29 @@ const BusinessPartnerOverview = () => {
 
   return (
     <div className="app-container container-fluid">
-      {/* Header */}
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <div>
-          <h1 className="fw-bold fs-2 mb-1">{t('businessPartnerOverview')}</h1>
-          <p className="text-muted mb-0">{t('customers')}</p>
-        </div>
-        <Button
-          icon="plus"
-          label={t('createBusinessPartner')}
-          colorClass="primary"
-          href="create-new-business-partner"
-        />
-      </div>
-
-      {/* Tabs */}
-      <Tab.Container activeKey={activeTab} onSelect={key => setActiveTab(key || 'all')}>
-        <Nav variant="tabs" className="mb-4 border-0">
-          <Nav.Item>
-            <Nav.Link eventKey="all" className="border-0 fw-semibold">
-              {t('allBusinessPartners')}
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="my" className="border-0 fw-semibold">
-              {t('myBusinessPartners')}
-            </Nav.Link>
-          </Nav.Item>
-        </Nav>
-
-        <Tab.Content>
-          <Tab.Pane eventKey="all">
-            <Table<BusinessPartnerTableData>
-              columns={columns}
-              data={businessPartners}
-              filters={
-                <div className="position-relative">
-                  <i className="ki-outline ki-magnifier fs-3 position-absolute ms-3 mt-3 text-muted"></i>
-                  <input
-                    type="text"
-                    className="form-control ps-10 border-0 bg-light"
-                    placeholder={t('searchNamePhoneNumberEtc')}
-                  />
-                </div>
-              }
+      <Table<BusinessPartnerTableData>
+        title={t('businessPartnerOverview')}
+        toolbars={[
+          {
+            icon: 'plus',
+            label: t('createBusinessPartner'),
+            colorClass: 'primary',
+            href: '/dashboard/workspace/ngblu-workspace/manage-business-partner/create-new-business-partner',
+          },
+        ]}
+        columns={columns}
+        data={businessPartners}
+        filters={
+          <div className="position-relative">
+            <i className="ki-outline ki-magnifier fs-3 position-absolute ms-3 mt-3 text-muted"></i>
+            <input
+              type="text"
+              className="form-control ps-10 border-0 bg-light"
+              placeholder={t('searchNamePhoneNumberEtc')}
             />
-          </Tab.Pane>
-          <Tab.Pane eventKey="my">
-            <Table<BusinessPartnerTableData>
-              columns={columns}
-              data={businessPartners.slice(0, 3)}
-              filters={
-                <div className="position-relative">
-                  <i className="ki-outline ki-magnifier fs-3 position-absolute ms-3 mt-3 text-muted"></i>
-                  <input
-                    type="text"
-                    className="form-control ps-10 border-0 bg-light"
-                    placeholder={t('searchNamePhoneNumberEtc')}
-                  />
-                </div>
-              }
-            />
-          </Tab.Pane>
-        </Tab.Content>
-      </Tab.Container>
+          </div>
+        }
+      />
     </div>
   )
 }

@@ -6,57 +6,76 @@ import { Row } from 'react-bootstrap'
 import { Button } from '@/components/button/button'
 import { TextView } from '@/components/view/text-view/TextView'
 
-import { BusinessPartnerInfo } from '../_types/business-partner.types'
+import { WorkspaceInfo, WorkspaceType } from '../types/workspace.types'
 
-type BusinessPartnerInfoViewProps = {
-  businessPartnerData: BusinessPartnerInfo
+type WorkspaceInfoViewProps = {
+  workspaceData: WorkspaceInfo
   isLoading?: boolean
+  translationNamespace?: string
 }
 
-export const BusinessPartnerInfoView = ({
-  businessPartnerData,
+export const WorkspaceInfoView = ({
+  workspaceData,
   isLoading = false,
-}: BusinessPartnerInfoViewProps) => {
-  const t = useTranslations('workspace.businessPartner')
+  translationNamespace,
+}: WorkspaceInfoViewProps) => {
+  const t = useTranslations(translationNamespace)
 
-  const businessPartnerInfoFields = [
+  const getWorkspaceTitle = (type: WorkspaceType) => {
+    const titles = {
+      ngblu: t('ngbluInformation'),
+      'business-partner': t('businessPartnerInformation'),
+      site: t('siteInformation'),
+    }
+    return titles[type] || t('workspaceInformation')
+  }
+
+  const workspaceInfoFields = [
     {
-      label: t('businessPartnerInformation'),
-      value: businessPartnerData.name,
+      label: getWorkspaceTitle(workspaceData.type),
+      value: workspaceData.name,
       colProps: { xs: 12, md: 6, lg: 3 },
     },
     {
       label: '',
-      value: (
+      value: workspaceData.companyUrl ? (
         <div className="d-flex align-items-center">
           <i className="ki-outline ki-global fs-5 me-2 text-primary"></i>
           <a
-            href={`https://${businessPartnerData.companyUrl}`}
+            href={`https://${workspaceData.companyUrl}`}
             className="text-primary text-decoration-none"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            {businessPartnerData.companyUrl}
+            {workspaceData.companyUrl}
           </a>
         </div>
+      ) : (
+        '-'
       ),
       colProps: { xs: 12, md: 6, lg: 3 },
     },
     {
       label: '',
-      value: (
+      value: workspaceData.phoneNumber ? (
         <div className="d-flex align-items-center">
           <i className="ki-outline ki-phone fs-5 me-2 text-muted"></i>
-          <span>{businessPartnerData.phoneNumber}</span>
+          <span>{workspaceData.phoneNumber}</span>
         </div>
+      ) : (
+        '-'
       ),
       colProps: { xs: 12, md: 6, lg: 3 },
     },
     {
       label: '',
-      value: (
+      value: workspaceData.email ? (
         <div className="d-flex align-items-center">
           <i className="ki-outline ki-sms fs-5 me-2 text-muted"></i>
-          <span>{businessPartnerData.email}</span>
+          <span>{workspaceData.email}</span>
         </div>
+      ) : (
+        '-'
       ),
       colProps: { xs: 12, md: 6, lg: 3 },
     },
@@ -65,32 +84,32 @@ export const BusinessPartnerInfoView = ({
   const additionalFields = [
     {
       label: t('vatNumber'),
-      value: businessPartnerData.vatNumber,
+      value: workspaceData.vatNumber || '-',
       colProps: { xs: 12, md: 6, lg: 3 },
     },
     {
-      label: t('addressName'),
-      value: businessPartnerData.addressName,
+      label: t('address'),
+      value: workspaceData.addressName || '-',
       colProps: { xs: 12, md: 6, lg: 3 },
     },
     {
       label: t('postalCode'),
-      value: businessPartnerData.postalCode,
+      value: workspaceData.postalCode || '-',
       colProps: { xs: 12, md: 6, lg: 3 },
     },
     {
-      label: t('cityName'),
-      value: businessPartnerData.cityName,
+      label: t('city'),
+      value: workspaceData.cityName || '-',
       colProps: { xs: 12, md: 6, lg: 3 },
     },
     {
-      label: t('countryName'),
-      value: businessPartnerData.countryName,
+      label: t('country'),
+      value: workspaceData.countryName || '-',
       colProps: { xs: 12, md: 6, lg: 3 },
     },
     {
-      label: t('brancheName'),
-      value: businessPartnerData.brancheName,
+      label: t('branche'),
+      value: workspaceData.brancheName || '-',
       colProps: { xs: 12, md: 6, lg: 3 },
     },
   ]
@@ -99,13 +118,13 @@ export const BusinessPartnerInfoView = ({
     <div>
       {/* Header with Edit Button */}
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h3 className="fw-bold fs-3 mb-0">{t('businessPartnerInformation')}</h3>
+        <h3 className="fw-bold fs-3 mb-0">{getWorkspaceTitle(workspaceData.type)}</h3>
         <Button icon="setting-2" colorClass="light" className="btn-sm" />
       </div>
 
-      {/* Business Partner Info Fields */}
+      {/* Workspace Info Fields */}
       <Row>
-        {businessPartnerInfoFields.map((field, index) => (
+        {workspaceInfoFields.map((field, index) => (
           <TextView
             key={index}
             label={field.label}
