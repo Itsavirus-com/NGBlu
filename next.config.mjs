@@ -28,6 +28,12 @@ const nextConfig = {
     formats: ['image/webp'], // Optioneel als je WebP wilt ondersteunen
   },
   webpack: config => {
+    // Fix webpack cache serialization warning
+    config.cache = {
+      type: 'filesystem',
+      compression: 'gzip',
+      maxMemoryGenerations: 1,
+    }
     return config
   },
   /* Uncomment and simplify rewrites */
