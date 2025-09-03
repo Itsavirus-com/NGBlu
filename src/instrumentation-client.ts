@@ -24,3 +24,9 @@ Sentry.init({
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
 })
+
+// Router transition instrumentation for Sentry
+export const onRouterTransitionStart = (name: string) => {
+  // Simple router transition tracking
+  return Sentry.captureMessage(`Navigation to: ${name}`, 'debug')
+}
