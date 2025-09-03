@@ -1,10 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useToast } from '@/hooks/use-toast.hook'
+import { useRouter } from '@/navigation'
 import { businessPartnerApi } from '@/services/api/business-partner-api'
 import { swrApi } from '@/services/api/swr-api'
 
@@ -482,7 +482,7 @@ export const useCreateBusinessPartnerForm = () => {
           title: 'Success',
           body: 'Business Partner created successfully',
         })
-        push('/dashboard/onboarding/manage-business-partner')
+        push('/dashboard/workspace/ngblu-workspace/manage-business-partner')
         return { success: true, data: response.data }
       } else {
         showToast({
@@ -606,19 +606,6 @@ export const useCreateBusinessPartnerForm = () => {
     setCurrentStep(step)
   }
 
-  const breadcrumbItems = [
-    {
-      name: t('breadcrumbs.manageBusinessPartner'),
-      path: '/dashboard/onboarding/manage-business-partner',
-      type: 'manage',
-    },
-    {
-      name: t('breadcrumbs.createNewBusinessPartner'),
-      path: '/dashboard/onboarding/manage-business-partner/create-new-business-partner',
-      type: 'create',
-    },
-  ]
-
   const onSubmit = async (data: CreateBusinessPartnerFormData) => {
     try {
       // Validate required fields
@@ -680,7 +667,6 @@ export const useCreateBusinessPartnerForm = () => {
     handleStepClick,
     setMapCoordinates,
     setShouldRenderMap,
-    breadcrumbItems,
     onSubmit,
     getSubmitButtonText,
     isSubmitButtonDisabled,

@@ -16,14 +16,24 @@ const SidebarMenuMain = () => {
       {/* Dashboard */}
       <SidebarMenuItem to="/dashboard" icon="element-11" title={t('dashboard')} />
 
-      {/* Onboarding */}
-      <SidebarMenuSeparator title={t('onboarding')} />
-      <SidebarMenuItemWithSub to="/dashboard/onboarding" title={t('onboarding')} icon="user-tick">
+      {/* Workspace */}
+      <SidebarMenuSeparator title={t('workspace')} />
+      <SidebarMenuItemWithSub
+        to="/dashboard/workspace/ngblu-workspace"
+        title={t('ngbluWorkspace')}
+        icon="abstract-41"
+      >
         <SidebarMenuItem
-          to="/dashboard/onboarding/manage-business-partner"
+          to="/dashboard/workspace/ngblu-workspace/manage-business-partner"
           title={t('manageBusinessPartner')}
           hasBullet
         />
+      </SidebarMenuItemWithSub>
+      {/* End of Workspace */}
+
+      {/* Onboarding */}
+      <SidebarMenuSeparator title={t('onboarding')} />
+      <SidebarMenuItemWithSub title={t('onboarding')} icon="user-tick">
         <SidebarMenuItem
           to="/dashboard/onboarding/profile-completion"
           title={t('profileCompletion')}

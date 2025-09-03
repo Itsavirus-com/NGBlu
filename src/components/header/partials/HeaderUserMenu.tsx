@@ -8,7 +8,6 @@ import { FC } from 'react'
 import avatar from '@/assets/images/avatars/300-3.jpg'
 import { passwordVerificationUtils } from '@/utils/password-verification'
 
-
 import { Languages } from './languages'
 
 const HeaderUserMenu: FC = () => {
