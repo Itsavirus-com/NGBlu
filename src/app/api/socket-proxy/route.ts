@@ -3,7 +3,23 @@ import { type NextRequest } from 'next/server'
 // Socket.IO server to proxy to from environment variable with fallback
 const SOCKET_SERVER = process.env.NEXT_PUBLIC_SOCKET_IO_URL
 
+// Validate environment variable
+if (!SOCKET_SERVER) {
+  console.error('NEXT_PUBLIC_SOCKET_IO_URL is not defined')
+}
+
 export async function GET(request: NextRequest) {
+  // Check if socket server is configured
+  if (!SOCKET_SERVER) {
+    return new Response(JSON.stringify({ error: 'Socket server not configured' }), {
+      status: 503,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    })
+  }
+
   const requestUrl = new URL(request.url)
   const path = requestUrl.pathname.replace('/api/socket-proxy', '')
   const searchParams = requestUrl.search
@@ -47,6 +63,17 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  // Check if socket server is configured
+  if (!SOCKET_SERVER) {
+    return new Response(JSON.stringify({ error: 'Socket server not configured' }), {
+      status: 503,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    })
+  }
+
   const requestUrl = new URL(request.url)
   const path = requestUrl.pathname.replace('/api/socket-proxy', '')
   const searchParams = requestUrl.search
