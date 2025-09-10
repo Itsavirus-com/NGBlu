@@ -87,5 +87,11 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "overrides": {
+    "rollup": "^4.0.0"
+  },
+  "resolutions": {
+    "rollup": "^4.0.0"
   }
 }
