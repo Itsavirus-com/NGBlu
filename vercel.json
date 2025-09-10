@@ -1,6 +1,6 @@
 {
-  "buildCommand": "npm ci && npm run build",
-  "installCommand": "npm ci --prefer-offline --no-audit",
+  "buildCommand": "rm -rf node_modules package-lock.json && npm install && npm run build",
+  "installCommand": "npm install --no-optional --no-audit",
   "framework": "nextjs",
   "functions": {
     "src/app/api/**/*.ts": {

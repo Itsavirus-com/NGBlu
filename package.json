@@ -21,6 +21,7 @@
   "dependencies": {
     "@googlemaps/react-wrapper": "^1.1.35",
     "@hookform/resolvers": "^3.4.0",
+    "@rollup/rollup-linux-x64-gnu": "^4.0.0",
     "@sentry/nextjs": "^9.5.0",
     "@simplewebauthn/browser": "^13.1.0",
     "@simplewebauthn/types": "^12.0.0",
@@ -46,6 +47,7 @@
     "react-hook-form": "^7.51.4",
     "react-inlinesvg": "4.1.0",
     "react-select": "^5.9.0",
+    "rollup": "^4.0.0",
     "sass": "^1.79.4",
     "sharp": "^0.33.4",
     "socket.io": "^4.8.1",
