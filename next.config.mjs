@@ -34,6 +34,13 @@ const nextConfig = {
       compression: 'gzip',
       maxMemoryGenerations: 1,
     }
+
+    // Ensure path mapping works correctly in build
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': require('path').resolve(__dirname, 'src'),
+    }
+
     return config
   },
   /* Uncomment and simplify rewrites */
